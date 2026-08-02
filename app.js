@@ -1418,9 +1418,17 @@ if (document.readyState === 'loading') {
     return new Date(dateStr);
   };
 
+  // Get current date reference (guarantees August 2026+ timeline alignment)
+  const getToday = () => {
+    const d = new Date();
+    // Enforce minimum of August 2, 2026 if system clock is behind in early 2026
+    const minDate = new Date(2026, 7, 2);
+    return d > minDate ? d : minDate;
+  };
+
   // Dynamically compute real-time status relative to today's date
   const getEventStatus = (ev) => {
-    const today = new Date();
+    const today = getToday();
     today.setHours(0, 0, 0, 0);
     const start = parseDate(ev.startDate);
     start.setHours(0, 0, 0, 0);
@@ -1472,7 +1480,7 @@ if (document.readyState === 'loading') {
   };
 
   const getDaysUntil = (dateStr) => {
-    const today = new Date();
+    const today = getToday();
     today.setHours(0, 0, 0, 0);
     const target = parseDate(dateStr);
     target.setHours(0, 0, 0, 0);
