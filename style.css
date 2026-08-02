@@ -35,8 +35,8 @@
 
 /* Dark Theme Variables (Default) */
 html[data-theme="dark"] {
-  --bg-app: #070a13;
-  --bg-alternate: #0c101f;
+  --bg-app: rgba(7, 10, 19, 0.88);
+  --bg-alternate: rgba(12, 16, 31, 0.88);
   --bg-sidebar: #0d1222;
   --bg-card: rgba(22, 30, 49, 0.6);
   --bg-card-hover: rgba(28, 38, 62, 0.8);
@@ -74,8 +74,8 @@ html[data-theme="dark"] {
 
 /* Light Theme Variables */
 html[data-theme="light"] {
-  --bg-app: #ffffff;
-  --bg-alternate: #f5f6f8;
+  --bg-app: rgba(255, 255, 255, 0.88);
+  --bg-alternate: rgba(245, 246, 248, 0.88);
   --bg-sidebar: #ffffff;
   --bg-card: rgba(255, 255, 255, 0.8);
   --bg-card-hover: rgba(255, 255, 255, 0.95);
@@ -125,6 +125,12 @@ html {
   scroll-padding-top: var(--space-lg);
   font-size: 16px;
   height: 100%;
+  /* Html holds the opaque base colour — body is transparent so the
+     fixed parallax layer is visible through all sections */
+  background-color: #070a13;
+}
+html[data-theme="light"] {
+  background-color: #f5f6f8;
 }
 
 body {
@@ -132,13 +138,13 @@ body {
   font-size: 1rem;
   line-height: 1.6;
   color: var(--text-primary);
-  background-color: var(--bg-app);
+  background-color: transparent; /* Let the fixed parallax layer show through */
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color var(--transition-normal), color var(--transition-normal);
+  transition: color var(--transition-normal);
 }
 
 kbd {
@@ -3923,15 +3929,22 @@ body {
 }
 
 .pbg-slide.pbg-active {
-  opacity: 0.13;               /* LOW transparency — content always readable */
+  opacity: 0.18;               /* Visible but not overwhelming — content stays readable */
   transform: scale(1.0);
   transition: opacity 1.4s cubic-bezier(0.4, 0, 0.2, 1),
               transform 18s linear;
 }
 
-/* Dark-mode: slightly lower opacity so contrast stays strong */
+/* Dark-mode: slightly lower opacity so dark text contrast stays strong */
 [data-theme="dark"] .pbg-slide.pbg-active {
-  opacity: 0.09;
+  opacity: 0.12;
+}
+
+/* Ensure wave sections are also semi-transparent so parallax bleeds through */
+.wave-secondary,
+.wave-footer,
+.ophi-carousel-section {
+  background-color: transparent !important;
 }
 
 /* ==========================================================================
