@@ -1307,7 +1307,7 @@ if (document.readyState === 'loading') {
       specialty: ["glaucoma"],
       organizer: "EGS",
       url: "https://www.eugs.org/",
-      status: "upcoming",
+      status: "completed",
       flag: "🇧🇪"
     },
     {
@@ -1323,7 +1323,7 @@ if (document.readyState === 'loading') {
       specialty: ["general"],
       organizer: "ICO",
       url: "https://icowoc.org/",
-      status: "upcoming",
+      status: "completed",
       flag: "🇨🇿"
     },
     {
@@ -1339,7 +1339,7 @@ if (document.readyState === 'loading') {
       specialty: ["retina"],
       organizer: "ASRS",
       url: "https://www.asrs.org/",
-      status: "upcoming",
+      status: "completed",
       flag: "🇨🇦"
     },
     {
@@ -1408,6 +1408,28 @@ if (document.readyState === 'loading') {
     }
   ];
 
+  // Dynamically compute real-time status relative to today's date
+  const getEventStatus = (ev) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const start = new Date(ev.startDate);
+    start.setHours(0, 0, 0, 0);
+    const end = new Date(ev.endDate);
+    end.setHours(23, 59, 59, 999);
+
+    if (end < today) {
+      return 'completed';
+    } else if (start <= today && today <= end) {
+      return 'open';
+    } else {
+      return 'upcoming';
+    }
+  };
+
+  gcalEvents.forEach(ev => {
+    ev.status = getEventStatus(ev);
+  });
+
   let currentView = 'agenda';
   let filteredEvents = [...gcalEvents];
   
@@ -1441,9 +1463,9 @@ if (document.readyState === 'loading') {
 
   const getDaysUntil = (dateStr) => {
     const today = new Date();
-    // Assuming today is May 21, 2026 for context
-    today.setFullYear(2026, 4, 21);
+    today.setHours(0, 0, 0, 0);
     const target = new Date(dateStr);
+    target.setHours(0, 0, 0, 0);
     const diffTime = target - today;
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return diffDays;
