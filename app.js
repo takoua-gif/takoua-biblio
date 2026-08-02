@@ -1408,13 +1408,23 @@ if (document.readyState === 'loading') {
     }
   ];
 
+  // Cross-browser safe date parser (YYYY-MM-DD)
+  const parseDate = (dateStr) => {
+    if (!dateStr) return new Date();
+    const parts = dateStr.split('-');
+    if (parts.length === 3) {
+      return new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+    }
+    return new Date(dateStr);
+  };
+
   // Dynamically compute real-time status relative to today's date
   const getEventStatus = (ev) => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const start = new Date(ev.startDate);
+    const start = parseDate(ev.startDate);
     start.setHours(0, 0, 0, 0);
-    const end = new Date(ev.endDate);
+    const end = parseDate(ev.endDate);
     end.setHours(23, 59, 59, 999);
 
     if (end < today) {
@@ -1448,8 +1458,8 @@ if (document.readyState === 'loading') {
 
   // Helper functions
   const formatDateRange = (start, end) => {
-    const sDate = new Date(start);
-    const eDate = new Date(end);
+    const sDate = parseDate(start);
+    const eDate = parseDate(end);
     const sMonth = sDate.toLocaleString('default', { month: 'short' });
     const eMonth = eDate.toLocaleString('default', { month: 'short' });
     const sDay = sDate.getDate();
@@ -1464,7 +1474,7 @@ if (document.readyState === 'loading') {
   const getDaysUntil = (dateStr) => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const target = new Date(dateStr);
+    const target = parseDate(dateStr);
     target.setHours(0, 0, 0, 0);
     const diffTime = target - today;
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
@@ -1488,7 +1498,7 @@ if (document.readyState === 'loading') {
   
   const getStatusPill = (status) => {
     const titles = { 'upcoming': 'Upcoming', 'open': 'Register Open', 'completed': 'Completed' };
-    return `<span class="gcal-status gcal-status-${status}">${titles[status]}</span>`;
+    return `<span class="gcal-status gcal-status-${status}">${titles[status] || 'Upcoming'}</span>`;
   };
 
   // Renderers
@@ -1527,9 +1537,9 @@ if (document.readyState === 'loading') {
     let html = '';
     let currentMonth = '';
     
-    filteredEvents.sort((a, b) => new Date(a.startDate) - new Date(b.startDate)).forEach(ev => {
+    filteredEvents.sort((a, b) => parseDate(a.startDate) - parseDate(b.startDate)).forEach(ev => {
       const dates = formatDateRange(ev.startDate, ev.endDate);
-      const evMonth = new Date(ev.startDate).toLocaleString('default', { month: 'long', year: 'numeric' });
+      const evMonth = parseDate(ev.startDate).toLocaleString('default', { month: 'long', year: 'numeric' });
       
       if (evMonth !== currentMonth) {
         html += `<div class="gcal-agenda-month-label">${evMonth}</div>`;
@@ -1578,7 +1588,7 @@ if (document.readyState === 'loading') {
     }
     
     let html = '';
-    filteredEvents.sort((a, b) => new Date(a.startDate) - new Date(b.startDate)).forEach(ev => {
+    filteredEvents.sort((a, b) => parseDate(a.startDate) - parseDate(b.startDate)).forEach(ev => {
       const dates = formatDateRange(ev.startDate, ev.endDate);
       const daysUntil = getDaysUntil(ev.startDate);
       const specialties = ev.specialty.map(s => getSpecialtyBadge(s)).join(' ');
@@ -1627,8 +1637,8 @@ if (document.readyState === 'loading') {
     }
     
     let html = '';
-    filteredEvents.sort((a, b) => new Date(a.startDate) - new Date(b.startDate)).forEach(ev => {
-      const sDate = new Date(ev.startDate).toLocaleString('default', { month: 'short', day: 'numeric', year: 'numeric' });
+    filteredEvents.sort((a, b) => parseDate(a.startDate) - parseDate(b.startDate)).forEach(ev => {
+      const sDate = parseDate(ev.startDate).toLocaleString('default', { month: 'short', day: 'numeric', year: 'numeric' });
       const completedClass = ev.status === 'completed' ? 'gcal-tl-completed' : '';
       const specialties = ev.specialty.map(s => getSpecialtyBadge(s)).join(' ');
       
@@ -1659,6 +1669,11 @@ if (document.readyState === 'loading') {
     const status = els.filterStatus.value;
     const q = els.search.value.toLowerCase();
     
+    // Always calculate fresh real-time status relative to current date
+    gcalEvents.forEach(ev => {
+      ev.status = getEventStatus(ev);
+    });
+
     filteredEvents = gcalEvents.filter(ev => {
       const matchRegion = region === 'all' || ev.region === region;
       const matchSpec = spec === 'all' || ev.specialty.includes(spec);
@@ -1672,6 +1687,7 @@ if (document.readyState === 'loading') {
       return matchRegion && matchSpec && matchStatus && matchQ;
     });
     
+    renderStats();
     updateView();
   };
 
@@ -1683,8 +1699,6 @@ if (document.readyState === 'loading') {
 
   const initGcal = () => {
     if (!document.getElementById('events-calendar')) return;
-    
-    renderStats();
     
     if (els.toggles) {
       els.toggles.forEach(btn => {
@@ -1707,7 +1721,7 @@ if (document.readyState === 'loading') {
     if (els.filterStatus) els.filterStatus.addEventListener('change', applyFilters);
     if (els.search) els.search.addEventListener('input', applyFilters);
     
-    updateView();
+    applyFilters();
   };
 
   if (document.readyState === 'loading') {
