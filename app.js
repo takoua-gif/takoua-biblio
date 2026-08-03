@@ -1,139 +1,162 @@
 /**
- * EyePros Reference Library & Strategy Workspace Engine
- * Curator: Takoua Selmi
- * Logic Layer: Theme, Command Palette (Ctrl+K), Grouped ScrollSpy, Workbench, SWR Feed, Events Calendar
+ * EyePros Command Hub Engine
+ * Unified JavaScript Engine
  */
 
-const initPlaybook = () => {
+const initApp = () => {
 
   // ==========================================================================
-  // 1. MOBILE DRAWER & 6-GROUP NAV SCROLL SPY
+  // 1. ZONE ROUTER
   // ==========================================================================
-  const mobileToggle = document.getElementById('mobileMenuToggle');
-  const closeDrawerBtn = document.getElementById('closeMobileDrawerBtn');
-  const drawerSheet = document.getElementById('mobileDrawerSheet');
-  const drawerOverlay = document.getElementById('mobileDrawerOverlay');
+  const validZones = ['dashboard', 'playbook', 'studio', 'workbench', 'calendar'];
 
-  function openMobileDrawer() {
-    if (drawerSheet) drawerSheet.classList.add('active');
-    if (drawerOverlay) drawerOverlay.classList.add('active');
+  function getZoneForElement(el) {
+    const panel = el.closest('.zone-panel');
+    if (panel && panel.id) {
+      // Return the zone name without 'zone-' if it has it, otherwise just the id
+      return panel.id.replace(/^zone-/, '');
+    }
+    return null;
   }
 
-  function closeMobileDrawer() {
-    if (drawerSheet) drawerSheet.classList.remove('active');
-    if (drawerOverlay) drawerOverlay.classList.remove('active');
+  function navigateToZone(zoneName) {
+    if (!validZones.includes(zoneName)) zoneName = 'dashboard';
+    
+    // Hide all, show matching
+    document.querySelectorAll('.zone-panel').forEach(panel => {
+      if (panel.id === zoneName || panel.id === `zone-${zoneName}`) {
+        panel.style.display = 'block';
+        panel.classList.add('active');
+      } else {
+        panel.style.display = 'none';
+        panel.classList.remove('active');
+      }
+    });
+
+    // Update sidebar active state
+    document.querySelectorAll('.app-sidebar .nav-item, .app-sidebar .sidebar-nav-link').forEach(nav => {
+      nav.classList.remove('active');
+      if (nav.getAttribute('href') === `#${zoneName}`) {
+        nav.classList.add('active');
+      }
+    });
+
+    // Update bottom-tab-bar active state
+    document.querySelectorAll('.bottom-tab-bar .tab-item').forEach(tab => {
+      tab.classList.remove('active');
+      if (tab.getAttribute('href') === `#${zoneName}`) {
+        tab.classList.add('active');
+      }
+    });
+
+    // Update header breadcrumb
+    const breadcrumb = document.getElementById('headerBreadcrumb');
+    if (breadcrumb) {
+      breadcrumb.textContent = zoneName.charAt(0).toUpperCase() + zoneName.slice(1);
+    }
+
+    // Scroll zone content to top
+    const appContent = document.querySelector('.app-content');
+    if (appContent) {
+      appContent.scrollTop = 0;
+    } else {
+      window.scrollTo(0, 0);
+    }
   }
 
-  if (mobileToggle) mobileToggle.addEventListener('click', openMobileDrawer);
-  if (closeDrawerBtn) closeDrawerBtn.addEventListener('click', closeMobileDrawer);
-  if (drawerOverlay) drawerOverlay.addEventListener('click', closeMobileDrawer);
+  window.addEventListener('hashchange', () => {
+    const hash = window.location.hash.replace('#', '') || 'dashboard';
+    navigateToZone(hash);
+  });
 
-  document.querySelectorAll('.mobile-nav-link').forEach(link => {
-    link.addEventListener('click', () => {
-      closeMobileDrawer();
+  // Initial load
+  const initialHash = window.location.hash.replace('#', '') || 'dashboard';
+  navigateToZone(initialHash);
+
+  // Set hash on click
+  document.querySelectorAll('.app-sidebar .nav-item, .app-sidebar .sidebar-nav-link, .bottom-tab-bar .tab-item').forEach(el => {
+    el.addEventListener('click', (e) => {
+      const href = el.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        window.location.hash = href;
+      }
     });
   });
 
-  // Group ScrollSpy — Maps section IDs to the 6 header group links
-  const sectionGroupMap = {
-    'banner': 'navGroupOverview',
-    'intro': 'navGroupOverview',
-    'structure': 'navGroupSystem',
-    'acronyms': 'navGroupSystem',
-    'sources': 'navGroupSystem',
-    'intel-carousel': 'navGroupMarket',
-    'numbers': 'navGroupMarket',
-    'competitors': 'navGroupMarket',
-    'watchlist': 'navGroupMarket',
-    'archetypes': 'navGroupStrategy',
-    'strategy': 'navGroupStrategy',
-    'interviews': 'navGroupWorkbench',
-    'timeline': 'navGroupWorkbench',
-    'events-calendar': 'navGroupResources',
-    'what-i-know': 'navGroupResources'
-  };
+  // ==========================================================================
+  // 2. SIDEBAR TOGGLE
+  // ==========================================================================
+  const sidebar = document.querySelector('.app-sidebar');
+  const sidebarToggleBtn = document.getElementById('sidebarToggleBtn');
+  const appShell = document.querySelector('.app-shell');
+  
+  // Restore state
+  const isCollapsed = localStorage.getItem('eyepros-sidebar-collapsed') === 'true';
+  if (isCollapsed && sidebar) {
+    sidebar.classList.add('collapsed');
+  }
 
-  const groupLinks = document.querySelectorAll('.nav-group-link');
-  window.addEventListener('scroll', () => {
-    let currentSection = '';
-    Object.keys(sectionGroupMap).forEach(secId => {
-      const el = document.getElementById(secId);
-      if (el && window.scrollY >= el.offsetTop - 110) {
-        currentSection = secId;
-      }
-    });
-
-    const activeGroupId = sectionGroupMap[currentSection];
-    groupLinks.forEach(link => {
-      if (activeGroupId && link.id === activeGroupId) {
-        link.classList.add('active');
+  if (sidebarToggleBtn) {
+    sidebarToggleBtn.addEventListener('click', () => {
+      if (window.innerWidth <= 768) {
+        if (appShell) appShell.classList.toggle('sidebar-open');
       } else {
-        link.classList.remove('active');
+        if (sidebar) {
+          sidebar.classList.toggle('collapsed');
+          localStorage.setItem('eyepros-sidebar-collapsed', sidebar.classList.contains('collapsed'));
+        }
       }
-    });
-  }, { passive: true });
-
-  // ==========================================================================
-  // 2. HERO COLLAPSIBLE "ABOUT PLAYBOOK" & QUICK ACTIONS
-  // ==========================================================================
-  const toggleAboutBtn = document.getElementById('toggleAboutPlaybookBtn');
-  const aboutContent = document.getElementById('aboutPlaybookContent');
-
-  if (toggleAboutBtn && aboutContent) {
-    toggleAboutBtn.addEventListener('click', () => {
-      aboutContent.classList.toggle('open');
-      const isExpanded = aboutContent.classList.contains('open');
-      toggleAboutBtn.querySelector('.chevron-icon').style.transform = isExpanded ? 'rotate(180deg)' : 'rotate(0deg)';
     });
   }
 
-  // ==========================================================================
-  // 3. DATE-DRIVEN LOGIC & LIVE COUNTDOWN
-  // ==========================================================================
-  const INTERNSHIP_START = new Date("2026-07-15T22:00:00+02:00");
+  // Close sidebar on mobile when a nav item is clicked
+  document.querySelectorAll('.app-sidebar .nav-item, .app-sidebar .sidebar-nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth <= 768 && appShell) {
+        appShell.classList.remove('sidebar-open');
+      }
+    });
+  });
 
-  function updateCountdown() {
-    const now = new Date();
-    const diffMs = INTERNSHIP_START - now;
+  // ==========================================================================
+  // 3. INTERNSHIP DAY COUNTER
+  // ==========================================================================
+  function updateDayCounter() {
     const widget = document.getElementById('countdownWidget');
     if (!widget) return;
-
-    if (diffMs <= 0) {
-      widget.innerHTML = `
-        <div style="font-weight: 700; color: #0d9488; text-align: center; font-size: 1.05rem; padding: 6px 0;">ACTIVE IN SESSION</div>
-        <div class="font-size-xs text-muted text-center">Day One officially active!</div>
-      `;
-      return;
-    }
-
-    const totalSecs  = Math.floor(diffMs / 1000);
-    const totalMins  = Math.floor(totalSecs / 60);
-    const totalHours = Math.floor(totalMins / 60);
-    const days       = Math.floor(totalHours / 24);
-    const secsRemaining = totalSecs % 60;
-    const minsRemaining = totalMins % 60;
-    const hrsRemaining  = totalHours % 24;
-
-    const daysEl = document.getElementById('countdownDays');
-    const hrsEl = document.getElementById('countdownHours');
-    const minsEl = document.getElementById('countdownMins');
-    const secEl = document.getElementById('countdownSecs');
-
-    if (daysEl) daysEl.textContent  = String(days).padStart(2, '0');
-    if (hrsEl) hrsEl.textContent = String(hrsRemaining).padStart(2, '0');
-    if (minsEl) minsEl.textContent  = String(minsRemaining).padStart(2, '0');
-    if (secEl) secEl.textContent = String(secsRemaining).padStart(2, '0');
+    
+    const start = new Date('2026-08-01T00:00:00');
+    const end = new Date('2026-12-18T23:59:59');
+    const today = new Date();
+    
+    const totalDiff = end - start;
+    const currentDiff = today - start;
+    
+    const totalDays = Math.ceil(totalDiff / (1000 * 60 * 60 * 24));
+    let currentDay = Math.floor(currentDiff / (1000 * 60 * 60 * 24)) + 1;
+    
+    if (currentDay > totalDays) currentDay = totalDays;
+    if (currentDay < 1) currentDay = 1;
+    
+    const percent = Math.min(100, Math.max(0, (currentDay / totalDays) * 100));
+    
+    widget.innerHTML = `
+      <div class="day-counter text-center" style="padding: 10px 0;">
+        <div style="font-weight: 700; color: var(--color-primary, #0d9488); font-size: 1.1rem; margin-bottom: 8px;">
+          Day ${currentDay} of ${totalDays}
+        </div>
+        <div class="progress-bar-wrap" style="width: 100%; background: var(--bg-secondary, #eee); height: 8px; border-radius: 4px; overflow: hidden;">
+          <div style="width: ${percent}%; background: var(--color-primary, #0d9488); height: 100%; transition: width 0.3s ease;"></div>
+        </div>
+      </div>
+    `;
   }
-
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
+  updateDayCounter();
 
   // ==========================================================================
-  // 4. THEME CONTROLLER (Dark / Light toggle) & PRINT
+  // 4. THEME CONTROLLER
   // ==========================================================================
   const themeToggleBtn = document.getElementById('themeToggleBtn');
-  const printBtn = document.getElementById('printBtn');
-  
   const storedTheme = localStorage.getItem('eyepros-theme') || 'light';
   document.documentElement.setAttribute('data-theme', storedTheme);
 
@@ -141,20 +164,13 @@ const initPlaybook = () => {
     themeToggleBtn.addEventListener('click', () => {
       const currentTheme = document.documentElement.getAttribute('data-theme');
       const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      
       document.documentElement.setAttribute('data-theme', newTheme);
       localStorage.setItem('eyepros-theme', newTheme);
     });
   }
 
-  if (printBtn) {
-    printBtn.addEventListener('click', () => {
-      window.print();
-    });
-  }
-
   // ==========================================================================
-  // 5. GLOBAL COMMAND PALETTE (Ctrl+K / Cmd+K)
+  // 5. COMMAND PALETTE (ENHANCED)
   // ==========================================================================
   const cmdModal = document.getElementById('cmdPaletteModal');
   const cmdInput = document.getElementById('cmdPaletteInput');
@@ -224,7 +240,8 @@ const initPlaybook = () => {
       { selector: '.facts-list li', cat: 'Strategy', getTitle: el => el.querySelector('.fact-key')?.textContent || '', getDesc: el => el.querySelector('.fact-val')?.textContent || '' },
       { selector: '.q-item', cat: 'Interviews', getTitle: el => el.querySelector('.q-text')?.textContent || '', getDesc: el => el.querySelector('.q-crib-sheet')?.textContent || '' },
       { selector: '.timeline-milestone', cat: 'Timeline', getTitle: el => el.querySelector('h3')?.textContent || '', getDesc: el => el.querySelector('p')?.textContent || '' },
-      { selector: '.gcal-event-row', cat: 'Events', getTitle: el => el.querySelector('h4')?.textContent || '', getDesc: el => el.querySelector('.gcal-location')?.textContent || '' }
+      { selector: '.gcal-event-row', cat: 'Events', getTitle: el => el.querySelector('h4')?.textContent || '', getDesc: el => el.querySelector('.gcal-location')?.textContent || '' },
+      { selector: '.film-script-item, .studio-item', cat: 'Studio', getTitle: el => el.querySelector('h3, h4')?.textContent || '', getDesc: el => el.querySelector('p')?.textContent || '' }
     ];
 
     searchableItems.forEach(item => {
@@ -237,7 +254,7 @@ const initPlaybook = () => {
 
         if (!q || fullText.includes(q)) {
           // Assign unique target ID if missing
-          if (!el.id) el.id = `cmd_target_${item.cat}_${index}`;
+          if (!el.id) el.id = `cmd_target_${item.cat.replace(/\s+/g, '')}_${index}`;
           results.push({
             category: item.cat,
             title: title || 'Item Reference',
@@ -330,6 +347,12 @@ const initPlaybook = () => {
     const targetEl = document.getElementById(targetId);
     if (!targetEl) return;
 
+    // Detect zone and navigate
+    const zoneName = getZoneForElement(targetEl);
+    if (zoneName) {
+      window.location.hash = zoneName;
+    }
+
     // Open parent accordion panel or tab if in Workbench
     const parentPanel = targetEl.closest('.workbench-persona-panel');
     if (parentPanel) {
@@ -337,14 +360,23 @@ const initPlaybook = () => {
       switchPersonaTab(persona);
     }
 
-    // Smooth scroll with header offset
-    const targetTop = targetEl.getBoundingClientRect().top + window.scrollY - 95;
-    window.scrollTo({ top: targetTop, behavior: 'smooth' });
+    // Smooth scroll with delay for zone render
+    setTimeout(() => {
+      const appContent = document.querySelector('.app-content');
+      if (appContent) {
+        // Find relative offset
+        const topPos = targetEl.offsetTop - 20; 
+        appContent.scrollTo({ top: topPos, behavior: 'smooth' });
+      } else {
+        const targetTop = targetEl.getBoundingClientRect().top + window.scrollY - 95;
+        window.scrollTo({ top: targetTop, behavior: 'smooth' });
+      }
 
-    // Flash Teal Highlight
-    targetEl.classList.remove('search-highlight-flash');
-    void targetEl.offsetWidth; // Trigger reflow
-    targetEl.classList.add('search-highlight-flash');
+      // Flash Teal Highlight
+      targetEl.classList.remove('search-highlight-flash');
+      void targetEl.offsetWidth; // Trigger reflow
+      targetEl.classList.add('search-highlight-flash');
+    }, 50);
   }
 
   // ==========================================================================
@@ -456,7 +488,7 @@ const initPlaybook = () => {
   });
 
   // ==========================================================================
-  // 8. UNIFIED INTERVIEW WORKBENCH (LocalStorage Compatible)
+  // 8. UNIFIED INTERVIEW WORKBENCH
   // ==========================================================================
   const personaTabs = document.querySelectorAll('.persona-tab');
   const personaPanels = document.querySelectorAll('.workbench-persona-panel');
@@ -614,25 +646,65 @@ const initPlaybook = () => {
   // 9. READING PROGRESS BAR
   // ==========================================================================
   const progressBar = document.getElementById('readProgressFill');
-  window.addEventListener('scroll', () => {
-    const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-    if (scrollHeight <= 0) return;
-    
-    const scrolled = Math.round((scrollTop / scrollHeight) * 100);
-    if (progressBar) progressBar.style.width = `${scrolled}%`;
-  }, { passive: true });
+  const appContent = document.querySelector('.app-content');
+  if (appContent) {
+    appContent.addEventListener('scroll', () => {
+      const scrollTop = appContent.scrollTop;
+      const scrollHeight = appContent.scrollHeight - appContent.clientHeight;
+      if (scrollHeight <= 0) return;
+      
+      const scrolled = Math.round((scrollTop / scrollHeight) * 100);
+      if (progressBar) progressBar.style.width = `${scrolled}%`;
+    }, { passive: true });
+  } else {
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (scrollHeight <= 0) return;
+      
+      const scrolled = Math.round((scrollTop / scrollHeight) * 100);
+      if (progressBar) progressBar.style.width = `${scrolled}%`;
+    }, { passive: true });
+  }
+
+  // ==========================================================================
+  // 12. PRINT HANDLER
+  // ==========================================================================
+  const printBtn = document.getElementById('printBtn');
+  if (printBtn) {
+    printBtn.addEventListener('click', () => {
+      window.print();
+    });
+  }
+
+  // ==========================================================================
+  // 13. HERO COLLAPSIBLE
+  // ==========================================================================
+  const toggleAboutBtn = document.getElementById('toggleAboutPlaybookBtn');
+  const aboutContent = document.getElementById('aboutPlaybookContent');
+
+  if (toggleAboutBtn && aboutContent) {
+    toggleAboutBtn.addEventListener('click', () => {
+      aboutContent.classList.toggle('open');
+      const isExpanded = aboutContent.classList.contains('open');
+      const chevron = toggleAboutBtn.querySelector('.chevron-icon');
+      if (chevron) {
+        chevron.style.transform = isExpanded ? 'rotate(180deg)' : 'rotate(0deg)';
+      }
+    });
+  }
 
 };
 
+// Initialize App
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initPlaybook);
+  document.addEventListener('DOMContentLoaded', initApp);
 } else {
-  initPlaybook();
+  initApp();
 }
 
 /* ==========================================================================
-   OPHTHALMOLOGY INTELLIGENCE CAROUSEL (SWR Feed Engine)
+   10. CAROUSEL ENGINE (SWR Feed Engine)
    ========================================================================== */
 (function () {
   const newsItems = [
@@ -661,6 +733,20 @@ if (document.readyState === 'loading') {
       `;
     });
     track.innerHTML = html;
+
+    const prevBtn = document.getElementById('ophiPrevBtn');
+    const nextBtn = document.getElementById('ophiNextBtn');
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        track.scrollBy({ left: -320, behavior: 'smooth' });
+      });
+    }
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        track.scrollBy({ left: 320, behavior: 'smooth' });
+      });
+    }
   }
 
   if (document.readyState === 'loading') {
@@ -671,7 +757,7 @@ if (document.readyState === 'loading') {
 })();
 
 /* ==========================================================================
-   GLOBAL OPHTHALMOLOGY EVENTS CALENDAR LOGIC
+   11. EVENTS CALENDAR LOGIC
    ========================================================================== */
 (function () {
   const gcalEvents = [
@@ -796,7 +882,9 @@ if (document.readyState === 'loading') {
   };
 
   const initGcal = () => {
-    if (!document.getElementById('events-calendar')) return;
+    // Only init if filter elements exist
+    const regEl = document.getElementById('gcalFilterRegion');
+    if (!regEl) return;
 
     ['gcalFilterRegion', 'gcalFilterSpecialty', 'gcalFilterStatus'].forEach(id => {
       const el = document.getElementById(id);
