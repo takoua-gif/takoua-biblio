@@ -1,0 +1,1620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Social Media Safe Zone Checker & Size Analyzer | Instagram, Facebook & LinkedIn</title>
+  <meta name="description" content="Free tool to check safe zones and aspect ratio fit for Instagram Reels, Facebook Reels, and LinkedIn Videos. Upload videos or cover photos and preview live mobile UI overlays.">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #0b0f17;
+      --bg-card: #151c28;
+      --bg-card-hover: #1e283a;
+      --accent-ig: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+      --accent-fb: #1877f2;
+      --accent-in: #0a66c2;
+      --accent-glow: rgba(131, 58, 180, 0.3);
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --border-color: #263346;
+      --success-bg: rgba(34, 197, 94, 0.15);
+      --success-text: #4ade80;
+      --warning-bg: rgba(234, 179, 8, 0.15);
+      --warning-text: #fde047;
+      --error-bg: rgba(239, 68, 68, 0.15);
+      --error-text: #f87171;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.5;
+    }
+
+    /* Header & Nav */
+    header {
+      border-bottom: 1px solid var(--border-color);
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 1rem 2rem;
+    }
+
+    .nav-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .logo-badge {
+      background: var(--accent-ig);
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      border: 1px solid var(--border-color);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 0.875rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: #475569;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 3rem 1.5rem 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .hero-tags {
+      display: inline-flex;
+      gap: 0.5rem;
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid var(--border-color);
+      padding: 0.35rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-tags span {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero h1 span {
+      background: var(--accent-ig);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* App Container Layout */
+    .app-layout {
+      max-width: 1380px;
+      margin: 0 auto 4rem;
+      padding: 0 1.5rem;
+      display: grid;
+      grid-template-columns: 340px 1fr 380px;
+      gap: 1.75rem;
+      width: 100%;
+    }
+
+    @media (max-width: 1180px) {
+      .app-layout {
+        grid-template-columns: 1fr 400px;
+      }
+      .controls-panel {
+        grid-column: span 2;
+      }
+    }
+
+    @media (max-width: 850px) {
+      .app-layout {
+        grid-template-columns: 1fr;
+      }
+      .controls-panel {
+        grid-column: span 1;
+      }
+    }
+
+    /* Card Panels */
+    .panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+    }
+
+    .panel-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    /* Platform Selector Tabs */
+    .platform-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+      background: rgba(15, 23, 42, 0.6);
+      padding: 0.35rem;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 0.6rem 0.5rem;
+      border-radius: 7px;
+      font-weight: 600;
+      font-size: 0.8rem;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    .tab-btn.active {
+      background: #1e293b;
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .tab-btn[data-platform="instagram"].active {
+      border-bottom: 2px solid #e1306c;
+      color: #f472b6;
+    }
+    .tab-btn[data-platform="facebook"].active {
+      border-bottom: 2px solid var(--accent-fb);
+      color: #60a5fa;
+    }
+    .tab-btn[data-platform="linkedin"].active {
+      border-bottom: 2px solid var(--accent-in);
+      color: #38bdf8;
+    }
+
+    /* Upload Zone */
+    .upload-box {
+      border: 2px dashed #334155;
+      border-radius: 12px;
+      padding: 1.75rem 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: rgba(15, 23, 42, 0.4);
+      position: relative;
+    }
+
+    .upload-box:hover, .upload-box.dragover {
+      border-color: #64748b;
+      background: rgba(30, 41, 59, 0.5);
+    }
+
+    .upload-icon {
+      width: 44px;
+      height: 44px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 0.75rem;
+      color: #94a3b8;
+    }
+
+    .upload-box h4 {
+      font-size: 0.95rem;
+      color: #f1f5f9;
+      margin-bottom: 0.25rem;
+    }
+
+    .upload-box p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .file-input {
+      display: none;
+    }
+
+    .sample-btn-group {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .btn-sm {
+      flex: 1;
+      padding: 0.45rem 0.5rem;
+      font-size: 0.75rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-sm:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    /* Controls Form Switchers */
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .control-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #cbd5e1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .switch-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 24px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #334155;
+      transition: .3s;
+      border-radius: 24px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .3s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: #3b82f6;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(20px);
+    }
+
+    select.select-custom {
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid var(--border-color);
+      color: #fff;
+      padding: 0.6rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      outline: none;
+    }
+
+    /* Preview Workspace */
+    .preview-stage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #05080e;
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1.5rem 1rem;
+      position: relative;
+      min-height: 640px;
+    }
+
+    /* Phone Mockup Frame */
+    .phone-mockup {
+      width: 320px;
+      height: 568px; /* 9:16 scaled view */
+      background: #000;
+      border-radius: 36px;
+      box-shadow: 0 0 0 10px #1e293b, 0 25px 50px -12px rgba(0,0,0,0.8);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .phone-mockup.ratio-1-1 {
+      width: 320px;
+      height: 320px;
+      border-radius: 20px;
+    }
+
+    .phone-mockup.ratio-16-9 {
+      width: 380px;
+      height: 213px;
+      border-radius: 16px;
+    }
+
+    /* Dynamic Media Element */
+    .media-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .media-container img, .media-container video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .media-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      color: #64748b;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    /* Safe Zone Boundary Guide Lines */
+    .safe-zone-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-sizing: border-box;
+      transition: opacity 0.2s;
+    }
+
+    /* Zone Boxes */
+    .zone-top-danger {
+      background: rgba(239, 68, 68, 0.25);
+      border-bottom: 2px dashed rgba(239, 68, 68, 0.8);
+      color: #fca5a5;
+      font-size: 10px;
+      font-weight: 700;
+      display: flex;
+      align-items: flex-end;
+      padding: 4px 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .zone-bottom-danger {
+      background: rgba(239, 68, 68, 0.25);
+      border-top: 2px dashed rgba(239, 68, 68, 0.8);
+      color: #fca5a5;
+      font-size: 10px;
+      font-weight: 700;
+      display: flex;
+      align-items: flex-start;
+      padding: 4px 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .zone-side-danger-right {
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 60px;
+      background: rgba(234, 179, 8, 0.15);
+      border-left: 1px dashed rgba(234, 179, 8, 0.6);
+      pointer-events: none;
+    }
+
+    .safe-zone-box {
+      border: 2px solid #22c55e;
+      position: absolute;
+      box-sizing: border-box;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .safe-zone-label {
+      background: rgba(34, 197, 94, 0.85);
+      color: #000;
+      font-weight: 800;
+      font-size: 9px;
+      padding: 2px 6px;
+      border-radius: 3px;
+      letter-spacing: 0.5px;
+    }
+
+    /* Authentic Platform Mockup Overlays */
+    .platform-ui-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 12px;
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    /* Instagram UI Specifics */
+    .ig-ui-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 14px;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+    }
+    .ig-ui-top-title {
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .ig-ui-sidebar {
+      position: absolute;
+      right: 12px;
+      bottom: 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .ig-icon-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+    }
+
+    .ig-ui-bottom {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-right: 60px;
+      padding-bottom: 8px;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.9);
+    }
+    .ig-user-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .ig-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #cbd5e1;
+      border: 1px solid #fff;
+    }
+    .ig-username {
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .ig-follow-btn {
+      border: 1px solid rgba(255,255,255,0.7);
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .ig-caption {
+      font-size: 12px;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .ig-audio-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+    }
+
+    /* Video Player Controller Bar */
+    .video-controls-bar {
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      width: 100%;
+      max-width: 380px;
+      background: rgba(15, 23, 42, 0.8);
+      padding: 0.5rem 1rem;
+      border-radius: 30px;
+      border: 1px solid var(--border-color);
+    }
+
+    .video-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .video-progress {
+      flex: 1;
+      height: 4px;
+      background: #334155;
+      border-radius: 2px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .video-progress-fill {
+      width: 0%;
+      height: 100%;
+      background: #3b82f6;
+      border-radius: 2px;
+    }
+
+    /* Right Recommendation Panel */
+    .recommendation-card {
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      padding: 1rem;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .status-badge.perfect {
+      background: var(--success-bg);
+      color: var(--success-text);
+      border: 1px solid rgba(74, 222, 128, 0.3);
+    }
+    .status-badge.warning {
+      background: var(--warning-bg);
+      color: var(--warning-text);
+      border: 1px solid rgba(253, 224, 71, 0.3);
+    }
+    .status-badge.error {
+      background: var(--error-bg);
+      color: var(--error-text);
+      border: 1px solid rgba(248, 113, 113, 0.3);
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .metric-box {
+      background: #0f172a;
+      padding: 0.75rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+
+    .metric-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.25rem;
+    }
+
+    .metric-val {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .recommendations-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .rec-item {
+      display: flex;
+      gap: 0.6rem;
+      font-size: 0.85rem;
+      color: #cbd5e1;
+      background: rgba(30, 41, 59, 0.4);
+      padding: 0.6rem 0.8rem;
+      border-radius: 8px;
+      align-items: flex-start;
+    }
+
+    .rec-item svg {
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* Reference Specs Table */
+    .specs-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+    }
+
+    .specs-table th, .specs-table td {
+      padding: 0.5rem 0.6rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .specs-table th {
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .specs-table td {
+      color: #f1f5f9;
+    }
+
+    /* FAQ Section */
+    .guide-section {
+      max-width: 1280px;
+      margin: 2rem auto 4rem;
+      padding: 0 1.5rem;
+    }
+
+    .guide-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .faq-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+
+    .faq-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .faq-card p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav-container">
+      <a href="#" class="logo">
+        <div class="logo-badge">Safe Zone</div>
+        <span>Social Media Checker</span>
+      </a>
+      <div class="nav-links">
+        <a href="#guidelines" class="btn-secondary">Specs & Guidelines</a>
+        <button id="downloadTemplateBtn" class="btn-secondary">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+          Download PNG Overlay
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-tags">
+      <span>Free Creator Tool</span> • Instagram • Facebook • LinkedIn
+    </div>
+    <h1>Reels & Video <span>Safe Zone Checker</span></h1>
+    <p>Upload video files or cover photos to test visibility. Ensure text, logos, and captions never get cut off by platform UI overlays.</p>
+  </section>
+
+  <main class="app-layout">
+    <!-- LEFT PANEL: Controls & File Upload -->
+    <aside class="panel controls-panel">
+      <div class="panel-title">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+        1. Select Platform
+      </div>
+
+      <div class="platform-tabs">
+        <button class="tab-btn active" data-platform="instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          IG Reels
+        </button>
+        <button class="tab-btn" data-platform="facebook">
+          <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          FB Reels
+        </button>
+        <button class="tab-btn" data-platform="linkedin">
+          <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+          LinkedIn
+        </button>
+      </div>
+
+      <div class="control-group">
+        <div class="control-label">2. Upload Media (Video or Image)</div>
+        <div class="upload-box" id="dropZone">
+          <input type="file" id="mediaInput" class="file-input" accept="image/*,video/*">
+          <div class="upload-icon">
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+          </div>
+          <h4>Drop video or cover image here</h4>
+          <p>Supports MP4, MOV, WEBM, PNG, JPG, WEBP</p>
+        </div>
+        <div class="sample-btn-group">
+          <button class="btn-sm" id="sampleImageBtn">Load Sample Image</button>
+          <button class="btn-sm" id="sampleVideoBtn">Load Demo Video</button>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="control-label">Overlay & Preview Settings</div>
+        
+        <div class="switch-row">
+          <span>Safe Zone Box</span>
+          <label class="switch">
+            <input type="checkbox" id="toggleSafeZone" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="switch-row">
+          <span>Platform Mobile UI</span>
+          <label class="switch">
+            <input type="checkbox" id="togglePlatformUI" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="switch-row">
+          <span>Feed Grid Crop (1:1)</span>
+          <label class="switch">
+            <input type="checkbox" id="toggleFeedCrop">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="control-label">Display Aspect Ratio</div>
+        <select class="select-custom" id="aspectRatioSelect">
+          <option value="9-16">9:16 Vertical (Reels / Stories)</option>
+          <option value="1-1">1:1 Square (Post / Feed)</option>
+          <option value="16-9">16:9 Landscape (Desktop Video)</option>
+        </select>
+      </div>
+    </aside>
+
+    <!-- CENTER PANEL: Interactive Live Mobile Preview Stage -->
+    <section class="preview-stage">
+      <div class="phone-mockup" id="phoneFrame">
+        
+        <!-- Uploaded / Preset Media Container -->
+        <div class="media-container" id="mediaContainer">
+          <div class="media-placeholder" id="placeholderContent">
+            <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            <p>Upload a video or photo to preview safe zones</p>
+          </div>
+        </div>
+
+        <!-- Safe Zone Margin Overlay Lines -->
+        <div class="safe-zone-overlay" id="safeZoneOverlay">
+          <div class="zone-top-danger" id="zoneTopText">Top Danger Zone (UI Header)</div>
+          <div class="safe-zone-box" id="safeZoneBox">
+            <div class="safe-zone-label">SAFE TEXT / LOGO AREA</div>
+          </div>
+          <div class="zone-side-danger-right" id="zoneSideRight"></div>
+          <div class="zone-bottom-danger" id="zoneBottomText">Bottom Danger Zone (Caption & Buttons)</div>
+        </div>
+
+        <!-- Platform UI Mockup Layer -->
+        <div class="platform-ui-overlay" id="platformUIOverlay">
+          <!-- Instagram Mockup -->
+          <div id="igUIMockup" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; width: 100%;">
+            <div class="ig-ui-top">
+              <span class="ig-ui-top-title">Reels</span>
+              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            </div>
+            <div class="ig-ui-sidebar">
+              <div class="ig-icon-btn">
+                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                <span>48.2k</span>
+              </div>
+              <div class="ig-icon-btn">
+                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"/></svg>
+                <span>1,204</span>
+              </div>
+              <div class="ig-icon-btn">
+                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                <span>Share</span>
+              </div>
+              <div class="ig-avatar" style="width: 24px; height: 24px; border-radius: 6px;"></div>
+            </div>
+            <div class="ig-ui-bottom">
+              <div class="ig-user-row">
+                <div class="ig-avatar"></div>
+                <span class="ig-username">creator_handle</span>
+                <span class="ig-follow-btn">Follow</span>
+              </div>
+              <div class="ig-caption">Check if your key text, title graphics & CTA buttons are clear of this overlay zone! 🚀</div>
+              <div class="ig-audio-row">
+                <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                <span>Original Audio • Trending Sound</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Facebook Mockup -->
+          <div id="fbUIMockup" style="display: none; flex-direction: column; justify-content: space-between; height: 100%; width: 100%;">
+            <div class="ig-ui-top">
+              <span class="ig-ui-top-title" style="color: #60a5fa;">Facebook Reels</span>
+              <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+            </div>
+            <div class="ig-ui-sidebar">
+              <div class="ig-icon-btn">
+                <div style="background: #1877f2; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;">👍</div>
+                <span>12k</span>
+              </div>
+              <div class="ig-icon-btn">
+                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+                <span>850</span>
+              </div>
+              <div class="ig-icon-btn">
+                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+                <span>Share</span>
+              </div>
+            </div>
+            <div class="ig-ui-bottom">
+              <div class="ig-user-row">
+                <div class="ig-avatar" style="border-radius: 50%;"></div>
+                <span class="ig-username">Facebook Page</span>
+              </div>
+              <div class="ig-caption">FB Reels cover preview overlay. Keep important copy inside the green box!</div>
+            </div>
+          </div>
+
+          <!-- LinkedIn Mockup -->
+          <div id="inUIMockup" style="display: none; flex-direction: column; justify-content: space-between; height: 100%; width: 100%;">
+            <div class="ig-ui-top">
+              <span class="ig-ui-top-title" style="color: #38bdf8; font-size: 14px;">LinkedIn Video</span>
+              <span style="font-size: 11px; background: rgba(10, 102, 194, 0.6); padding: 2px 6px; border-radius: 4px;">PRO</span>
+            </div>
+            <div class="ig-ui-bottom" style="padding-right: 12px;">
+              <div class="ig-user-row">
+                <div class="ig-avatar" style="border-radius: 4px;"></div>
+                <div>
+                  <div class="ig-username">Professional User</div>
+                  <div style="font-size: 10px; color: #cbd5e1;">Founder & Creator • 1st</div>
+                </div>
+              </div>
+              <div class="ig-caption">LinkedIn Video player controls & subtitle captions display here at the bottom.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Video Controls Bar -->
+      <div class="video-controls-bar" id="videoControlsBar" style="display: none;">
+        <button class="video-btn" id="playPauseBtn">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <div class="video-progress" id="videoProgress">
+          <div class="video-progress-fill" id="videoProgressFill"></div>
+        </div>
+        <span id="videoTime" style="font-size: 0.75rem; color: #94a3b8;">0:00</span>
+      </div>
+    </section>
+
+    <!-- RIGHT PANEL: Dynamic Fit & Safe Zone Diagnostics & Recommendations -->
+    <aside class="panel">
+      <div class="panel-title">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        Fit & Size Diagnostics
+      </div>
+
+      <div id="statusBadge" class="status-badge perfect">
+        <span>✨ Standard Aspect Ratio</span>
+      </div>
+
+      <div class="metric-grid">
+        <div class="metric-box">
+          <div class="metric-label">Uploaded Size</div>
+          <div class="metric-val" id="metricUploadedDim">-- × --</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">Aspect Ratio</div>
+          <div class="metric-val" id="metricUploadedRatio">--</div>
+        </div>
+      </div>
+
+      <div class="recommendation-card">
+        <div class="control-label" style="margin-bottom: 0.5rem; color: #f8fafc;">Recommended Specs</div>
+        <table class="specs-table">
+          <tr>
+            <th>Ideal Dimensions:</th>
+            <td id="recIdealDim">1080 × 1920 px</td>
+          </tr>
+          <tr>
+            <th>Target Ratio:</th>
+            <td>9:16 Vertical</td>
+          </tr>
+          <tr>
+            <th>Top Margin Safe:</th>
+            <td id="recTopMargin">Top 220 px</td>
+          </tr>
+          <tr>
+            <th>Bottom Margin Safe:</th>
+            <td id="recBottomMargin">Bottom 320 px</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="control-label">Recommendations & Fixes</div>
+      <ul class="recommendations-list" id="recommendationsList">
+        <li class="rec-item">
+          <svg width="18" height="18" fill="#4ade80" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+          <div><strong>Safe Text Placement:</strong> Keep critical text within 1080 × 1350 px centered area.</div>
+        </li>
+        <li class="rec-item">
+          <svg width="18" height="18" fill="#38bdf8" viewBox="0 0 24 24"><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+          <div><strong>Feed Grid Preview:</strong> Instagram crops Reels covers to a 1:1 square in your grid profile.</div>
+        </li>
+      </ul>
+    </aside>
+  </main>
+
+  <!-- FAQ & Guidelines Section -->
+  <section class="guide-section" id="guidelines">
+    <h2 class="guide-title">Platform Safe Zone & Format Guide</h2>
+    <div class="faq-grid">
+      <div class="faq-card">
+        <h3>📸 Instagram Reels Safe Zones</h3>
+        <p>Instagram Reels render in full screen 9:16 (1080×1920 px). However, the top 220px are obscured by the Reels title/camera bar and the bottom 320px contain user captions, account handle, and audio track details. Always center your hook text.</p>
+      </div>
+      <div class="faq-card">
+        <h3>👍 Facebook Reels Guidelines</h3>
+        <p>Facebook Reels share the 1080×1920 format. The action buttons (Like, Comment, Share) occupy a 60px strip along the right side of the screen. Keep logos and interactive overlays away from the right edge.</p>
+      </div>
+      <div class="faq-card">
+        <h3>💼 LinkedIn Video Recommendations</h3>
+        <p>LinkedIn supports both 9:16 vertical videos and 1:1 square / 16:9 landscape formats. On mobile, vertical videos feature player control bars and headline text across the bottom 240px.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Social Media Safe Zone Checker. All uploads are processed strictly in your browser.</p>
+  </footer>
+
+  <script>
+    // State
+    const state = {
+      platform: 'instagram', // 'instagram', 'facebook', 'linkedin'
+      aspectRatio: '9-16', // '9-16', '1-1', '16-9'
+      showSafeZone: true,
+      showPlatformUI: true,
+      showFeedCrop: false,
+      mediaType: null, // 'image' | 'video'
+      mediaSrc: null,
+      mediaWidth: 0,
+      mediaHeight: 0
+    };
+
+    // Specs database
+    const platformSpecs = {
+      instagram: {
+        name: 'Instagram Reels',
+        idealDim: '1080 × 1920 px',
+        aspect: '9:16',
+        topMargin: 'Top 220 px',
+        bottomMargin: 'Bottom 320 px',
+        topPercent: 11.5, // 220 / 1920
+        bottomPercent: 16.6, // 320 / 1920
+        rightMarginPercent: 16
+      },
+      facebook: {
+        name: 'Facebook Reels',
+        idealDim: '1080 × 1920 px',
+        aspect: '9:16',
+        topMargin: 'Top 180 px',
+        bottomMargin: 'Bottom 280 px',
+        topPercent: 9.3,
+        bottomPercent: 14.5,
+        rightMarginPercent: 18
+      },
+      linkedin: {
+        name: 'LinkedIn Video',
+        idealDim: '1080 × 1920 px',
+        aspect: '9:16 / 1:1',
+        topMargin: 'Top 140 px',
+        bottomMargin: 'Bottom 240 px',
+        topPercent: 7.2,
+        bottomPercent: 12.5,
+        rightMarginPercent: 5
+      }
+    };
+
+    // DOM Elements
+    const phoneFrame = document.getElementById('phoneFrame');
+    const mediaContainer = document.getElementById('mediaContainer');
+    const placeholderContent = document.getElementById('placeholderContent');
+    const safeZoneOverlay = document.getElementById('safeZoneOverlay');
+    const platformUIOverlay = document.getElementById('platformUIOverlay');
+    const safeZoneBox = document.getElementById('safeZoneBox');
+    const zoneTopText = document.getElementById('zoneTopText');
+    const zoneBottomText = document.getElementById('zoneBottomText');
+    const zoneSideRight = document.getElementById('zoneSideRight');
+
+    const igUIMockup = document.getElementById('igUIMockup');
+    const fbUIMockup = document.getElementById('fbUIMockup');
+    const inUIMockup = document.getElementById('inUIMockup');
+
+    const toggleSafeZone = document.getElementById('toggleSafeZone');
+    const togglePlatformUI = document.getElementById('togglePlatformUI');
+    const toggleFeedCrop = document.getElementById('toggleFeedCrop');
+    const aspectRatioSelect = document.getElementById('aspectRatioSelect');
+
+    const dropZone = document.getElementById('dropZone');
+    const mediaInput = document.getElementById('mediaInput');
+    const sampleImageBtn = document.getElementById('sampleImageBtn');
+    const sampleVideoBtn = document.getElementById('sampleVideoBtn');
+
+    const statusBadge = document.getElementById('statusBadge');
+    const metricUploadedDim = document.getElementById('metricUploadedDim');
+    const metricUploadedRatio = document.getElementById('metricUploadedRatio');
+    const recIdealDim = document.getElementById('recIdealDim');
+    const recTopMargin = document.getElementById('recTopMargin');
+    const recBottomMargin = document.getElementById('recBottomMargin');
+    const recommendationsList = document.getElementById('recommendationsList');
+
+    const videoControlsBar = document.getElementById('videoControlsBar');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const videoProgress = document.getElementById('videoProgress');
+    const videoProgressFill = document.getElementById('videoProgressFill');
+    const videoTime = document.getElementById('videoTime');
+
+    let activeVideoElement = null;
+
+    // Platform Tab Click Handlers
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.platform = btn.getAttribute('data-platform');
+        updateUI();
+      });
+    });
+
+    // Toggle Switches
+    toggleSafeZone.addEventListener('change', (e) => {
+      state.showSafeZone = e.target.checked;
+      safeZoneOverlay.style.opacity = state.showSafeZone ? '1' : '0';
+    });
+
+    togglePlatformUI.addEventListener('change', (e) => {
+      state.showPlatformUI = e.target.checked;
+      platformUIOverlay.style.opacity = state.showPlatformUI ? '1' : '0';
+    });
+
+    toggleFeedCrop.addEventListener('change', (e) => {
+      state.showFeedCrop = e.target.checked;
+      if (state.showFeedCrop) {
+        phoneFrame.style.borderRadius = '0px';
+        phoneFrame.style.clipPath = 'polygon(0% 25%, 100% 25%, 100% 75%, 0% 75%)';
+      } else {
+        phoneFrame.style.borderRadius = '';
+        phoneFrame.style.clipPath = '';
+      }
+    });
+
+    aspectRatioSelect.addEventListener('change', (e) => {
+      state.aspectRatio = e.target.value;
+      phoneFrame.className = 'phone-mockup ratio-' + state.aspectRatio;
+      updateUI();
+    });
+
+    // File Upload Handlers
+    dropZone.addEventListener('click', () => mediaInput.click());
+
+    dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropZone.classList.add('dragover');
+    });
+
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+        handleFileSelect(e.dataTransfer.files[0]);
+      }
+    });
+
+    mediaInput.addEventListener('change', (e) => {
+      if (e.target.files && e.target.files[0]) {
+        handleFileSelect(e.target.files[0]);
+      }
+    });
+
+    // Sample Media Handlers
+    sampleImageBtn.addEventListener('click', () => {
+      // Create SVG sample image
+      const canvas = document.createElement('canvas');
+      canvas.width = 1080;
+      canvas.height = 1920;
+      const ctx = canvas.getContext('2d');
+
+      // Gradient background
+      const grad = ctx.createLinearGradient(0, 0, 1080, 1920);
+      grad.addColorStop(0, '#4f46e5');
+      grad.addColorStop(0.5, '#7c3aed');
+      grad.addColorStop(1, '#db2777');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 1080, 1920);
+
+      // Text elements
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 72px "Plus Jakarta Sans", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('HOW TO GROW IN 2026', 540, 500);
+
+      ctx.fillStyle = '#fde047';
+      ctx.font = '500 44px sans-serif';
+      ctx.fillText('3 Secrets to Viral Reels', 540, 600);
+
+      // Sample CTA text placed dangerously close to top
+      ctx.fillStyle = '#ef4444';
+      ctx.font = 'bold 36px sans-serif';
+      ctx.fillText('⚠️ TOP HEADER BADGE (Too High)', 540, 150);
+
+      // Sample CTA at bottom
+      ctx.fillStyle = '#38bdf8';
+      ctx.font = 'bold 40px sans-serif';
+      ctx.fillText('👇 Save & Share This Reel', 540, 1750);
+
+      loadMediaFromUrl(canvas.toDataURL(), 'image', 1080, 1920);
+    });
+
+    sampleVideoBtn.addEventListener('click', () => {
+      // Create lightweight animated canvas turned into video blob
+      const canvas = document.createElement('canvas');
+      canvas.width = 720;
+      canvas.height = 1280;
+      const ctx = canvas.getContext('2d');
+
+      let frame = 0;
+      const stream = canvas.captureStream(30);
+      const mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
+      const chunks = [];
+
+      mediaRecorder.ondataavailable = e => chunks.push(e.data);
+      mediaRecorder.onstop = () => {
+        const blob = new Blob(chunks, { type: 'video/webm' });
+        const videoUrl = URL.createObjectURL(blob);
+        loadMediaFromUrl(videoUrl, 'video', 720, 1280);
+      };
+
+      mediaRecorder.start();
+
+      const animInterval = setInterval(() => {
+        frame++;
+        ctx.fillStyle = '#0f172a';
+        ctx.fillRect(0, 0, 720, 1280);
+
+        ctx.fillStyle = `hsl(${frame * 3 % 360}, 70%, 50%)`;
+        ctx.beginPath();
+        ctx.arc(360, 640, 100 + Math.sin(frame * 0.1) * 30, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 40px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('DEMO REEL VIDEO', 360, 400);
+
+        if (frame > 90) { // 3 seconds video
+          clearInterval(animInterval);
+          mediaRecorder.stop();
+        }
+      }, 33);
+    });
+
+    function handleFileSelect(file) {
+      const isVideo = file.type.startsWith('video/');
+      const isImage = file.type.startsWith('image/');
+
+      if (!isVideo && !isImage) {
+        alert('Please upload a valid image or video file.');
+        return;
+      }
+
+      const url = URL.createObjectURL(file);
+
+      if (isImage) {
+        const img = new Image();
+        img.onload = () => {
+          loadMediaFromUrl(url, 'image', img.naturalWidth, img.naturalHeight);
+        };
+        img.src = url;
+      } else if (isVideo) {
+        const video = document.createElement('video');
+        video.onloadedmetadata = () => {
+          loadMediaFromUrl(url, 'video', video.videoWidth, video.videoHeight);
+        };
+        video.src = url;
+      }
+    }
+
+    function loadMediaFromUrl(src, type, width, height) {
+      state.mediaSrc = src;
+      state.mediaType = type;
+      state.mediaWidth = width;
+      state.mediaHeight = height;
+
+      mediaContainer.innerHTML = '';
+      if (type === 'image') {
+        const img = document.createElement('img');
+        img.src = src;
+        mediaContainer.appendChild(img);
+        videoControlsBar.style.display = 'none';
+      } else if (type === 'video') {
+        const video = document.createElement('video');
+        video.src = src;
+        video.autoplay = true;
+        video.loop = true;
+        video.muted = true;
+        video.playsInline = true;
+        mediaContainer.appendChild(video);
+        activeVideoElement = video;
+        setupVideoControls(video);
+        videoControlsBar.style.display = 'flex';
+      }
+
+      updateUI();
+    }
+
+    function setupVideoControls(video) {
+      playPauseBtn.onclick = () => {
+        if (video.paused) {
+          video.play();
+          playPauseBtn.innerHTML = '<svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+        } else {
+          video.pause();
+          playPauseBtn.innerHTML = '<svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+        }
+      };
+
+      video.ontimeupdate = () => {
+        if (video.duration) {
+          const pct = (video.currentTime / video.duration) * 100;
+          videoProgressFill.style.width = pct + '%';
+          const mins = Math.floor(video.currentTime / 60);
+          const secs = Math.floor(video.currentTime % 60).toString().padStart(2, '0');
+          videoTime.innerText = `${mins}:${secs}`;
+        }
+      };
+
+      videoProgress.onclick = (e) => {
+        const rect = videoProgress.getBoundingClientRect();
+        const pos = (e.clientX - rect.left) / rect.width;
+        if (video.duration) {
+          video.currentTime = pos * video.duration;
+        }
+      };
+    }
+
+    // Dynamic UI Update & Recommendations Engine
+    function updateUI() {
+      const spec = platformSpecs[state.platform];
+
+      // Update mockups visibility
+      igUIMockup.style.display = state.platform === 'instagram' ? 'flex' : 'none';
+      fbUIMockup.style.display = state.platform === 'facebook' ? 'flex' : 'none';
+      inUIMockup.style.display = state.platform === 'linkedin' ? 'flex' : 'none';
+
+      // Update safe zone overlays
+      zoneTopText.style.height = spec.topPercent + '%';
+      zoneBottomText.style.height = spec.bottomPercent + '%';
+      zoneSideRight.style.width = spec.rightMarginPercent + '%';
+
+      safeZoneBox.style.top = spec.topPercent + '%';
+      safeZoneBox.style.bottom = spec.bottomPercent + '%';
+      safeZoneBox.style.left = '4%';
+      safeZoneBox.style.right = (spec.rightMarginPercent + 2) + '%';
+
+      // Recommendations calculations
+      recIdealDim.innerText = spec.idealDim;
+      recTopMargin.innerText = spec.topMargin;
+      recBottomMargin.innerText = spec.bottomMargin;
+
+      if (state.mediaWidth > 0 && state.mediaHeight > 0) {
+        metricUploadedDim.innerText = `${state.mediaWidth} × ${state.mediaHeight} px`;
+        const ratioVal = (state.mediaWidth / state.mediaHeight).toFixed(2);
+        metricUploadedRatio.innerText = `${ratioVal} (${getRatioString(state.mediaWidth, state.mediaHeight)})`;
+
+        generateDiagnostics(state.mediaWidth, state.mediaHeight, ratioVal, spec);
+      }
+    }
+
+    function getRatioString(w, h) {
+      const r = w / h;
+      if (Math.abs(r - 9/16) < 0.05) return '9:16 Vertical';
+      if (Math.abs(r - 1) < 0.05) return '1:1 Square';
+      if (Math.abs(r - 16/9) < 0.05) return '16:9 Landscape';
+      if (Math.abs(r - 4/5) < 0.05) return '4:5 Portrait';
+      return 'Custom';
+    }
+
+    function generateDiagnostics(w, h, ratio, spec) {
+      recommendationsList.innerHTML = '';
+      let isPerfect = true;
+      let warnings = [];
+
+      const targetRatio = 9 / 16;
+      const uploadedRatio = w / h;
+
+      // Check aspect ratio fit
+      if (Math.abs(uploadedRatio - targetRatio) > 0.08) {
+        isPerfect = false;
+        warnings.push({
+          type: 'warning',
+          title: 'Aspect Ratio Mismatch',
+          desc: `Uploaded aspect ratio is ${getRatioString(w, h)}. ${spec.name} prefers vertical 9:16 (1080×1920). Your cover/video will be pillarboxed or cropped on mobile screens.`
+        });
+      }
+
+      // Check resolution quality
+      if (w < 720 || h < 1280) {
+        isPerfect = false;
+        warnings.push({
+          type: 'error',
+          title: 'Low Resolution Risk',
+          desc: `Dimensions (${w}×${h} px) are below recommended HD quality (1080×1920 px). Uploaded media may look pixelated or blurry.`
+        });
+      }
+
+      // Safe zone advice
+      warnings.push({
+        type: 'info',
+        title: 'Top Header Safe Zone',
+        desc: `Avoid placing titles or text inside the upper ${spec.topMargin} area.`
+      });
+
+      warnings.push({
+        type: 'info',
+        title: 'Bottom Caption Safe Zone',
+        desc: `Keep primary CTA buttons and captions out of the lower ${spec.bottomMargin} area.`
+      });
+
+      // Update badge
+      if (isPerfect) {
+        statusBadge.className = 'status-badge perfect';
+        statusBadge.innerHTML = '<span>✅ Optimal 9:16 High-Res Format</span>';
+      } else if (warnings.some(w => w.type === 'error')) {
+        statusBadge.className = 'status-badge error';
+        statusBadge.innerHTML = '<span>⚠️ Formatting Issues Detected</span>';
+      } else {
+        statusBadge.className = 'status-badge warning';
+        statusBadge.innerHTML = '<span>⚠️ Aspect Ratio Adjustment Needed</span>';
+      }
+
+      // Render recommendations
+      warnings.forEach(item => {
+        const li = document.createElement('li');
+        li.className = 'rec-item';
+        const color = item.type === 'error' ? '#f87171' : item.type === 'warning' ? '#fde047' : '#38bdf8';
+        li.innerHTML = `
+          <svg width="18" height="18" fill="${color}" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+          <div><strong>${item.title}:</strong> ${item.desc}</div>
+        `;
+        recommendationsList.appendChild(li);
+      });
+    }
+
+    // Download Safe Zone Template PNG for Photoshop / Canva
+    document.getElementById('downloadTemplateBtn').addEventListener('click', () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = 1080;
+      canvas.height = 1920;
+      const ctx = canvas.getContext('2d');
+
+      const spec = platformSpecs[state.platform];
+      const topPx = (spec.topPercent / 100) * 1920;
+      const bottomPx = (spec.bottomPercent / 100) * 1920;
+
+      // Draw danger top zone
+      ctx.fillStyle = 'rgba(239, 68, 68, 0.3)';
+      ctx.fillRect(0, 0, 1080, topPx);
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 36px sans-serif';
+      ctx.fillText(`${spec.name.toUpperCase()} TOP UI DANGER ZONE`, 40, topPx - 30);
+
+      // Draw danger bottom zone
+      ctx.fillStyle = 'rgba(239, 68, 68, 0.3)';
+      ctx.fillRect(0, 1920 - bottomPx, 1080, bottomPx);
+      ctx.fillStyle = '#ffffff';
+      ctx.fillText(`${spec.name.toUpperCase()} BOTTOM CAPTION ZONE`, 40, 1920 - bottomPx + 60);
+
+      // Draw green safe zone box
+      ctx.strokeStyle = '#22c55e';
+      ctx.lineWidth = 8;
+      ctx.strokeRect(40, topPx + 20, 1000, 1920 - topPx - bottomPx - 40);
+
+      ctx.fillStyle = '#22c55e';
+      ctx.font = 'bold 44px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('SAFE TEXT & LOGO AREA (1080x1920)', 540, 960);
+
+      const link = document.createElement('a');
+      link.download = `${state.platform}-safe-zone-template-1080x1920.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    });
+
+    // Initialize
+    updateUI();
+  </script>
+</body>
+</html>
