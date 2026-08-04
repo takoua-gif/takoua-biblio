@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Social Media Safe Zone Checker & Size Analyzer | Instagram, Facebook & LinkedIn</title>
-  <meta name="description" content="Free tool to check safe zones and aspect ratio fit for Instagram Reels, Facebook Reels, and LinkedIn Videos. Upload videos or cover photos and preview live mobile UI overlays.">
+  <title>Social Media Safe Zone Checker & Image Resizer | Instagram, Facebook & LinkedIn</title>
+  <meta name="description" content="Free tool to check safe zones, resize cover photos to 1080x1920 HD, and test aspect ratio fit for Instagram Reels, Facebook Reels, and LinkedIn Videos.">
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -86,7 +86,7 @@
 
     .nav-links {
       display: flex;
-      gap: 1.5rem;
+      gap: 1rem;
       align-items: center;
     }
 
@@ -111,10 +111,31 @@
       border-color: #475569;
     }
 
+    .btn-primary {
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      color: #fff;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 0.875rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
+    }
+
     /* Hero Section */
     .hero {
       text-align: center;
-      padding: 3rem 1.5rem 2rem;
+      padding: 2.5rem 1.5rem 1.5rem;
       max-width: 900px;
       margin: 0 auto;
     }
@@ -128,7 +149,7 @@
       border-radius: 20px;
       font-size: 0.8rem;
       color: var(--text-muted);
-      margin-bottom: 1.25rem;
+      margin-bottom: 1rem;
     }
 
     .hero-tags span {
@@ -140,7 +161,7 @@
       font-size: 2.5rem;
       font-weight: 800;
       letter-spacing: -0.02em;
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
       background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -153,9 +174,9 @@
     }
 
     .hero p {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       color: var(--text-muted);
-      max-width: 700px;
+      max-width: 720px;
       margin: 0 auto;
     }
 
@@ -267,7 +288,7 @@
     .upload-box {
       border: 2px dashed #334155;
       border-radius: 12px;
-      padding: 1.75rem 1rem;
+      padding: 1.5rem 1rem;
       text-align: center;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -281,19 +302,19 @@
     }
 
     .upload-icon {
-      width: 44px;
-      height: 44px;
+      width: 40px;
+      height: 40px;
       background: rgba(255, 255, 255, 0.05);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 0.75rem;
+      margin: 0 auto 0.5rem;
       color: #94a3b8;
     }
 
     .upload-box h4 {
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       color: #f1f5f9;
       margin-bottom: 0.25rem;
     }
@@ -348,7 +369,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0.5rem 0;
+      padding: 0.4rem 0;
     }
 
     .switch {
@@ -404,6 +425,42 @@
       outline: none;
     }
 
+    /* Resizer Options Panel */
+    .resizer-panel {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .resizer-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.4rem;
+    }
+
+    .fit-btn {
+      background: #0f172a;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 0.5rem 0.25rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .fit-btn.active {
+      background: #1e293b;
+      border-color: #3b82f6;
+      color: #60a5fa;
+    }
+
     /* Preview Workspace */
     .preview-stage {
       display: flex;
@@ -455,12 +512,49 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
+      background: #000;
     }
 
-    .media-container img, .media-container video {
+    /* Resizer Blur Backdrops */
+    .blurred-bg {
+      position: absolute;
+      top: -10%;
+      left: -10%;
+      width: 120%;
+      height: 120%;
+      object-fit: cover;
+      filter: blur(20px) brightness(0.6);
+      z-index: 1;
+      display: none;
+    }
+
+    .media-container img.main-media, .media-container video.main-media {
+      position: relative;
+      z-index: 2;
+      transition: object-fit 0.2s ease;
+    }
+
+    .media-container.mode-cover img.main-media {
       width: 100%;
       height: 100%;
       object-fit: cover;
+    }
+
+    .media-container.mode-contain-blur img.main-media {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .media-container.mode-contain-blur .blurred-bg {
+      display: block;
+    }
+
+    .media-container.mode-contain-solid img.main-media {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
     }
 
     .media-placeholder {
@@ -794,6 +888,23 @@
       color: #f1f5f9;
     }
 
+    /* Download Resized Button Block */
+    .download-resizer-card {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .download-resizer-card p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
     /* FAQ Section */
     .guide-section {
       max-width: 1280px;
@@ -849,13 +960,16 @@
     <div class="nav-container">
       <a href="#" class="logo">
         <div class="logo-badge">Safe Zone</div>
-        <span>Social Media Checker</span>
+        <span>Social Media Checker & Resizer</span>
       </a>
       <div class="nav-links">
-        <a href="#guidelines" class="btn-secondary">Specs & Guidelines</a>
+        <button id="downloadResizedTopBtn" class="btn-primary">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+          Download Resized Image (1080×1920)
+        </button>
         <button id="downloadTemplateBtn" class="btn-secondary">
           <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-          Download PNG Overlay
+          Download Safe Zone Overlay
         </button>
       </div>
     </div>
@@ -865,8 +979,8 @@
     <div class="hero-tags">
       <span>Free Creator Tool</span> • Instagram • Facebook • LinkedIn
     </div>
-    <h1>Reels & Video <span>Safe Zone Checker</span></h1>
-    <p>Upload video files or cover photos to test visibility. Ensure text, logos, and captions never get cut off by platform UI overlays.</p>
+    <h1>Reels & Video <span>Safe Zone Checker & Auto-Resizer</span></h1>
+    <p>Upload videos or cover photos to test visibility. If your cover image doesn't fit, auto-resize it to 1080×1920 HD and download it instantly.</p>
   </section>
 
   <main class="app-layout">
@@ -905,6 +1019,22 @@
         <div class="sample-btn-group">
           <button class="btn-sm" id="sampleImageBtn">Load Sample Image</button>
           <button class="btn-sm" id="sampleVideoBtn">Load Demo Video</button>
+        </div>
+      </div>
+
+      <!-- Resizer Fit Mode Controls -->
+      <div class="control-group">
+        <div class="control-label">3. Image Auto-Resizer & Fit Mode</div>
+        <div class="resizer-panel">
+          <div class="resizer-options">
+            <button class="fit-btn active" data-fit="cover">Crop to Fill (9:16)</button>
+            <button class="fit-btn" data-fit="contain-blur">Blurred Margins</button>
+            <button class="fit-btn" data-fit="contain-solid">Solid Black</button>
+          </div>
+          <button id="downloadResizedSideBtn" class="btn-primary" style="width: 100%; justify-content: center;">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+            Download Resized Cover (1080×1920)
+          </button>
         </div>
       </div>
 
@@ -951,10 +1081,11 @@
       <div class="phone-mockup" id="phoneFrame">
         
         <!-- Uploaded / Preset Media Container -->
-        <div class="media-container" id="mediaContainer">
+        <div class="media-container mode-cover" id="mediaContainer">
+          <img class="blurred-bg" id="blurredBg" src="" alt="Blurred Background">
           <div class="media-placeholder" id="placeholderContent">
             <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-            <p>Upload a video or photo to preview safe zones</p>
+            <p>Upload a video or photo to preview & auto-resize</p>
           </div>
         </div>
 
@@ -1089,6 +1220,16 @@
         </div>
       </div>
 
+      <!-- Download Resized Card -->
+      <div class="download-resizer-card">
+        <div class="control-label" style="justify-content: center; color: #fff;">Download Perfect 1080×1920 Cover</div>
+        <p>Auto-formats your uploaded picture to exact 9:16 HD dimensions ready for posting.</p>
+        <button id="downloadResizedMainBtn" class="btn-primary" style="width: 100%; justify-content: center;">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+          Download Resized Cover (1080×1920)
+        </button>
+      </div>
+
       <div class="recommendation-card">
         <div class="control-label" style="margin-bottom: 0.5rem; color: #f8fafc;">Recommended Specs</div>
         <table class="specs-table">
@@ -1145,7 +1286,7 @@
   </section>
 
   <footer>
-    <p>© 2026 Social Media Safe Zone Checker. All uploads are processed strictly in your browser.</p>
+    <p>© 2026 Social Media Safe Zone Checker & Auto-Resizer. All processing happens locally in your browser.</p>
   </footer>
 
   <script>
@@ -1153,6 +1294,7 @@
     const state = {
       platform: 'instagram', // 'instagram', 'facebook', 'linkedin'
       aspectRatio: '9-16', // '9-16', '1-1', '16-9'
+      fitMode: 'cover', // 'cover', 'contain-blur', 'contain-solid'
       showSafeZone: true,
       showPlatformUI: true,
       showFeedCrop: false,
@@ -1170,8 +1312,8 @@
         aspect: '9:16',
         topMargin: 'Top 220 px',
         bottomMargin: 'Bottom 320 px',
-        topPercent: 11.5, // 220 / 1920
-        bottomPercent: 16.6, // 320 / 1920
+        topPercent: 11.5,
+        bottomPercent: 16.6,
         rightMarginPercent: 16
       },
       facebook: {
@@ -1199,6 +1341,7 @@
     // DOM Elements
     const phoneFrame = document.getElementById('phoneFrame');
     const mediaContainer = document.getElementById('mediaContainer');
+    const blurredBg = document.getElementById('blurredBg');
     const placeholderContent = document.getElementById('placeholderContent');
     const safeZoneOverlay = document.getElementById('safeZoneOverlay');
     const platformUIOverlay = document.getElementById('platformUIOverlay');
@@ -1236,6 +1379,21 @@
     const videoTime = document.getElementById('videoTime');
 
     let activeVideoElement = null;
+    let activeImageElement = null;
+
+    // Fit Mode Selectors
+    document.querySelectorAll('.fit-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.fit-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.fitMode = btn.getAttribute('data-fit');
+        updateFitModeUI();
+      });
+    });
+
+    function updateFitModeUI() {
+      mediaContainer.className = `media-container mode-${state.fitMode}`;
+    }
 
     // Platform Tab Click Handlers
     document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -1301,45 +1459,30 @@
 
     // Sample Media Handlers
     sampleImageBtn.addEventListener('click', () => {
-      // Create SVG sample image
+      // Create sample image (non 9:16 square photo to test resizer!)
       const canvas = document.createElement('canvas');
-      canvas.width = 1080;
-      canvas.height = 1920;
+      canvas.width = 1000;
+      canvas.height = 1000;
       const ctx = canvas.getContext('2d');
 
-      // Gradient background
-      const grad = ctx.createLinearGradient(0, 0, 1080, 1920);
-      grad.addColorStop(0, '#4f46e5');
-      grad.addColorStop(0.5, '#7c3aed');
-      grad.addColorStop(1, '#db2777');
+      const grad = ctx.createLinearGradient(0, 0, 1000, 1000);
+      grad.addColorStop(0, '#3b82f6');
+      grad.addColorStop(1, '#8b5cf6');
       ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, 1080, 1920);
+      ctx.fillRect(0, 0, 1000, 1000);
 
-      // Text elements
       ctx.fillStyle = '#ffffff';
-      ctx.font = 'bold 72px "Plus Jakarta Sans", sans-serif';
+      ctx.font = 'bold 60px "Plus Jakarta Sans", sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('HOW TO GROW IN 2026', 540, 500);
-
+      ctx.fillText('NON-FITTING COVER', 500, 480);
       ctx.fillStyle = '#fde047';
-      ctx.font = '500 44px sans-serif';
-      ctx.fillText('3 Secrets to Viral Reels', 540, 600);
+      ctx.font = '500 36px sans-serif';
+      ctx.fillText('Test Auto-Resizer (Square 1:1)', 500, 560);
 
-      // Sample CTA text placed dangerously close to top
-      ctx.fillStyle = '#ef4444';
-      ctx.font = 'bold 36px sans-serif';
-      ctx.fillText('⚠️ TOP HEADER BADGE (Too High)', 540, 150);
-
-      // Sample CTA at bottom
-      ctx.fillStyle = '#38bdf8';
-      ctx.font = 'bold 40px sans-serif';
-      ctx.fillText('👇 Save & Share This Reel', 540, 1750);
-
-      loadMediaFromUrl(canvas.toDataURL(), 'image', 1080, 1920);
+      loadMediaFromUrl(canvas.toDataURL(), 'image', 1000, 1000);
     });
 
     sampleVideoBtn.addEventListener('click', () => {
-      // Create lightweight animated canvas turned into video blob
       const canvas = document.createElement('canvas');
       canvas.width = 720;
       canvas.height = 1280;
@@ -1374,7 +1517,7 @@
         ctx.textAlign = 'center';
         ctx.fillText('DEMO REEL VIDEO', 360, 400);
 
-        if (frame > 90) { // 3 seconds video
+        if (frame > 90) {
           clearInterval(animInterval);
           mediaRecorder.stop();
         }
@@ -1413,15 +1556,25 @@
       state.mediaWidth = width;
       state.mediaHeight = height;
 
-      mediaContainer.innerHTML = '';
+      // Keep blurred bg updated
+      blurredBg.src = src;
+
+      // Clean existing media elements
+      const existingMedia = mediaContainer.querySelectorAll('.main-media');
+      existingMedia.forEach(el => el.remove());
+      if (placeholderContent) placeholderContent.style.display = 'none';
+
       if (type === 'image') {
         const img = document.createElement('img');
         img.src = src;
+        img.className = 'main-media';
         mediaContainer.appendChild(img);
+        activeImageElement = img;
         videoControlsBar.style.display = 'none';
       } else if (type === 'video') {
         const video = document.createElement('video');
         video.src = src;
+        video.className = 'main-media';
         video.autoplay = true;
         video.loop = true;
         video.muted = true;
@@ -1432,6 +1585,7 @@
         videoControlsBar.style.display = 'flex';
       }
 
+      updateFitModeUI();
       updateUI();
     }
 
@@ -1465,16 +1619,14 @@
       };
     }
 
-    // Dynamic UI Update & Recommendations Engine
+    // Dynamic UI Update & Diagnostics Engine
     function updateUI() {
       const spec = platformSpecs[state.platform];
 
-      // Update mockups visibility
       igUIMockup.style.display = state.platform === 'instagram' ? 'flex' : 'none';
       fbUIMockup.style.display = state.platform === 'facebook' ? 'flex' : 'none';
       inUIMockup.style.display = state.platform === 'linkedin' ? 'flex' : 'none';
 
-      // Update safe zone overlays
       zoneTopText.style.height = spec.topPercent + '%';
       zoneBottomText.style.height = spec.bottomPercent + '%';
       zoneSideRight.style.width = spec.rightMarginPercent + '%';
@@ -1484,7 +1636,6 @@
       safeZoneBox.style.left = '4%';
       safeZoneBox.style.right = (spec.rightMarginPercent + 2) + '%';
 
-      // Recommendations calculations
       recIdealDim.innerText = spec.idealDim;
       recTopMargin.innerText = spec.topMargin;
       recBottomMargin.innerText = spec.bottomMargin;
@@ -1515,52 +1666,47 @@
       const targetRatio = 9 / 16;
       const uploadedRatio = w / h;
 
-      // Check aspect ratio fit
       if (Math.abs(uploadedRatio - targetRatio) > 0.08) {
         isPerfect = false;
         warnings.push({
           type: 'warning',
           title: 'Aspect Ratio Mismatch',
-          desc: `Uploaded aspect ratio is ${getRatioString(w, h)}. ${spec.name} prefers vertical 9:16 (1080×1920). Your cover/video will be pillarboxed or cropped on mobile screens.`
+          desc: `Uploaded image (${w}×${h} px) is ${getRatioString(w, h)}. Use the Auto-Resizer to convert it to 1080×1920 9:16 HD.`
         });
       }
 
-      // Check resolution quality
       if (w < 720 || h < 1280) {
         isPerfect = false;
         warnings.push({
           type: 'error',
-          title: 'Low Resolution Risk',
-          desc: `Dimensions (${w}×${h} px) are below recommended HD quality (1080×1920 px). Uploaded media may look pixelated or blurry.`
+          title: 'Low Resolution Warning',
+          desc: `Dimensions (${w}×${h} px) are below 1080×1920 px HD standard. The resizer will scale it up.`
         });
       }
 
-      // Safe zone advice
       warnings.push({
         type: 'info',
         title: 'Top Header Safe Zone',
-        desc: `Avoid placing titles or text inside the upper ${spec.topMargin} area.`
+        desc: `Avoid text inside the upper ${spec.topMargin} area.`
       });
 
       warnings.push({
         type: 'info',
         title: 'Bottom Caption Safe Zone',
-        desc: `Keep primary CTA buttons and captions out of the lower ${spec.bottomMargin} area.`
+        desc: `Keep primary CTA buttons clear of lower ${spec.bottomMargin} area.`
       });
 
-      // Update badge
       if (isPerfect) {
         statusBadge.className = 'status-badge perfect';
         statusBadge.innerHTML = '<span>✅ Optimal 9:16 High-Res Format</span>';
       } else if (warnings.some(w => w.type === 'error')) {
         statusBadge.className = 'status-badge error';
-        statusBadge.innerHTML = '<span>⚠️ Formatting Issues Detected</span>';
+        statusBadge.innerHTML = '<span>⚠️ Formatting & Resolution Issues</span>';
       } else {
         statusBadge.className = 'status-badge warning';
-        statusBadge.innerHTML = '<span>⚠️ Aspect Ratio Adjustment Needed</span>';
+        statusBadge.innerHTML = '<span>⚠️ Resizing Recommended</span>';
       }
 
-      // Render recommendations
       warnings.forEach(item => {
         const li = document.createElement('li');
         li.className = 'rec-item';
@@ -1573,7 +1719,112 @@
       });
     }
 
-    // Download Safe Zone Template PNG for Photoshop / Canva
+    // High-Resolution 1080x1920 Resizer Engine & Export
+    function downloadResizedImage() {
+      if (!state.mediaSrc) {
+        alert('Please upload an image first to resize and download!');
+        return;
+      }
+
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = 1080;
+        canvas.height = 1920;
+        const ctx = canvas.getContext('2d');
+
+        const targetW = 1080;
+        const targetH = 1920;
+        const targetRatio = targetW / targetH;
+        const imgRatio = img.width / img.height;
+
+        if (state.fitMode === 'contain-blur') {
+          // Render blurred background
+          ctx.save();
+          ctx.filter = 'blur(40px) brightness(0.6)';
+          // Draw cover background
+          let bgW, bgH, bgX, bgY;
+          if (imgRatio > targetRatio) {
+            bgH = targetH;
+            bgW = targetH * imgRatio;
+            bgX = (targetW - bgW) / 2;
+            bgY = 0;
+          } else {
+            bgW = targetW;
+            bgH = targetW / imgRatio;
+            bgX = 0;
+            bgY = (targetH - bgH) / 2;
+          }
+          ctx.drawImage(img, bgX, bgY, bgW, bgH);
+          ctx.restore();
+
+          // Draw main contained image
+          let mainW, mainH, mainX, mainY;
+          if (imgRatio > targetRatio) {
+            mainW = targetW;
+            mainH = targetW / imgRatio;
+            mainX = 0;
+            mainY = (targetH - mainH) / 2;
+          } else {
+            mainH = targetH;
+            mainW = targetH * imgRatio;
+            mainX = (targetW - mainW) / 2;
+            mainY = 0;
+          }
+          ctx.drawImage(img, mainX, mainY, mainW, mainH);
+
+        } else if (state.fitMode === 'contain-solid') {
+          // Solid black background
+          ctx.fillStyle = '#000000';
+          ctx.fillRect(0, 0, targetW, targetH);
+
+          let mainW, mainH, mainX, mainY;
+          if (imgRatio > targetRatio) {
+            mainW = targetW;
+            mainH = targetW / imgRatio;
+            mainX = 0;
+            mainY = (targetH - mainH) / 2;
+          } else {
+            mainH = targetH;
+            mainW = targetH * imgRatio;
+            mainX = (targetW - mainW) / 2;
+            mainY = 0;
+          }
+          ctx.drawImage(img, mainX, mainY, mainW, mainH);
+
+        } else {
+          // Default: Cover (Crop to Fill 1080x1920)
+          let renderW, renderH, renderX, renderY;
+          if (imgRatio > targetRatio) {
+            renderH = targetH;
+            renderW = targetH * imgRatio;
+            renderX = (targetW - renderW) / 2;
+            renderY = 0;
+          } else {
+            renderW = targetW;
+            renderH = targetW / imgRatio;
+            renderX = 0;
+            renderY = (targetH - renderH) / 2;
+          }
+          ctx.drawImage(img, renderX, renderY, renderW, renderH);
+        }
+
+        // Trigger Download
+        const link = document.createElement('a');
+        link.download = `resized-cover-1080x1920-${state.platform}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      };
+      img.src = state.mediaSrc;
+    }
+
+    // Attach Resizer Download Button Event Listeners
+    document.getElementById('downloadResizedTopBtn').addEventListener('click', downloadResizedImage);
+    document.getElementById('downloadResizedSideBtn').addEventListener('click', downloadResizedImage);
+    document.getElementById('downloadResizedMainBtn').addEventListener('click', downloadResizedImage);
+
+    // Download Safe Zone Template PNG
     document.getElementById('downloadTemplateBtn').addEventListener('click', () => {
       const canvas = document.createElement('canvas');
       canvas.width = 1080;
@@ -1584,20 +1835,17 @@
       const topPx = (spec.topPercent / 100) * 1920;
       const bottomPx = (spec.bottomPercent / 100) * 1920;
 
-      // Draw danger top zone
       ctx.fillStyle = 'rgba(239, 68, 68, 0.3)';
       ctx.fillRect(0, 0, 1080, topPx);
       ctx.fillStyle = '#ffffff';
       ctx.font = 'bold 36px sans-serif';
       ctx.fillText(`${spec.name.toUpperCase()} TOP UI DANGER ZONE`, 40, topPx - 30);
 
-      // Draw danger bottom zone
       ctx.fillStyle = 'rgba(239, 68, 68, 0.3)';
       ctx.fillRect(0, 1920 - bottomPx, 1080, bottomPx);
       ctx.fillStyle = '#ffffff';
       ctx.fillText(`${spec.name.toUpperCase()} BOTTOM CAPTION ZONE`, 40, 1920 - bottomPx + 60);
 
-      // Draw green safe zone box
       ctx.strokeStyle = '#22c55e';
       ctx.lineWidth = 8;
       ctx.strokeRect(40, topPx + 20, 1000, 1920 - topPx - bottomPx - 40);
