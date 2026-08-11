@@ -1,1022 +1,1255 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
-<head>
-    <meta charset="utf-8">
-    <title>EyePros Command Hub · Unified Ophthalmology Workspace</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Unified interactive workspace, strategic playbook, video production studio, and discovery workbench for EyePros Ophthalmology. Curated by Takoua Selmi.">
-    <meta name="author" content="Takoua Selmi">
+    <head>
+        <title>EyePros Strategy Workspace · Playbook &amp; Internship Companion</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <!-- SEO Meta Tags -->
+        <meta name="description" content="An interactive, modern reference workspace and strategic playbook for the EyePros Ophthalmology Internship in the Midlands, UK. Optimized for clinical learning, interviews, and market growth." />
+        <meta name="author" content="Takoua Selmi" />
 
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
 
-    <!-- Libraries CSS -->
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/animate.css">
+        <!-- Bootstrap css -->
+        <link rel="stylesheet" href="css/bootstrap.css">
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Fraunces:opsz,wght@9..144,300..900&family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+        <!-- Font awesome css -->
+        <link rel="stylesheet" href="css/font-awesome.min.css">
 
-    <!-- Design System & Zone Styles -->
-    <link rel="stylesheet" href="styles/design-system.css">
-    <link rel="stylesheet" href="styles/zones.css">
-</head>
-<body>
+        <!-- Magnific popup css -->
+        <link rel="stylesheet" href="css/magnific-popup.css">
 
-    <!-- Reading Progress Indicator -->
-    <div class="reading-progress-container">
-        <div class="reading-progress-bar" id="readProgressFill"></div>
-    </div>
+        <!-- Adrian main css -->
+        <link rel="stylesheet" href="css/adrian-style.css">
 
-    <!-- Main Application Shell -->
-    <div class="app-shell">
+        <!-- Animate css -->
+        <link rel="stylesheet" href="css/animate.css">
 
-        <!-- ================================================================
-             GLOBAL SIDEBAR NAVIGATION
-             ================================================================ -->
-        <aside class="app-sidebar" aria-label="Main Navigation">
-            <div class="sidebar-brand">
-                <a href="#dashboard" class="brand-logo text-decoration-none">
-                    <span class="brand-icon"><i class="fa fa-eye"></i></span>
-                    <div class="brand-text">
-                        <span class="brand-title">EyePros</span>
-                        <span class="brand-sub">Command Hub</span>
-                    </div>
-                </a>
-            </div>
+        <!-- Google Fonts links -->
+        <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&family=Outfit:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
 
-            <nav class="sidebar-nav">
-                <a href="#dashboard" class="sidebar-nav-link active" data-zone="dashboard">
-                    <i class="fa fa-dashboard"></i>
-                    <span class="nav-label">Dashboard</span>
-                </a>
-                <a href="#playbook" class="sidebar-nav-link" data-zone="playbook">
-                    <i class="fa fa-book"></i>
-                    <span class="nav-label">Playbook</span>
-                </a>
-                <a href="#studio" class="sidebar-nav-link" data-zone="studio">
-                    <i class="fa fa-film"></i>
-                    <span class="nav-label">Studio</span>
-                </a>
-                <a href="#workbench" class="sidebar-nav-link" data-zone="workbench">
-                    <i class="fa fa-briefcase"></i>
-                    <span class="nav-label">Workbench</span>
-                </a>
-                <a href="#calendar" class="sidebar-nav-link" data-zone="calendar">
-                    <i class="fa fa-calendar"></i>
-                    <span class="nav-label">Calendar &amp; Intel</span>
-                </a>
-            </nav>
+        <!-- Custom clinical overrides & theme variables -->
+        <link rel="stylesheet" href="style.css">
+    </head>
 
-            <div class="sidebar-footer p-3 border-top border-color">
-                <button class="action-btn-outline w-100 sidebar-collapse-btn" id="sidebarCollapseBtn" title="Toggle Sidebar">
-                    <i class="fa fa-bars"></i>
-                    <span class="nav-label ml-2">Collapse Menu</span>
-                </button>
-            </div>
-        </aside>
+    <body>
 
-        <!-- Sidebar Mobile Backdrop Overlay -->
-        <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+        <!-- Skip to main content for accessibility -->
+        <a href="#main-content" class="skip-to-content">Skip to main content</a>
 
         <!-- ================================================================
-             MAIN CONTENT AREA & HEADER
+             PARALLAX BACKGROUND LAYER — scrolls behind all page content
              ================================================================ -->
-        <div class="app-main">
+        <div id="parallax-bg-layer" aria-hidden="true">
+            <div class="pbg-slide pbg-active" style="background-image:url('images/parallax1.jpg')"></div>
+            <div class="pbg-slide" style="background-image:url('images/parallax2.jpg')"></div>
+            <div class="pbg-slide" style="background-image:url('images/parallax3.jpg')"></div>
+            <div class="pbg-slide" style="background-image:url('images/parallax4.jpg')"></div>
+        </div>
 
-            <!-- Sticky Top Header -->
-            <header class="app-header">
-                <div class="d-flex align-items-center gap-3">
-                    <button class="mobile-menu-toggle d-lg-none border-0 bg-transparent text-primary font-size-lg" id="mobileMenuToggle" aria-label="Open Navigation">
-                        <i class="fa fa-bars"></i>
-                    </button>
-                    <div class="header-breadcrumb font-weight-bold" id="headerBreadcrumb">
-                        Dashboard
-                    </div>
+        <!-- Global Reading Progress Fill -->
+        <div class="global-progress-bar" id="readProgressBar">
+            <div class="progress-fill" id="readProgressFill"></div>
+        </div>
+
+        <!-- ================================================================
+             REDESIGNED SCANDINAVIAN COMPACT HEADER NAVIGATION
+             ================================================================ -->
+        <header class="header-nav-two-strip fixed-top" role="banner">
+            <div class="container d-flex align-items-center justify-content-between">
+                
+                <!-- Brand Logo Area -->
+                <div class="brand-area d-flex align-items-center">
+                    <a href="#banner" class="brand-logo d-flex align-items-center text-decoration-none">
+                        <span class="brand-icon"><i class="fa fa-eye"></i></span>
+                        <div class="brand-text">
+                            <span class="brand-title">EyePros</span>
+                            <span class="brand-sub">Strategy Workspace</span>
+                        </div>
+                    </a>
                 </div>
 
-                <div class="header-utilities d-flex align-items-center gap-2">
-                    <!-- Global Search Trigger -->
-                    <button class="cmd-palette-trigger-btn" id="openCmdPaletteBtn" title="Search Everything (Ctrl+K)">
+                <!-- 6 Top-Level Grouped Navigation (Desktop) -->
+                <nav class="group-nav d-none d-lg-flex" aria-label="Main Navigation">
+                    
+                    <!-- Group 1: Overview -->
+                    <div class="nav-group-item">
+                        <a href="#banner" class="nav-group-link active" id="navGroupOverview">
+                            Overview <i class="fa fa-angle-down"></i>
+                        </a>
+                        <div class="nav-dropdown-menu">
+                            <a href="#banner" class="dropdown-item-link"><i class="fa fa-dashboard"></i> Executive Summary</a>
+                            <a href="#banner" class="dropdown-item-link"><i class="fa fa-clock-o"></i> Internship Status</a>
+                            <a href="#intro" class="dropdown-item-link"><i class="fa fa-compass"></i> Key Priorities</a>
+                        </div>
+                    </div>
+
+                    <!-- Group 2: Healthcare System -->
+                    <div class="nav-group-item">
+                        <a href="#structure" class="nav-group-link" id="navGroupSystem">
+                            Healthcare <i class="fa fa-angle-down"></i>
+                        </a>
+                        <div class="nav-dropdown-menu">
+                            <a href="#structure" class="dropdown-item-link"><i class="fa fa-sitemap"></i> Three-Tier Care</a>
+                            <a href="#acronyms" class="dropdown-item-link"><i class="fa fa-book"></i> Acronym Explorer</a>
+                            <a href="#sources" class="dropdown-item-link"><i class="fa fa-institution"></i> Regulators &amp; Sources</a>
+                        </div>
+                    </div>
+
+                    <!-- Group 3: Market & Competition -->
+                    <div class="nav-group-item">
+                        <a href="#intel-carousel" class="nav-group-link" id="navGroupMarket">
+                            Market <i class="fa fa-angle-down"></i>
+                        </a>
+                        <div class="nav-dropdown-menu">
+                            <a href="#intel-carousel" class="dropdown-item-link"><i class="fa fa-rss"></i> Live Intelligence</a>
+                            <a href="#numbers" class="dropdown-item-link"><i class="fa fa-line-chart"></i> Market Numbers</a>
+                            <a href="#competitors" class="dropdown-item-link"><i class="fa fa-building"></i> Competitors &amp; Pricing</a>
+                            <a href="#watchlist" class="dropdown-item-link"><i class="fa fa-eye"></i> Watch-List</a>
+                        </div>
+                    </div>
+
+                    <!-- Group 4: Patients & Strategy -->
+                    <div class="nav-group-item">
+                        <a href="#archetypes" class="nav-group-link" id="navGroupStrategy">
+                            Strategy <i class="fa fa-angle-down"></i>
+                        </a>
+                        <div class="nav-dropdown-menu">
+                            <a href="#archetypes" class="dropdown-item-link"><i class="fa fa-user-md"></i> Patient Archetypes</a>
+                            <a href="#strategy" class="dropdown-item-link"><i class="fa fa-bullseye"></i> Strategic Positioning</a>
+                        </div>
+                    </div>
+
+                    <!-- Group 5: Internship Workbench -->
+                    <div class="nav-group-item">
+                        <a href="#interviews" class="nav-group-link" id="navGroupWorkbench">
+                            Workbench <i class="fa fa-angle-down"></i>
+                        </a>
+                        <div class="nav-dropdown-menu">
+                            <a href="#interviews" class="dropdown-item-link"><i class="fa fa-comments"></i> Interview Playbook</a>
+                            <a href="#timeline" class="dropdown-item-link"><i class="fa fa-tasks"></i> 5-Month Timeline</a>
+                        </div>
+                    </div>
+
+                    <!-- Group 6: Resources -->
+                    <div class="nav-group-item">
+                        <a href="#events-calendar" class="nav-group-link" id="navGroupResources">
+                            Resources <i class="fa fa-angle-down"></i>
+                        </a>
+                        <div class="nav-dropdown-menu">
+                            <a href="#events-calendar" class="dropdown-item-link"><i class="fa fa-calendar"></i> Events Calendar</a>
+                            <a href="#what-i-know" class="dropdown-item-link"><i class="fa fa-lightbulb-o"></i> What I Know</a>
+                            <a href="solo-films.html" class="dropdown-item-link"><i class="fa fa-film"></i> Solo Films Companion</a>
+                        </div>
+                    </div>
+
+                </nav>
+
+                <!-- Utility Bar & Actions -->
+                <div class="header-utilities d-flex align-items-center">
+                    
+                    <!-- Global Command Palette Trigger Button -->
+                    <button class="cmd-palette-trigger-btn" id="openCmdPaletteBtn" aria-label="Open Command Palette Search (Ctrl+K)">
                         <i class="fa fa-search"></i>
-                        <span class="cmd-label d-none d-md-inline">Search Workspace...</span>
+                        <span class="cmd-label d-none d-md-inline">Search...</span>
                         <kbd class="cmd-kbd d-none d-sm-inline-block">Ctrl K</kbd>
                     </button>
 
                     <!-- Theme Toggle -->
-                    <button class="nav-action-btn" id="themeToggleBtn" title="Toggle Theme" aria-label="Toggle Light/Dark Theme">
+                    <button class="nav-action-btn ml-2" id="themeToggleBtn" title="Toggle Light/Dark Theme" aria-label="Toggle Theme">
                         <i class="fa fa-moon-o"></i>
                     </button>
 
-                    <!-- Print Document -->
-                    <button class="nav-action-btn d-none d-sm-inline-flex" id="printBtn" title="Print Workspace" aria-label="Print Document">
+                    <!-- Print Action -->
+                    <button class="nav-action-btn ml-2 d-none d-sm-inline-flex" id="printBtn" title="Print Playbook Workspace" aria-label="Print Workspace">
                         <i class="fa fa-print"></i>
                     </button>
+
+                    <!-- Solo Films Button -->
+                    <a href="solo-films.html" class="nav-action-btn ml-2 d-none d-md-inline-flex" title="Solo Films Companion" aria-label="Solo Films Companion">
+                        <i class="fa fa-film"></i>
+                    </a>
+
+                    <!-- Mobile Toggler -->
+                    <button class="mobile-drawer-toggle-btn d-lg-none ml-2" id="mobileMenuToggle" aria-label="Open Navigation Menu">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
                 </div>
-            </header>
+            </div>
+        </header>
 
-            <!-- Scrollable Content Body -->
-            <main class="app-content" id="main-content" role="main">
+        <!-- Mobile Drawer Sheet Navigation -->
+        <div class="mobile-drawer-overlay" id="mobileDrawerOverlay"></div>
+        <aside class="mobile-drawer-sheet" id="mobileDrawerSheet" aria-label="Mobile Navigation">
+            <div class="drawer-header d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center">
+                    <span class="brand-icon mr-2"><i class="fa fa-eye"></i></span>
+                    <strong>EyePros Menu</strong>
+                </div>
+                <button class="drawer-close-btn" id="closeMobileDrawerBtn" aria-label="Close Navigation Menu">&times;</button>
+            </div>
+            <div class="drawer-body">
+                <div class="mobile-nav-group">
+                    <div class="mobile-group-title">1. Overview</div>
+                    <a href="#banner" class="mobile-nav-link"><i class="fa fa-dashboard"></i> Executive Summary</a>
+                    <a href="#banner" class="mobile-nav-link"><i class="fa fa-clock-o"></i> Internship Status</a>
+                    <a href="#intro" class="mobile-nav-link"><i class="fa fa-compass"></i> Key Priorities</a>
+                </div>
+                <div class="mobile-nav-group">
+                    <div class="mobile-group-title">2. Healthcare System</div>
+                    <a href="#structure" class="mobile-nav-link"><i class="fa fa-sitemap"></i> Three-Tier Care</a>
+                    <a href="#acronyms" class="mobile-nav-link"><i class="fa fa-book"></i> Acronym Explorer</a>
+                    <a href="#sources" class="mobile-nav-link"><i class="fa fa-institution"></i> Regulators &amp; Sources</a>
+                </div>
+                <div class="mobile-nav-group">
+                    <div class="mobile-group-title">3. Market &amp; Competition</div>
+                    <a href="#intel-carousel" class="mobile-nav-link"><i class="fa fa-rss"></i> Live Intelligence</a>
+                    <a href="#numbers" class="mobile-nav-link"><i class="fa fa-line-chart"></i> Market Numbers</a>
+                    <a href="#competitors" class="mobile-nav-link"><i class="fa fa-building"></i> Competitors &amp; Pricing</a>
+                    <a href="#watchlist" class="mobile-nav-link"><i class="fa fa-eye"></i> Watch-List</a>
+                </div>
+                <div class="mobile-nav-group">
+                    <div class="mobile-group-title">4. Patients &amp; Strategy</div>
+                    <a href="#archetypes" class="mobile-nav-link"><i class="fa fa-user-md"></i> Patient Archetypes</a>
+                    <a href="#strategy" class="mobile-nav-link"><i class="fa fa-bullseye"></i> Strategic Positioning</a>
+                </div>
+                <div class="mobile-nav-group">
+                    <div class="mobile-group-title">5. Internship Workbench</div>
+                    <a href="#interviews" class="mobile-nav-link"><i class="fa fa-comments"></i> Interview Playbook</a>
+                    <a href="#timeline" class="mobile-nav-link"><i class="fa fa-tasks"></i> 5-Month Timeline</a>
+                </div>
+                <div class="mobile-nav-group">
+                    <div class="mobile-group-title">6. Resources</div>
+                    <a href="#events-calendar" class="mobile-nav-link"><i class="fa fa-calendar"></i> Events Calendar</a>
+                    <a href="#what-i-know" class="mobile-nav-link"><i class="fa fa-lightbulb-o"></i> What I Know</a>
+                    <a href="solo-films.html" class="mobile-nav-link"><i class="fa fa-film"></i> Solo Films Companion</a>
+                </div>
+            </div>
+        </aside>
 
-                <!-- ============================================================
-                     ZONE 1: DASHBOARD
-                     ============================================================ -->
-                <div class="zone-panel active" id="dashboard">
-                    
-                    <!-- Hero Section -->
-                    <section id="banner" class="hero-overview-section py-5">
-                        <div class="container-fluid px-4">
-                            <div class="row align-items-center">
-                                <div class="col-lg-8 mb-4 mb-lg-0">
-                                    <div class="hero-kicker-badge">
-                                        <span class="pulse-dot"></span> Active Internship · Nottingham Hub
-                                    </div>
-                                    <h1 class="hero-main-title mt-2">EyePros Command Hub</h1>
-                                    <p class="hero-lead-text">
-                                        A unified, Scandinavian-inspired strategic workspace for Takoua Selmi's business development internship at EyePros Ophthalmology, Midlands UK.
-                                    </p>
-
-                                    <!-- Action Pills -->
-                                    <div class="hero-quick-actions d-flex flex-wrap gap-2 mt-4">
-                                        <a href="#workbench" class="action-btn-primary">
-                                            <i class="fa fa-comments"></i> Discovery Workbench
-                                        </a>
-                                        <a href="#studio" class="action-btn-secondary">
-                                            <i class="fa fa-film"></i> Video Studio
-                                        </a>
-                                        <button class="action-btn-outline" id="heroSearchTriggerBtn">
-                                            <i class="fa fa-search"></i> Search Everything
-                                        </button>
-                                    </div>
-
-                                    <!-- Collapsible About -->
-                                    <div class="about-playbook-container mt-4">
-                                        <button class="about-toggle-btn" id="toggleAboutPlaybookBtn">
-                                            <i class="fa fa-info-circle"></i> About EyePros &amp; Strategic Context <i class="fa fa-angle-down chevron-icon"></i>
-                                        </button>
-                                        <div class="about-playbook-content" id="aboutPlaybookContent">
-                                            <p class="mt-3 text-secondary font-size-sm">
-                                                EyePros is a consultant-led private ophthalmology provider in the Midlands founded by Mr Ahmad Elsahn. With Kingfisher House launching in Nottingham (Jan 2027), this unified hub brings together market intelligence, clinical pathways, video scripts, and operational interview playbooks into a single seamless interface.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Internship Status & Day Counter Widget -->
-                                <div class="col-lg-4">
-                                    <div class="status-widget-card glass-card p-4">
-                                        <div class="widget-header d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
-                                            <span class="widget-title"><i class="fa fa-clock-o text-teal"></i> Internship Status</span>
-                                            <span class="badge badge-accent">Active Phase</span>
-                                        </div>
-                                        <div class="countdown-body" id="countdownWidget">
-                                            <!-- Dynamically updated by app.js Day Counter Engine -->
-                                        </div>
-                                        <div class="widget-footer border-top pt-2 mt-2 font-size-xs text-muted">
-                                            <strong>Role:</strong> Business Development &amp; Project Management
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- Key Priorities Section -->
-                    <section id="intro" class="py-5 bg-dark-subtle">
-                        <div class="container-fluid px-4">
-                            <div class="row">
-                                <div class="col-md-12 text-center marbtm-40">
-                                    <span class="section-kicker">Core Strategic Pillars</span>
-                                    <h2 class="text-uppercase section-main-title">Key Priorities &amp; Focus</h2>
-                                    <div class="title-underline"></div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-4 mb-4">
-                                    <div class="glass-card p-4 h-100">
-                                        <div class="priority-num-badge">01</div>
-                                        <h3 class="subsection-title mt-3">Referrer Network Growth</h3>
-                                        <p class="text-secondary font-size-sm mb-0">
-                                            Build relationships with primary optometry practices in Nottinghamshire, launching LenzClub CPD workshops to convert cold practices into active referring partners.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-4">
-                                    <div class="glass-card p-4 h-100">
-                                        <div class="priority-num-badge">02</div>
-                                        <h3 class="subsection-title mt-3">Hospital Site Launch</h3>
-                                        <p class="text-secondary font-size-sm mb-0">
-                                            Support operational planning for Kingfisher House (Jan 2027 opening), shifting surgical delivery in-house to capture full surgical margins.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-4">
-                                    <div class="glass-card p-4 h-100">
-                                        <div class="priority-num-badge">03</div>
-                                        <h3 class="subsection-title mt-3">Subscription Care Plans</h3>
-                                        <p class="text-secondary font-size-sm mb-0">
-                                            Develop recurring patient subscription models for chronic glaucoma monitoring and Dry Eye Spa therapies, driving high lifetime value.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- Live Intelligence Overview -->
-                    <section class="py-5">
-                        <div class="container-fluid px-4">
-                            <div class="d-flex justify-content-between align-items-center mb-4">
-                                <div>
-                                    <span class="section-kicker">Real-Time Sync</span>
-                                    <h3 class="text-uppercase section-main-title mb-0">Ophthalmology Market Intel</h3>
-                                </div>
-                                <a href="#calendar" class="action-btn-outline">View All &rarr;</a>
-                            </div>
-
-                            <div class="ophi-carousel-container">
-                                <button class="ophi-nav-btn ophi-prev-btn" id="ophiPrevBtn" aria-label="Previous News"><i class="fa fa-angle-left"></i></button>
-                                <div class="ophi-carousel-wrapper">
-                                    <div class="ophi-carousel-track" id="ophiCarouselTrack">
-                                        <!-- Populated dynamically by app.js -->
-                                    </div>
-                                </div>
-                                <button class="ophi-nav-btn ophi-next-btn" id="ophiNextBtn" aria-label="Next News"><i class="fa fa-angle-right"></i></button>
-                            </div>
-                        </div>
-                    </section>
+        <!-- ================================================================
+             SITE-WIDE COMMAND PALETTE MODAL (Ctrl+K / Cmd+K)
+             ================================================================ -->
+        <div class="cmd-palette-backdrop" id="cmdPaletteModal" tabIndex="-1" role="dialog" aria-modal="true" aria-labelledby="cmdPaletteTitle">
+            <div class="cmd-palette-container">
+                <div class="cmd-palette-header">
+                    <i class="fa fa-search cmd-search-icon"></i>
+                    <input type="text" id="cmdPaletteInput" class="cmd-palette-input" placeholder="Search acronyms, market data, strategy, interviews, timeline..." aria-label="Search Workspace">
+                    <button class="cmd-palette-close-btn" id="closeCmdPaletteBtn" aria-label="Close Search">&times;</button>
+                </div>
+                
+                <!-- Category Filter Pills inside Search -->
+                <div class="cmd-category-pills">
+                    <button class="cmd-cat-pill active" data-filter="all">All</button>
+                    <button class="cmd-cat-pill" data-filter="Acronyms">Acronyms</button>
+                    <button class="cmd-cat-pill" data-filter="Market">Market</button>
+                    <button class="cmd-cat-pill" data-filter="Strategy">Strategy</button>
+                    <button class="cmd-cat-pill" data-filter="Interviews">Interviews</button>
+                    <button class="cmd-cat-pill" data-filter="Timeline">Timeline</button>
+                    <button class="cmd-cat-pill" data-filter="Events">Events</button>
                 </div>
 
-                <!-- ============================================================
-                     ZONE 2: PLAYBOOK
-                     ============================================================ -->
-                <div class="zone-panel" id="playbook" style="display:none;">
-
-                    <!-- Three-Tier Care Architecture -->
-                    <section id="structure" class="py-5">
-                        <div class="container-fluid px-4">
-                            <div class="row">
-                                <div class="col-md-12 text-center marbtm-40">
-                                    <span class="section-kicker">Healthcare System</span>
-                                    <h2 class="text-uppercase section-main-title">Three-Tier Care Architecture</h2>
-                                    <div class="title-underline"></div>
-                                    <p class="section-lead-text my-3">
-                                        Understanding how primary optometry, independent surgical providers, and NHS Hospital Eye Services (HES) interact.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-lg-4 mb-4">
-                                    <div class="glass-card p-4 h-100 border-top-teal">
-                                        <span class="badge badge-accent mb-2">Tier 1</span>
-                                        <h3>Primary Optometry</h3>
-                                        <p class="font-size-sm text-secondary">High-street optometry practices (Boots, Specsavers, Independents) managing primary sight tests, GOS, and initial pathology detection.</p>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 mb-4">
-                                    <div class="glass-card p-4 h-100 border-top-teal">
-                                        <span class="badge badge-accent mb-2">Tier 2 · EyePros</span>
-                                        <h3>Independent Sector Provider</h3>
-                                        <p class="font-size-sm text-secondary">Consultant-led independent clinics delivering fast-track self-pay and NHS community-commissioned cataract, glaucoma, and laser eye procedures.</p>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 mb-4">
-                                    <div class="glass-card p-4 h-100 border-top-teal">
-                                        <span class="badge badge-accent mb-2">Tier 3</span>
-                                        <h3>NHS Hospital Eye Services (HES)</h3>
-                                        <p class="font-size-sm text-secondary">Acute NHS hospital trusts handling high-complex tertiary pathology, emergency trauma, and long-term complex ocular disease backlogs.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- Interactive Acronym Explorer -->
-                    <section id="acronyms" class="py-5 bg-dark-subtle">
-                        <div class="container-fluid px-4">
-                            <div class="row">
-                                <div class="col-md-12 text-center marbtm-40">
-                                    <span class="section-kicker">Knowledge Base</span>
-                                    <h2 class="text-uppercase section-main-title">Interactive Acronym Explorer</h2>
-                                    <div class="title-underline"></div>
-                                    <p class="section-lead-text my-3">
-                                        Master regional clinical, commissioning, and business terminology. Click any card to flip for full strategic details.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="row mb-4">
-                                <div class="col-12 text-center">
-                                    <div class="acronym-filter-bar d-flex flex-wrap justify-content-center gap-2">
-                                        <button class="filter-pill active" data-category="all">All Terms</button>
-                                        <button class="filter-pill" data-category="clinical">Clinical</button>
-                                        <button class="filter-pill" data-category="commissioning">Commissioning</button>
-                                        <button class="filter-pill" data-category="business">Business</button>
-                                        <button class="filter-pill" data-category="surgical">Surgical</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="acronyms-grid" id="acronymsGrid">
-                                <div class="acronym-card" data-category="clinical">
-                                    <div class="acronym-card-inner">
-                                        <div class="card-front">
-                                            <span class="acronym-tag">Clinical</span>
-                                            <h4>IOP</h4>
-                                            <p class="term-full">Intraocular Pressure</p>
-                                            <span class="click-hint"><i class="fa fa-refresh"></i> Flip card</span>
-                                        </div>
-                                        <div class="card-back">
-                                            <h5>Intraocular Pressure</h5>
-                                            <p>Fluid pressure inside the eye measured in mmHg. Normal range is 10-21 mmHg. Primary metric in glaucoma diagnosis and MIGS surgical evaluation.</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="acronym-card" data-category="clinical">
-                                    <div class="acronym-card-inner">
-                                        <div class="card-front">
-                                            <span class="acronym-tag">Clinical</span>
-                                            <h4>OCT</h4>
-                                            <p class="term-full">Optical Coherence Tomography</p>
-                                            <span class="click-hint"><i class="fa fa-refresh"></i> Flip card</span>
-                                        </div>
-                                        <div class="card-back">
-                                            <h5>Optical Coherence Tomography</h5>
-                                            <p>Non-invasive cross-sectional retinal imaging. Essential for macular disease, dry AMD drusen tracking, and optic nerve fiber layer analysis.</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="acronym-card" data-category="surgical">
-                                    <div class="acronym-card-inner">
-                                        <div class="card-front">
-                                            <span class="acronym-tag">Surgical</span>
-                                            <h4>MIGS</h4>
-                                            <p class="term-full">Minimally Invasive Glaucoma Surgery</p>
-                                            <span class="click-hint"><i class="fa fa-refresh"></i> Flip card</span>
-                                        </div>
-                                        <div class="card-back">
-                                            <h5>Minimally Invasive Glaucoma Surgery</h5>
-                                            <p>Micro-stent implantation to lower IOP with minimal tissue disruption. Ahmad's subspecialty edge over traditional trabeculectomy.</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="acronym-card" data-category="commissioning">
-                                    <div class="acronym-card-inner">
-                                        <div class="card-front">
-                                            <span class="acronym-tag">Commissioning</span>
-                                            <h4>ICB</h4>
-                                            <p class="term-full">Integrated Care Board</p>
-                                            <span class="click-hint"><i class="fa fa-refresh"></i> Flip card</span>
-                                        </div>
-                                        <div class="card-back">
-                                            <h5>Integrated Care Board</h5>
-                                            <p>NHS body responsible for regional healthcare commissioning. Nottingham &amp; Nottinghamshire ICB holds the public sector contract keys.</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="acronym-card" data-category="business">
-                                    <div class="acronym-card-inner">
-                                        <div class="card-front">
-                                            <span class="acronym-tag">Business</span>
-                                            <h4>CPD</h4>
-                                            <p class="term-full">Continuing Professional Development</p>
-                                            <span class="click-hint"><i class="fa fa-refresh"></i> Flip card</span>
-                                        </div>
-                                        <div class="card-back">
-                                            <h5>Continuing Professional Development</h5>
-                                            <p>Accredited training workshops hosted by EyePros for high-street optometrists. Primary mechanism for building organic referrer loyalty.</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="acronym-card" data-category="clinical">
-                                    <div class="acronym-card-inner">
-                                        <div class="card-front">
-                                            <span class="acronym-tag">Clinical</span>
-                                            <h4>PBM</h4>
-                                            <p class="term-full">Photobiomodulation</p>
-                                            <span class="click-hint"><i class="fa fa-refresh"></i> Flip card</span>
-                                        </div>
-                                        <div class="card-back">
-                                            <h5>Photobiomodulation</h5>
-                                            <p>Low-level light therapy (Valeda System) to treat Dry AMD and preserve photoreceptor function. Key first-mover service offering.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- Market Numbers & Financial Models -->
-                    <section id="numbers" class="py-5">
-                        <div class="container-fluid px-4">
-                            <div class="row">
-                                <div class="col-md-12 text-center marbtm-40">
-                                    <span class="section-kicker">Canonical Figures</span>
-                                    <h2 class="text-uppercase section-main-title">Market Numbers &amp; Capital Model</h2>
-                                    <div class="title-underline"></div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-3 col-6 mb-4 text-center">
-                                    <div class="glass-card p-4 h-100">
-                                        <div class="kpi-number text-teal">&pound;1.2m</div>
-                                        <div class="kpi-label">Vector Leasing Facility (0% Owner Equity)</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 col-6 mb-4 text-center">
-                                    <div class="glass-card p-4 h-100">
-                                        <div class="kpi-number text-teal">&pound;1.0m</div>
-                                        <div class="kpi-label">Year 1 Target Revenue (2027)</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 col-6 mb-4 text-center">
-                                    <div class="glass-card p-4 h-100">
-                                        <div class="kpi-number text-teal">&pound;3.1m</div>
-                                        <div class="kpi-label">Year 3 Target Revenue (47% EBITDA)</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 col-6 mb-4 text-center">
-                                    <div class="glass-card p-4 h-100">
-                                        <div class="kpi-number text-teal">1.8 yrs</div>
-                                        <div class="kpi-label">Estimated Capital Payback Period</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- Patient Archetypes -->
-                    <section id="archetypes" class="py-5 bg-dark-subtle">
-                        <div class="container-fluid px-4">
-                            <div class="row">
-                                <div class="col-md-12 text-center marbtm-40">
-                                    <span class="section-kicker">Patient Segments</span>
-                                    <h2 class="text-uppercase section-main-title">Patient Archetypes &amp; Journeys</h2>
-                                    <div class="title-underline"></div>
-                                </div>
-                            </div>
-
-                            <div class="row mb-4">
-                                <div class="col-12 text-center">
-                                    <div class="archetype-tab-bar d-flex flex-wrap justify-content-center gap-2">
-                                        <button class="archetype-tab active" data-arch="A">A · Cataract</button>
-                                        <button class="archetype-tab" data-arch="B">B · Glaucoma</button>
-                                        <button class="archetype-tab" data-arch="C">C · Laser Refractive</button>
-                                        <button class="archetype-tab" data-arch="D">D · Dry Eye</button>
-                                        <button class="archetype-tab" data-arch="E">E · Dry AMD</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-lg-6 mb-4">
-                                    <div class="glass-card p-4 h-100" id="archetypeContent">
-                                        <!-- Dynamically rendered by app.js -->
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <div class="glass-card p-4 h-100">
-                                        <h4 id="archetypeTimelineTitle" class="subsection-title">Patient Journey Steps</h4>
-                                        <div class="timeline-vertical mt-3" id="archetypeTimeline">
-                                            <!-- Dynamically rendered by app.js -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- Competitor Landscape & Pricing Tiers -->
-                    <section id="competitors" class="py-5">
-                        <div class="container-fluid px-4">
-                            <div class="row">
-                                <div class="col-md-12 text-center marbtm-40">
-                                    <span class="section-kicker">Regional Landscape</span>
-                                    <h2 class="text-uppercase section-main-title">Competitor Analysis &amp; Self-Pay Tiers</h2>
-                                    <div class="title-underline"></div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-lg-7 mb-4">
-                                    <div class="glass-card p-4 h-100">
-                                        <h3 class="subsection-title"><i class="fa fa-building text-teal mr-2"></i> Regional Competitor Landscape</h3>
-                                        <div class="table-responsive mt-3">
-                                            <table class="table table-dark-custom">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Competitor</th>
-                                                        <th>Location</th>
-                                                        <th>Primary Focus</th>
-                                                        <th>Pricing Strategy</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td><strong>Optical Express</strong></td>
-                                                        <td>Nottingham</td>
-                                                        <td>Laser &amp; Refractive Volume</td>
-                                                        <td>Price-led promotional</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><strong>Optegra</strong></td>
-                                                        <td>Leicester</td>
-                                                        <td>Cataract &amp; NHS Contracts</td>
-                                                        <td>Standard NHS tariff + self-pay</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><strong>Nuffield Leicester</strong></td>
-                                                        <td>Leicester</td>
-                                                        <td>Full Private Hospital</td>
-                                                        <td>Premium private fee structure</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><strong>Spire Hospital</strong></td>
-                                                        <td>Nottingham</td>
-                                                        <td>Consultant Private Practice</td>
-                                                        <td>High-end multi-specialty</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-5 mb-4">
-                                    <div class="glass-card p-4 h-100">
-                                        <h3 class="subsection-title"><i class="fa fa-tags text-teal mr-2"></i> EyePros Self-Pay Cataract Tiers</h3>
-                                        <ul class="facts-list mt-3">
-                                            <li>
-                                                <span class="fact-key">VisionNOW Entry</span>
-                                                <span class="fact-val"><strong>&pound;1,400</strong> / eye · Accessible entry point</span>
-                                            </li>
-                                            <li>
-                                                <span class="fact-key">Standard Tier</span>
-                                                <span class="fact-val"><strong>&pound;2,000</strong> / eye · Undercuts regional floor</span>
-                                            </li>
-                                            <li>
-                                                <span class="fact-key">Premium Continuity</span>
-                                                <span class="fact-val"><strong>&pound;3,750</strong> / eye · Full consultant care + EDOF IOL</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- What I Know Summary Reference -->
-                    <section id="what-i-know" class="py-5 bg-dark-subtle">
-                        <div class="container-fluid px-4">
-                            <div class="row">
-                                <div class="col-md-12 text-center marbtm-40">
-                                    <span class="section-kicker">Executive Summary</span>
-                                    <h2 class="text-uppercase section-main-title">What I Know Going In</h2>
-                                    <div class="title-underline"></div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-lg-6 mb-4">
-                                    <div class="glass-card p-4 h-100">
-                                        <h3><i class="fa fa-eye text-teal mr-2"></i> EyePros Core Essentials</h3>
-                                        <ul class="facts-list mt-3">
-                                            <li><span class="fact-key">Founder</span><span class="fact-val">Ahmad Elsahn (Glaucoma, Cataract &amp; Refractive Surgeon)</span></li>
-                                            <li><span class="fact-key">Hospital Site</span><span class="fact-val">Kingfisher House, Nottingham (Opening Jan 2027)</span></li>
-                                            <li><span class="fact-key">Funding Facility</span><span class="fact-val">&pound;1.2m Vector Leasing (0% owner equity)</span></li>
-                                            <li><span class="fact-key">Revenue Target</span><span class="fact-val">&pound;1.0m (Year 1) &rarr; &pound;3.1m (Year 3 at 47% EBITDA)</span></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <div class="glass-card p-4 h-100">
-                                        <h3><i class="fa fa-compass text-teal mr-2"></i> Primary Deliverables</h3>
-                                        <ul class="facts-list mt-3">
-                                            <li><span class="fact-key">LenzClub</span><span class="fact-val">Optometry CPD workshops &amp; referrer loyalty portal</span></li>
-                                            <li><span class="fact-key">Subscription Care</span><span class="fact-val">Recurring glaucoma &amp; dry eye monitoring plans</span></li>
-                                            <li><span class="fact-key">Satellite Clinics</span><span class="fact-val">Feasibility study for 3 East Midlands satellite sites</span></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-
-                <!-- ============================================================
-                     ZONE 3: STUDIO (Solo Films & Script Hub)
-                     ============================================================ -->
-                <div class="zone-panel" id="studio" style="display:none;">
-                    <section class="py-5">
-                        <div class="container-fluid px-4">
-                            <div class="row">
-                                <div class="col-md-12 text-center marbtm-40">
-                                    <span class="section-kicker">Video Production Hub</span>
-                                    <h2 class="text-uppercase section-main-title">Solo Films &amp; Teleprompter Studio</h2>
-                                    <div class="title-underline"></div>
-                                    <p class="section-lead-text my-3">
-                                        Interactive screenplay reference, 60-second Reels scripts, podcast dialogues, and teleprompter overlay for Mr Ahmad Elsahn.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <!-- Solo Film Episodes Grid -->
-                                <div class="col-lg-4 mb-4">
-                                    <div class="glass-card p-4 h-100 film-script-item" id="script-ep1">
-                                        <span class="badge badge-accent mb-2">Ep 01 · 60s Reel</span>
-                                        <h4>Glaucoma — The Silent Thief</h4>
-                                        <p class="font-size-sm text-secondary">Style A · Clinical Storyboard &amp; Optic Nerve Visuals</p>
-                                        <div class="border-top pt-3 mt-3 font-size-xs text-muted">
-                                            <strong>Hook:</strong> "Did you know you could lose 40% of your vision without noticing?"
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 mb-4">
-                                    <div class="glass-card p-4 h-100 film-script-item" id="script-ep2">
-                                        <span class="badge badge-accent mb-2">Ep 02 · 60s Reel</span>
-                                        <h4>Cataracts — When Lights Halo</h4>
-                                        <p class="font-size-sm text-secondary">Style B · Direct-to-Camera &amp; Subtitle Focus</p>
-                                        <div class="border-top pt-3 mt-3 font-size-xs text-muted">
-                                            <strong>Hook:</strong> "Are oncoming headlights looking blurry or surrounded by bright halos?"
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 mb-4">
-                                    <div class="glass-card p-4 h-100 film-script-item" id="script-ep3">
-                                        <span class="badge badge-accent mb-2">Ep 03 · 60s Reel</span>
-                                        <h4>Dry Eye — Beyond Tears</h4>
-                                        <p class="font-size-sm text-secondary">Style A · EyeSpa &amp; Meibomian Glands</p>
-                                        <div class="border-top pt-3 mt-3 font-size-xs text-muted">
-                                            <strong>Hook:</strong> "Eye drops alone won't fix chronic inflammation. Here is why."
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 mb-4">
-                                    <div class="glass-card p-4 h-100 film-script-item" id="script-ep4">
-                                        <span class="badge badge-accent mb-2">Ep 04 · 60s Reel</span>
-                                        <h4>Premium Lenses — Freedom from Glasses</h4>
-                                        <p class="font-size-sm text-secondary">Style B · EDOF &amp; Multifocal IOL Options</p>
-                                        <div class="border-top pt-3 mt-3 font-size-xs text-muted">
-                                            <strong>Hook:</strong> "What if cataract surgery could also eliminate your reading glasses?"
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 mb-4">
-                                    <div class="glass-card p-4 h-100 film-script-item" id="script-ep5">
-                                        <span class="badge badge-accent mb-2">Ep 05 · 60s Reel</span>
-                                        <h4>MIGS — Micro-Implants for Glaucoma</h4>
-                                        <p class="font-size-sm text-secondary">Style A · Micro-Stent Surgical Animation</p>
-                                        <div class="border-top pt-3 mt-3 font-size-xs text-muted">
-                                            <strong>Hook:</strong> "A tiny stent smaller than an eyelash can lower eye pressure permanently."
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 mb-4">
-                                    <div class="glass-card p-4 h-100 film-script-item" id="script-ep6">
-                                        <span class="badge badge-accent mb-2">Ep 06 · 60s Reel</span>
-                                        <h4>Valeda — Light Therapy for Dry AMD</h4>
-                                        <p class="font-size-sm text-secondary">Style B · Photobiomodulation Breakthrough</p>
-                                        <div class="border-top pt-3 mt-3 font-size-xs text-muted">
-                                            <strong>Hook:</strong> "Safe low-level light therapy is slowing macula degeneration."
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-
-                <!-- ============================================================
-                     ZONE 4: WORKBENCH (Discovery & Timeline)
-                     ============================================================ -->
-                <div class="zone-panel" id="workbench" style="display:none;">
-                    
-                    <!-- Unified Interview Workbench -->
-                    <section id="interviews" class="py-5">
-                        <div class="container-fluid px-4">
-                            <div class="row">
-                                <div class="col-md-12 text-center marbtm-40">
-                                    <span class="section-kicker">Interactive Onboarding Tool</span>
-                                    <h2 class="text-uppercase section-main-title">Unified Interview Workbench</h2>
-                                    <div class="title-underline"></div>
-                                    <p class="section-lead-text my-3">
-                                        Interactive question checklists and notes for alignment sessions with Ahmad Elsahn, Steve Edwards, and Clinic Operations.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <!-- Workbench Controls -->
-                            <div class="workbench-control-bar glass-card p-3 mb-4 d-flex flex-wrap align-items-center justify-content-between gap-3">
-                                <div class="workbench-persona-tabs d-flex gap-2">
-                                    <button class="persona-tab active" data-persona="ahmad">
-                                        <i class="fa fa-user-md"></i> Ahmad Elsahn <span>(Glaucoma &amp; Surgical)</span>
-                                    </button>
-                                    <button class="persona-tab" data-persona="steve">
-                                        <i class="fa fa-user"></i> Steve Edwards <span>(Commercial &amp; Referrers)</span>
-                                    </button>
-                                    <button class="persona-tab" data-persona="ops">
-                                        <i class="fa fa-hospital-o"></i> Clinic Operations <span>(Admin &amp; Front-of-House)</span>
-                                    </button>
-                                </div>
-
-                                <div class="workbench-actions d-flex align-items-center gap-3">
-                                    <div class="workbench-progress-display d-flex align-items-center gap-2">
-                                        <span class="font-size-xs text-muted">Completed:</span>
-                                        <div class="progress progress-workbench" style="width: 100px; height: 8px;">
-                                            <div class="progress-bar bg-teal" id="workbenchProgressBar" style="width: 0%;"></div>
-                                        </div>
-                                        <span class="font-size-xs font-weight-bold" id="workbenchProgressText">0%</span>
-                                    </div>
-
-                                    <button class="action-btn-outline-sm" id="toggleGlobalCribBtn">
-                                        <i class="fa fa-lightbulb-o"></i> Strategy Crib Sheet
-                                    </button>
-                                    <button class="action-btn-outline-sm text-danger" id="resetWorkbenchBtn">
-                                        <i class="fa fa-trash"></i> Reset Notes
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Persona Playbook Grid Containers -->
-                            <div class="workbench-persona-panel active" id="panelAhmad">
-                                <div class="qblocks-container glass-card p-4" id="ahmadQGrid">
-                                    <div class="qblock-section mb-4">
-                                        <div class="qblock-header-sub font-weight-bold border-bottom pb-2 mb-3">Section 1: Founder Vision &amp; Surgical Strategy</div>
-                                        
-                                        <div class="q-item border-bottom pb-3 mb-3" data-id="ahmad_q1">
-                                            <div class="q-row d-flex align-items-start">
-                                                <div class="q-checkbox-wrapper mr-3 mt-1">
-                                                    <input type="checkbox" id="chk_ahmad_q1" class="q-chk" />
-                                                    <label for="chk_ahmad_q1" class="q-chk-label"></label>
-                                                </div>
-                                                <div class="q-main-body flex-grow-1">
-                                                    <div class="q-text font-weight-bold mb-1">"What is the single highest-priority surgical pathway (cataract, MIGS, refractive) for EyePros during Year 1?"</div>
-                                                    <div class="q-crib-sheet p-2 mb-2 bg-dark-subtle border-left-teal" style="display:none;">
-                                                        <strong>Strategy Crib Sheet:</strong> Establishes where marketing budget and referrer outreach should be focused immediately.
-                                                    </div>
-                                                    <textarea class="q-notes-input form-control mt-2" placeholder="Type clinical responses and decisions here..."></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="q-item border-bottom pb-3 mb-3" data-id="ahmad_q2">
-                                            <div class="q-row d-flex align-items-start">
-                                                <div class="q-checkbox-wrapper mr-3 mt-1">
-                                                    <input type="checkbox" id="chk_ahmad_q2" class="q-chk" />
-                                                    <label for="chk_ahmad_q2" class="q-chk-label"></label>
-                                                </div>
-                                                <div class="q-main-body flex-grow-1">
-                                                    <div class="q-text font-weight-bold mb-1">"What are your clinical criteria for selecting premium EDOF/Multifocal IOLs vs standard monofocal lenses?"</div>
-                                                    <div class="q-crib-sheet p-2 mb-2 bg-dark-subtle border-left-teal" style="display:none;">
-                                                        <strong>Strategy Crib Sheet:</strong> Informs patient educational materials and self-pay conversion pricing tiers.
-                                                    </div>
-                                                    <textarea class="q-notes-input form-control mt-2" placeholder="Type clinical responses and decisions here..."></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="workbench-persona-panel" id="panelSteve" style="display:none;">
-                                <div class="qblocks-container glass-card p-4" id="steveQGrid">
-                                    <div class="qblock-section mb-4">
-                                        <div class="qblock-header-sub font-weight-bold border-bottom pb-2 mb-3">Section 1: Referrer Network &amp; Optometry Outreach</div>
-                                        
-                                        <div class="q-item border-bottom pb-3 mb-3" data-id="steve_q1">
-                                            <div class="q-row d-flex align-items-start">
-                                                <div class="q-checkbox-wrapper mr-3 mt-1">
-                                                    <input type="checkbox" id="chk_steve_q1" class="q-chk" />
-                                                    <label for="chk_steve_q1" class="q-chk-label"></label>
-                                                </div>
-                                                <div class="q-main-body flex-grow-1">
-                                                    <div class="q-text font-weight-bold mb-1">"In your experience, what are the key factors that convert an optometry practice from a cold contact into an active referrer?"</div>
-                                                    <div class="q-crib-sheet p-2 mb-2 bg-dark-subtle border-left-teal" style="display:none;">
-                                                        <strong>Strategy Crib Sheet:</strong> Leverages Steve's background at CHEC and Newmedica to build our referrer playbook.
-                                                    </div>
-                                                    <textarea class="q-notes-input form-control mt-2" placeholder="Type clinical responses and decisions here..."></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="workbench-persona-panel" id="panelOps" style="display:none;">
-                                <div class="qblocks-container glass-card p-4" id="opsQGrid">
-                                    <div class="qblock-section mb-4">
-                                        <div class="qblock-header-sub font-weight-bold border-bottom pb-2 mb-3">Section 1: Clinic Workflows &amp; Admin Efficiency</div>
-                                        
-                                        <div class="q-item border-bottom pb-3 mb-3" data-id="ops_q1">
-                                            <div class="q-row d-flex align-items-start">
-                                                <div class="q-checkbox-wrapper mr-3 mt-1">
-                                                    <input type="checkbox" id="chk_ops_q1" class="q-chk" />
-                                                    <label for="chk_ops_q1" class="q-chk-label"></label>
-                                                </div>
-                                                <div class="q-main-body flex-grow-1">
-                                                    <div class="q-text font-weight-bold mb-1">"Walk me through the standard patient workflow: from initial inquiry (call, email) to booking a consultation."</div>
-                                                    <div class="q-crib-sheet p-2 mb-2 bg-dark-subtle border-left-teal" style="display:none;">
-                                                        <strong>Strategy Crib Sheet:</strong> Helps identify potential drops in our patient booking pipeline.
-                                                    </div>
-                                                    <textarea class="q-notes-input form-control mt-2" placeholder="Type clinical responses and decisions here..."></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- 5-Month Growth Timeline -->
-                    <section id="timeline" class="py-5 bg-dark-subtle">
-                        <div class="container-fluid px-4">
-                            <div class="row">
-                                <div class="col-md-12 text-center marbtm-40">
-                                    <span class="section-kicker">Internship Track</span>
-                                    <h2 class="text-uppercase section-main-title">5-Month Growth Timeline</h2>
-                                    <div class="title-underline"></div>
-                                </div>
-                            </div>
-
-                            <div class="timeline-container justify-content-center">
-                                <div class="timeline-milestone current" data-phase="pre">
-                                    <div class="milestone-marker"></div>
-                                    <div class="milestone-card glass-card p-4">
-                                        <div class="milestone-header d-flex justify-content-between align-items-center mb-2">
-                                            <span class="milestone-date font-weight-bold">Active · Aug 2026</span>
-                                            <span class="badge badge-accent">Current Phase</span>
-                                        </div>
-                                        <h3>Context Onboarding &amp; Playbook Execution</h3>
-                                        <p class="text-secondary font-size-sm">Shadow patient journeys, audit past 6 months of conversion metrics, and execute optometry referrer outreach.</p>
-                                    </div>
-                                </div>
-
-                                <div class="timeline-milestone upcoming" data-phase="m2">
-                                    <div class="milestone-marker"></div>
-                                    <div class="milestone-card glass-card p-4">
-                                        <div class="milestone-header d-flex justify-content-between align-items-center mb-2">
-                                            <span class="milestone-date font-weight-bold text-muted">Month 2 · September 2026</span>
-                                            <span class="badge badge-secondary">Upcoming</span>
-                                        </div>
-                                        <h3>Competitor Map &amp; Satellite Site Analysis</h3>
-                                        <p class="text-secondary font-size-sm">Map East Midlands competitors and analyze three potential satellite consultation clinic sites.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-
-                <!-- ============================================================
-                     ZONE 5: CALENDAR & INTEL
-                     ============================================================ -->
-                <div class="zone-panel" id="calendar" style="display:none;">
-                    <section id="events-calendar" class="py-5">
-                        <div class="container-fluid px-4">
-                            <div class="gcal-header text-center mb-4">
-                                <span class="section-kicker">Global Directory</span>
-                                <h2 class="text-uppercase section-main-title mt-2">Ophthalmology Events &amp; Congress Directory</h2>
-                                <p class="gcal-subtitle text-muted">Upcoming ophthalmology conferences, innovation meetings, retina congresses, and surgical gatherings worldwide.</p>
-                            </div>
-
-                            <div class="gcal-controls glass-card p-3 mb-4 d-flex flex-wrap align-items-center justify-content-between gap-3">
-                                <div class="gcal-view-toggles">
-                                    <button class="gcal-view-btn active" data-view="agenda"><i class="fa fa-list"></i> Agenda</button>
-                                    <button class="gcal-view-btn" data-view="cards"><i class="fa fa-th-large"></i> Cards</button>
-                                </div>
-
-                                <div class="gcal-filters d-flex flex-wrap gap-2">
-                                    <select class="gcal-filter-select" id="gcalFilterRegion">
-                                        <option value="all">All Regions</option>
-                                        <option value="North America">North America</option>
-                                        <option value="Europe">Europe</option>
-                                        <option value="Asia-Pacific">Asia-Pacific</option>
-                                    </select>
-                                    <select class="gcal-filter-select" id="gcalFilterSpecialty">
-                                        <option value="all">All Subspecialties</option>
-                                        <option value="general">General</option>
-                                        <option value="retina">Retina</option>
-                                        <option value="cataract">Cataract</option>
-                                        <option value="glaucoma">Glaucoma</option>
-                                    </select>
-                                    <select class="gcal-filter-select" id="gcalFilterStatus">
-                                        <option value="all">All Statuses</option>
-                                        <option value="upcoming">Upcoming</option>
-                                        <option value="completed">Completed</option>
-                                    </select>
-                                    <input type="text" class="gcal-search" id="gcalSearch" placeholder="Search events..." />
-                                </div>
-                            </div>
-
-                            <div class="gcal-view-container active" id="gcalViewAgenda"></div>
-                        </div>
-                    </section>
-                </div>
-
-            </main>
-
-            <!-- Footer Section -->
-            <footer class="footer-section py-3 px-4 border-top">
-                <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 font-size-xs text-secondary">
-                    <div>
-                        &copy; 2026 <strong>EyePros Command Hub</strong> · Curated by Takoua Selmi
-                    </div>
-                    <div>
-                        <a href="#dashboard" class="text-teal text-decoration-none mr-3"><i class="fa fa-dashboard"></i> Dashboard</a>
-                        <a href="#main-content" class="text-teal text-decoration-none"><i class="fa fa-arrow-up"></i> Top</a>
+                <!-- Search Results Body -->
+                <div class="cmd-palette-body" id="cmdPaletteResults">
+                    <div class="cmd-empty-state">
+                        <i class="fa fa-keyboard-o"></i>
+                        <p>Type to search across the entire EyePros strategy workspace...</p>
                     </div>
                 </div>
-            </footer>
-        </div>
-    </div>
 
-    <!-- ================================================================
-         GLOBAL COMMAND PALETTE MODAL (Ctrl+K)
-         ================================================================ -->
-    <div class="cmd-palette-backdrop" id="cmdPaletteModal" tabIndex="-1" role="dialog" aria-modal="true">
-        <div class="cmd-palette-container">
-            <div class="cmd-palette-header">
-                <i class="fa fa-search cmd-search-icon"></i>
-                <input type="text" id="cmdPaletteInput" class="cmd-palette-input" placeholder="Search acronyms, market data, video scripts, interviews..." aria-label="Search Workspace">
-                <button class="cmd-palette-close-btn" id="closeCmdPaletteBtn" aria-label="Close Search">&times;</button>
-            </div>
-            
-            <div class="cmd-category-pills">
-                <button class="cmd-cat-pill active" data-filter="all">All</button>
-                <button class="cmd-cat-pill" data-filter="Acronyms">Acronyms</button>
-                <button class="cmd-cat-pill" data-filter="Market">Market</button>
-                <button class="cmd-cat-pill" data-filter="Studio">Studio</button>
-                <button class="cmd-cat-pill" data-filter="Strategy">Strategy</button>
-                <button class="cmd-cat-pill" data-filter="Interviews">Interviews</button>
-                <button class="cmd-cat-pill" data-filter="Events">Events</button>
-            </div>
-
-            <div class="cmd-palette-body" id="cmdPaletteResults">
-                <div class="cmd-empty-state">
-                    <i class="fa fa-keyboard-o"></i>
-                    <p>Type to search across all 5 zones of EyePros Command Hub...</p>
+                <div class="cmd-palette-footer">
+                    <span><kbd>↑</kbd> <kbd>↓</kbd> Navigate</span>
+                    <span><kbd>↵</kbd> Select</span>
+                    <span><kbd>ESC</kbd> Close</span>
                 </div>
             </div>
-
-            <div class="cmd-palette-footer">
-                <span><kbd>&uarr;</kbd> <kbd>&darr;</kbd> Navigate</span>
-                <span><kbd>&crarr;</kbd> Select</span>
-                <span><kbd>ESC</kbd> Close</span>
-            </div>
         </div>
-    </div>
 
-    <!-- Mobile Bottom Tab Bar -->
-    <div class="bottom-tab-bar d-flex d-lg-none" aria-label="Mobile Navigation">
-        <a href="#dashboard" class="bottom-tab active" data-zone="dashboard">
-            <i class="fa fa-dashboard"></i>
-            <span>Dashboard</span>
-        </a>
-        <a href="#playbook" class="bottom-tab" data-zone="playbook">
-            <i class="fa fa-book"></i>
-            <span>Playbook</span>
-        </a>
-        <a href="#studio" class="bottom-tab" data-zone="studio">
-            <i class="fa fa-film"></i>
-            <span>Studio</span>
-        </a>
-        <a href="#workbench" class="bottom-tab" data-zone="workbench">
-            <i class="fa fa-briefcase"></i>
-            <span>Workbench</span>
-        </a>
-        <a href="#calendar" class="bottom-tab" data-zone="calendar">
-            <i class="fa fa-calendar"></i>
-            <span>Calendar</span>
-        </a>
-    </div>
+        <main id="main-content" role="main">
 
-    <!-- JavaScript Libraries -->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/typed.min.js"></script>
-    <script src="js/isotope.pkgd.min.js"></script>
-    <script src="js/wow.min.js"></script>
-    <script src="js/jquery.fittext.js"></script>
+            <!-- ================================================================
+                 SECTION 1: OVERVIEW & EXECUTIVE HERO (1st Viewport)
+                 ================================================================ -->
+            <section id="banner" class="hero-overview-section wave-primary py-5">
+                <div class="container pt-4">
+                    <div class="row align-items-center">
+                        
+                        <!-- Executive Summary Title & Quick Actions -->
+                        <div class="col-lg-8 mb-4 mb-lg-0">
+                            <div class="hero-kicker-badge">
+                                <span class="pulse-dot"></span> Mid-Internship Preparation · Nottingham Hub
+                            </div>
+                            <h1 class="hero-main-title mt-2">EyePros Strategy Workspace</h1>
+                            <p class="hero-lead-text">
+                                A restrained, Scandinavian-inspired knowledge workspace for Takoua Selmi's business development internship at EyePros Ophthalmology, Midlands UK.
+                            </p>
 
-    <!-- Master Application Engine -->
-    <script src="app.js"></script>
-</body>
+                            <!-- Primary Quick Actions (3 Core Action Pills) -->
+                            <div class="hero-quick-actions d-flex flex-wrap gap-2 mt-4">
+                                <a href="#interviews" class="action-btn-primary">
+                                    <i class="fa fa-comments"></i> Continue Workbench
+                                </a>
+                                <button class="action-btn-secondary" id="heroSearchTriggerBtn">
+                                    <i class="fa fa-search"></i> Search Library
+                                </button>
+                                <a href="#intro" class="action-btn-outline">
+                                    <i class="fa fa-bullseye"></i> Review Priorities
+                                </a>
+                            </div>
+
+                            <!-- Expandable "About This Playbook" Area (Progressive Disclosure) -->
+                            <div class="about-playbook-container mt-4">
+                                <button class="about-toggle-btn" id="toggleAboutPlaybookBtn">
+                                    <i class="fa fa-info-circle"></i> About This Playbook &amp; Internship Context <i class="fa fa-angle-down chevron-icon"></i>
+                                </button>
+                                <div class="about-playbook-content" id="aboutPlaybookContent">
+                                    <p class="mt-3 text-secondary font-size-sm">
+                                        EyePros is a private, consultant-led ophthalmology provider in the Midlands founded by Mr Ahmad Elsahn. With the upcoming opening of Kingfisher House in Nottingham (Jan 2027), this playbook serves as the canonical reference for commercial positioning, referrer engagement (LenzClub), NHS commissioning, and competitive differentiation against regional providers.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Live Internship Status Widget -->
+                        <div class="col-lg-4">
+                            <div class="status-widget-card glass-card p-4">
+                                <div class="widget-header d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
+                                    <span class="widget-title"><i class="fa fa-clock-o text-teal"></i> Internship Status</span>
+                                    <span class="badge badge-accent">Current Phase</span>
+                                </div>
+                                <div class="countdown-body" id="countdownWidget">
+                                    <div class="countdown-grid d-flex justify-content-between text-center mb-3">
+                                        <div class="cd-item"><span class="cd-num" id="countdownDays">00</span><span class="cd-label">Days</span></div>
+                                        <div class="cd-item"><span class="cd-num" id="countdownHours">00</span><span class="cd-label">Hrs</span></div>
+                                        <div class="cd-item"><span class="cd-num" id="countdownMins">00</span><span class="cd-label">Mins</span></div>
+                                        <div class="cd-item"><span class="cd-num" id="countdownSecs">00</span><span class="cd-label">Secs</span></div>
+                                    </div>
+                                </div>
+                                <div class="widget-footer border-top pt-2 mt-2 font-size-xs text-muted">
+                                    <strong>Role:</strong> Business Development &amp; Project Management
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================================================================
+                 KEY PRIORITIES & OBJECTIVES (Intro)
+                 ================================================================ -->
+            <section id="intro" class="py-5">
+                <div class="container py-3">
+                    <div class="row">
+                        <div class="col-md-12 text-center marbtm-40">
+                            <span class="section-kicker">Core Alignment</span>
+                            <h2 class="text-uppercase section-main-title">Key Priorities &amp; Focus</h2>
+                            <div class="title-underline"></div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <div class="glass-card p-4 h-100">
+                                <div class="priority-num-badge">01</div>
+                                <h3 class="subsection-title mt-3">Referrer Network Growth</h3>
+                                <p class="text-secondary font-size-sm mb-0">
+                                    Build relationships with primary optometry practices in Nottinghamshire, launching LenzClub CPD workshops to convert cold practices into active referring partners.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="glass-card p-4 h-100">
+                                <div class="priority-num-badge">02</div>
+                                <h3 class="subsection-title mt-3">Hospital Site Launch</h3>
+                                <p class="text-secondary font-size-sm mb-0">
+                                    Support operational planning for Kingfisher House (Jan 2027 opening), shifting surgical delivery in-house to capture full surgical margins.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="glass-card p-4 h-100">
+                                <div class="priority-num-badge">03</div>
+                                <h3 class="subsection-title mt-3">Subscription Care Plans</h3>
+                                <p class="text-secondary font-size-sm mb-0">
+                                    Develop recurring patient subscription models for chronic glaucoma monitoring and Dry Eye Spa therapies, driving high lifetime value.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================================================================
+                 SECTION 2: HEALTHCARE SYSTEM (Three-Tier Care)
+                 ================================================================ -->
+            <section id="structure" class="wave-secondary py-5">
+                <div class="container py-4">
+                    <div class="row">
+                        <div class="col-md-12 text-center marbtm-40">
+                            <span class="section-kicker">Healthcare System</span>
+                            <h2 class="text-uppercase section-main-title">Three-Tier Care Architecture</h2>
+                            <div class="title-underline"></div>
+                            <p class="section-lead-text my-3">
+                                Understanding how primary optometry, independent surgical providers, and NHS Hospital Eye Services (HES) interact.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-lg-4 mb-4">
+                            <div class="glass-card p-4 h-100 border-top-teal">
+                                <span class="badge badge-accent mb-2">Tier 1</span>
+                                <h3>Primary Optometry</h3>
+                                <p class="font-size-sm text-secondary">High-street optometry practices (Boots, Specsavers, Independents) managing primary sight tests, GOS, and initial pathology detection.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 mb-4">
+                            <div class="glass-card p-4 h-100 border-top-teal">
+                                <span class="badge badge-accent mb-2">Tier 2 · EyePros</span>
+                                <h3>Independent Sector Provider</h3>
+                                <p class="font-size-sm text-secondary">Consultant-led independent clinics delivering fast-track self-pay and NHS community-commissioned cataract, glaucoma, and laser eye procedures.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 mb-4">
+                            <div class="glass-card p-4 h-100 border-top-teal">
+                                <span class="badge badge-accent mb-2">Tier 3</span>
+                                <h3>NHS Hospital Eye Services (HES)</h3>
+                                <p class="font-size-sm text-secondary">Acute NHS hospital trusts handling high-complex tertiary pathology, emergency trauma, and long-term complex ocular disease backlogs.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================================================================
+                 ACRONYM EXPLORER
+                 ================================================================ -->
+            <section id="acronyms" class="py-5">
+                <div class="container py-4">
+                    <div class="row">
+                        <div class="col-md-12 text-center marbtm-40">
+                            <span class="section-kicker">Knowledge Base</span>
+                            <h2 class="text-uppercase section-main-title">Interactive Acronym Explorer</h2>
+                            <div class="title-underline"></div>
+                            <p class="section-lead-text my-3">
+                                Master regional clinical, commissioning, and business terminology. Click any card to flip for full strategic details.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Filter Pills -->
+                    <div class="row mb-4">
+                        <div class="col-12 text-center">
+                            <div class="acronym-filter-bar d-flex flex-wrap justify-content-center gap-2">
+                                <button class="filter-pill active" data-category="all">All Terms</button>
+                                <button class="filter-pill" data-category="clinical">Clinical</button>
+                                <button class="filter-pill" data-category="commissioning">Commissioning</button>
+                                <button class="filter-pill" data-category="business">Business</button>
+                                <button class="filter-pill" data-category="surgical">Surgical</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Acronym Cards Grid -->
+                    <div class="acronyms-grid" id="acronymsGrid">
+                        <!-- Clinical -->
+                        <div class="acronym-card" data-category="clinical">
+                            <div class="acronym-card-inner">
+                                <div class="card-front">
+                                    <span class="acronym-tag">Clinical</span>
+                                    <h4>IOP</h4>
+                                    <p class="term-full">Intraocular Pressure</p>
+                                    <span class="click-hint"><i class="fa fa-refresh"></i> Flip card</span>
+                                </div>
+                                <div class="card-back">
+                                    <h5>Intraocular Pressure</h5>
+                                    <p>Fluid pressure inside the eye measured in mmHg. Normal range is 10-21 mmHg. Primary metric in glaucoma diagnosis and MIGS surgical evaluation.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="acronym-card" data-category="clinical">
+                            <div class="acronym-card-inner">
+                                <div class="card-front">
+                                    <span class="acronym-tag">Clinical</span>
+                                    <h4>OCT</h4>
+                                    <p class="term-full">Optical Coherence Tomography</p>
+                                    <span class="click-hint"><i class="fa fa-refresh"></i> Flip card</span>
+                                </div>
+                                <div class="card-back">
+                                    <h5>Optical Coherence Tomography</h5>
+                                    <p>Non-invasive cross-sectional retinal imaging. Essential for macular disease, dry AMD drusen tracking, and optic nerve fiber layer analysis.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="acronym-card" data-category="surgical">
+                            <div class="acronym-card-inner">
+                                <div class="card-front">
+                                    <span class="acronym-tag">Surgical</span>
+                                    <h4>MIGS</h4>
+                                    <p class="term-full">Minimally Invasive Glaucoma Surgery</p>
+                                    <span class="click-hint"><i class="fa fa-refresh"></i> Flip card</span>
+                                </div>
+                                <div class="card-back">
+                                    <h5>Minimally Invasive Glaucoma Surgery</h5>
+                                    <p>Micro-stent implantation to lower IOP with minimal tissue disruption. Ahmad's subspecialty edge over traditional trabeculectomy.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="acronym-card" data-category="commissioning">
+                            <div class="acronym-card-inner">
+                                <div class="card-front">
+                                    <span class="acronym-tag">Commissioning</span>
+                                    <h4>ICB</h4>
+                                    <p class="term-full">Integrated Care Board</p>
+                                    <span class="click-hint"><i class="fa fa-refresh"></i> Flip card</span>
+                                </div>
+                                <div class="card-back">
+                                    <h5>Integrated Care Board</h5>
+                                    <p>NHS body responsible for regional healthcare commissioning. Nottingham &amp; Nottinghamshire ICB holds the public sector contract keys.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="acronym-card" data-category="business">
+                            <div class="acronym-card-inner">
+                                <div class="card-front">
+                                    <span class="acronym-tag">Business</span>
+                                    <h4>CPD</h4>
+                                    <p class="term-full">Continuing Professional Development</p>
+                                    <span class="click-hint"><i class="fa fa-refresh"></i> Flip card</span>
+                                </div>
+                                <div class="card-back">
+                                    <h5>Continuing Professional Development</h5>
+                                    <p>Accredited training workshops hosted by EyePros for high-street optometrists. Primary mechanism for building organic referrer loyalty.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="acronym-card" data-category="clinical">
+                            <div class="acronym-card-inner">
+                                <div class="card-front">
+                                    <span class="acronym-tag">Clinical</span>
+                                    <h4>PBM</h4>
+                                    <p class="term-full">Photobiomodulation</p>
+                                    <span class="click-hint"><i class="fa fa-refresh"></i> Flip card</span>
+                                </div>
+                                <div class="card-back">
+                                    <h5>Photobiomodulation</h5>
+                                    <p>Low-level light therapy (Valeda System) to treat Dry AMD and preserve photoreceptor function. Key first-mover service offering.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================================================================
+                 REGULATORS & TRUSTED SOURCES
+                 ================================================================ -->
+            <section id="sources" class="wave-secondary py-5">
+                <div class="container py-4">
+                    <div class="row">
+                        <div class="col-md-12 text-center marbtm-40">
+                            <span class="section-kicker">Governance</span>
+                            <h2 class="text-uppercase section-main-title">Regulators &amp; Trusted Sources</h2>
+                            <div class="title-underline"></div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 col-6 mb-4 text-center">
+                            <div class="glass-card p-3 h-100">
+                                <h5>CQC</h5>
+                                <p class="font-size-xs text-muted">Care Quality Commission · Healthcare Inspectorate</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6 mb-4 text-center">
+                            <div class="glass-card p-3 h-100">
+                                <h5>GOC</h5>
+                                <p class="font-size-xs text-muted">General Optical Council · Optometry Regulator</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6 mb-4 text-center">
+                            <div class="glass-card p-3 h-100">
+                                <h5>NICE</h5>
+                                <p class="font-size-xs text-muted">National Institute for Health &amp; Care Excellence</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6 mb-4 text-center">
+                            <div class="glass-card p-3 h-100">
+                                <h5>RCOphth</h5>
+                                <p class="font-size-xs text-muted">Royal College of Ophthalmologists</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================================================================
+                 SECTION 3: MARKET & COMPETITION (Live Intelligence)
+                 ================================================================ -->
+            <section id="intel-carousel" class="ophi-carousel-section py-5">
+                <div class="container py-4">
+                    <div class="row">
+                        <div class="col-md-12 text-center marbtm-40">
+                            <span class="section-kicker">Real-Time Sync</span>
+                            <h2 class="text-uppercase section-main-title">Live Ophthalmology Intelligence Feed</h2>
+                            <div class="title-underline"></div>
+                            <p class="section-lead-text my-3">
+                                Automated Stale-While-Revalidate (SWR) feed tracking UK eye health news, NHS wait lists, and competitor activity.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- News Carousel Track -->
+                    <div class="ophi-carousel-container">
+                        <button class="ophi-nav-btn ophi-prev-btn" id="ophiPrevBtn" aria-label="Previous News"><i class="fa fa-angle-left"></i></button>
+                        <div class="ophi-carousel-wrapper">
+                            <div class="ophi-carousel-track" id="ophiCarouselTrack">
+                                <!-- Populated dynamically by app.js SWR engine -->
+                            </div>
+                        </div>
+                        <button class="ophi-nav-btn ophi-next-btn" id="ophiNextBtn" aria-label="Next News"><i class="fa fa-angle-right"></i></button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================================================================
+                 MARKET NUMBERS & FINANCIAL TARGETS
+                 ================================================================ -->
+            <section id="numbers" class="wave-secondary py-5">
+                <div class="container py-4">
+                    <div class="row">
+                        <div class="col-md-12 text-center marbtm-40">
+                            <span class="section-kicker">Canonical Figures</span>
+                            <h2 class="text-uppercase section-main-title">Market Numbers &amp; Capital Model</h2>
+                            <div class="title-underline"></div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 col-6 mb-4 text-center">
+                            <div class="glass-card p-4 h-100">
+                                <div class="kpi-number text-teal">&pound;1.2m</div>
+                                <div class="kpi-label">Vector Leasing Facility (0% Owner Equity)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6 mb-4 text-center">
+                            <div class="glass-card p-4 h-100">
+                                <div class="kpi-number text-teal">&pound;1.0m</div>
+                                <div class="kpi-label">Year 1 Target Revenue (2027)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6 mb-4 text-center">
+                            <div class="glass-card p-4 h-100">
+                                <div class="kpi-number text-teal">&pound;3.1m</div>
+                                <div class="kpi-label">Year 3 Target Revenue (47% EBITDA)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6 mb-4 text-center">
+                            <div class="glass-card p-4 h-100">
+                                <div class="kpi-number text-teal">1.8 yrs</div>
+                                <div class="kpi-label">Estimated Capital Payback Period</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================================================================
+                 COMPETITORS & PRICING
+                 ================================================================ -->
+            <section id="competitors" class="py-5">
+                <div class="container py-4">
+                    <div class="row">
+                        <div class="col-md-12 text-center marbtm-40">
+                            <span class="section-kicker">Regional Landscape</span>
+                            <h2 class="text-uppercase section-main-title">Competitor Analysis &amp; Self-Pay Tiers</h2>
+                            <div class="title-underline"></div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-7 mb-4">
+                            <div class="glass-card p-4 h-100">
+                                <h3 class="subsection-title"><i class="fa fa-building text-teal mr-2"></i> Regional Competitor Landscape</h3>
+                                <div class="table-responsive mt-3">
+                                    <table class="table table-dark-custom">
+                                        <thead>
+                                            <tr>
+                                                <th>Competitor</th>
+                                                <th>Location</th>
+                                                <th>Primary Focus</th>
+                                                <th>Pricing Strategy</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><strong>Optical Express</strong></td>
+                                                <td>Nottingham</td>
+                                                <td>Laser &amp; Refractive Volume</td>
+                                                <td>Price-led promotional</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Optegra</strong></td>
+                                                <td>Leicester</td>
+                                                <td>Cataract &amp; NHS Contracts</td>
+                                                <td>Standard NHS tariff + self-pay</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Nuffield Leicester</strong></td>
+                                                <td>Leicester</td>
+                                                <td>Full Private Hospital</td>
+                                                <td>Premium private fee structure</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Spire Hospital</strong></td>
+                                                <td>Nottingham</td>
+                                                <td>Consultant Private Practice</td>
+                                                <td>High-end multi-specialty</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-5 mb-4">
+                            <div class="glass-card p-4 h-100">
+                                <h3 class="subsection-title"><i class="fa fa-tags text-teal mr-2"></i> EyePros Self-Pay Cataract Tiers</h3>
+                                <ul class="facts-list mt-3">
+                                    <li>
+                                        <span class="fact-key">VisionNOW Entry</span>
+                                        <span class="fact-val"><strong>&pound;1,400</strong> / eye · Accessible entry point</span>
+                                    </li>
+                                    <li>
+                                        <span class="fact-key">Standard Tier</span>
+                                        <span class="fact-val"><strong>&pound;2,000</strong> / eye · Undercuts regional floor</span>
+                                    </li>
+                                    <li>
+                                        <span class="fact-key">Premium Continuity</span>
+                                        <span class="fact-val"><strong>&pound;3,750</strong> / eye · Full consultant care + EDOF IOL</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================================================================
+                 MARKET WATCH-LIST
+                 ================================================================ -->
+            <section id="watchlist" class="wave-secondary py-5">
+                <div class="container py-4">
+                    <div class="row">
+                        <div class="col-md-12 text-center marbtm-40">
+                            <span class="section-kicker">Industry Tracking</span>
+                            <h2 class="text-uppercase section-main-title">Market Watch-List</h2>
+                            <div class="title-underline"></div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6 mb-4">
+                            <div class="glass-card p-4 h-100">
+                                <span class="badge badge-accent">Policy</span>
+                                <h4 class="mt-2">NHS Tariffs</h4>
+                                <p class="font-size-xs text-muted mb-0">Track outpatient cataract commissioning tariffs and regional CUES expansion.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 mb-4">
+                            <div class="glass-card p-4 h-100">
+                                <span class="badge badge-accent">Competition</span>
+                                <h4 class="mt-2">CHEC &amp; Newmedica</h4>
+                                <p class="font-size-xs text-muted mb-0">Monitor new satellite clinic launches and community optometry outreach.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 mb-4">
+                            <div class="glass-card p-4 h-100">
+                                <span class="badge badge-accent">Clinical</span>
+                                <h4 class="mt-2">NICE NG81 &amp; NG82</h4>
+                                <p class="font-size-xs text-muted mb-0">Track updates to Glaucoma &amp; AMD clinical pathways and photobiomodulation trials.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 mb-4">
+                            <div class="glass-card p-4 h-100">
+                                <span class="badge badge-accent">Macro</span>
+                                <h4 class="mt-2">NHS Backlogs</h4>
+                                <p class="font-size-xs text-muted mb-0">Monitor HES wait times to forecast self-pay conversion readiness.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================================================================
+                 SECTION 4: PATIENTS & STRATEGY (Archetypes & Journeys)
+                 ================================================================ -->
+            <section id="archetypes" class="py-5">
+                <div class="container py-4">
+                    <div class="row">
+                        <div class="col-md-12 text-center marbtm-40">
+                            <span class="section-kicker">Patient Segments</span>
+                            <h2 class="text-uppercase section-main-title">Patient Archetypes &amp; Journeys</h2>
+                            <div class="title-underline"></div>
+                            <p class="section-lead-text my-3">
+                                Select an archetype below to review pathology triggers, conversion strategies, and step-by-step clinical pathways.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Archetype Tabs -->
+                    <div class="row mb-4">
+                        <div class="col-12 text-center">
+                            <div class="archetype-tab-bar d-flex flex-wrap justify-content-center gap-2">
+                                <button class="archetype-tab active" data-arch="A">A · Cataract</button>
+                                <button class="archetype-tab" data-arch="B">B · Glaucoma</button>
+                                <button class="archetype-tab" data-arch="C">C · Laser Refractive</button>
+                                <button class="archetype-tab" data-arch="D">D · Dry Eye</button>
+                                <button class="archetype-tab" data-arch="E">E · Dry AMD</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6 mb-4">
+                            <div class="glass-card p-4 h-100" id="archetypeContent">
+                                <!-- Rendered dynamically by app.js -->
+                            </div>
+                        </div>
+                        <div class="col-lg-6 mb-4">
+                            <div class="glass-card p-4 h-100">
+                                <h4 id="archetypeTimelineTitle" class="subsection-title">Patient Journey Steps</h4>
+                                <div class="timeline-vertical mt-3" id="archetypeTimeline">
+                                    <!-- Rendered dynamically by app.js -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================================================================
+                 STRATEGIC POSITIONING & FIT
+                 ================================================================ -->
+            <section id="strategy" class="wave-secondary py-5">
+                <div class="container py-4">
+                    <div class="row">
+                        <div class="col-md-12 text-center marbtm-40">
+                            <span class="section-kicker">Strategic Narrative</span>
+                            <h2 class="text-uppercase section-main-title">Strategic Fit &amp; Positioning</h2>
+                            <div class="title-underline"></div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="glass-card p-4 h-100">
+                                <h3 class="subsection-title"><i class="fa fa-check-circle text-teal mr-2"></i> EyePros Competitive Advantage</h3>
+                                <ul class="bullet-list mt-3">
+                                    <li><strong>Consultant-Led Care:</strong> Unlike high-street optical chains where corporate surgeons rotate, patients see Mr Ahmad Elsahn from initial consult through aftercare.</li>
+                                    <li><strong>Hub &amp; Spoke Efficiency:</strong> Nottingham surgical hub supported by satellite consultation clinics across the East Midlands.</li>
+                                    <li><strong>Specialist Technology:</strong> First-mover advantage in Valeda Photobiomodulation and advanced MIGS micro-stenting.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="glass-card p-4 h-100">
+                                <h3 class="subsection-title"><i class="fa fa-shield text-teal mr-2"></i> Risk Mitigation Strategy</h3>
+                                <ul class="bullet-list mt-3">
+                                    <li><strong>Zero Owner Equity Risk:</strong> Asset-backed Vector Leasing facility preserves cash flow during onboarding.</li>
+                                    <li><strong>LenzClub Referrer Retention:</strong> Direct optometrist education minimizes referral attrition to CHEC or Newmedica.</li>
+                                    <li><strong>Subscription LTV Cushion:</strong> Recurring glaucoma &amp; dry eye plans stabilize monthly revenue against seasonal self-pay surgical drops.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================================================================
+                 SECTION 5: INTERNSHIP WORKBENCH (Unified Interview Playbook)
+                 ================================================================ -->
+            <section id="interviews" class="py-5">
+                <div class="container py-4">
+                    <div class="row">
+                        <div class="col-md-12 text-center marbtm-40">
+                            <span class="section-kicker">Interactive Tool</span>
+                            <h2 class="text-uppercase section-main-title">Unified Interview Workbench</h2>
+                            <div class="title-underline"></div>
+                            <p class="section-lead-text my-3">
+                                Interactive question checklists and strategy crib sheets for alignment sessions with Ahmad Elsahn, Steve Edwards, and Clinic Operations.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Global Workbench Controls Bar -->
+                    <div class="workbench-control-bar glass-card p-3 mb-4 d-flex flex-wrap align-items-center justify-content-between gap-3">
+                        
+                        <!-- Persona Switcher Tabs -->
+                        <div class="workbench-persona-tabs d-flex gap-2">
+                            <button class="persona-tab active" data-persona="ahmad">
+                                <i class="fa fa-user-md"></i> Ahmad Elsahn <span>(Glaucoma &amp; Surgical)</span>
+                            </button>
+                            <button class="persona-tab" data-persona="steve">
+                                <i class="fa fa-user"></i> Steve Edwards <span>(Commercial &amp; Referrers)</span>
+                            </button>
+                            <button class="persona-tab" data-persona="ops">
+                                <i class="fa fa-hospital-o"></i> Clinic Operations <span>(Admin &amp; Front-of-House)</span>
+                            </button>
+                        </div>
+
+                        <!-- Progress Bar & Actions -->
+                        <div class="workbench-actions d-flex align-items-center gap-3">
+                            <div class="workbench-progress-display d-flex align-items-center gap-2">
+                                <span class="font-size-xs text-muted">Completed:</span>
+                                <div class="progress progress-workbench" style="width: 100px; height: 8px;">
+                                    <div class="progress-bar bg-teal" id="workbenchProgressBar" style="width: 0%;"></div>
+                                </div>
+                                <span class="font-size-xs font-weight-bold" id="workbenchProgressText">0%</span>
+                            </div>
+
+                            <button class="action-btn-outline-sm" id="toggleGlobalCribBtn">
+                                <i class="fa fa-lightbulb-o"></i> Strategy Crib Sheet
+                            </button>
+                            <button class="action-btn-outline-sm text-danger" id="resetWorkbenchBtn">
+                                <i class="fa fa-trash"></i> Reset Notes
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <!-- Persona Playbook Grid Containers -->
+                    <!-- 1. Ahmad Elsahn Playbook -->
+                    <div class="workbench-persona-panel active" id="panelAhmad">
+                        <div class="qblocks-container glass-card p-4" id="ahmadQGrid">
+                            
+                            <div class="qblock-section mb-4">
+                                <div class="qblock-header-sub font-weight-bold border-bottom pb-2 mb-3">Section 1: Founder Vision &amp; Surgical Strategy</div>
+                                
+                                <div class="q-item border-bottom pb-3 mb-3" data-id="ahmad_q1">
+                                    <div class="q-row d-flex align-items-start">
+                                        <div class="q-checkbox-wrapper mr-3 mt-1">
+                                            <input type="checkbox" id="chk_ahmad_q1" class="q-chk" />
+                                            <label for="chk_ahmad_q1" class="q-chk-label"></label>
+                                        </div>
+                                        <div class="q-main-body flex-grow-1">
+                                            <div class="q-text font-weight-bold mb-1">"What is the single highest-priority surgical pathway (cataract, MIGS, refractive) for EyePros during Year 1?"</div>
+                                            <div class="q-crib-sheet p-2 mb-2 bg-dark-subtle border-left-teal" style="display:none;">
+                                                <strong>Strategy Crib Sheet:</strong> Establishes where marketing budget and referrer outreach should be focused immediately.
+                                            </div>
+                                            <textarea class="q-notes-input form-control mt-2" placeholder="Type clinical responses and decisions here..."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="q-item border-bottom pb-3 mb-3" data-id="ahmad_q2">
+                                    <div class="q-row d-flex align-items-start">
+                                        <div class="q-checkbox-wrapper mr-3 mt-1">
+                                            <input type="checkbox" id="chk_ahmad_q2" class="q-chk" />
+                                            <label for="chk_ahmad_q2" class="q-chk-label"></label>
+                                        </div>
+                                        <div class="q-main-body flex-grow-1">
+                                            <div class="q-text font-weight-bold mb-1">"What are your clinical criteria for selecting premium EDOF/Multifocal IOLs vs standard monofocal lenses?"</div>
+                                            <div class="q-crib-sheet p-2 mb-2 bg-dark-subtle border-left-teal" style="display:none;">
+                                                <strong>Strategy Crib Sheet:</strong> Informs patient educational materials and self-pay conversion pricing tiers.
+                                            </div>
+                                            <textarea class="q-notes-input form-control mt-2" placeholder="Type clinical responses and decisions here..."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- 2. Steve Edwards Playbook -->
+                    <div class="workbench-persona-panel" id="panelSteve">
+                        <div class="qblocks-container glass-card p-4" id="steveQGrid">
+                            
+                            <div class="qblock-section mb-4">
+                                <div class="qblock-header-sub font-weight-bold border-bottom pb-2 mb-3">Section 1: Referrer Network &amp; Optometry Outreach</div>
+                                
+                                <div class="q-item border-bottom pb-3 mb-3" data-id="steve_q1">
+                                    <div class="q-row d-flex align-items-start">
+                                        <div class="q-checkbox-wrapper mr-3 mt-1">
+                                            <input type="checkbox" id="chk_steve_q1" class="q-chk" />
+                                            <label for="chk_steve_q1" class="q-chk-label"></label>
+                                        </div>
+                                        <div class="q-main-body flex-grow-1">
+                                            <div class="q-text font-weight-bold mb-1">"In your experience, what are the key factors that convert an optometry practice from a cold contact into an active referrer?"</div>
+                                            <div class="q-crib-sheet p-2 mb-2 bg-dark-subtle border-left-teal" style="display:none;">
+                                                <strong>Strategy Crib Sheet:</strong> Leverages Steve's background at CHEC and Newmedica to build our referrer playbook.
+                                            </div>
+                                            <textarea class="q-notes-input form-control mt-2" placeholder="Type clinical responses and decisions here..."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="q-item border-bottom pb-3 mb-3" data-id="steve_q2">
+                                    <div class="q-row d-flex align-items-start">
+                                        <div class="q-checkbox-wrapper mr-3 mt-1">
+                                            <input type="checkbox" id="chk_steve_q2" class="q-chk" />
+                                            <label for="chk_steve_q2" class="q-chk-label"></label>
+                                        </div>
+                                        <div class="q-main-body flex-grow-1">
+                                            <div class="q-text font-weight-bold mb-1">"If you were developing a referrer engagement plan in Mansfield tomorrow, what would be your first three actions?"</div>
+                                            <div class="q-crib-sheet p-2 mb-2 bg-dark-subtle border-left-teal" style="display:none;">
+                                                <strong>Strategy Crib Sheet:</strong> Translates Steve's commercial experience into an actionable outreach plan.
+                                            </div>
+                                            <textarea class="q-notes-input form-control mt-2" placeholder="Type clinical responses and decisions here..."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- 3. Clinic Operations Playbook -->
+                    <div class="workbench-persona-panel" id="panelOps">
+                        <div class="qblocks-container glass-card p-4" id="opsQGrid">
+                            
+                            <div class="qblock-section mb-4">
+                                <div class="qblock-header-sub font-weight-bold border-bottom pb-2 mb-3">Section 1: Clinic Workflows &amp; Admin Efficiency</div>
+                                
+                                <div class="q-item border-bottom pb-3 mb-3" data-id="ops_q1">
+                                    <div class="q-row d-flex align-items-start">
+                                        <div class="q-checkbox-wrapper mr-3 mt-1">
+                                            <input type="checkbox" id="chk_ops_q1" class="q-chk" />
+                                            <label for="chk_ops_q1" class="q-chk-label"></label>
+                                        </div>
+                                        <div class="q-main-body flex-grow-1">
+                                            <div class="q-text font-weight-bold mb-1">"Walk me through the standard patient workflow: from initial inquiry (call, email) to booking a consultation."</div>
+                                            <div class="q-crib-sheet p-2 mb-2 bg-dark-subtle border-left-teal" style="display:none;">
+                                                <strong>Strategy Crib Sheet:</strong> Helps identify potential drops in our patient booking pipeline.
+                                            </div>
+                                            <textarea class="q-notes-input form-control mt-2" placeholder="Type clinical responses and decisions here..."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="q-item border-bottom pb-3 mb-3" data-id="ops_q2">
+                                    <div class="q-row d-flex align-items-start">
+                                        <div class="q-checkbox-wrapper mr-3 mt-1">
+                                            <input type="checkbox" id="chk_ops_q2" class="q-chk" />
+                                            <label for="chk_ops_q2" class="q-chk-label"></label>
+                                        </div>
+                                        <div class="q-main-body flex-grow-1">
+                                            <div class="q-text font-weight-bold mb-1">"What are our primary reasons for patient appointment cancellations or no-shows?"</div>
+                                            <div class="q-crib-sheet p-2 mb-2 bg-dark-subtle border-left-teal" style="display:none;">
+                                                <strong>Strategy Crib Sheet:</strong> Highlights scheduling conflicts or patient concerns to address.
+                                            </div>
+                                            <textarea class="q-notes-input form-control mt-2" placeholder="Type clinical responses and decisions here..."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- ================================================================
+                 INTERNSHIP TIMELINE
+                 ================================================================ -->
+            <section id="timeline" class="wave-secondary py-5">
+                <div class="container py-4">
+                    <div class="row">
+                        <div class="col-md-12 text-center marbtm-40">
+                            <span class="section-kicker">Internship Track</span>
+                            <h2 class="text-uppercase section-main-title">5-Month Growth Timeline</h2>
+                            <div class="title-underline"></div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-container justify-content-center">
+                        <div class="timeline-milestone current" data-phase="pre">
+                            <div class="milestone-marker"></div>
+                            <div class="milestone-card glass-card p-4">
+                                <div class="milestone-header d-flex justify-content-between align-items-center mb-2">
+                                    <span class="milestone-date font-weight-bold">Pre-Arrival · May-July 2026</span>
+                                    <span class="badge badge-accent">Active Phase</span>
+                                </div>
+                                <h3>Context Onboarding &amp; Playbook Prep</h3>
+                                <p class="text-secondary font-size-sm">Internalize regional terminology, acronym datasets, and prepare interview outlines for Ahmad and Steve.</p>
+                            </div>
+                        </div>
+
+                        <div class="timeline-milestone upcoming" data-phase="m1">
+                            <div class="milestone-marker"></div>
+                            <div class="milestone-card glass-card p-4">
+                                <div class="milestone-header d-flex justify-content-between align-items-center mb-2">
+                                    <span class="milestone-date font-weight-bold text-muted">Month 1 · August 2026</span>
+                                    <span class="badge badge-secondary">Upcoming</span>
+                                </div>
+                                <h3>Onboarding &amp; Clinic Workflow Review</h3>
+                                <p class="text-secondary font-size-sm">Shadow patient journeys, audit past 6 months of conversion metrics, and deliver clinic assessment report.</p>
+                            </div>
+                        </div>
+
+                        <div class="timeline-milestone upcoming" data-phase="m2">
+                            <div class="milestone-marker"></div>
+                            <div class="milestone-card glass-card p-4">
+                                <div class="milestone-header d-flex justify-content-between align-items-center mb-2">
+                                    <span class="milestone-date font-weight-bold text-muted">Month 2 · September 2026</span>
+                                    <span class="badge badge-secondary">Upcoming</span>
+                                </div>
+                                <h3>Competitor Map &amp; Satellite Site Analysis</h3>
+                                <p class="text-secondary font-size-sm">Map East Midlands competitors and analyze three potential satellite consultation clinic sites.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================================================================
+                 SECTION 6: RESOURCES (Events Calendar & What I Know)
+                 ================================================================ -->
+            <section id="events-calendar" class="py-5">
+                <div class="container py-4">
+                    
+                    <div class="gcal-header text-center mb-4">
+                        <div class="sync-status-container" id="gcalSyncStatus">
+                            <span class="gcal-live-badge status-checking"><i class="fa fa-circle-o-notch fa-spin"></i> Checking latest ophthalmology intelligence...</span>
+                        </div>
+                        <h2 class="text-uppercase section-main-title mt-2">Global Ophthalmology Events Calendar</h2>
+                        <p class="gcal-subtitle text-muted">Upcoming ophthalmology conferences, innovation meetings, retina congresses, and surgical gatherings worldwide.</p>
+                    </div>
+
+                    <!-- Stats Bar -->
+                    <div class="gcal-stats-bar text-center mb-4" id="gcalStatsBar">
+                        <!-- Populated by JS -->
+                    </div>
+
+                    <!-- Controls -->
+                    <div class="gcal-controls glass-card p-3 mb-4 d-flex flex-wrap align-items-center justify-content-between gap-3">
+                        <div class="gcal-view-toggles">
+                            <button class="gcal-view-btn active" data-view="agenda"><i class="fa fa-list"></i> Agenda</button>
+                            <button class="gcal-view-btn" data-view="cards"><i class="fa fa-th-large"></i> Cards</button>
+                            <button class="gcal-view-btn" data-view="timeline"><i class="fa fa-clock-o"></i> Timeline</button>
+                        </div>
+
+                        <div class="gcal-filters d-flex flex-wrap gap-2">
+                            <select class="gcal-filter-select" id="gcalFilterRegion">
+                                <option value="all">All Regions</option>
+                                <option value="North America">North America</option>
+                                <option value="Europe">Europe</option>
+                                <option value="Asia-Pacific">Asia-Pacific</option>
+                            </select>
+                            <select class="gcal-filter-select" id="gcalFilterSpecialty">
+                                <option value="all">All Subspecialties</option>
+                                <option value="general">General</option>
+                                <option value="retina">Retina</option>
+                                <option value="cataract">Cataract</option>
+                                <option value="glaucoma">Glaucoma</option>
+                            </select>
+                            <select class="gcal-filter-select" id="gcalFilterStatus">
+                                <option value="all">All Statuses</option>
+                                <option value="upcoming">Upcoming</option>
+                                <option value="open">Register Open</option>
+                                <option value="completed">Completed</option>
+                            </select>
+                            <input type="text" class="gcal-search" id="gcalSearch" placeholder="Search events..." />
+                        </div>
+                    </div>
+
+                    <!-- Event View Containers -->
+                    <div class="gcal-view-container active" id="gcalViewAgenda"></div>
+                    <div class="gcal-view-container" id="gcalViewCards">
+                        <div class="gcal-cards-grid" id="gcalCardsGrid"></div>
+                    </div>
+                    <div class="gcal-view-container" id="gcalViewTimeline">
+                        <div class="gcal-timeline" id="gcalTimeline"></div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- ================================================================
+                 WHAT I KNOW COMPANION
+                 ================================================================ -->
+            <section id="what-i-know" class="wave-primary py-5">
+                <div class="container py-4">
+                    <div class="row">
+                        <div class="col-md-12 text-center marbtm-40">
+                            <span class="section-kicker">Summary Reference</span>
+                            <h2 class="text-uppercase section-main-title">What I Know Going In</h2>
+                            <div class="title-underline"></div>
+                            <p class="section-lead-text my-3">
+                                Concise one-page summary for goal-setting sessions with Ahmad &amp; Steve.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6 mb-4">
+                            <div class="glass-card p-4 h-100">
+                                <h3><i class="fa fa-eye text-teal mr-2"></i> EyePros Core Essentials</h3>
+                                <ul class="facts-list mt-3">
+                                    <li><span class="fact-key">Founder</span><span class="fact-val">Ahmad Elsahn (Glaucoma, Cataract &amp; Refractive Surgeon)</span></li>
+                                    <li><span class="fact-key">Hospital Site</span><span class="fact-val">Kingfisher House, Nottingham (Opening Jan 2027)</span></li>
+                                    <li><span class="fact-key">Funding Facility</span><span class="fact-val">&pound;1.2m Vector Leasing (0% owner equity)</span></li>
+                                    <li><span class="fact-key">Revenue Target</span><span class="fact-val">&pound;1.0m (Year 1) &rarr; &pound;3.1m (Year 3 at 47% EBITDA)</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 mb-4">
+                            <div class="glass-card p-4 h-100">
+                                <h3><i class="fa fa-compass text-teal mr-2"></i> Primary Deliverables</h3>
+                                <ul class="facts-list mt-3">
+                                    <li><span class="fact-key">LenzClub</span><span class="fact-val">Optometry CPD workshops &amp; referrer loyalty portal</span></li>
+                                    <li><span class="fact-key">Subscription Care</span><span class="fact-val">Recurring glaucoma &amp; dry eye monitoring plans</span></li>
+                                    <li><span class="fact-key">Satellite Clinics</span><span class="fact-val">Feasibility study for 3 East Midlands satellite sites</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- ================================================================
+             FOOTER SECTION
+             ================================================================ -->
+        <footer class="footer-section py-4 border-top">
+            <div class="container">
+                <div class="row align-items-center justify-content-between">
+                    <div class="col-md-6 text-center text-md-left mb-3 mb-md-0">
+                        <p class="mb-0 font-size-sm text-secondary">
+                            &copy; 2026 <strong>EyePros Strategy Workspace</strong> · Curated by Takoua Selmi
+                        </p>
+                    </div>
+                    <div class="col-md-6 text-center text-md-right">
+                        <a href="solo-films.html" class="text-teal font-size-sm mr-3"><i class="fa fa-film"></i> Solo Films Companion</a>
+                        <a href="#banner" class="text-teal font-size-sm"><i class="fa fa-arrow-up"></i> Back to Top</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- JS Libraries -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/typed.min.js"></script>
+        <script src="js/isotope.pkgd.min.js"></script>
+        <script src="js/wow.min.js"></script>
+        <script src="js/jquery.fittext.js"></script>
+        <script src="js/jquery.magnific-popup.min.js"></script>
+
+        <!-- Site Engine JS -->
+        <script src="app.js"></script>
+    </body>
 </html>
