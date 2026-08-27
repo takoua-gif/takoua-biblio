@@ -29,13 +29,56 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); line
 button { font-family: inherit; cursor: pointer; border: none; background: none; }
 input, textarea, select { font-family: inherit; font-size: 14px; border: 1px solid var(--border); border-radius: var(--radius); padding: 8px; width: 100%; }
 textarea { resize: vertical; min-height: 80px; }
-nav.top-bar { position: sticky; top: 0; background: var(--surface); border-bottom: 1px solid var(--border); padding: 10px 20px; display: flex; flex-wrap: wrap; gap: 10px; z-index: 100; align-items: center; }
-.top-bar h1 { font-size: 16px; margin-right: 20px; color: var(--accent); }
-.top-bar button { padding: 6px 12px; border-radius: 20px; background: var(--bg); color: var(--text); font-weight: 500; transition: all 0.2s; border: 1px solid transparent; }
+/* Top bar: logo + day pills */
+nav.top-bar {
+  position: sticky; top: 0; background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 8px 12px; display: flex; gap: 8px;
+  z-index: 100; align-items: center;
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; flex-wrap: nowrap;
+}
+nav.top-bar::-webkit-scrollbar { display: none; }
+.top-bar h1 { font-size: 14px; margin-right: 4px; color: var(--accent); white-space: nowrap; flex-shrink: 0; }
+.top-bar button { padding: 6px 14px; border-radius: 20px; background: var(--bg); color: var(--text); font-weight: 600; font-size: 13px; transition: all 0.2s; border: 1px solid transparent; white-space: nowrap; flex-shrink: 0; }
 .top-bar button:hover { background: var(--border); }
 .top-bar button.active { background: var(--accent); color: white; }
-.top-bar .nav-actions { margin-left: auto; display: flex; gap: 8px; }
-main { max-width: 1000px; margin: 0 auto; padding: 20px; }
+.top-bar .nav-actions { display: none; }
+
+/* Bottom tab bar */
+.bottom-bar {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: var(--surface); border-top: 1px solid var(--border);
+  display: flex; justify-content: space-around; align-items: stretch;
+  z-index: 100; padding-bottom: env(safe-area-inset-bottom, 0);
+}
+.bottom-bar button {
+  flex: 1; display: flex; flex-direction: column; align-items: center;
+  gap: 2px; padding: 8px 4px 6px; background: none; border: none;
+  font-size: 10px; font-weight: 600; color: var(--text-muted);
+  transition: color 0.15s; cursor: pointer; font-family: var(--font);
+  -webkit-tap-highlight-color: transparent;
+}
+.bottom-bar button .tab-icon { font-size: 20px; line-height: 1; }
+.bottom-bar button.active { color: var(--accent); }
+.bottom-bar button:hover { color: var(--accent); }
+
+/* More menu */
+.more-menu {
+  position: fixed; bottom: 60px; right: 8px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  padding: 6px; z-index: 200; display: none; min-width: 150px;
+}
+.more-menu.open { display: block; }
+.more-menu button {
+  display: flex; align-items: center; gap: 8px;
+  width: 100%; padding: 10px 14px; background: none; border: none;
+  font-size: 14px; font-weight: 500; color: var(--text); border-radius: var(--radius);
+  cursor: pointer; font-family: var(--font); text-align: left;
+}
+.more-menu button:hover { background: var(--bg); }
+main { max-width: 1000px; margin: 0 auto; padding: 20px 20px 80px; }
 .view-section { display: none; }
 .view-section.active { display: block; }
 
@@ -137,7 +180,7 @@ dialog::backdrop { background: rgba(0,0,0,0.5); backdrop-filter: blur(2px); }
 .btn-primary:hover { background: var(--accent-mid); }
 
 /* Quick Note FAB */
-.fab { position: fixed; bottom: 30px; right: 30px; width: 56px; height: 56px; border-radius: 28px; background: var(--accent); color: white; font-size: 24px; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: 0.2s; z-index: 90; }
+.fab { position: fixed; bottom: 76px; right: 20px; width: 52px; height: 52px; border-radius: 26px; background: var(--accent); color: white; font-size: 24px; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: 0.2s; z-index: 90; }
 .fab:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.3); }
 
 /* End of Day Reflection */
@@ -294,20 +337,27 @@ mark { background: #fef08a; color: #854d0e; padding: 0 2px; border-radius: 2px; 
 <body>
 <nav class="top-bar" id="topNav">
   <h1>ESCRS 2026</h1>
+  <span id="syncIndicator" style="display:none;font-size:10px;font-weight:600;padding:3px 6px;border-radius:10px;background:var(--bg);white-space:nowrap;flex-shrink:0"></span>
   <button data-view="day0" class="active">Day 1</button>
   <button data-view="day1">Day 2</button>
   <button data-view="day2">Day 3</button>
   <button data-view="day3">Day 4</button>
   <button data-view="day4">Day 5</button>
-  <div class="nav-actions"><span id="syncIndicator" style="display:none;font-size:11px;font-weight:600;padding:4px 8px;border-radius:12px;background:var(--bg);white-space:nowrap"></span>
-    <button data-view="network">Network</button>
-    <button data-view="search">Search</button>
-    <button data-view="report">Report</button>
-    <button onclick="exportData()">Export</button>
-    <button onclick="document.getElementById('importFile').click()">Import</button>
-    <input type="file" id="importFile" style="display:none" accept=".json" onchange="importData(event)">
-  </div>
+  <input type="file" id="importFile" style="display:none" accept=".json" onchange="importData(event)">
 </nav>
+
+<nav class="bottom-bar" id="bottomBar">
+  <button data-view="day0" class="active" id="tab-days"><span class="tab-icon">📅</span>Days</button>
+  <button data-view="network" id="tab-network"><span class="tab-icon">👥</span>Network</button>
+  <button data-view="search" id="tab-search"><span class="tab-icon">🔍</span>Search</button>
+  <button data-view="report" id="tab-report"><span class="tab-icon">📊</span>Report</button>
+  <button id="tab-more" onclick="toggleMoreMenu(event)"><span class="tab-icon">⋯</span>More</button>
+</nav>
+
+<div class="more-menu" id="moreMenu">
+  <button onclick="exportData(); closeMoreMenu()">↓ Export data</button>
+  <button onclick="document.getElementById('importFile').click(); closeMoreMenu()">↑ Import data</button>
+</div>
 
 <main id="mainContent">
   <!-- Views will be generated here -->
@@ -578,13 +628,17 @@ function init() {
   saveState();
   renderApp();
   
-  // Navigation
+  // Navigation — top bar (days) + bottom bar (sections)
   document.querySelectorAll('.top-bar button[data-view]').forEach(btn => {
     btn.addEventListener('click', (e) => {
-      document.querySelectorAll('.top-bar button[data-view]').forEach(b => b.classList.remove('active'));
-      e.target.classList.add('active');
       const view = e.target.getAttribute('data-view');
-      showView(view);
+      navigateTo(view);
+    });
+  });
+  document.querySelectorAll('.bottom-bar button[data-view]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const view = e.target.closest('button').getAttribute('data-view');
+      navigateTo(view);
     });
   });
   showView('day0');
@@ -596,6 +650,46 @@ function init() {
       openQuickNote();
     }
   });
+  
+  // Close more menu when tapping elsewhere
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('#tab-more') && !e.target.closest('.more-menu')) {
+      closeMoreMenu();
+    }
+  });
+}
+
+function navigateTo(view) {
+  // Update top bar (day buttons)
+  document.querySelectorAll('.top-bar button[data-view]').forEach(b => b.classList.remove('active'));
+  const topBtn = document.querySelector(`.top-bar button[data-view="${view}"]`);
+  if (topBtn) topBtn.classList.add('active');
+  
+  // Update bottom bar
+  document.querySelectorAll('.bottom-bar button').forEach(b => b.classList.remove('active'));
+  if (view.startsWith('day')) {
+    document.getElementById('tab-days').classList.add('active');
+    // Also highlight the correct day in top bar and scroll it visible
+    if (topBtn) {
+      topBtn.classList.add('active');
+      topBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    }
+  } else {
+    const tabBtn = document.querySelector(`.bottom-bar button[data-view="${view}"]`);
+    if (tabBtn) tabBtn.classList.add('active');
+  }
+  
+  showView(view);
+  closeMoreMenu();
+}
+
+function toggleMoreMenu(e) {
+  e.stopPropagation();
+  document.getElementById('moreMenu').classList.toggle('open');
+}
+
+function closeMoreMenu() {
+  document.getElementById('moreMenu').classList.remove('open');
 }
 
 function saveState() {
