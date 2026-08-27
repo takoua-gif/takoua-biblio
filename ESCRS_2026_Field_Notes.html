@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ESCRS 2026 Field Notes</title>
+<style>
+:root {
+  --accent: #1a56a0;
+  --accent-light: #e8f0fb;
+  --accent-mid: #5b8dd9;
+  --bg: #f7f7f5;
+  --surface: #ffffff;
+  --border: #e0ddd8;
+  --text: #1a1a18;
+  --text-muted: #6b6b67;
+  --text-faint: #a8a8a4;
+  --success: #16803c;
+  --success-bg: #f0fdf4;
+  --warning: #b45309;
+  --warning-bg: #fffbeb;
+  --danger: #991b1b;
+  --radius: 6px;
+  --radius-lg: 10px;
+  --font: Inter, "Helvetica Neue", Arial, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.5; font-size: 14px; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+input, textarea, select { font-family: inherit; font-size: 14px; border: 1px solid var(--border); border-radius: var(--radius); padding: 8px; width: 100%; }
+textarea { resize: vertical; min-height: 80px; }
+nav.top-bar { position: sticky; top: 0; background: var(--surface); border-bottom: 1px solid var(--border); padding: 10px 20px; display: flex; flex-wrap: wrap; gap: 10px; z-index: 100; align-items: center; }
+.top-bar h1 { font-size: 16px; margin-right: 20px; color: var(--accent); }
+.top-bar button { padding: 6px 12px; border-radius: 20px; background: var(--bg); color: var(--text); font-weight: 500; transition: all 0.2s; border: 1px solid transparent; }
+.top-bar button:hover { background: var(--border); }
+.top-bar button.active { background: var(--accent); color: white; }
+.top-bar .nav-actions { margin-left: auto; display: flex; gap: 8px; }
+main { max-width: 1000px; margin: 0 auto; padding: 20px; }
+.view-section { display: none; }
+.view-section.active { display: block; }
+
+/* Day Header */
+.day-header { background: linear-gradient(to bottom right, var(--surface), var(--accent-light)); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 20px; }
+.day-header h2 { background: linear-gradient(90deg, var(--text), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px; }
+.progress-bar-container { height: 6px; background: var(--border); border-radius: 3px; margin: 15px 0; overflow: hidden; }
+.progress-bar { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-mid)); width: 0%; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+.stat-chips { display: flex; gap: 10px; flex-wrap: wrap; }
+.stat-chip { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 4px 12px; font-size: 12px; font-weight: 500; }
+
+/* Steering Timeline */
+.steering-timeline { position: relative; padding-left: 20px; }
+.steering-timeline::before { content: ""; position: absolute; left: 44px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--accent-mid), var(--border)); }
+
+.act-card { display: grid; grid-template-columns: 48px 1fr auto; margin-bottom: 16px; position: relative; }
+.act-dot-col { display: flex; flex-direction: column; align-items: center; z-index: 2; padding-top: 16px; }
+.act-dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--border); background: var(--bg); transition: all 0.3s; }
+.time-label { font-size: 11px; color: var(--text-muted); margin-top: 4px; font-variant-numeric: tabular-nums; }
+
+.act-card-body { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden; margin: 0 16px; }
+.act-card-body:hover { border-color: var(--accent-mid); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+.act-card-body::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 0; transition: width 0.2s; }
+
+.act-title { font-weight: 600; font-size: 15px; margin-bottom: 4px; }
+.act-outcome { color: var(--text-muted); font-size: 13px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 12px; }
+
+.act-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.act-chip { font-size: 11px; padding: 2px 8px; border-radius: 12px; display: inline-flex; align-items: center; gap: 4px; }
+.act-target { background: var(--accent-light); color: var(--accent); }
+.overlap-badge { background: linear-gradient(90deg, #fef3c7, #fde68a); color: var(--warning); border: 1px solid #fcd34d; }
+.act-insight-chip { background: #f3e8ff; color: #7e22ce; }
+.act-people-chip { background: #f1f5f9; color: #475569; }
+.act-note-chip { background: #f1f5f9; color: #475569; }
+.act-rating-chip { color: #f59e0b; }
+
+.act-status-col { padding-top: 12px; }
+.status-btn { width: 44px; height: 44px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid var(--border); background: var(--surface); transition: all 0.2s; }
+.status-btn:hover { background: var(--bg); }
+.status-icon { font-size: 16px; margin-bottom: 2px; }
+.status-label { font-size: 9px; text-transform: uppercase; font-weight: bold; }
+
+/* Status States */
+.act-card[data-status="planned"] .act-dot { border-color: var(--border); background: var(--bg); }
+
+.act-card[data-status="inprogress"] .act-dot { border-color: var(--warning); background: #fef3c7; animation: dotPulse 2s infinite; }
+.act-card[data-status="inprogress"] .act-card-body { background: linear-gradient(to right, #fffbeb, var(--surface)); }
+.act-card[data-status="inprogress"] .act-card-body::before { width: 3.5px; background: linear-gradient(to bottom, #f59e0b, #fbbf24); }
+.act-card[data-status="inprogress"] .status-btn { border-color: var(--warning); color: var(--warning); }
+
+.act-card[data-status="completed"] .act-dot { border-color: var(--success); background: var(--success); }
+.act-card[data-status="completed"] .act-card-body { background: linear-gradient(to right, #f0fdf4, var(--surface)); }
+.act-card[data-status="completed"] .act-card-body::before { width: 3.5px; background: linear-gradient(to bottom, #10b981, #34d399); }
+.act-card[data-status="completed"] .status-btn { border-color: var(--success); color: var(--success); }
+
+.act-card[data-status="skipped"] { opacity: 0.55; }
+.act-card[data-status="skipped"] .act-dot { border-color: var(--text-faint); background: var(--text-faint); }
+.act-card[data-status="skipped"] .act-title { text-decoration: line-through; }
+.act-card[data-status="skipped"] .status-btn { border-color: var(--text-faint); color: var(--text-faint); }
+
+@keyframes dotPulse {
+  0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
+  70% { box-shadow: 0 0 0 6px rgba(245, 158, 11, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+}
+@keyframes checkPop {
+  0% { transform: scale(0.5); opacity: 0; }
+  60% { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+.act-card.status-completed .status-icon { animation: checkPop 0.3s ease forwards; }
+
+
+/* Modals */
+dialog { margin: auto; padding: 24px; border: none; border-radius: var(--radius-lg); box-shadow: 0 10px 25px rgba(0,0,0,0.2); max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto; }
+dialog::backdrop { background: rgba(0,0,0,0.5); backdrop-filter: blur(2px); }
+.dialog-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.dialog-header h3 { font-size: 18px; }
+.close-btn { font-size: 20px; padding: 4px 8px; border-radius: 4px; }
+.close-btn:hover { background: var(--bg); }
+
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; margin-bottom: 6px; font-weight: 500; font-size: 13px; color: var(--text-muted); }
+.meta-info { background: var(--bg); padding: 12px; border-radius: var(--radius); margin-bottom: 20px; font-size: 13px; }
+.meta-info p { margin-bottom: 4px; }
+.meta-info strong { color: var(--text); }
+
+/* Toggle */
+.toggle-row { display: flex; justify-content: space-between; align-items: center; }
+.toggle-switch { position: relative; width: 44px; height: 24px; background: var(--border); border-radius: 12px; cursor: pointer; transition: 0.3s; }
+.toggle-switch.on { background: var(--success); }
+.toggle-switch::after { content: ""; position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; background: white; border-radius: 50%; transition: 0.3s; }
+.toggle-switch.on::after { left: 22px; }
+
+/* Sticky Save Bar */
+.sticky-save-bar { position: sticky; bottom: -24px; left: -24px; right: -24px; background: var(--surface); padding: 16px 24px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; align-items: center; margin-top: 24px; width: calc(100% + 48px); }
+.save-status { font-size: 12px; color: var(--text-muted); margin-right: 16px; }
+.btn-primary { background: var(--accent); color: white; padding: 8px 16px; border-radius: var(--radius); font-weight: 500; }
+.btn-primary:hover { background: var(--accent-mid); }
+
+/* Quick Note FAB */
+.fab { position: fixed; bottom: 30px; right: 30px; width: 56px; height: 56px; border-radius: 28px; background: var(--accent); color: white; font-size: 24px; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: 0.2s; z-index: 90; }
+.fab:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.3); }
+
+/* End of Day Reflection */
+.reflection-section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; margin-top: 30px; margin-bottom: 30px; }
+.reflection-section h3 { margin-bottom: 16px; color: var(--accent); }
+
+/* Networking View */
+.contact-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-top: 20px; }
+.contact-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
+.contact-card h4 { margin-bottom: 4px; }
+.contact-card p { font-size: 13px; color: var(--text-muted); margin-bottom: 8px; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 500; }
+.badge-new { background: #e0e7ff; color: #4338ca; }
+.badge-followup { background: #fef3c7; color: #b45309; }
+.badge-connected { background: #dcfce7; color: #15803d; }
+.badge-done { background: #f3f4f6; color: #4b5563; }
+
+/* Filter Bar */
+.filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+.filter-btn { padding: 4px 12px; border-radius: 16px; border: 1px solid var(--border); background: var(--surface); font-size: 13px; }
+.filter-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+/* Search View */
+.search-container { margin-bottom: 20px; position: relative; }
+.search-container input { padding-left: 36px; height: 44px; font-size: 16px; }
+.search-icon { position: absolute; left: 12px; top: 12px; font-size: 16px; color: var(--text-muted); }
+.search-results { display: flex; flex-direction: column; gap: 16px; }
+.result-group h3 { font-size: 14px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+.result-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px; cursor: pointer; }
+.result-item:hover { border-color: var(--accent-mid); }
+mark { background: #fef08a; color: #854d0e; padding: 0 2px; border-radius: 2px; }
+
+/* Report View */
+.report-actions { display: flex; gap: 12px; margin-bottom: 24px; }
+.report-section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 20px; }
+.report-section h3 { margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+.editable-content { min-height: 60px; outline: none; }
+.editable-content:focus { background: #f8fafc; border-radius: 4px; padding: 4px; }
+
+/* Sync indicator */
+#syncIndicator { transition: all 0.3s; }
+
+/* Toast */
+#toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--text); color: white; padding: 10px 20px; border-radius: 20px; font-size: 14px; transition: transform 0.3s; z-index: 1000; }
+#toast.show { transform: translateX(-50%) translateY(0); }
+
+/* Schedule Note */
+.schedule-note { background: var(--warning-bg); border-left: 4px solid var(--warning); padding: 12px; border-radius: 0 var(--radius) var(--radius) 0; margin-bottom: 20px; font-size: 13px; color: var(--warning); }
+
+@media (max-width: 600px) {
+  .act-card { grid-template-columns: 36px 1fr 40px; }
+  .steering-timeline::before { left: 32px; }
+  .act-card-body { padding: 12px; margin: 0 8px; }
+  .status-btn { width: 36px; height: 36px; }
+  .status-icon { font-size: 14px; }
+  .top-bar { padding: 10px; }
+}
+</style>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+  import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-database.js";
+  
+  // ⚠️ REPLACE THESE WITH YOUR FIREBASE CONFIG (see setup guide below)
+  const firebaseConfig = {
+    apiKey: "PASTE_YOUR_API_KEY",
+    authDomain: "PASTE_YOUR_PROJECT_ID.firebaseapp.com",
+    databaseURL: "https://PASTE_YOUR_PROJECT_ID-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "PASTE_YOUR_PROJECT_ID",
+    storageBucket: "PASTE_YOUR_PROJECT_ID.firebasestorage.app",
+    messagingSenderId: "PASTE_YOUR_SENDER_ID",
+    appId: "PASTE_YOUR_APP_ID"
+  };
+  
+  let db = null;
+  let syncEnabled = false;
+  let isSyncing = false;
+  let lastSyncTime = 0;
+  
+  try {
+    const app = initializeApp(firebaseConfig);
+    db = getDatabase(app);
+    
+    // Check if config is real (not placeholder)
+    if (!firebaseConfig.apiKey.startsWith('PASTE')) {
+      syncEnabled = true;
+      
+      // Listen for remote changes
+      const stateRef = ref(db, 'escrs2026/state');
+      onValue(stateRef, (snapshot) => {
+        const remoteData = snapshot.val();
+        if (!remoteData) return;
+        
+        // Don't overwrite if we just pushed
+        if (Date.now() - lastSyncTime < 2000) return;
+        
+        isSyncing = true;
+        window._escrsState = remoteData;
+        
+        // Merge into localStorage and reload UI
+        localStorage.setItem('escrs2026v3', JSON.stringify(remoteData));
+        
+        // If the app is loaded, update in-memory state
+        if (typeof state !== 'undefined') {
+          Object.assign(state, remoteData);
+          if (typeof renderApp === 'function') {
+            renderApp();
+            if (typeof showView === 'function') {
+              const activeBtn = document.querySelector('.top-bar button.active[data-view]');
+              if (activeBtn) showView(activeBtn.getAttribute('data-view'));
+            }
+          }
+        }
+        
+        isSyncing = false;
+        updateSyncIndicator('synced');
+      });
+      
+      updateSyncIndicator('connected');
+    }
+  } catch(e) {
+    console.log('Firebase not configured yet:', e.message);
+  }
+  
+  // Expose sync function globally
+  window._firebasePush = function(stateObj) {
+    if (!syncEnabled || !db || isSyncing) return;
+    lastSyncTime = Date.now();
+    const stateRef = ref(db, 'escrs2026/state');
+    set(stateRef, stateObj).then(() => {
+      updateSyncIndicator('synced');
+    }).catch(err => {
+      console.error('Sync error:', err);
+      updateSyncIndicator('error');
+    });
+  };
+  
+  function updateSyncIndicator(status) {
+    const el = document.getElementById('syncIndicator');
+    if (!el) return;
+    if (status === 'synced') {
+      el.innerHTML = '🟢 Synced';
+      el.style.color = '#16803c';
+    } else if (status === 'connected') {
+      el.innerHTML = '🔵 Connected';
+      el.style.color = '#1a56a0';
+    } else if (status === 'error') {
+      el.innerHTML = '🔴 Sync error';
+      el.style.color = '#991b1b';
+    }
+    el.style.display = 'inline-block';
+  }
+</script>
+</head>
+<body>
+<nav class="top-bar" id="topNav">
+  <h1>ESCRS 2026</h1>
+  <button data-view="day0" class="active">Day 1</button>
+  <button data-view="day1">Day 2</button>
+  <button data-view="day2">Day 3</button>
+  <button data-view="day3">Day 4</button>
+  <button data-view="day4">Day 5</button>
+  <div class="nav-actions"><span id="syncIndicator" style="display:none;font-size:11px;font-weight:600;padding:4px 8px;border-radius:12px;background:var(--bg);white-space:nowrap"></span>
+    <button data-view="network">Network</button>
+    <button data-view="search">Search</button>
+    <button data-view="report">Report</button>
+    <button onclick="exportData()">Export</button>
+    <button onclick="document.getElementById('importFile').click()">Import</button>
+    <input type="file" id="importFile" style="display:none" accept=".json" onchange="importData(event)">
+  </div>
+</nav>
+
+<main id="mainContent">
+  <!-- Views will be generated here -->
+</main>
+
+<button class="fab" onclick="openQuickNote()">+</button>
+<div id="toast"></div>
+
+<!-- Activity Detail Dialog -->
+<dialog id="activityDialog">
+  <div class="dialog-header">
+    <h3 id="adTitle">Activity</h3>
+    <button class="close-btn" onclick="document.getElementById('activityDialog').close()">&times;</button>
+  </div>
+  <div class="meta-info" id="adMeta"></div>
+  <div id="adOverlapWarning" class="schedule-note" style="display:none"></div>
+  
+  <div class="form-group">
+    <label>What happened?</label>
+    <textarea id="adHappened" oninput="debouncedSaveActivity()"></textarea>
+  </div>
+  <div class="form-group">
+    <label>What did I learn?</label>
+    <textarea id="adLearned" oninput="debouncedSaveActivity()"></textarea>
+  </div>
+  <div class="form-group">
+    <label>Key insight</label>
+    <input type="text" id="adInsight" oninput="debouncedSaveActivity()">
+  </div>
+  <div class="form-group">
+    <label>Who did I meet?</label>
+    <div id="adPeopleList"></div>
+    <button class="btn-primary" style="margin-top:8px" onclick="addPersonToActivity()">+ Add Person</button>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+    <div class="form-group">
+      <label>Follow-up / next action</label>
+      <input type="text" id="adFollowUp" oninput="debouncedSaveActivity()">
+    </div>
+    <div class="form-group">
+      <label>Idea / opportunity</label>
+      <input type="text" id="adIdea" oninput="debouncedSaveActivity()" placeholder="Optional">
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+    <div class="form-group toggle-row" style="margin-bottom:0;gap:8px">
+      <label style="margin-bottom:0;font-size:13px">Share with clinic</label>
+      <div class="toggle-switch" id="adShareToggle" onclick="toggleShareClinic()"></div>
+    </div>
+    <div class="form-group" style="margin-bottom:0;flex:1;min-width:120px">
+      <select id="adRating" onchange="debouncedSaveActivity()" style="height:36px">
+        <option value="0">★ Rating</option><option value="1">★</option><option value="2">★★</option><option value="3">★★★</option><option value="4">★★★★</option><option value="5">★★★★★</option>
+      </select>
+    </div>
+  </div>
+  
+  <div class="sticky-save-bar">
+    <span class="save-status" id="adSaveStatus">All changes saved locally</span>
+    <button class="btn-primary" onclick="document.getElementById('activityDialog').close()">Done</button>
+  </div>
+</dialog>
+
+<!-- Quick Note Dialog -->
+<dialog id="quickNoteDialog">
+  <div class="dialog-header">
+    <h3>Quick Note</h3>
+    <button class="close-btn" onclick="document.getElementById('quickNoteDialog').close()">&times;</button>
+  </div>
+  <div class="form-group">
+    <label>Note</label>
+    <textarea id="qnNote" style="min-height: 120px"></textarea>
+  </div>
+  <div class="form-group">
+    <label>Related Day</label>
+    <select id="qnDay" onchange="updateQnActivities()">
+      <option value="">None</option><option value="0">Day 1</option><option value="1">Day 2</option><option value="2">Day 3</option><option value="3">Day 4</option><option value="4">Day 5</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label>Related Activity</label>
+    <select id="qnActivity"><option value="">None</option></select>
+  </div>
+  <div class="form-group">
+    <label>Person / Company</label>
+    <input type="text" id="qnPerson">
+  </div>
+  <div class="form-group">
+    <label>Tags</label>
+    <div style="display:flex; flex-wrap:wrap; gap:8px" id="qnTags">
+      <label><input type="checkbox" value="Learning"> Learning</label>
+      <label><input type="checkbox" value="AI"> AI</label>
+      <label><input type="checkbox" value="Technology"> Technology</label>
+      <label><input type="checkbox" value="Networking"> Networking</label>
+      <label><input type="checkbox" value="Market"> Market</label>
+      <label><input type="checkbox" value="Patient"> Patient</label>
+      <label><input type="checkbox" value="Clinic"> Clinic</label>
+      <label><input type="checkbox" value="Follow-up"> Follow-up</label>
+    </div>
+  </div>
+  <button class="btn-primary" style="width:100%" onclick="saveQuickNote()">Save Note</button>
+</dialog>
+
+<!-- Contact Dialog -->
+<dialog id="contactDialog" style="max-width:560px">
+  <div class="dialog-header">
+    <h3 id="cdTitle">Add Contact</h3>
+    <button class="close-btn" onclick="document.getElementById('contactDialog').close()">&times;</button>
+  </div>
+  <div id="cdBody">
+    <div class="form-group">
+      <label>Name *</label>
+      <input type="text" id="cdName" placeholder="Full name">
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="form-group">
+        <label>Organisation</label>
+        <input type="text" id="cdOrg" placeholder="Company / hospital">
+      </div>
+      <div class="form-group">
+        <label>Role</label>
+        <input type="text" id="cdRole" placeholder="Job title">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Where did we meet?</label>
+      <input type="text" id="cdWhere" placeholder="Session, booth, dinner...">
+    </div>
+    <div class="form-group">
+      <label>What did we discuss / what did I learn?</label>
+      <textarea id="cdLearned" style="min-height:60px" placeholder="Key takeaway from conversation..."></textarea>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="form-group">
+        <label>Follow-up action</label>
+        <input type="text" id="cdFollowUp" placeholder="Next step...">
+      </div>
+      <div class="form-group">
+        <label>Contact details</label>
+        <input type="text" id="cdContact" placeholder="Email / LinkedIn">
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="form-group">
+        <label>Category</label>
+        <select id="cdCategory">
+          <option>Clinician</option><option>Industry</option><option>Technology</option><option>AI</option><option>Innovation</option><option selected>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Status</label>
+        <select id="cdStatus">
+          <option selected>New</option><option>Follow up</option><option>Connected</option><option>Done</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- BUSINESS CARD PHOTO -->
+    <div class="form-group">
+      <label style="margin-bottom:8px">Business Card Photo</label>
+      <div id="cdCardPreview" style="display:none;margin-bottom:10px;position:relative">
+        <img id="cdCardImg" style="width:100%;border-radius:var(--radius);border:1px solid var(--border)" alt="Business card">
+        <button onclick="removeCardPhoto()" style="position:absolute;top:6px;right:6px;background:rgba(0,0,0,0.6);color:white;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:14px">&times;</button>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <label class="btn-primary" style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;padding:8px 14px;border-radius:var(--radius);font-size:13px">
+          📷 Take Photo
+          <input type="file" accept="image/*" capture="environment" onchange="handleCardPhoto(this)" style="display:none">
+        </label>
+        <label style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;padding:8px 14px;border-radius:var(--radius);font-size:13px;background:var(--bg);border:1px solid var(--border)">
+          📁 Choose File
+          <input type="file" accept="image/*" onchange="handleCardPhoto(this)" style="display:none">
+        </label>
+      </div>
+      <p style="font-size:11px;color:var(--text-faint);margin-top:6px">Photo saved locally in your browser — no upload to any server.</p>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:16px;padding-top:12px;border-top:1px solid var(--border)">
+    <button id="cdDeleteBtn" class="btn-primary" style="background:var(--danger);margin-right:auto;display:none" onclick="deleteContact()">Delete</button>
+    <button style="padding:8px 16px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface)" onclick="document.getElementById('contactDialog').close()">Cancel</button>
+    <button class="btn-primary" onclick="saveContact()">Save Contact</button>
+  </div>
+</dialog>
+
+<script>
+const STATE_KEY = 'escrs2026v3';
+let state = {
+  activities: {},
+  quickNotes: [],
+  contacts: [],
+  reflections: { 0:{}, 1:{}, 2:{}, 3:{}, 4:{} },
+  report: { editedSections: {} }
+};
+
+const data = [
+  {
+    dayIdx: 0, title: "DAY 1 — FRIDAY 11 SEPTEMBER", focus: "Learning + networking",
+    activities: [
+      { id: "d0a0", time: "09:00–12:30", name: "iNovation® Day", outcome: "Understand emerging technologies AI and new directions in eye care", target: "5 useful insights" },
+      { id: "d0a1", time: "12:30–14:00", name: "Networking — lunch / congress", outcome: "Meet clinicians industry professionals and innovators", target: "3–5 meaningful conversations" },
+      { id: "d0a2", time: "14:00–14:45", name: "Exhibition exploration", outcome: "Get an overview of relevant companies / technologies to revisit", target: "Priority shortlist" },
+      { id: "d0a3", time: "14:45–16:00", name: "Legends of the Lens", outcome: "Understand how cataract and glaucoma care connect and what is changing", target: "3 takeaways" },
+      { id: "d0a4", time: "16:00–17:00", name: "IME: Refractive Surgery", outcome: "Understand current refractive developments trends and patient outcomes", target: "3 insights" },
+      { id: "d0a5", time: "17:00+", name: "Networking — end of day", outcome: "Deepen the strongest conversations from the day", target: "2 quality follow-ups" }
+    ]
+  },
+  {
+    dayIdx: 1, title: "DAY 2 — SATURDAY 12 SEPTEMBER", focus: "MIGS + surgical learning + Rayner dinner",
+    activities: [
+      { id: "d1a0", time: "09:00–12:00", name: "Modern MIGS Techniques NOT Using Implants", outcome: "Learn the selected MIGS content and capture practical insights", target: "Key notes + 3 takeaways" },
+      { id: "d1a1", time: "12:00–13:00", name: "Networking — lunch / exhibition", outcome: "Discuss the morning learning and meet new professionals", target: "3 conversations" },
+      { id: "d1a2", time: "13:00–14:00", name: "IME: Complex Phaco", outcome: "Understand developments and innovations in complex cataract surgery", target: "3 insights" },
+      { id: "d1a3", time: "14:30–16:45", name: "Near-Live Surgery", outcome: "Connect clinical decision-making with technology and outcomes", target: "3 takeaways" },
+      { id: "d1a4", time: "16:45–17:30", name: "Exhibition / technology exploration", outcome: "Revisit the most relevant companies from the first two days", target: "2 technologies to investigate" },
+      { id: "d1a5", time: "18:30+", name: "Rayner UK ESCRS Dinner", outcome: "Informal professional networking and relationship building", target: "3–5 conversations", note: "Location: Roe Canary Wharf" }
+    ]
+  },
+  {
+    dayIdx: 2, title: "DAY 3 — SUNDAY 13 SEPTEMBER", focus: "MIGS (implants) + AI Summit + World Café + Lift Off",
+    activities: [
+      { id: "d2a0", time: "09:00–12:00", name: "Modern MIGS Techniques USING Implants", outcome: "Compare the implant and non-implant approaches", target: "3 comparison insights", overlap: true, overlapNote: "Overlaps with AI Summit (10:15–12:00) — choose one" },
+      { id: "d2a1", time: "10:15–12:00", name: "AI Summit", outcome: "Understand practical AI applications limitations and direction in ophthalmology", target: "5 AI insights", overlap: true, overlapNote: "Overlaps with MIGS Implants (09:00–12:00) — choose one" },
+      { id: "d2a2", time: "12:00–13:30", name: "Networking — lunch / exhibition", outcome: "Exchange views on AI surgery and technology", target: "3–5 conversations" },
+      { id: "d2a3", time: "13:30–15:30", name: "Digital / AI / diagnostics exhibition", outcome: "Identify technologies worth understanding further", target: "3 relevant solutions" },
+      { id: "d2a4", time: "15:30–17:00", name: "Targeted sessions / exhibition", outcome: "Follow themes that emerged during the day", target: "2 new insights" },
+      { id: "d2a5", time: "17:00–18:20", name: "World Café: Refractive", outcome: "Interactive discussion and expert perspectives on refractive care", target: "3 perspectives" },
+      { id: "d2a6", time: "18:00–22:30", name: "Lift Off in London 2026", outcome: "Informal evening networking and relationship building", target: "3–5 conversations" }
+    ]
+  },
+  {
+    dayIdx: 3, title: "DAY 4 — MONDAY 14 SEPTEMBER", focus: "Targeted sessions + World Café: Cornea + daily reflection",
+    activities: [
+      { id: "d3a0", time: "09:00–10:45", name: "Targeted clinical sessions / exhibition", outcome: "Fill knowledge gaps from Days 1–3", target: "2 answers" },
+      { id: "d3a1", time: "11:00–12:20", name: "World Café: Cornea", outcome: "Interactive discussion with experts and peers", target: "3 perspectives" },
+      { id: "d3a2", time: "12:20–13:00", name: "Networking — lunch", outcome: "Reconnect with people from previous days and meet new professionals", target: "3 conversations" },
+      { id: "d3a3", time: "13:00–14:00", name: "IME: Digital Operating Room", outcome: "Understand digital OR workflow technology and future practice", target: "3 insights" },
+      { id: "d3a4", time: "14:00–17:00", name: "Networking + exhibition", outcome: "Explore relevant companies and build professional relationships", target: "5 conversations" },
+      { id: "d3a5", time: "17:00+", name: "Daily reflection", outcome: "Consolidate the strongest themes and people from the congress so far", target: "Top 5 insights" }
+    ]
+  },
+  {
+    dayIdx: 4, title: "DAY 5 — TUESDAY 15 SEPTEMBER", focus: "Final sessions + debrief + close",
+    activities: [
+      { id: "d4a0", time: "08:30–10:00", name: "Delivering Safe Cataract Surgery in Low-Resource Settings", outcome: "Learn lessons around safety efficiency adaptability and access", target: "3 lessons" },
+      { id: "d4a1", time: "10:00–11:00", name: "Networking — coffee", outcome: "Final professional conversations and follow-ups", target: "2–3 contacts" },
+      { id: "d4a2", time: "11:00–13:00", name: "Targeted final sessions / exhibition", outcome: "Close remaining learning gaps", target: "2 insights" },
+      { id: "d4a3", time: "13:00–14:00", name: "Networking — final lunch", outcome: "Close conversations and exchange contacts where relevant", target: "Final connections" },
+      { id: "d4a4", time: "14:00–15:00", name: "Personal ESCRS debrief", outcome: "Turn the week into clear insights and relevant recommendations", target: "3–5 recommendations" },
+      { id: "d4a5", time: "15:00+", name: "Close / organise notes", outcome: "Clean up notes and follow-up list while everything is fresh", target: "Ready-to-report notes" }
+    ]
+  }
+];
+
+// Initialize
+function init() {
+  const saved = localStorage.getItem(STATE_KEY);
+  if (saved) {
+    try { state = JSON.parse(saved); } catch (e) { console.error("Corrupt state"); }
+  }
+  
+  // ensure all activities exist in state
+  data.forEach(d => {
+    d.activities.forEach(a => {
+      if (!state.activities[a.id]) {
+        state.activities[a.id] = { status: 'planned', whatHappened: '', whatLearned: '', keyInsight: '', people: [], idea: '', relevance: '', followUp: '', shareWithClinic: false, rating: 0, attachments: [] };
+      }
+    });
+  });
+  saveState();
+  renderApp();
+  
+  // Navigation
+  document.querySelectorAll('.top-bar button[data-view]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      document.querySelectorAll('.top-bar button[data-view]').forEach(b => b.classList.remove('active'));
+      e.target.classList.add('active');
+      const view = e.target.getAttribute('data-view');
+      showView(view);
+    });
+  });
+  showView('day0');
+  
+  // Shortcuts
+  document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'q') {
+      e.preventDefault();
+      openQuickNote();
+    }
+  });
+}
+
+function saveState() {
+  localStorage.setItem(STATE_KEY, JSON.stringify(state));
+  // Push to Firebase if connected
+  if (typeof window._firebasePush === 'function') {
+    window._firebasePush(state);
+  }
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.innerText = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+function showView(viewId) {
+  document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+  const el = document.getElementById('view-' + viewId);
+  if (el) el.classList.add('active');
+  if (viewId === 'network') renderNetwork();
+  if (viewId === 'report') renderReport();
+}
+
+function renderApp() {
+  const main = document.getElementById('mainContent');
+  let html = '';
+  
+  // Render Days
+  data.forEach(d => {
+    const total = d.activities.length;
+    const completed = d.activities.filter(a => state.activities[a.id].status === 'completed').length;
+    const progress = Math.round((completed / total) * 100);
+    
+    html += `<div id="view-day${d.dayIdx}" class="view-section">
+      <div class="day-header">
+        <h2>${d.title}</h2>
+        <p><strong>Focus:</strong> ${d.focus}</p>
+        <div class="progress-bar-container"><div class="progress-bar" id="prog-day${d.dayIdx}" style="width: ${progress}%"></div></div>
+        <div class="stat-chips">
+          <div class="stat-chip">Activities: ${total}</div>
+          <div class="stat-chip" id="stat-comp-day${d.dayIdx}">Completed: ${completed}</div>
+        </div>
+      </div>
+      
+      <div class="steering-timeline">`;
+      
+    d.activities.forEach(a => {
+      const s = state.activities[a.id];
+      html += `<div class="act-card" id="card-${a.id}" data-status="${s.status}">
+        <div class="act-dot-col">
+          <div class="act-dot"></div>
+          <div class="time-label">${a.time.split('–')[0]}</div>
+        </div>
+        <div class="act-card-body" onclick="openActivity('${a.id}')">
+          <div class="act-title">${a.name}</div>
+          <div class="act-outcome">${a.outcome}</div>
+          <div class="act-chips" id="chips-${a.id}">
+            <!-- Chips rendered by updateCardChips -->
+          </div>
+        </div>
+        <div class="act-status-col">
+          <button class="status-btn" onclick="cycleStatus('${a.id}', event)">
+            <div class="status-icon" id="s-icon-${a.id}"></div>
+            <div class="status-label" id="s-label-${a.id}"></div>
+          </button>
+        </div>
+      </div>`;
+    });
+    
+    html += `</div>
+      <div class="reflection-section">
+        <h3>End of Day Reflection</h3>
+        <div class="form-group"><label>Top 3 things I learned</label><textarea oninput="saveReflection(${d.dayIdx}, 'learned')" id="ref-${d.dayIdx}-learned">${state.reflections[d.dayIdx].learned || ''}</textarea></div>
+        <div class="form-group"><label>Most interesting person I met</label><textarea oninput="saveReflection(${d.dayIdx}, 'person')" id="ref-${d.dayIdx}-person">${state.reflections[d.dayIdx].person || ''}</textarea></div>
+        <div class="form-group"><label>Most interesting technology / idea</label><textarea oninput="saveReflection(${d.dayIdx}, 'tech')" id="ref-${d.dayIdx}-tech">${state.reflections[d.dayIdx].tech || ''}</textarea></div>
+        <div class="form-group"><label>What surprised me?</label><textarea oninput="saveReflection(${d.dayIdx}, 'surprised')" id="ref-${d.dayIdx}-surprised">${state.reflections[d.dayIdx].surprised || ''}</textarea></div>
+        <div class="form-group"><label>What do I want to investigate tomorrow?</label><textarea oninput="saveReflection(${d.dayIdx}, 'tomorrow')" id="ref-${d.dayIdx}-tomorrow">${state.reflections[d.dayIdx].tomorrow || ''}</textarea></div>
+        <div class="form-group"><label>What should potentially be shared with the clinic?</label><textarea oninput="saveReflection(${d.dayIdx}, 'clinic')" id="ref-${d.dayIdx}-clinic">${state.reflections[d.dayIdx].clinic || ''}</textarea></div>
+      </div>
+    </div>`;
+  });
+  
+  // Other views
+  html += `<div id="view-network" class="view-section">
+    <div style="display:flex;justify-content:space-between;margin-bottom:20px">
+      <h2>Network</h2>
+      <button class="btn-primary" onclick="openContactDialog()">+ Add Contact</button>
+    </div>
+    <div class="filter-bar" id="networkFilters">
+      <button class="filter-btn active" onclick="setNetworkFilter('All')">All</button>
+      <button class="filter-btn" onclick="setNetworkFilter('Clinician')">Clinician</button>
+      <button class="filter-btn" onclick="setNetworkFilter('Industry')">Industry</button>
+      <button class="filter-btn" onclick="setNetworkFilter('Technology')">Technology</button>
+      <button class="filter-btn" onclick="setNetworkFilter('AI')">AI</button>
+      <button class="filter-btn" onclick="setNetworkFilter('Innovation')">Innovation</button>
+      <button class="filter-btn" onclick="setNetworkFilter('Other')">Other</button>
+    </div>
+    <div class="contact-grid" id="contactGrid"></div>
+  </div>`;
+  
+  html += `<div id="view-search" class="view-section">
+    <div class="search-container">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" placeholder="Search notes, insights, people..." oninput="performSearch()">
+    </div>
+    <div id="searchResults" class="search-results"></div>
+  </div>`;
+  
+  html += `<div id="view-report" class="view-section">
+    <h2>Congress Report</h2>
+    <div class="report-actions">
+      <button class="btn-primary" onclick="generateReport()">Generate / Refresh Report</button>
+      <button class="btn-primary" onclick="copyReport()">Copy to Clipboard</button>
+      <button class="btn-primary" onclick="window.print()">Export PDF</button>
+    </div>
+    <div id="reportContent"></div>
+  </div>`;
+  
+  main.innerHTML = html;
+  
+  // Post render updates
+  data.forEach(d => {
+    d.activities.forEach(a => {
+      refreshCard(a.id);
+    });
+  });
+}
+
+function getStatusInfo(status) {
+  if (status === 'planned') return { icon: '○', label: 'Plan' };
+  if (status === 'inprogress') return { icon: '◔', label: 'Doing' };
+  if (status === 'completed') return { icon: '✓', label: 'Done' };
+  if (status === 'skipped') return { icon: '‒', label: 'Skip' };
+  return { icon: '○', label: 'Plan' };
+}
+
+function cycleStatus(aid, e) {
+  e.stopPropagation();
+  const statuses = ['planned', 'inprogress', 'completed', 'skipped'];
+  const s = state.activities[aid];
+  const idx = statuses.indexOf(s.status);
+  s.status = statuses[(idx + 1) % statuses.length];
+  saveState();
+  refreshCard(aid);
+  updateDayProgress(aid);
+}
+
+function refreshCard(aid) {
+  const card = document.getElementById('card-' + aid);
+  const s = state.activities[aid];
+  if (!card) return;
+  card.setAttribute('data-status', s.status);
+  
+  const info = getStatusInfo(s.status);
+  document.getElementById('s-icon-' + aid).innerText = info.icon;
+  document.getElementById('s-label-' + aid).innerText = info.label;
+  
+  // update chips
+  let act = null;
+  data.forEach(d => d.activities.forEach(a => { if(a.id === aid) act = a; }));
+  
+  let chipsHtml = `<span class="act-chip act-target">◎ ${act.target}</span>`;
+  if (act.overlap) chipsHtml += `<span class="act-chip overlap-badge">⚠ Overlap</span>`;
+  if (s.keyInsight) chipsHtml += `<span class="act-chip act-insight-chip">💡 ${s.keyInsight}</span>`;
+  if (s.people && s.people.length > 0) chipsHtml += `<span class="act-chip act-people-chip">👤 ${s.people.length}</span>`;
+  if (act.note) chipsHtml += `<span class="act-chip act-note-chip">📍 ${act.note}</span>`;
+  if (s.rating > 0) chipsHtml += `<span class="act-chip act-rating-chip">★ ${s.rating}</span>`;
+  
+  document.getElementById('chips-' + aid).innerHTML = chipsHtml;
+}
+
+function updateDayProgress(aid) {
+  let dayIdx = -1;
+  data.forEach(d => d.activities.forEach(a => { if(a.id === aid) dayIdx = d.dayIdx; }));
+  if (dayIdx === -1) return;
+  
+  const d = data[dayIdx];
+  const total = d.activities.length;
+  const completed = d.activities.filter(a => state.activities[a.id].status === 'completed').length;
+  const progress = Math.round((completed / total) * 100);
+  
+  document.getElementById('prog-day' + dayIdx).style.width = progress + '%';
+  document.getElementById('stat-comp-day' + dayIdx).innerText = `Completed: ${completed}`;
+}
+
+let currentActivityId = null;
+let saveTimeout = null;
+
+function openActivity(aid) {
+  currentActivityId = aid;
+  const s = state.activities[aid];
+  let act = null;
+  data.forEach(d => d.activities.forEach(a => { if(a.id === aid) act = a; }));
+  
+  document.getElementById('adTitle').innerText = act.name;
+  document.getElementById('adMeta').innerHTML = `<p><strong>Time:</strong> ${act.time}</p><p><strong>Target:</strong> ${act.target}</p><p><strong>Outcome:</strong> ${act.outcome}</p>`;
+  
+  const overlapWarning = document.getElementById('adOverlapWarning');
+  if (act.overlap) {
+    overlapWarning.style.display = 'block';
+    overlapWarning.innerText = act.overlapNote;
+  } else {
+    overlapWarning.style.display = 'none';
+  }
+  
+  document.getElementById('adHappened').value = s.whatHappened || '';
+  document.getElementById('adLearned').value = s.whatLearned || '';
+  document.getElementById('adInsight').value = s.keyInsight || '';
+  document.getElementById('adIdea').value = s.idea || '';
+
+  document.getElementById('adFollowUp').value = s.followUp || '';
+  document.getElementById('adRating').value = s.rating || '0';
+  
+  const tgl = document.getElementById('adShareToggle');
+  if (s.shareWithClinic) tgl.classList.add('on');
+  else tgl.classList.remove('on');
+  
+  renderActivityPeople();
+  document.getElementById('activityDialog').showModal();
+}
+
+function toggleShareClinic() {
+  const tgl = document.getElementById('adShareToggle');
+  tgl.classList.toggle('on');
+  debouncedSaveActivity();
+}
+
+function debouncedSaveActivity() {
+  document.getElementById('adSaveStatus').innerText = 'Saving...';
+  clearTimeout(saveTimeout);
+  saveTimeout = setTimeout(() => {
+    const aid = currentActivityId;
+    const s = state.activities[aid];
+    s.whatHappened = document.getElementById('adHappened').value;
+    s.whatLearned = document.getElementById('adLearned').value;
+    s.keyInsight = document.getElementById('adInsight').value;
+    s.idea = document.getElementById('adIdea').value;
+    s.relevance = s.relevance || '';  // preserve if exists
+    s.followUp = document.getElementById('adFollowUp').value;
+    s.rating = parseInt(document.getElementById('adRating').value) || 0;
+    s.shareWithClinic = document.getElementById('adShareToggle').classList.contains('on');
+    
+    // Auto-update status to inprogress if it was planned and user typed something
+    if (s.status === 'planned' && (s.whatHappened || s.whatLearned || s.keyInsight)) {
+      s.status = 'inprogress';
+    }
+    
+    saveState();
+    refreshCard(aid);
+    updateDayProgress(aid);
+    document.getElementById('adSaveStatus').innerText = 'All changes saved locally';
+  }, 1000);
+}
+
+function renderActivityPeople() {
+  const s = state.activities[currentActivityId];
+  let html = '';
+  (s.people || []).forEach((p, idx) => {
+    html += `<div style="background:var(--surface); border:1px solid var(--border); padding:10px; margin-bottom:10px; border-radius:var(--radius)">
+      <input type="text" placeholder="Name" value="${p.name || ''}" onchange="updatePerson(${idx}, 'name', this.value)" style="margin-bottom:8px">
+      <input type="text" placeholder="Organisation / Role" value="${p.org || ''}" onchange="updatePerson(${idx}, 'org', this.value)" style="margin-bottom:8px">
+      <input type="text" placeholder="What did we discuss?" value="${p.discussed || ''}" onchange="updatePerson(${idx}, 'discussed', this.value)" style="margin-bottom:8px">
+      <button class="btn-primary" style="background:var(--danger)" onclick="removePerson(${idx})">Remove</button>
+    </div>`;
+  });
+  document.getElementById('adPeopleList').innerHTML = html;
+}
+
+function addPersonToActivity() {
+  const s = state.activities[currentActivityId];
+  if (!s.people) s.people = [];
+  s.people.push({});
+  renderActivityPeople();
+  debouncedSaveActivity();
+}
+
+function updatePerson(idx, field, val) {
+  state.activities[currentActivityId].people[idx][field] = val;
+  debouncedSaveActivity();
+}
+
+function removePerson(idx) {
+  state.activities[currentActivityId].people.splice(idx, 1);
+  renderActivityPeople();
+  debouncedSaveActivity();
+}
+
+function saveReflection(dayIdx, field) {
+  state.reflections[dayIdx][field] = document.getElementById(`ref-${dayIdx}-${field}`).value;
+  saveState();
+}
+
+// Quick Notes
+function openQuickNote() {
+  document.getElementById('qnNote').value = '';
+  document.getElementById('qnPerson').value = '';
+  document.getElementById('qnDay').value = '';
+  document.getElementById('qnActivity').innerHTML = '<option value="">None</option>';
+  document.querySelectorAll('#qnTags input').forEach(cb => cb.checked = false);
+  document.getElementById('quickNoteDialog').showModal();
+}
+
+function updateQnActivities() {
+  const dayIdx = document.getElementById('qnDay').value;
+  const sel = document.getElementById('qnActivity');
+  sel.innerHTML = '<option value="">None</option>';
+  if (dayIdx !== '') {
+    data[dayIdx].activities.forEach(a => {
+      sel.innerHTML += `<option value="${a.id}">${a.name}</option>`;
+    });
+  }
+}
+
+function saveQuickNote() {
+  const tags = [];
+  document.querySelectorAll('#qnTags input:checked').forEach(cb => tags.push(cb.value));
+  const note = {
+    id: 'qn_' + Date.now(),
+    text: document.getElementById('qnNote').value,
+    day: document.getElementById('qnDay').value,
+    activity: document.getElementById('qnActivity').value,
+    person: document.getElementById('qnPerson').value,
+    tags: tags,
+    date: new Date().toISOString()
+  };
+  state.quickNotes.push(note);
+  saveState();
+  document.getElementById('quickNoteDialog').close();
+  showToast('Quick note saved');
+}
+
+// Network
+let currentNetworkFilter = 'All';
+
+function renderNetwork() {
+  const grid = document.getElementById('contactGrid');
+  let html = '';
+  
+  let toShow = state.contacts;
+  if (currentNetworkFilter !== 'All') {
+    toShow = toShow.filter(c => c.category === currentNetworkFilter);
+  }
+  
+  toShow.forEach(c => {
+    let badgeClass = 'badge-new';
+    if(c.status === 'Follow up') badgeClass = 'badge-followup';
+    if(c.status === 'Connected') badgeClass = 'badge-connected';
+    if(c.status === 'Done') badgeClass = 'badge-done';
+    
+    html += `<div class="contact-card">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start">
+        <h4>${c.name || 'Unnamed'}</h4>
+        <span class="badge ${badgeClass}">${c.status || 'New'}</span>
+      </div>
+      <p><strong>${c.org || ''}</strong> - ${c.role || ''}</p>
+      <p style="margin-top:8px">${c.learned || ''}</p>
+      <button class="btn-primary" style="margin-top:12px; width:100%" onclick="editContact('${c.id}')">Edit</button>
+    </div>`;
+  });
+  
+  grid.innerHTML = html;
+}
+
+function setNetworkFilter(f) {
+  currentNetworkFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  renderNetwork();
+}
+
+let currentContactId = null;
+let currentCardPhotoData = null;
+
+function editContact(id) {
+  const c = state.contacts.find(x => x.id === id);
+  if (!c) return;
+  currentContactId = id;
+  document.getElementById('cdTitle').innerText = 'Edit Contact';
+  document.getElementById('cdName').value = c.name || '';
+  document.getElementById('cdOrg').value = c.org || '';
+  document.getElementById('cdRole').value = c.role || '';
+  document.getElementById('cdWhere').value = c.where || '';
+  document.getElementById('cdLearned').value = c.learned || '';
+  document.getElementById('cdFollowUp').value = c.followUp || '';
+  document.getElementById('cdContact').value = c.contact || '';
+  document.getElementById('cdCategory').value = c.category || 'Other';
+  document.getElementById('cdStatus').value = c.status || 'New';
+  document.getElementById('cdDeleteBtn').style.display = 'inline-block';
+  
+  // Show existing card photo
+  currentCardPhotoData = c.cardPhoto || null;
+  const preview = document.getElementById('cdCardPreview');
+  const img = document.getElementById('cdCardImg');
+  if (currentCardPhotoData) {
+    img.src = currentCardPhotoData;
+    preview.style.display = 'block';
+  } else {
+    preview.style.display = 'none';
+  }
+  
+  document.getElementById('contactDialog').showModal();
+}
+
+function openContactDialog() {
+  currentContactId = null;
+  currentCardPhotoData = null;
+  document.getElementById('cdTitle').innerText = 'Add Contact';
+  document.getElementById('cdName').value = '';
+  document.getElementById('cdOrg').value = '';
+  document.getElementById('cdRole').value = '';
+  document.getElementById('cdWhere').value = '';
+  document.getElementById('cdLearned').value = '';
+  document.getElementById('cdFollowUp').value = '';
+  document.getElementById('cdContact').value = '';
+  document.getElementById('cdCategory').value = 'Other';
+  document.getElementById('cdStatus').value = 'New';
+  document.getElementById('cdDeleteBtn').style.display = 'none';
+  document.getElementById('cdCardPreview').style.display = 'none';
+  document.getElementById('contactDialog').showModal();
+}
+
+function handleCardPhoto(input) {
+  const file = input.files[0];
+  if (!file) return;
+  
+  // Resize to max 800px to keep localStorage manageable
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const img = new Image();
+    img.onload = function() {
+      const canvas = document.createElement('canvas');
+      const MAX = 800;
+      let w = img.width, h = img.height;
+      if (w > MAX || h > MAX) {
+        if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
+        else { w = Math.round(w * MAX / h); h = MAX; }
+      }
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      currentCardPhotoData = canvas.toDataURL('image/jpeg', 0.7);
+      
+      document.getElementById('cdCardImg').src = currentCardPhotoData;
+      document.getElementById('cdCardPreview').style.display = 'block';
+      showToast('Photo captured');
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+  input.value = '';  // reset so same file can be re-selected
+}
+
+function removeCardPhoto() {
+  currentCardPhotoData = null;
+  document.getElementById('cdCardPreview').style.display = 'none';
+}
+
+function saveContact() {
+  const name = document.getElementById('cdName').value.trim();
+  if (!name) { showToast('Name is required'); return; }
+  
+  const contactData = {
+    id: currentContactId || ('c_' + Date.now()),
+    name: name,
+    org: document.getElementById('cdOrg').value.trim(),
+    role: document.getElementById('cdRole').value.trim(),
+    where: document.getElementById('cdWhere').value.trim(),
+    learned: document.getElementById('cdLearned').value.trim(),
+    followUp: document.getElementById('cdFollowUp').value.trim(),
+    contact: document.getElementById('cdContact').value.trim(),
+    category: document.getElementById('cdCategory').value,
+    status: document.getElementById('cdStatus').value,
+    cardPhoto: currentCardPhotoData
+  };
+  
+  if (currentContactId) {
+    const idx = state.contacts.findIndex(c => c.id === currentContactId);
+    if (idx >= 0) state.contacts[idx] = contactData;
+  } else {
+    state.contacts.push(contactData);
+  }
+  
+  saveState();
+  document.getElementById('contactDialog').close();
+  renderNetwork();
+  showToast('Contact saved');
+}
+
+function deleteContact() {
+  if (!currentContactId) return;
+  if (!confirm('Delete this contact?')) return;
+  state.contacts = state.contacts.filter(c => c.id !== currentContactId);
+  saveState();
+  document.getElementById('contactDialog').close();
+  renderNetwork();
+  showToast('Contact deleted');
+}
+
+// Search
+function performSearch() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const res = document.getElementById('searchResults');
+  if (q.length < 2) { res.innerHTML = ''; return; }
+  
+  let html = '';
+  
+  // search activities
+  let actRes = '';
+  data.forEach(d => {
+    d.activities.forEach(a => {
+      const s = state.activities[a.id];
+      const textToSearch = [a.name, s.whatHappened, s.whatLearned, s.keyInsight, s.idea].join(' ').toLowerCase();
+      if (textToSearch.includes(q)) {
+        actRes += `<div class="result-item" onclick="openActivity('${a.id}')">
+          <strong>${a.name}</strong><br>
+          <span style="font-size:12px; color:var(--text-muted)">${s.keyInsight ? s.keyInsight : 'Matched content'}</span>
+        </div>`;
+      }
+    });
+  });
+  if (actRes) html += `<div class="result-group"><h3>Activities</h3>${actRes}</div>`;
+  
+  res.innerHTML = html || '<p>No results found.</p>';
+}
+
+// Report
+function generateReport() {
+  const content = document.getElementById('reportContent');
+  let html = '';
+  
+  html += `<div class="report-section">
+    <h3>Executive Summary</h3>
+    <div class="editable-content" contenteditable="true" onblur="saveReportSection('exec')">${state.report.editedSections['exec'] || 'Type executive summary here...'}</div>
+  </div>`;
+  
+  let daily = '';
+  data.forEach(d => {
+    let dayHasNotes = false;
+    let dayContent = `<h4>${d.title}</h4><ul>`;
+    d.activities.forEach(a => {
+      const s = state.activities[a.id];
+      if (s.whatLearned || s.keyInsight) {
+        dayHasNotes = true;
+        dayContent += `<li><strong>${a.name}:</strong> ${s.keyInsight || ''} ${s.whatLearned || ''}</li>`;
+      }
+    });
+    dayContent += '</ul>';
+    if (dayHasNotes) daily += dayContent;
+  });
+  
+  html += `<div class="report-section">
+    <h3>Daily Highlights</h3>
+    <div class="editable-content" contenteditable="true" onblur="saveReportSection('daily')">${state.report.editedSections['daily'] || daily}</div>
+  </div>`;
+  
+  content.innerHTML = html;
+}
+
+function saveReportSection(sec) {
+  // mock save
+}
+
+function copyReport() {
+  navigator.clipboard.writeText(document.getElementById('reportContent').innerText);
+  showToast('Copied to clipboard');
+}
+
+// Data Export / Import
+function exportData() {
+  const dataStr = JSON.stringify(state, null, 2);
+  const blob = new Blob([dataStr], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'escrs2026_data.json';
+  a.click();
+}
+
+function importData(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(evt) {
+    try {
+      const obj = JSON.parse(evt.target.result);
+      if (confirm('Replace current data with imported data?')) {
+        state = obj;
+        saveState();
+        location.reload();
+      }
+    } catch (err) {
+      alert('Invalid JSON file');
+    }
+  };
+  reader.readAsText(file);
+}
+
+// Start
+window.onload = init;
+</script>
+</body>
+</html>
