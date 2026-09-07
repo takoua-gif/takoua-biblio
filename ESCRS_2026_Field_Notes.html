@@ -363,7 +363,7 @@ mark { background: #fef08a; color: #854d0e; padding: 0 2px; border-radius: 2px; 
 <body>
 <nav class="top-bar" id="topNav">
   <h1>ESCRS 2026</h1>
-  <span id="syncIndicator" style="display:none;font-size:10px;font-weight:600;padding:3px 6px;border-radius:10px;background:var(--bg);white-space:nowrap;flex-shrink:0"></span>
+  <span id="lastSaved" style="font-size:10px;color:var(--text-faint);white-space:nowrap;flex-shrink:0"></span><span id="syncIndicator" style="display:none;font-size:10px;font-weight:600;padding:3px 6px;border-radius:10px;background:var(--bg);white-space:nowrap;flex-shrink:0"></span>
   <button data-view="day0" class="active">Day 1</button>
   <button data-view="day1">Day 2</button>
   <button data-view="day2">Day 3</button>
@@ -755,6 +755,9 @@ function init() {
   });
   showView('day0');
   
+  // Auto-backup check
+  checkBackupReminder();
+  
   // Shortcuts
   document.addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'q') {
@@ -810,6 +813,12 @@ function saveState() {
   if (typeof window._firebasePush === 'function') {
     window._firebasePush(state);
   }
+  // Update last-saved indicator
+  const now = new Date();
+  const timeStr = now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+  const saveEl = document.getElementById('lastSaved');
+  if (saveEl) saveEl.innerText = 'Saved ' + timeStr;
+  localStorage.setItem('escrs2026_lastSave', now.toISOString());
 }
 
 function showToast(msg) {
@@ -1385,6 +1394,7 @@ function copyReport() {
 
 // Data Export / Import
 function exportData() {
+  localStorage.setItem('escrs2026_lastBackup', new Date().toISOString());
   const dataStr = JSON.stringify(state, null, 2);
   const blob = new Blob([dataStr], { type: "application/json" });
   const url = URL.createObjectURL(blob);
@@ -1579,6 +1589,38 @@ function removeExCardPhoto() {
   currentExCardPhotoData = null;
   document.getElementById('exCardPreview').style.display = 'none';
   debouncedSaveExhibitor();
+}
+
+// Backup reminder
+function checkBackupReminder() {
+  const lastBackup = localStorage.getItem('escrs2026_lastBackup');
+  const hasData = Object.values(state.activities).some(a => a.whatHappened || a.whatLearned || a.keyInsight);
+  if (!hasData) return; // No data to back up yet
+  
+  if (!lastBackup || (Date.now() - new Date(lastBackup).getTime()) > 24*60*60*1000) {
+    // Show gentle reminder after 3 seconds
+    setTimeout(() => {
+      if (confirm('\ud83d\udcbe Backup reminder\n\nYou have unsaved congress notes. Would you like to export a backup now?\n\nThis downloads a JSON file you can import later if anything goes wrong.')) {
+        exportData();
+        localStorage.setItem('escrs2026_lastBackup', new Date().toISOString());
+      }
+    }, 3000);
+  }
+}
+
+// Mark backup done when exporting
+const _origExport = typeof exportData === 'function' ? exportData : null;
+
+// Data integrity: verify on load
+function verifyDataIntegrity() {
+  const saved = localStorage.getItem(STATE_KEY);
+  if (!saved) return false;
+  try {
+    const parsed = JSON.parse(saved);
+    return parsed && parsed.activities && typeof parsed.activities === 'object';
+  } catch(e) {
+    return false;
+  }
 }
 
 // Start
