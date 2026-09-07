@@ -403,6 +403,10 @@ mark { background: #fef08a; color: #854d0e; padding: 0 2px; border-radius: 2px; 
   <div id="adOverlapWarning" class="schedule-note" style="display:none"></div>
   
   <div class="form-group">
+    <label>📍 Room / Hall</label>
+    <input type="text" id="adLocation" placeholder="e.g. Capital Hall, South Gallery Room 22" oninput="debouncedSaveActivity()" style="height:36px">
+  </div>
+  <div class="form-group">
     <label>What happened?</label>
     <textarea id="adHappened" oninput="debouncedSaveActivity()"></textarea>
   </div>
@@ -664,7 +668,7 @@ const data = [
       { id: "d2a0", time: "09:00–12:00", name: "Modern MIGS Techniques USING Implants", outcome: "Compare the implant and non-implant approaches", target: "3 comparison insights", overlap: true, overlapNote: "Overlaps with AI Summit (10:15–12:00) — choose one" },
       { id: "d2a1", time: "10:15–12:00", name: "AI Summit", outcome: "Understand practical AI applications limitations and direction in ophthalmology", target: "5 AI insights", overlap: true, overlapNote: "Overlaps with MIGS Implants (09:00–12:00) — choose one" },
       { id: "d2a2", time: "12:00–13:30", name: "Networking — lunch / exhibition", outcome: "Exchange views on AI surgery and technology", target: "3–5 conversations" },
-      { id:"d2a7", time:"13:00-13:45", name:"BoSS Connect: Diversity Networking", outcome:"Joint networking event by BoSS and Orbis. Meet diverse professionals", target:"3 new connections", type:"boss" },
+      { id:"d2a7", time:"13:00-13:45", name:"BoSS Connect: Diversity Networking", note:"South Gallery Room 22", outcome:"Joint networking event by BoSS and Orbis. Meet diverse professionals", target:"3 new connections", type:"boss" },
       { id: "d2a3", time: "13:30–15:30", name: "Exhibition: Glaukos, iCare, Sight Sciences, Nidek", outcome: "Identify technologies worth understanding further", target: "3 relevant solutions" },
       { id: "d2a4", time: "15:30–17:00", name: "Targeted sessions / exhibition", outcome: "Follow themes that emerged during the day", target: "2 new insights" },
       { id: "d2a5", time: "17:00–18:20", name: "World Café: Refractive", outcome: "Interactive discussion and expert perspectives on refractive care", target: "3 perspectives" },
@@ -728,7 +732,7 @@ function init() {
   data.forEach(d => {
     d.activities.forEach(a => {
       if (!state.activities[a.id]) {
-        state.activities[a.id] = { status: 'planned', whatHappened: '', whatLearned: '', keyInsight: '', people: [], idea: '', relevance: '', followUp: '', shareWithClinic: false, rating: 0, attachments: [] };
+        state.activities[a.id] = { status: 'planned', whatHappened: '', whatLearned: '', keyInsight: '', people: [], idea: '', relevance: '', followUp: '', shareWithClinic: false, rating: 0, attachments: [], location: '' };
       }
     });
   });
@@ -974,6 +978,7 @@ function refreshCard(aid) {
   if (act.overlap) chipsHtml += `<span class="act-chip overlap-badge">⚠ Overlap</span>`;
   if (s.keyInsight) chipsHtml += `<span class="act-chip act-insight-chip">💡 ${s.keyInsight}</span>`;
   if (s.people && s.people.length > 0) chipsHtml += `<span class="act-chip act-people-chip">👤 ${s.people.length}</span>`;
+  if (s.location) chipsHtml += `<span class="act-chip act-note-chip">📍 ${s.location}</span>`;
   if (act.note) chipsHtml += `<span class="act-chip act-note-chip">📍 ${act.note}</span>`;
   if (s.rating > 0) chipsHtml += `<span class="act-chip act-rating-chip">★ ${s.rating}</span>`;
   
@@ -1004,7 +1009,8 @@ function openActivity(aid) {
   data.forEach(d => d.activities.forEach(a => { if(a.id === aid) act = a; }));
   
   document.getElementById('adTitle').innerText = act.name;
-  document.getElementById('adMeta').innerHTML = `<p><strong>Time:</strong> ${act.time}</p><p><strong>Target:</strong> ${act.target}</p><p><strong>Outcome:</strong> ${act.outcome}</p>`;
+  const loc = s.location ? s.location : 'Tap to add room/hall';
+  document.getElementById('adMeta').innerHTML = `<p><strong>Time:</strong> ${act.time}</p><p><strong>Target:</strong> ${act.target}</p><p><strong>Outcome:</strong> ${act.outcome}</p><p style="margin-top:4px"><strong>📍 Location:</strong> <span style="color:${s.location ? 'var(--text)' : 'var(--text-faint)'}">${loc}</span></p>`;
   
   const overlapWarning = document.getElementById('adOverlapWarning');
   if (act.overlap) {
@@ -1014,6 +1020,7 @@ function openActivity(aid) {
     overlapWarning.style.display = 'none';
   }
   
+  document.getElementById('adLocation').value = s.location || '';
   document.getElementById('adHappened').value = s.whatHappened || '';
   document.getElementById('adLearned').value = s.whatLearned || '';
   document.getElementById('adInsight').value = s.keyInsight || '';
@@ -1042,6 +1049,7 @@ function debouncedSaveActivity() {
   saveTimeout = setTimeout(() => {
     const aid = currentActivityId;
     const s = state.activities[aid];
+    s.location = document.getElementById('adLocation').value;
     s.whatHappened = document.getElementById('adHappened').value;
     s.whatLearned = document.getElementById('adLearned').value;
     s.keyInsight = document.getElementById('adInsight').value;
