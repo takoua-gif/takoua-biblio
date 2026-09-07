@@ -223,6 +223,32 @@ mark { background: #fef08a; color: #854d0e; padding: 0 2px; border-radius: 2px; 
 /* Sync indicator */
 #syncIndicator { transition: all 0.3s; }
 
+
+/* Exhibitor View */
+.exhibitor-day-group { margin-bottom: 24px; }
+.exhibitor-day-group h3 { font-size: 13px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; letter-spacing: 0.5px; }
+.exhibitor-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+.exhibitor-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 16px; cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden; }
+.exhibitor-card:hover { border-color: var(--accent-mid); box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.exhibitor-card.visited { border-left: 4px solid var(--success); }
+.exhibitor-card .ex-name { font-weight: 700; font-size: 15px; margin-bottom: 2px; }
+.exhibitor-card .ex-category { font-size: 11px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+.exhibitor-card .ex-brief { font-size: 13px; color: var(--text-muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 10px; }
+.exhibitor-card .ex-progress { display: flex; align-items: center; gap: 8px; }
+.ex-progress-bar { flex: 1; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.ex-progress-fill { height: 100%; background: var(--success); transition: width 0.3s; }
+.ex-progress-label { font-size: 11px; color: var(--text-muted); white-space: nowrap; }
+
+.ex-checklist-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.ex-checklist-item:last-child { border-bottom: none; }
+.ex-check { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-size: 12px; color: white; margin-top: 1px; }
+.ex-checklist-item.checked .ex-check { background: var(--success); border-color: var(--success); }
+.ex-checklist-text { font-size: 14px; line-height: 1.4; }
+.ex-checklist-item.checked .ex-checklist-text { color: var(--text-muted); text-decoration: line-through; }
+
+.ex-question-item { background: var(--accent-light); border-radius: var(--radius); padding: 10px 14px; margin-bottom: 6px; font-size: 13px; color: var(--accent); }
+.ex-question-item::before { content: '💬 '; }
+
 /* Toast */
 #toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--text); color: white; padding: 10px 20px; border-radius: 20px; font-size: 14px; transition: transform 0.3s; z-index: 1000; }
 #toast.show { transform: translateX(-50%) translateY(0); }
@@ -349,6 +375,7 @@ mark { background: #fef08a; color: #854d0e; padding: 0 2px; border-radius: 2px; 
 <nav class="bottom-bar" id="bottomBar">
   <button data-view="day0" class="active" id="tab-days"><span class="tab-icon">📅</span>Days</button>
   <button data-view="network" id="tab-network"><span class="tab-icon">👥</span>Network</button>
+  <button data-view="exhibitors" id="tab-exhibitors"><span class="tab-icon">📦</span>Exhib</button>
   <button data-view="search" id="tab-search"><span class="tab-icon">🔍</span>Search</button>
   <button data-view="report" id="tab-report"><span class="tab-icon">📊</span>Report</button>
   <button id="tab-more" onclick="toggleMoreMenu(event)"><span class="tab-icon">⋯</span>More</button>
@@ -541,6 +568,60 @@ mark { background: #fef08a; color: #854d0e; padding: 0 2px; border-radius: 2px; 
   </div>
 </dialog>
 
+
+<dialog id="exhibitorDialog" style="max-width:600px">
+  <div class="dialog-header">
+    <h3 id="exTitle">Exhibitor</h3>
+    <button class="close-btn" onclick="document.getElementById('exhibitorDialog').close()">&times;</button>
+  </div>
+  <div class="meta-info" id="exBrief"></div>
+  <div style="background:#fffbeb;border-left:4px solid #f59e0b;padding:12px;border-radius:0 6px 6px 0;margin-bottom:16px">
+    <strong style="color:#b45309">🏥 Your hospital angle:</strong>
+    <p id="exAngle" style="margin-top:4px;font-size:13px;color:#92400e"></p>
+  </div>
+  <div id="exQuestions" style="margin-bottom:16px"></div>
+  <h4 style="font-size:14px;color:#6b6b67;margin-bottom:10px">Checklist</h4>
+  <div id="exChecklist" style="margin-bottom:16px"></div>
+  <div class="form-group">
+    <label>Key contact name & role</label>
+    <input type="text" id="exContact" oninput="debouncedSaveExhibitor()">
+  </div>
+  <div class="form-group">
+    <label>What they offered / proposed</label>
+    <textarea id="exOffered" style="min-height:60px" oninput="debouncedSaveExhibitor()"></textarea>
+  </div>
+  <div class="form-group">
+    <label>Key takeaway</label>
+    <input type="text" id="exTakeaway" oninput="debouncedSaveExhibitor()">
+  </div>
+  <div class="form-group">
+    <label>Follow-up action</label>
+    <input type="text" id="exFollowUp" oninput="debouncedSaveExhibitor()">
+  </div>
+  <div class="form-group">
+    <label>Business card photo</label>
+    <div id="exCardPreview" style="display:none;margin-bottom:10px;position:relative">
+      <img id="exCardImg" style="width:100%;border-radius:6px;border:1px solid #e0ddd8" alt="Business card">
+      <button onclick="removeExCardPhoto()" style="position:absolute;top:6px;right:6px;background:rgba(0,0,0,0.6);color:white;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:14px">&times;</button>
+    </div>
+    <div style="display:flex;gap:8px">
+      <label style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;padding:8px 14px;border-radius:6px;font-size:13px;background:#1a56a0;color:white">
+        📷 Take Photo
+        <input type="file" accept="image/*" capture="environment" onchange="handleExCardPhoto(this)" style="display:none">
+      </label>
+      <label style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;padding:8px 14px;border-radius:6px;font-size:13px;background:#f7f7f5;border:1px solid #e0ddd8">
+        📁 Choose File
+        <input type="file" accept="image/*" onchange="handleExCardPhoto(this)" style="display:none">
+      </label>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:16px;padding-top:12px;border-top:1px solid #e0ddd8">
+    <span style="font-size:12px;color:#6b6b67;margin-right:auto;align-self:center" id="exSaveStatus">All changes saved</span>
+    <button style="background:#1a56a0;color:white;padding:8px 16px;border-radius:6px;font-weight:500;border:none;cursor:pointer" onclick="document.getElementById('exhibitorDialog').close()">Done</button>
+  </div>
+</dialog>
+
+
 <script>
 const STATE_KEY = 'escrs2026v3';
 let state = {
@@ -548,7 +629,8 @@ let state = {
   quickNotes: [],
   contacts: [],
   reflections: { 0:{}, 1:{}, 2:{}, 3:{}, 4:{} },
-  report: { editedSections: {} }
+  report: { editedSections: {} },
+  exhibitors: {}
 };
 
 const data = [
@@ -556,8 +638,9 @@ const data = [
     dayIdx: 0, title: "DAY 1 — FRIDAY 11 SEPTEMBER", focus: "Learning + networking",
     activities: [
       { id: "d0a0", time: "09:00–12:30", name: "iNovation® Day", outcome: "Understand emerging technologies AI and new directions in eye care", target: "5 useful insights" },
+      { id:"d0a6", time:"TBC", name:"LBI: How to Negotiate", outcome:"Learn negotiation frameworks for industry partnerships, equipment pricing, deal structures", target:"Negotiation framework to use all week", type:"lbi" },
       { id: "d0a1", time: "12:30–14:00", name: "Networking — lunch / congress", outcome: "Meet clinicians industry professionals and innovators", target: "3–5 meaningful conversations" },
-      { id: "d0a2", time: "14:00–14:45", name: "Exhibition exploration", outcome: "Get an overview of relevant companies / technologies to revisit", target: "Priority shortlist" },
+      { id: "d0a2", time: "14:00–14:45", name: "Exhibition: Alcon, Zeiss, Rayner", outcome: "Get an overview of relevant companies / technologies to revisit", target: "Priority shortlist" },
       { id: "d0a3", time: "14:45–16:00", name: "Legends of the Lens", outcome: "Understand how cataract and glaucoma care connect and what is changing", target: "3 takeaways" },
       { id: "d0a4", time: "16:00–17:00", name: "IME: Refractive Surgery", outcome: "Understand current refractive developments trends and patient outcomes", target: "3 insights" },
       { id: "d0a5", time: "17:00+", name: "Networking — end of day", outcome: "Deepen the strongest conversations from the day", target: "2 quality follow-ups" }
@@ -570,8 +653,9 @@ const data = [
       { id: "d1a1", time: "12:00–13:00", name: "Networking — lunch / exhibition", outcome: "Discuss the morning learning and meet new professionals", target: "3 conversations" },
       { id: "d1a2", time: "13:00–14:00", name: "IME: Complex Phaco", outcome: "Understand developments and innovations in complex cataract surgery", target: "3 insights" },
       { id: "d1a3", time: "14:30–16:45", name: "Near-Live Surgery", outcome: "Connect clinical decision-making with technology and outcomes", target: "3 takeaways" },
-      { id: "d1a4", time: "16:45–17:30", name: "Exhibition / technology exploration", outcome: "Revisit the most relevant companies from the first two days", target: "2 technologies to investigate" },
-      { id: "d1a5", time: "18:30+", name: "Rayner UK ESCRS Dinner", outcome: "Informal professional networking and relationship building", target: "3–5 conversations", note: "Location: Roe Canary Wharf" }
+      { id: "d1a4", time: "16:45–17:30", name: "Exhibition: Schwind, Bausch+Lomb, STAAR Surgical", outcome: "Revisit the most relevant companies from the first two days", target: "2 technologies to investigate" },
+      { id: "d1a5", time: "18:30+", name: "Rayner UK ESCRS Dinner", outcome: "Informal professional networking and relationship building", target: "3–5 conversations", note: "Location: Roe Canary Wharf" },
+      { id:"d1a6", time:"TBC", name:"LBI: Wealth Management", outcome:"Financial decisions for starting/scaling your clinic. Personal wealth vs practice reinvestment", target:"3 financial insights", type:"lbi" }
     ]
   },
   {
@@ -580,7 +664,8 @@ const data = [
       { id: "d2a0", time: "09:00–12:00", name: "Modern MIGS Techniques USING Implants", outcome: "Compare the implant and non-implant approaches", target: "3 comparison insights", overlap: true, overlapNote: "Overlaps with AI Summit (10:15–12:00) — choose one" },
       { id: "d2a1", time: "10:15–12:00", name: "AI Summit", outcome: "Understand practical AI applications limitations and direction in ophthalmology", target: "5 AI insights", overlap: true, overlapNote: "Overlaps with MIGS Implants (09:00–12:00) — choose one" },
       { id: "d2a2", time: "12:00–13:30", name: "Networking — lunch / exhibition", outcome: "Exchange views on AI surgery and technology", target: "3–5 conversations" },
-      { id: "d2a3", time: "13:30–15:30", name: "Digital / AI / diagnostics exhibition", outcome: "Identify technologies worth understanding further", target: "3 relevant solutions" },
+      { id:"d2a7", time:"13:00-13:45", name:"BoSS Connect: Diversity Networking", outcome:"Joint networking event by BoSS and Orbis. Meet diverse professionals", target:"3 new connections", type:"boss" },
+      { id: "d2a3", time: "13:30–15:30", name: "Exhibition: Glaukos, iCare, Sight Sciences, Nidek", outcome: "Identify technologies worth understanding further", target: "3 relevant solutions" },
       { id: "d2a4", time: "15:30–17:00", name: "Targeted sessions / exhibition", outcome: "Follow themes that emerged during the day", target: "2 new insights" },
       { id: "d2a5", time: "17:00–18:20", name: "World Café: Refractive", outcome: "Interactive discussion and expert perspectives on refractive care", target: "3 perspectives" },
       { id: "d2a6", time: "18:00–22:30", name: "Lift Off in London 2026", outcome: "Informal evening networking and relationship building", target: "3–5 conversations" }
@@ -593,8 +678,10 @@ const data = [
       { id: "d3a1", time: "11:00–12:20", name: "World Café: Cornea", outcome: "Interactive discussion with experts and peers", target: "3 perspectives" },
       { id: "d3a2", time: "12:20–13:00", name: "Networking — lunch", outcome: "Reconnect with people from previous days and meet new professionals", target: "3 conversations" },
       { id: "d3a3", time: "13:00–14:00", name: "IME: Digital Operating Room", outcome: "Understand digital OR workflow technology and future practice", target: "3 insights" },
-      { id: "d3a4", time: "14:00–17:00", name: "Networking + exhibition", outcome: "Explore relevant companies and build professional relationships", target: "5 conversations" },
-      { id: "d3a5", time: "17:00+", name: "Daily reflection", outcome: "Consolidate the strongest themes and people from the congress so far", target: "Top 5 insights" }
+      { id: "d3a4", time: "14:00–17:00", name: "Exhibition: BVI, Leica, Ziemer, MedInstrus", outcome: "Explore relevant companies and build professional relationships", target: "5 conversations" },
+      { id: "d3a5", time: "17:00+", name: "Daily reflection", outcome: "Consolidate the strongest themes and people from the congress so far", target: "Top 5 insights" },
+      { id:"d3a6", time:"TBC", name:"LBI: Podium Presentation Skills", outcome:"Present your hospital project to investors/partners more effectively", target:"Presentation framework", type:"lbi" },
+      { id:"d3a7", time:"TBC", name:"BoSS: Leadership Skills", outcome:"Transitioning from peer to leader. Communication, delegation, cross-cultural teams", target:"3 leadership insights", type:"boss" }
     ]
   },
   {
@@ -602,12 +689,32 @@ const data = [
     activities: [
       { id: "d4a0", time: "08:30–10:00", name: "Delivering Safe Cataract Surgery in Low-Resource Settings", outcome: "Learn lessons around safety efficiency adaptability and access", target: "3 lessons" },
       { id: "d4a1", time: "10:00–11:00", name: "Networking — coffee", outcome: "Final professional conversations and follow-ups", target: "2–3 contacts" },
-      { id: "d4a2", time: "11:00–13:00", name: "Targeted final sessions / exhibition", outcome: "Close remaining learning gaps", target: "2 insights" },
+      { id: "d4a2", time: "11:00–13:00", name: "Exhibition: Rexxam, Laboratoires KÔL + follow-ups", outcome: "Close remaining learning gaps", target: "2 insights" },
       { id: "d4a3", time: "13:00–14:00", name: "Networking — final lunch", outcome: "Close conversations and exchange contacts where relevant", target: "Final connections" },
       { id: "d4a4", time: "14:00–15:00", name: "Personal ESCRS debrief", outcome: "Turn the week into clear insights and relevant recommendations", target: "3–5 recommendations" },
       { id: "d4a5", time: "15:00+", name: "Close / organise notes", outcome: "Clean up notes and follow-up list while everything is fresh", target: "Ready-to-report notes" }
     ]
   }
+];
+
+
+const exhibitors = [
+  { id:'ex_alcon', name:'Alcon', day:0, category:'Platform + IOL', brief:'Full cataract suite (Centurion/ACTIVE SENTRY), premium IOLs (PanOptix, Vivity), surgical packs', angle:'Your hospital needs a phaco platform and IOL supply chain from day one', questions:['What is your new hospital setup package?','Volume IOL pricing for first 2 years?','Is surgeon training included?','Demo unit or trial program available?','What consumables are required?'] },
+  { id:'ex_zeiss', name:'Zeiss', day:0, category:'Microscope + Diagnostics', brief:'Surgical microscopes (KINEVO/OPMI), IOLs, OCT diagnostics, femtosecond lasers', angle:'OR microscope + full diagnostic suite — potential single-vendor deal', questions:['Bundled OR microscope + diagnostics deal?','Service contract structure and cost?','Demo unit program?','Integration with digital OR?','Competitive quote vs Leica?'] },
+  { id:'ex_rayner', name:'Rayner', day:0, category:'IOL', brief:'Hydrophilic IOLs (RayOne), strong UK presence. You are attending their dinner', angle:'UK-based — strong partner for your hospital. Leverage dinner relationship', questions:['UK hospital pricing and supply terms?','Next-gen IOL pipeline?','Training partnership or sponsorship?','Volume rebates?','Clinical support program?'] },
+  { id:'ex_schwind', name:'Schwind', day:1, category:'Refractive Laser', brief:'Excimer lasers (AMARIS), femtosecond lasers, refractive surgery suite', angle:'If your hospital will offer refractive surgery, you need a laser platform', questions:['Turnkey refractive suite pricing?','Per-procedure vs outright purchase model?','Installation and room requirements?','Maintenance contract terms?','Staff training program?'] },
+  { id:'ex_bausch', name:'Bausch+Lomb', day:1, category:'IOL + Surgical', brief:'IOLs (enVista, LuxSmart), surgical equipment, vision care products', angle:'Alternative IOL supplier — compare pricing against Alcon', questions:['Multi-year IOL supply agreement?','Competitive pricing vs Alcon?','Surgical consumables catalog?','New hospital onboarding support?','Clinical education program?'] },
+  { id:'ex_staar', name:'STAAR Surgical', day:1, category:'ICL', brief:'Implantable Collamer Lens (EVO ICL) — high-margin refractive procedure', angle:'ICL is a premium revenue stream for your hospital', questions:['ICL certification pathway for surgeons?','Minimum patient volume requirements?','Marketing support for ICL services?','Device pricing and margins?','Training timeline?'] },
+  { id:'ex_glaukos', name:'Glaukos', day:2, category:'MIGS', brief:'MIGS devices (iStent), corneal health products', angle:'If your hospital will do glaucoma surgery, you need MIGS devices', questions:['Volume pricing on iStent?','Surgeon training program?','Regulatory status in your market?','Case support for new surgeons?','Combo cataract+MIGS approach?'] },
+  { id:'ex_icare', name:'iCare', day:2, category:'Diagnostics', brief:'Tonometers (iCare), perimeters — glaucoma screening equipment', angle:'Essential for your glaucoma screening and follow-up clinic', questions:['Multi-device deal for full glaucoma lane?','New clinic pricing?','Trial unit available?','Integration with EMR?','Service and calibration?'] },
+  { id:'ex_sight', name:'Sight Sciences', day:2, category:'MIGS', brief:'OMNI Surgical System — interventional glaucoma', angle:'Alternative/complement to Glaukos for your glaucoma offering', questions:['OMNI device pricing?','Surgeon certification process?','Case support program?','Clinical evidence vs iStent?','Market access support?'] },
+  { id:'ex_nidek', name:'Nidek', day:2, category:'Laser + Diagnostics', brief:'Lasers (YAG, SLT), diagnostics (OCT, autorefractors, topographers)', angle:'Combined diagnostic + laser package could save costs', questions:['Combined diagnostic + laser package pricing?','Service contract included?','Installation requirements?','Comparison to Zeiss diagnostics?','Training and support?'] },
+  { id:'ex_bvi', name:'BVI', day:3, category:'Instruments + Consumables', brief:'Surgical instruments, BSS, consumables, Visitec cannulas', angle:'Day-to-day surgical consumables supply — high recurring revenue for them', questions:['Annual consumables contract pricing?','New account setup deal?','Custom surgical pack options?','Instrument warranty?','Delivery logistics?'] },
+  { id:'ex_leica', name:'Leica', day:3, category:'Microscope', brief:'Surgical microscopes (Proveo, Envisu OCT) — Leica Microsystems', angle:'Direct competitor to Zeiss for your OR microscope purchase', questions:['Competitive quote vs Zeiss?','Proveo 8 features and pricing?','Demo program available?','Integration with digital OR recording?','Service contract terms?'] },
+  { id:'ex_ziemer', name:'Ziemer', day:3, category:'Femtosecond', brief:'Femtosecond lasers (FEMTO LDV Z series) for cataract and refractive', angle:'Compact femto platform — consider for femto-assisted cataract', questions:['FEMTO LDV platform cost?','Per-case model available?','Maintenance terms and frequency?','Room and infrastructure requirements?','Comparison to Zeiss/Alcon femto?'] },
+  { id:'ex_medinstrus', name:'MedInstrus', day:3, category:'Instruments', brief:'Ophthalmic surgical instruments and consumables', angle:'Instrument sets for cataract, glaucoma, and cornea surgery', questions:['Bulk instrument set pricing?','Instrument reprocessing support?','Starter kit for new OR?','Custom tray configuration?','Warranty and replacement policy?'] },
+  { id:'ex_rexxam', name:'Rexxam', day:4, category:'Diagnostics', brief:'Ophthalmic diagnostic equipment manufacturer', angle:'Diagnostic lane equipment for your outpatient clinic', questions:['Full diagnostic lane package?','Installation and training support?','Service contract options?','Integration capabilities?','Comparison to Nidek/Zeiss?'] },
+  { id:'ex_kol', name:'Laboratoires KÔL', day:4, category:'Pharma - Cornea', brief:'French pharma startup. Olisens® — first mRNA eye drop for corneal neovascularization. Research in rare corneal diseases (AAK, GvHD, LSCD)', angle:'Cutting-edge corneal therapy. Potential pharma partner for your cornea unit', questions:['Olisens availability and regulatory status?','Partnership model for hospitals?','Clinical trial participation possible?','Pricing and access programs?','Pipeline products timeline?'] }
 ];
 
 // Initialize
@@ -625,6 +732,7 @@ function init() {
       }
     });
   });
+  if (!state.exhibitors) state.exhibitors = {};
   saveState();
   renderApp();
   
@@ -713,6 +821,7 @@ function showView(viewId) {
   if (el) el.classList.add('active');
   if (viewId === 'network') renderNetwork();
   if (viewId === 'report') renderReport();
+  if (viewId === 'exhibitors') renderExhibitors();
 }
 
 function renderApp() {
@@ -775,6 +884,14 @@ function renderApp() {
   });
   
   // Other views
+  <div id="view-exhibitors" class="view-section">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <h2>Exhibition Strategy</h2>
+      <span style="font-size:13px;color:var(--text-muted)">🏥 Building your hospital</span>
+    </div>
+    <div id="exhibitorContent"></div>
+  </div>
+
   html += `<div id="view-network" class="view-section">
     <div style="display:flex;justify-content:space-between;margin-bottom:20px">
       <h2>Network</h2>
@@ -1286,6 +1403,174 @@ function importData(e) {
     }
   };
   reader.readAsText(file);
+}
+
+
+// ========== EXHIBITORS ==========
+let currentExhibitorId = null;
+let exSaveTimeout = null;
+let currentExCardPhotoData = null;
+
+const EX_CHECKLIST = [
+  'Introduced myself & explained hospital project',
+  'Saw product/platform demo',
+  'Asked about equipment pricing & volume deals',
+  'Discussed partnership or distributor model',
+  'Asked about new hospital setup packages',
+  'Asked about surgeon/staff training programs',
+  'Discussed maintenance & service contracts',
+  'Asked about leasing / payment plans / financing',
+  'Got business card / key contact details',
+  'Booked post-congress call or meeting'
+];
+
+function renderExhibitors() {
+  const container = document.getElementById('exhibitorContent');
+  if (!container) return;
+  if (!state.exhibitors) state.exhibitors = {};
+  
+  const dayNames = ['Day 1 — Friday', 'Day 2 — Saturday', 'Day 3 — Sunday', 'Day 4 — Monday', 'Day 5 — Tuesday'];
+  let html = '';
+  
+  for (let d = 0; d <= 4; d++) {
+    const dayExhibitors = exhibitors.filter(e => e.day === d);
+    if (dayExhibitors.length === 0) continue;
+    
+    html += '<div class="exhibitor-day-group">';
+    html += '<h3>' + dayNames[d] + '</h3>';
+    html += '<div class="exhibitor-grid">';
+    
+    dayExhibitors.forEach(ex => {
+      const s = state.exhibitors[ex.id] || {};
+      const checks = s.checklist || [];
+      const checkedCount = checks.filter(Boolean).length;
+      const total = EX_CHECKLIST.length;
+      const pct = Math.round((checkedCount / total) * 100);
+      const visited = checkedCount > 0 ? ' visited' : '';
+      
+      html += '<div class="exhibitor-card' + visited + '" onclick="openExhibitor(\'' + ex.id + '\')">'
+        + '<div class="ex-name">' + ex.name + '</div>'
+        + '<div class="ex-category">' + ex.category + '</div>'
+        + '<div class="ex-brief">' + ex.brief + '</div>'
+        + '<div class="ex-progress">'
+        + '<div class="ex-progress-bar"><div class="ex-progress-fill" style="width:' + pct + '%"></div></div>'
+        + '<span class="ex-progress-label">' + checkedCount + '/' + total + '</span>'
+        + '</div></div>';
+    });
+    
+    html += '</div></div>';
+  }
+  
+  container.innerHTML = html;
+}
+
+function openExhibitor(exId) {
+  currentExhibitorId = exId;
+  const ex = exhibitors.find(e => e.id === exId);
+  if (!ex) return;
+  if (!state.exhibitors) state.exhibitors = {};
+  if (!state.exhibitors[exId]) {
+    state.exhibitors[exId] = { checklist: new Array(EX_CHECKLIST.length).fill(false), contact:'', offered:'', takeaway:'', followUp:'', cardPhoto:null };
+  }
+  const s = state.exhibitors[exId];
+  
+  document.getElementById('exTitle').innerText = ex.name;
+  document.getElementById('exBrief').innerHTML = '<p><strong>Category:</strong> ' + ex.category + '</p><p style="margin-top:4px">' + ex.brief + '</p>';
+  document.getElementById('exAngle').innerText = ex.angle;
+  
+  // Questions
+  let qHtml = '<h4 style="font-size:14px;color:#6b6b67;margin-bottom:8px">Key questions to ask</h4>';
+  ex.questions.forEach(q => { qHtml += '<div class="ex-question-item">' + q + '</div>'; });
+  document.getElementById('exQuestions').innerHTML = qHtml;
+  
+  // Checklist
+  let cHtml = '';
+  EX_CHECKLIST.forEach((item, idx) => {
+    const checked = s.checklist[idx] ? ' checked' : '';
+    cHtml += '<div class="ex-checklist-item' + checked + '" onclick="toggleExCheck(' + idx + ')">';
+    cHtml += '<div class="ex-check">' + (s.checklist[idx] ? '✓' : '') + '</div>';
+    cHtml += '<div class="ex-checklist-text">' + item + '</div></div>';
+  });
+  document.getElementById('exChecklist').innerHTML = cHtml;
+  
+  // Fields
+  document.getElementById('exContact').value = s.contact || '';
+  document.getElementById('exOffered').value = s.offered || '';
+  document.getElementById('exTakeaway').value = s.takeaway || '';
+  document.getElementById('exFollowUp').value = s.followUp || '';
+  
+  // Photo
+  currentExCardPhotoData = s.cardPhoto || null;
+  const preview = document.getElementById('exCardPreview');
+  if (currentExCardPhotoData) {
+    document.getElementById('exCardImg').src = currentExCardPhotoData;
+    preview.style.display = 'block';
+  } else {
+    preview.style.display = 'none';
+  }
+  
+  document.getElementById('exhibitorDialog').showModal();
+}
+
+function toggleExCheck(idx) {
+  const s = state.exhibitors[currentExhibitorId];
+  s.checklist[idx] = !s.checklist[idx];
+  saveState();
+  // Re-render checklist
+  const items = document.querySelectorAll('#exChecklist .ex-checklist-item');
+  items[idx].classList.toggle('checked');
+  const check = items[idx].querySelector('.ex-check');
+  check.innerText = s.checklist[idx] ? '\u2713' : '';
+  renderExhibitors();
+}
+
+function debouncedSaveExhibitor() {
+  document.getElementById('exSaveStatus').innerText = 'Saving...';
+  clearTimeout(exSaveTimeout);
+  exSaveTimeout = setTimeout(() => {
+    const s = state.exhibitors[currentExhibitorId];
+    s.contact = document.getElementById('exContact').value;
+    s.offered = document.getElementById('exOffered').value;
+    s.takeaway = document.getElementById('exTakeaway').value;
+    s.followUp = document.getElementById('exFollowUp').value;
+    s.cardPhoto = currentExCardPhotoData;
+    saveState();
+    renderExhibitors();
+    document.getElementById('exSaveStatus').innerText = 'All changes saved';
+  }, 800);
+}
+
+function handleExCardPhoto(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const img = new Image();
+    img.onload = function() {
+      const canvas = document.createElement('canvas');
+      const MAX = 800;
+      let w = img.width, h = img.height;
+      if (w > MAX || h > MAX) {
+        if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
+        else { w = Math.round(w * MAX / h); h = MAX; }
+      }
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      currentExCardPhotoData = canvas.toDataURL('image/jpeg', 0.7);
+      document.getElementById('exCardImg').src = currentExCardPhotoData;
+      document.getElementById('exCardPreview').style.display = 'block';
+      debouncedSaveExhibitor();
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+  input.value = '';
+}
+
+function removeExCardPhoto() {
+  currentExCardPhotoData = null;
+  document.getElementById('exCardPreview').style.display = 'none';
+  debouncedSaveExhibitor();
 }
 
 // Start
