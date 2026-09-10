@@ -882,6 +882,7 @@ function showView(viewId) {
 
 function renderApp() {
   const main = document.getElementById('mainContent');
+  if (!main) { document.body.innerHTML = '<h1 style="color:red;padding:40px">ERROR: mainContent div not found!</h1>'; return; }
   try {
   let html = '';
   
@@ -984,6 +985,10 @@ function renderApp() {
     <div id="reportContent"></div>
   </div>`;
   
+  if (!html || html.length < 100) {
+    main.innerHTML = '<div style="padding:40px;color:orange"><h2>Debug: HTML is empty or too short</h2><p>html length: ' + html.length + '</p><p>data.length: ' + data.length + '</p><p>state.activities keys: ' + Object.keys(state.activities).length + '</p></div>';
+    return;
+  }
   main.innerHTML = html;
   
   // Post render updates
