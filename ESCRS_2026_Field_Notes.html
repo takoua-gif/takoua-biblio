@@ -953,9 +953,12 @@ function renderApp() {
   
   // Other views
   html += `<div id="view-exhibitors" class="view-section">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-      <h2>Exhibition Strategy</h2>
-      <span style="font-size:13px;color:var(--text-muted)">🏥 Building your hospital</span>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+      <h2>Exhibition Strategy (17 Companies)</h2>
+      <span style="font-size:13px;color:var(--text-muted)">🏥 Hospital Partner Strategy</span>
+    </div>
+    <div style="margin-bottom:16px">
+      <input type="text" id="exSearchInput" placeholder="🔍 Filter exhibitors (e.g. RxSight, Zeiss, Alcon...)" oninput="filterExhibitors()" style="width:100%;height:40px;padding:0 14px;border:1px solid var(--border);border-radius:var(--radius);font-size:14px;background:var(--surface);">
     </div>
     <div id="exhibitorContent"></div>
   </div>`;
@@ -1409,6 +1412,22 @@ function performSearch() {
     });
   });
   if (actRes) html += `<div class="result-group"><h3>Activities</h3>${actRes}</div>`;
+  
+  // Search exhibitors
+  let exRes = '';
+  if (typeof exhibitors !== 'undefined') {
+    exhibitors.forEach(ex => {
+      const s = (state.exhibitors && state.exhibitors[ex.id]) || {};
+      const textToSearch = [ex.name, ex.category, ex.brief, ex.angle, s.contact, s.offered, s.takeaway, s.followUp].join(' ').toLowerCase();
+      if (textToSearch.includes(q)) {
+        exRes += `<div class="result-item" onclick="openExhibitor('${ex.id}')">
+          <strong>${ex.name}</strong> <span style="font-size:11px;color:var(--accent);text-transform:uppercase;">(${ex.category})</span><br>
+          <span style="font-size:12px; color:var(--text-muted)">${ex.brief}</span>
+        </div>`;
+      }
+    });
+  }
+  if (exRes) html += `<div class="result-group"><h3>Exhibitors</h3>${exRes}</div>`;
   
   res.innerHTML = html || '<p>No results found.</p>';
 }
