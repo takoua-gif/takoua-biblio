@@ -296,32 +296,54 @@ mark { background: #fef08a; color: #854d0e; padding: 0 2px; border-radius: 2px; 
     if (!firebaseConfig.apiKey.startsWith('PASTE')) {
       syncEnabled = true;
       
-      // Listen for remote changes
+      // Listen for remote changes across devices
       const stateRef = ref(db, 'escrs2026/state');
+      let initialCheckDone = false;
+      
       onValue(stateRef, (snapshot) => {
         const remoteData = snapshot.val();
+        
+        // If Firebase is completely empty on very first load, check if we need to seed it
+        if (!initialCheckDone) {
+          initialCheckDone = true;
+          if (!remoteData) {
+            const localSaved = localStorage.getItem('escrs2026v3');
+            if (localSaved) {
+              try {
+                const localData = JSON.parse(localSaved);
+                const hasLocalContent = Object.values(localData.activities || {}).some(a => 
+                  a.whatHappened || a.whatLearned || a.keyInsight || a.location
+                ) || (localData.quickNotes && localData.quickNotes.length > 0) 
+                  || (localData.contacts && localData.contacts.length > 0);
+                if (hasLocalContent) {
+                  lastSyncTime = Date.now();
+                  set(stateRef, localData);
+                }
+              } catch(e) {}
+            }
+            updateSyncIndicator('connected');
+            return;
+          }
+        }
+        
         if (!remoteData) return;
         
-        // Don't overwrite if we just pushed
-        if (Date.now() - lastSyncTime < 2000) return;
+        // If we just pushed this change from this device within 1.5s, skip re-render
+        if (Date.now() - lastSyncTime < 1500) {
+          updateSyncIndicator('synced');
+          return;
+        }
         
         isSyncing = true;
         window._escrsState = remoteData;
-        
-        // Merge into localStorage and reload UI
         localStorage.setItem('escrs2026v3', JSON.stringify(remoteData));
         
-        // If the app is loaded, update in-memory state
+        // Update in-memory state and re-render app live
         if (typeof state !== 'undefined') {
           Object.assign(state, remoteData);
-          sanitizeState();
-
+          if (typeof sanitizeState === 'function') sanitizeState();
           if (typeof renderApp === 'function') {
             renderApp();
-            if (typeof showView === 'function') {
-              const activeBtn = document.querySelector('.top-bar button.active[data-view]');
-              if (activeBtn) showView(activeBtn.getAttribute('data-view'));
-            }
           }
         }
         
@@ -330,32 +352,9 @@ mark { background: #fef08a; color: #854d0e; padding: 0 2px; border-radius: 2px; 
       });
       
       updateSyncIndicator('connected');
-      
-      // On first connect, push local data to Firebase if it exists
-      const localSaved = localStorage.getItem('escrs2026v3');
-      if (localSaved) {
-        try {
-          const localData = JSON.parse(localSaved);
-          const hasLocalContent = Object.values(localData.activities || {}).some(a => 
-            a.whatHappened || a.whatLearned || a.keyInsight || a.status !== 'planned' || a.location
-          ) || (localData.quickNotes && localData.quickNotes.length > 0) 
-            || (localData.contacts && localData.contacts.length > 0)
-            || Object.keys(localData.exhibitors || {}).length > 0;
-          
-          if (hasLocalContent) {
-            // Push local data to Firebase to ensure nothing is lost
-            const stateRef = ref(db, 'escrs2026/state');
-            lastSyncTime = Date.now();
-            set(stateRef, localData).then(() => {
-              console.log('Local data pushed to Firebase');
-              updateSyncIndicator('synced');
-            });
-          }
-        } catch(e) { console.log('Could not parse local data'); }
-      }
     }
   } catch(e) {
-    console.log('Firebase not configured yet:', e.message);
+    console.log('Firebase init error:', e.message);
   }
   
   // Expose sync function globally
@@ -365,6 +364,10 @@ mark { background: #fef08a; color: #854d0e; padding: 0 2px; border-radius: 2px; 
     const stateRef = ref(db, 'escrs2026/state');
     set(stateRef, stateObj).then(() => {
       updateSyncIndicator('synced');
+      const adSave = document.getElementById('adSaveStatus');
+      if (adSave) adSave.innerText = '☁️ Synced to both devices';
+      const exSave = document.getElementById('exSaveStatus');
+      if (exSave) exSave.innerText = '☁️ Synced to both devices';
     }).catch(err => {
       console.error('Sync error:', err);
       updateSyncIndicator('error');
@@ -375,13 +378,13 @@ mark { background: #fef08a; color: #854d0e; padding: 0 2px; border-radius: 2px; 
     const el = document.getElementById('syncIndicator');
     if (!el) return;
     if (status === 'synced') {
-      el.innerHTML = '🟢 Synced';
+      el.innerHTML = '☁️ 🟢 Synced (Both Devices)';
       el.style.color = '#16803c';
     } else if (status === 'connected') {
-      el.innerHTML = '🔵 Connected';
+      el.innerHTML = '☁️ 🔵 Connected to Cloud';
       el.style.color = '#1a56a0';
     } else if (status === 'error') {
-      el.innerHTML = '🔴 Sync error';
+      el.innerHTML = '☁️ 🔴 Sync Error';
       el.style.color = '#991b1b';
     }
     el.style.display = 'inline-block';
@@ -779,8 +782,7 @@ function init() {
   }
   
   sanitizeState();
-  sanitizeState();
-  saveState();
+  localStorage.setItem(STATE_KEY, JSON.stringify(state));
   renderApp();
   
   // Navigation — top bar (days) + bottom bar (sections)
@@ -1136,7 +1138,7 @@ function debouncedSaveActivity() {
     saveState();
     refreshCard(aid);
     updateDayProgress(aid);
-    document.getElementById('adSaveStatus').innerText = 'All changes saved locally';
+    document.getElementById('adSaveStatus').innerText = '☁️ Saved to cloud & syncing across devices';
   }, 1000);
 }
 
