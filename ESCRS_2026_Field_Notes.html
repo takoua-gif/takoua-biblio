@@ -796,7 +796,7 @@ function init() {
       navigateTo(view);
     });
   });
-  showView('day0');
+  navigateTo('day0');
   
   // Auto-backup check
   checkBackupReminder();
@@ -871,13 +871,16 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 3000);
 }
 
+let currentView = 'day0';
+
 function showView(viewId) {
+  currentView = viewId || 'day0';
   document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-  const el = document.getElementById('view-' + viewId);
+  const el = document.getElementById('view-' + currentView);
   if (el) el.classList.add('active');
-  if (viewId === 'network') renderNetwork();
-  if (viewId === 'report') renderReport();
-  if (viewId === 'exhibitors') renderExhibitors();
+  if (currentView === 'network') renderNetwork();
+  if (currentView === 'report') generateReport();
+  if (currentView === 'exhibitors') renderExhibitors();
 }
 
 function renderApp() {
@@ -906,8 +909,9 @@ function renderApp() {
       <div class="steering-timeline">`;
       
     d.activities.forEach(a => {
-      const s = state.activities[a.id];
-      html += `<div class="act-card" id="card-${a.id}" data-status="${s.status}">
+      const s = (state.activities && state.activities[a.id]) || { status:'planned', whatHappened:'', whatLearned:'', keyInsight:'', people:[], idea:'', relevance:'', followUp:'', shareWithClinic:false, rating:0, attachments:[], location:'' };
+      const timePart = (a.time || '').split('–')[0];
+      html += `<div class="act-card" id="card-${a.id}" data-status="${s.status || 'planned'}">
         <div class="act-dot-col">
           <div class="act-dot"></div>
           <div class="time-label">${a.time.split('–')[0]}</div>
@@ -929,15 +933,18 @@ function renderApp() {
     });
     
     html += `</div>
-      <div class="reflection-section">
-        <h3>End of Day Reflection</h3>
-        <div class="form-group"><label>Top 3 things I learned</label><textarea oninput="saveReflection(${d.dayIdx}, 'learned')" id="ref-${d.dayIdx}-learned">${state.reflections[d.dayIdx].learned || ''}</textarea></div>
-        <div class="form-group"><label>Most interesting person I met</label><textarea oninput="saveReflection(${d.dayIdx}, 'person')" id="ref-${d.dayIdx}-person">${refl.person || ''}</textarea></div>
-        <div class="form-group"><label>Most interesting technology / idea</label><textarea oninput="saveReflection(${d.dayIdx}, 'tech')" id="ref-${d.dayIdx}-tech">${refl.tech || ''}</textarea></div>
-        <div class="form-group"><label>What surprised me?</label><textarea oninput="saveReflection(${d.dayIdx}, 'surprised')" id="ref-${d.dayIdx}-surprised">${refl.surprised || ''}</textarea></div>
-        <div class="form-group"><label>What do I want to investigate tomorrow?</label><textarea oninput="saveReflection(${d.dayIdx}, 'tomorrow')" id="ref-${d.dayIdx}-tomorrow">${refl.tomorrow || ''}</textarea></div>
-        <div class="form-group"><label>What should potentially be shared with the clinic?</label><textarea oninput="saveReflection(${d.dayIdx}, 'clinic')" id="ref-${d.dayIdx}-clinic">${refl.clinic || ''}</textarea></div>
-      </div>
+      ${(() => {
+        const refl = (state.reflections && state.reflections[d.dayIdx]) || {};
+        return `<div class="reflection-section">
+          <h3>End of Day Reflection</h3>
+          <div class="form-group"><label>Top 3 things I learned</label><textarea oninput="saveReflection(${d.dayIdx}, 'learned')" id="ref-${d.dayIdx}-learned">${refl.learned || ''}</textarea></div>
+          <div class="form-group"><label>Most interesting person I met</label><textarea oninput="saveReflection(${d.dayIdx}, 'person')" id="ref-${d.dayIdx}-person">${refl.person || ''}</textarea></div>
+          <div class="form-group"><label>Most interesting technology / idea</label><textarea oninput="saveReflection(${d.dayIdx}, 'tech')" id="ref-${d.dayIdx}-tech">${refl.tech || ''}</textarea></div>
+          <div class="form-group"><label>What surprised me?</label><textarea oninput="saveReflection(${d.dayIdx}, 'surprised')" id="ref-${d.dayIdx}-surprised">${refl.surprised || ''}</textarea></div>
+          <div class="form-group"><label>What do I want to investigate tomorrow?</label><textarea oninput="saveReflection(${d.dayIdx}, 'tomorrow')" id="ref-${d.dayIdx}-tomorrow">${refl.tomorrow || ''}</textarea></div>
+          <div class="form-group"><label>What should potentially be shared with the clinic?</label><textarea oninput="saveReflection(${d.dayIdx}, 'clinic')" id="ref-${d.dayIdx}-clinic">${refl.clinic || ''}</textarea></div>
+        </div>`;
+      })()}
     </div>`;
   });
   
@@ -985,10 +992,6 @@ function renderApp() {
     <div id="reportContent"></div>
   </div>`;
   
-  if (!html || html.length < 100) {
-    main.innerHTML = '<div style="padding:40px;color:orange"><h2>Debug: HTML is empty or too short</h2><p>html length: ' + html.length + '</p><p>data.length: ' + data.length + '</p><p>state.activities keys: ' + Object.keys(state.activities).length + '</p></div>';
-    return;
-  }
   main.innerHTML = html;
   
   // Post render updates
@@ -997,6 +1000,7 @@ function renderApp() {
       if (state.activities[a.id]) refreshCard(a.id);
     });
   });
+  showView(currentView || 'day0');
   } catch(err) {
     main.innerHTML = '<div style="padding:40px;color:red;font-size:16px"><h2>Render Error</h2><pre>' + err.message + '\n' + err.stack + '</pre></div>';
     console.error('renderApp error:', err);
@@ -1024,9 +1028,9 @@ function cycleStatus(aid, e) {
 
 function refreshCard(aid) {
   const card = document.getElementById('card-' + aid);
-  const s = state.activities[aid];
   if (!card) return;
-  card.setAttribute('data-status', s.status);
+  const s = state.activities[aid] || { status: 'planned' };
+  card.setAttribute('data-status', s.status || 'planned');
   
   const info = getStatusInfo(s.status);
   document.getElementById('s-icon-' + aid).innerText = info.icon;
@@ -1066,6 +1070,9 @@ let saveTimeout = null;
 
 function openActivity(aid) {
   currentActivityId = aid;
+  if (!state.activities[aid]) {
+    state.activities[aid] = { status:'planned', whatHappened:'', whatLearned:'', keyInsight:'', people:[], idea:'', relevance:'', followUp:'', shareWithClinic:false, rating:0, attachments:[], location:'' };
+  }
   const s = state.activities[aid];
   let act = null;
   data.forEach(d => d.activities.forEach(a => { if(a.id === aid) act = a; }));
