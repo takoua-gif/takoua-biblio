@@ -867,7 +867,7 @@ function renderApp() {
   // Render Days
   data.forEach(d => {
     const total = d.activities.length;
-    const completed = d.activities.filter(a => state.activities[a.id].status === 'completed').length;
+    const completed = d.activities.filter(a => (state.activities[a.id] || {}).status === 'completed').length;
     const progress = Math.round((completed / total) * 100);
     
     html += `<div id="view-day${d.dayIdx}" class="view-section">
@@ -1024,7 +1024,7 @@ function updateDayProgress(aid) {
   
   const d = data[dayIdx];
   const total = d.activities.length;
-  const completed = d.activities.filter(a => state.activities[a.id].status === 'completed').length;
+  const completed = d.activities.filter(a => (state.activities[a.id] || {}).status === 'completed').length;
   const progress = Math.round((completed / total) * 100);
   
   document.getElementById('prog-day' + dayIdx).style.width = progress + '%';
