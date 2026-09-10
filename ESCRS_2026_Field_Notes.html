@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ESCRS 2026 Field Notes</title>
 <style>
@@ -661,6 +664,28 @@ let state = {
   report: { editedSections: {} },
   exhibitors: {}
 };
+
+function sanitizeState() {
+  if (!state.activities || typeof state.activities !== 'object') state.activities = {};
+  if (!Array.isArray(state.quickNotes)) state.quickNotes = [];
+  if (!Array.isArray(state.contacts)) state.contacts = [];
+  if (!state.reflections || typeof state.reflections !== 'object') state.reflections = {};
+  for (let i = 0; i <= 4; i++) {
+    if (!state.reflections[i] || typeof state.reflections[i] !== 'object') state.reflections[i] = {};
+  }
+  if (!state.report || typeof state.report !== 'object') state.report = { editedSections: {} };
+  if (!state.report.editedSections) state.report.editedSections = {};
+  if (!state.exhibitors || typeof state.exhibitors !== 'object') state.exhibitors = {};
+  if (typeof data !== 'undefined') {
+    data.forEach(d => {
+      d.activities.forEach(a => {
+        if (!state.activities[a.id]) {
+          state.activities[a.id] = { status:'planned', whatHappened:'', whatLearned:'', keyInsight:'', people:[], idea:'', relevance:'', followUp:'', shareWithClinic:false, rating:0, attachments:[], location:'' };
+        }
+      });
+    });
+  }
+}
 
 const data = [
   {
