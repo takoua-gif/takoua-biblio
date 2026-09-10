@@ -311,6 +311,17 @@ mark { background: #fef08a; color: #854d0e; padding: 0 2px; border-radius: 2px; 
         // If the app is loaded, update in-memory state
         if (typeof state !== 'undefined') {
           Object.assign(state, remoteData);
+          // Re-ensure all activities exist after merge
+          if (typeof data !== 'undefined') {
+            data.forEach(d => {
+              d.activities.forEach(a => {
+                if (!state.activities[a.id]) {
+                  state.activities[a.id] = { status:'planned', whatHappened:'', whatLearned:'', keyInsight:'', people:[], idea:'', relevance:'', followUp:'', shareWithClinic:false, rating:0, attachments:[], location:'' };
+                }
+              });
+            });
+          }
+          if (!state.exhibitors) state.exhibitors = {};
           if (typeof renderApp === 'function') {
             renderApp();
             if (typeof showView === 'function') {
@@ -862,6 +873,7 @@ function showView(viewId) {
 
 function renderApp() {
   const main = document.getElementById('mainContent');
+  try {
   let html = '';
   
   // Render Days
@@ -968,9 +980,13 @@ function renderApp() {
   // Post render updates
   data.forEach(d => {
     d.activities.forEach(a => {
-      refreshCard(a.id);
+      if (state.activities[a.id]) refreshCard(a.id);
     });
   });
+  } catch(err) {
+    main.innerHTML = '<div style="padding:40px;color:red;font-size:16px"><h2>Render Error</h2><pre>' + err.message + '\n' + err.stack + '</pre></div>';
+    console.error('renderApp error:', err);
+  }
 }
 
 function getStatusInfo(status) {
