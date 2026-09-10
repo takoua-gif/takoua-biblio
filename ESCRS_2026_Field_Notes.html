@@ -325,6 +325,29 @@ mark { background: #fef08a; color: #854d0e; padding: 0 2px; border-radius: 2px; 
       });
       
       updateSyncIndicator('connected');
+      
+      // On first connect, push local data to Firebase if it exists
+      const localSaved = localStorage.getItem('escrs2026v3');
+      if (localSaved) {
+        try {
+          const localData = JSON.parse(localSaved);
+          const hasLocalContent = Object.values(localData.activities || {}).some(a => 
+            a.whatHappened || a.whatLearned || a.keyInsight || a.status !== 'planned' || a.location
+          ) || (localData.quickNotes && localData.quickNotes.length > 0) 
+            || (localData.contacts && localData.contacts.length > 0)
+            || Object.keys(localData.exhibitors || {}).length > 0;
+          
+          if (hasLocalContent) {
+            // Push local data to Firebase to ensure nothing is lost
+            const stateRef = ref(db, 'escrs2026/state');
+            lastSyncTime = Date.now();
+            set(stateRef, localData).then(() => {
+              console.log('Local data pushed to Firebase');
+              updateSyncIndicator('synced');
+            });
+          }
+        } catch(e) { console.log('Could not parse local data'); }
+      }
     }
   } catch(e) {
     console.log('Firebase not configured yet:', e.message);
