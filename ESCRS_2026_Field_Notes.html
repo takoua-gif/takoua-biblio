@@ -922,11 +922,11 @@ function renderApp() {
       <div class="reflection-section">
         <h3>End of Day Reflection</h3>
         <div class="form-group"><label>Top 3 things I learned</label><textarea oninput="saveReflection(${d.dayIdx}, 'learned')" id="ref-${d.dayIdx}-learned">${state.reflections[d.dayIdx].learned || ''}</textarea></div>
-        <div class="form-group"><label>Most interesting person I met</label><textarea oninput="saveReflection(${d.dayIdx}, 'person')" id="ref-${d.dayIdx}-person">${state.reflections[d.dayIdx].person || ''}</textarea></div>
-        <div class="form-group"><label>Most interesting technology / idea</label><textarea oninput="saveReflection(${d.dayIdx}, 'tech')" id="ref-${d.dayIdx}-tech">${state.reflections[d.dayIdx].tech || ''}</textarea></div>
-        <div class="form-group"><label>What surprised me?</label><textarea oninput="saveReflection(${d.dayIdx}, 'surprised')" id="ref-${d.dayIdx}-surprised">${state.reflections[d.dayIdx].surprised || ''}</textarea></div>
-        <div class="form-group"><label>What do I want to investigate tomorrow?</label><textarea oninput="saveReflection(${d.dayIdx}, 'tomorrow')" id="ref-${d.dayIdx}-tomorrow">${state.reflections[d.dayIdx].tomorrow || ''}</textarea></div>
-        <div class="form-group"><label>What should potentially be shared with the clinic?</label><textarea oninput="saveReflection(${d.dayIdx}, 'clinic')" id="ref-${d.dayIdx}-clinic">${state.reflections[d.dayIdx].clinic || ''}</textarea></div>
+        <div class="form-group"><label>Most interesting person I met</label><textarea oninput="saveReflection(${d.dayIdx}, 'person')" id="ref-${d.dayIdx}-person">${refl.person || ''}</textarea></div>
+        <div class="form-group"><label>Most interesting technology / idea</label><textarea oninput="saveReflection(${d.dayIdx}, 'tech')" id="ref-${d.dayIdx}-tech">${refl.tech || ''}</textarea></div>
+        <div class="form-group"><label>What surprised me?</label><textarea oninput="saveReflection(${d.dayIdx}, 'surprised')" id="ref-${d.dayIdx}-surprised">${refl.surprised || ''}</textarea></div>
+        <div class="form-group"><label>What do I want to investigate tomorrow?</label><textarea oninput="saveReflection(${d.dayIdx}, 'tomorrow')" id="ref-${d.dayIdx}-tomorrow">${refl.tomorrow || ''}</textarea></div>
+        <div class="form-group"><label>What should potentially be shared with the clinic?</label><textarea oninput="saveReflection(${d.dayIdx}, 'clinic')" id="ref-${d.dayIdx}-clinic">${refl.clinic || ''}</textarea></div>
       </div>
     </div>`;
   });
