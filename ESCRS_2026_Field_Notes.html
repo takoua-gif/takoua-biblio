@@ -694,67 +694,65 @@ function sanitizeState() {
 
 const data = [
   {
-    dayIdx: 0, title: "DAY 1 — FRIDAY 11 SEPTEMBER", focus: "Learning + networking",
+    dayIdx: 0, title: "DAY 1 — FRIDAY 11 SEPTEMBER", focus: "M&A, Innovation, Refractive Tech & Supplier Setup",
     activities: [
-      { id: "d0a0", time: "09:00–12:30", name: "iNovation® Day", outcome: "Understand emerging technologies AI and new directions in eye care", target: "5 useful insights" },
-      { id: "d0a1", time: "12:45–14:00", name: "GRS04: Technological Innovation in Refractive Surgery", note: "Victoria Room 5/6", outcome: "Global Refractive Summit on new excimer & femtosecond lasers (KLEx), phakic IOLs & vault calculators, and Full DOFi Simultaneous Vision IOLs. Chairs: Bryan Lin, Kevin Miller, Mun Wai Lee.", target: "Laser & Phakic IOL evaluation for new hospital", type: "refractive" },
-      { id: "d0a2", time: "14:00–14:45", name: "Exhibition: Alcon, Zeiss, Rayner", outcome: "Get an overview of relevant companies / technologies to revisit", target: "Priority shortlist" },
-      { id: "d0a3", time: "14:45–16:00", name: "Legends of the Lens", outcome: "Understand how cataract and glaucoma care connect and what is changing", target: "3 takeaways" },
-      { id: "d0a4", time: "16:00–17:00", name: "IME: Refractive Surgery", outcome: "Understand current refractive developments trends and patient outcomes", target: "3 insights" },
-      { id: "d0a5", time: "17:00+", name: "Networking — end of day", outcome: "Deepen the strongest conversations from the day", target: "2 quality follow-ups" }
+      { id: "d0a0", time: "08:15–12:30", name: "iNovation® Day (M&A, MedTech & AI)", note: "ICC Auditorium", outcome: "Key business sessions: M&A Ins & Outs (08:23), Innovators Den (08:50), Global Leadership Trends (09:38), AI & Robotics (10:27), Expanding Refractive & Corneal Markets (11:27).", target: "5 high-level commercial & M&A insights", type: "inovation" },
+      { id: "d0a1", time: "12:45–14:00", name: "GRS04: Technological Innovation in Refractive Surgery", note: "Victoria Room 5/6", outcome: "Global Refractive Summit: Excimer & femto laser platforms (KLEx), phakic IOL vault sizing, Full DOFi Simultaneous Vision IOLs. Chairs: Bryan Lin, Kevin Miller, Mun Wai Lee.", target: "Laser & Phakic IOL tech comparison for new hospital", type: "refractive" },
+      { id: "d0a2", time: "14:00–14:45", name: "Exhibition: Alcon, Zeiss, Rayner", note: "Exhibition Hall", outcome: "Walkthrough and supplier pricing: Centurion phaco, KINEVO/OPMI microscopes, RayOne IOL volume terms.", target: "Initial quotes & contact exchange", type: "exhibition" },
+      { id: "d0a3", time: "14:45–16:00", name: "Legends of the Lens: Navigating Cataract & Glaucoma", note: "George V Room 2", outcome: "Video & voting session with Karsten Klabe & Uday Devgan. Managing combined cataract + glaucoma pathways and complication management.", target: "3 surgical & technology takeaways", type: "clinical" },
+      { id: "d0a4", time: "16:00–17:00", name: "IME01: Refractive Surgery IME Forum", note: "Victoria Room 5/6", outcome: "Modern Refractive Surgery: Bridging Technology, Outcomes, and Patient Expectations. Chairs: Andreia Rosa & Eric Donnenfeld.", target: "3 patient expectation & premium conversion insights", type: "ime" },
+      { id: "d0a5", time: "17:00+", name: "Strategic Networking — End of Day 1", note: "Exhibition & Main Foyer", outcome: "Deepen conversations with industry heads, key surgeons, and device reps met during iNovation Day.", target: "2 high-quality follow-up meetings booked", type: "networking" }
     ]
   },
   {
-    dayIdx: 1, title: "DAY 2 — SATURDAY 12 SEPTEMBER", focus: "MIGS + surgical learning + Rayner dinner",
+    dayIdx: 1, title: "DAY 2 — SATURDAY 12 SEPTEMBER", focus: "MIGS, Complex Phaco, Near-Live Surgery & Rayner Dinner",
     activities: [
-      { id: "d1a0", time: "09:00–12:00", name: "Modern MIGS Techniques NOT Using Implants", outcome: "Learn the selected MIGS content and capture practical insights", target: "Key notes + 3 takeaways" },
-      { id: "d1a1", time: "12:00–13:00", name: "Networking — lunch / exhibition", outcome: "Discuss the morning learning and meet new professionals", target: "3 conversations" },
-      { id: "d1a2", time: "13:00–14:00", name: "IME: Complex Phaco", outcome: "Understand developments and innovations in complex cataract surgery", target: "3 insights" },
-      { id: "d1a3", time: "14:30–16:45", name: "Near-Live Surgery", outcome: "Connect clinical decision-making with technology and outcomes", target: "3 takeaways" },
-      { id: "d1a4", time: "16:45–17:30", name: "Exhibition: Schwind, Bausch+Lomb, STAAR Surgical", outcome: "Revisit the most relevant companies from the first two days", target: "2 technologies to investigate" },
-      { id: "d1a5", time: "18:30+", name: "Rayner UK ESCRS Dinner", outcome: "Informal professional networking and relationship building", target: "3–5 conversations", note: "Location: Roe Canary Wharf" },
-      { id:"d1a6", time:"TBC", name:"LBI: Wealth Management", outcome:"Financial decisions for starting/scaling your clinic. Personal wealth vs practice reinvestment", target:"3 financial insights", type:"lbi" }
+      { id: "d1a0", time: "09:00–12:00", name: "Modern MIGS Techniques NOT Using Implants — Skill Lab", note: "Wetlab Area", outcome: "Non-implant MIGS approaches (GATT, canaloplasty). Compare surgical consumable costs vs implant-based stents.", target: "Cost-per-case analysis for glaucoma lane", type: "surgical" },
+      { id: "d1a1", time: "12:00–13:00", name: "Networking — Lunch / Exhibition", note: "Exhibition Hall", outcome: "Discuss morning findings with clinicians and explore mid-tier equipment suppliers.", target: "3 meaningful conversations", type: "networking" },
+      { id: "d1a2", time: "13:00–14:00", name: "IME02: Complex Phaco — Best Practices", note: "Victoria Room 5/6", outcome: "Managing complex cataract cases, dense lenses, zonular weakness, and emergency surgical protocols for new hospital OR.", target: "Safety & OR readiness checklist", type: "ime" },
+      { id: "d1a3", time: "14:30–16:45", name: "Near-Live Surgery: Complex Cases & New Tech", note: "ICC Auditorium", outcome: "Ultra-dense cataracts, 4D phaco fluidics, 3D visualization, and surgical efficiency in action.", target: "3 technology takeaways for OR equipping", type: "surgical" },
+      { id: "d1a4", time: "16:45–17:30", name: "Exhibition: Schwind, Bausch+Lomb, STAAR Surgical", note: "Exhibition Hall", outcome: "Evaluate Schwind AMARIS/ATOS lasers, STAAR EVO ICL certification pathways, and Bausch+Lomb consumables.", target: "Compare laser & ICL business models", type: "exhibition" },
+      { id: "d1a5", time: "18:30+", name: "Rayner UK ESCRS Dinner", note: "Roe Canary Wharf", outcome: "High-level professional networking and partnership building with Rayner leadership and UK surgeons.", target: "3–5 senior relationship connections", type: "networking" }
     ]
   },
   {
-    dayIdx: 2, title: "DAY 3 — SUNDAY 13 SEPTEMBER", focus: "MIGS (implants) + AI Summit + World Café + Lift Off",
+    dayIdx: 2, title: "DAY 3 — SUNDAY 13 SEPTEMBER", focus: "LBI Sunday Bootcamp, Practice Scaling, AI & Negotiation",
     activities: [
-      { id: "d2a0", time: "09:00–12:00", name: "Modern MIGS Techniques USING Implants", outcome: "Compare the implant and non-implant approaches", target: "3 comparison insights", overlap: true, overlapNote: "Overlaps with AI Summit (10:15–12:00) — choose one" },
-      { id: "d2a1", time: "10:15–12:00", name: "AI Summit", outcome: "Understand practical AI applications limitations and direction in ophthalmology", target: "5 AI insights", overlap: true, overlapNote: "Overlaps with MIGS Implants (09:00–12:00) — choose one" },
-      { id: "d2a2", time: "12:00–13:00", name: "Networking — lunch / exhibition", outcome: "Exchange views on AI surgery and technology", target: "3–5 conversations" },
-      { id:"d2a7", time:"13:00–13:45", name:"BoSS Connect: Diversity Networking", note:"South Gallery Room 22", outcome:"Joint networking event by BoSS and Orbis. Meet diverse professionals", target:"3 new connections", type:"boss" },
-      { id:"d2a8", time:"14:00–16:00", name:"LBI: How to Negotiate (Interactive Workshop & Role-Play)", note:"Capital Suite Room 2-4", outcome:"Core principles of effective negotiation (industry partnerships, hospital management, suppliers). Led by Steven Callens & Vincent Qin with an interactive role-play simulation in an ophthalmology context.", target:"Negotiation framework & role-play practice", type:"lbi" },
-      { id: "d2a3", time: "16:00–17:00", name: "Exhibition: Glaukos, iCare, Sight Sciences, Nidek", outcome: "Identify technologies worth understanding further", target: "3 relevant solutions" },
-      { id: "d2a5", time: "17:00–18:20", name: "World Café: Refractive", outcome: "Interactive discussion and expert perspectives on refractive care", target: "3 perspectives" },
-      { id: "d2a6", time: "18:00–22:30", name: "Lift Off in London 2026", outcome: "Informal evening networking and relationship building", target: "3–5 conversations" }
+      { id: "d2a9", time: "09:00–11:00", name: "LBI: Podium Presentation Skills", note: "Capital Suite Room 2-4", outcome: "Masterclass with David Lockington & Artemis Matsou: pitching hospital projects to investors, rapid-fire talks, and overcoming public speaking hurdles.", target: "Pitch framework for hospital project", type: "lbi" },
+      { id: "d2a1", time: "10:15–12:00", name: "3D AI Digital Summit", note: "Victoria Room 3", outcome: "Today’s application of AI to improve decision-making and practice efficiency. Chairs: Bruce Allan & Julie Schallhorn.", target: "AI diagnostic & workflow tools for clinic", overlap: true, overlapNote: "Overlaps with LBI Bootcamp morning — choose based on investor pitch vs AI priority", type: "ai" },
+      { id: "d2a10", time: "11:30–13:00", name: "LBI: Wealth Management & Clinic Reinvestment", note: "Capital Suite Room 2-4", outcome: "Financial decisions for starting/scaling your clinic. Led by Christina Grupcheva with J.P. Morgan & Cazenove Capital bankers.", target: "Clinic scaling & capitalization model", type: "lbi" },
+      { id: "d2a11", time: "12:30–14:00", name: "3D Operating Microscope Showdown", note: "Victoria Room 3", outcome: "Heads-up 3D visualization, intraoperative OCT, and digital microscope platforms (Burkhard Dick, Gerd Auffarth). Compare Leica Proveo 8, Zeiss KINEVO & Alcon NGENUITY for hospital OR.", target: "Microscope selection criteria", overlap: true, overlapNote: "Overlaps with BoSS Connect (13:00–13:45) — choose based on OR equipment vs networking priority", type: "technology" },
+      { id: "d2a7", time: "13:00–13:45", name: "BoSS Connect: Diversity Networking", note: "South Gallery Room 22", outcome: "Joint networking event by BoSS and Orbis. Meet clinic managers, healthcare administrators, and diverse surgical leaders.", target: "3 key management contacts", type: "boss" },
+      { id: "d2a8", time: "14:00–16:00", name: "LBI: How to Negotiate (Workshop & Role-Play)", note: "Capital Suite Room 2-4", outcome: "Principles of effective negotiation (hospital management, supplier deals, partnerships). Live role-play simulation led by Steven Callens & Vincent Qin.", target: "Deal negotiation playbook for equipment vendors", type: "lbi" },
+      { id: "d2a3", time: "16:00–17:00", name: "Exhibition: Glaukos, iCare, Sight Sciences, Nidek", note: "Exhibition Hall", outcome: "Review MIGS stents (iStent vs OMNI), iCare tonometry suites, and Nidek diagnostic laser combos.", target: "Glaucoma lane package quotes", type: "exhibition" },
+      { id: "d2a12", time: "16:45–18:15", name: "BoSS Course: From Surgeon to Leader — Essential Leadership Skills", note: "South Gallery Room 22", outcome: "Transitioning from peer to leader, communication, delegation, and decision-making across multidisciplinary clinical teams (Mohamed Elalfy, Beatrice Cochener-Lamard).", target: "3 leadership & team delegation frameworks", overlap: true, overlapNote: "Overlaps with World Café Refractive (17:00–18:20) & Exhibition", type: "boss" },
+      { id: "d2a5", time: "17:00–18:20", name: "World Café: Refractive", note: "The World Café Area", outcome: "Interactive roundtable with clinical and practice management leaders on refractive conversion and patient journeys.", target: "3 patient conversion strategies", type: "worldcafe" },
+      { id: "d2a6", time: "18:00–22:30", name: "Lift Off in London 2026", note: "Social Venue", outcome: "Informal evening networking with surgeons, clinic owners, and industry directors.", target: "3–5 strong commercial contacts", type: "networking" }
     ]
   },
   {
-    dayIdx: 3, title: "DAY 4 — MONDAY 14 SEPTEMBER", focus: "Targeted sessions + World Café: Cornea + daily reflection",
+    dayIdx: 3, title: "DAY 4 — MONDAY 14 SEPTEMBER", focus: "Digital OR Technologies, Cornea Therapies & Instrument Contracts",
     activities: [
-      { id: "d3a0", time: "09:00–10:45", name: "Targeted clinical sessions / exhibition", outcome: "Fill knowledge gaps from Days 1–3", target: "2 answers" },
-      { id: "d3a1", time: "11:00–12:20", name: "World Café: Cornea", outcome: "Interactive discussion with experts and peers", target: "3 perspectives" },
-      { id: "d3a2", time: "12:20–13:00", name: "Networking — lunch", outcome: "Reconnect with people from previous days and meet new professionals", target: "3 conversations" },
-      { id: "d3a3", time: "13:00–14:00", name: "IME: Digital Operating Room", outcome: "Understand digital OR workflow technology and future practice", target: "3 insights" },
-      { id: "d3a4", time: "14:00–17:00", name: "Exhibition: BVI, Leica, Ziemer, MedInstrus", outcome: "Explore relevant companies and build professional relationships", target: "5 conversations" },
-      { id: "d3a5", time: "17:00+", name: "Daily reflection", outcome: "Consolidate the strongest themes and people from the congress so far", target: "Top 5 insights" },
-      { id:"d3a6", time:"TBC", name:"LBI: Podium Presentation Skills", outcome:"Present your hospital project to investors/partners more effectively", target:"Presentation framework", type:"lbi" },
-      { id:"d3a7", time:"TBC", name:"BoSS: Leadership Skills", outcome:"Transitioning from peer to leader. Communication, delegation, cross-cultural teams", target:"3 leadership insights", type:"boss" }
+      { id: "d3a0", time: "09:00–10:45", name: "Targeted Clinical Sessions & Floor Walk", note: "Exhibition Hall", outcome: "Follow up with shortlisted diagnostic and microscope vendors from Days 1–3.", target: "Clarify warranty & maintenance proposals", type: "exhibition" },
+      { id: "d3a1", time: "11:00–12:20", name: "World Café: Cornea", note: "The World Café Area", outcome: "Interactive discussion on modern corneal surgery, DMEK adoption, and premium ocular surface therapies.", target: "3 clinical & market takeaways", type: "worldcafe" },
+      { id: "d3a2", time: "12:20–13:00", name: "Networking — Lunch", note: "Catering Area", outcome: "Reconnect with key clinicians and partners met over the weekend.", target: "3 touchpoint check-ins", type: "networking" },
+      { id: "d3a3", time: "13:00–14:00", name: "IME04: Digital Operating Room Technologies", note: "Victoria Room 5/6", outcome: "Digital OR workflow, surgical recording systems, 3D heads-up surgery, and EMR integration.", target: "Digital OR architecture plan for hospital", type: "ime" },
+      { id: "d3a4", time: "14:00–17:00", name: "Exhibition: BVI, Leica, Ziemer, MedInstrus", note: "Exhibition Hall", outcome: "Deep dive: Leica Proveo 8 OR microscope quote, Ziemer femto platform, BVI/MedInstrus bulk surgical instrument trays.", target: "Instrument & microscope terms negotiated", type: "exhibition" },
+      { id: "d3a5", time: "17:00+", name: "Daily Reflection & Vendor Dossier Review", note: "Quiet Lounge", outcome: "Consolidate supplier notes, pricing models, and prepare final decision matrix.", target: "Draft supplier comparison grid", type: "reflection" }
     ]
   },
   {
-    dayIdx: 4, title: "DAY 5 — TUESDAY 15 SEPTEMBER", focus: "Final sessions + debrief + close",
+    dayIdx: 4, title: "DAY 5 — TUESDAY 15 SEPTEMBER", focus: "Final Vendor Deals, RxSight LAL & Hospital Debrief",
     activities: [
-      { id: "d4a0", time: "08:30–10:00", name: "Delivering Safe Cataract Surgery in Low-Resource Settings", outcome: "Learn lessons around safety efficiency adaptability and access", target: "3 lessons" },
-      { id: "d4a1", time: "10:00–11:00", name: "Networking — coffee", outcome: "Final professional conversations and follow-ups", target: "2–3 contacts" },
-      { id: "d4a2", time: "11:00–13:00", name: "Exhibition: Rexxam, Laboratoires KÔL, RxSight + follow-ups", outcome: "Close remaining learning gaps", target: "2 insights" },
-      { id: "d4a3", time: "13:00–14:00", name: "Networking — final lunch", outcome: "Close conversations and exchange contacts where relevant", target: "Final connections" },
-      { id: "d4a4", time: "14:00–15:00", name: "Personal ESCRS debrief", outcome: "Turn the week into clear insights and relevant recommendations", target: "3–5 recommendations" },
-      { id: "d4a5", time: "15:00+", name: "Close / organise notes", outcome: "Clean up notes and follow-up list while everything is fresh", target: "Ready-to-report notes" }
+      { id: "d4a0", time: "08:30–10:00", name: "Delivering Safe Surgery in Low-Resource Settings", note: "Instructional Course", outcome: "High-efficiency operating protocols, sterile processing optimization, and cost-containment strategies.", target: "3 operational efficiency protocols", type: "instructional" },
+      { id: "d4a1", time: "10:00–11:00", name: "Networking — Final Coffee & Contact Exchange", note: "Main Foyer", outcome: "Closing conversations with international colleagues, potential visiting surgeons, and advisors.", target: "2–3 confirmed post-congress follow-ups", type: "networking" },
+      { id: "d4a2", time: "11:00–13:00", name: "Exhibition: Rexxam, Laboratoires KÔL, RxSight + follow-ups", note: "Exhibition Hall", outcome: "Final booth meetings: Rexxam lane packages, Laboratoires KÔL cornea drop partnership, and RxSight LAL device placement model.", target: "Final commercial proposals secured", type: "exhibition" },
+      { id: "d4a3", time: "13:00–14:00", name: "Networking — Final Congress Lunch", note: "Catering Area", outcome: "Wrap up informal discussions and exchange direct contact details.", target: "Final connection confirmations", type: "networking" },
+      { id: "d4a4", time: "14:00–15:00", name: "Personal ESCRS Debrief & Action Plan", note: "Meeting Hub", outcome: "Synthesize week’s learnings, vendor quotes, and partnerships into executive recommendations.", target: "Executive summary ready for board/investors", type: "debrief" },
+      { id: "d4a5", time: "15:00+", name: "Close / Organize Notes & Procurement Dossier", note: "Business Centre", outcome: "Archive all business card photos, finalize notes, and export comprehensive congress report.", target: "Ready-to-report dossier + follow-up list", type: "close" }
     ]
   }
 ];
-
 
 const exhibitors = [
   { id:'ex_alcon', name:'Alcon', day:0, category:'Platform + IOL', brief:'Full cataract suite (Centurion/ACTIVE SENTRY), premium IOLs (PanOptix, Vivity), surgical packs', angle:'Your hospital needs a phaco platform and IOL supply chain from day one', questions:['What is your new hospital setup package?','Volume IOL pricing for first 2 years?','Is surgeon training included?','Demo unit or trial program available?','What consumables are required?'] },
@@ -1051,8 +1049,8 @@ function refreshCard(aid) {
   if (act.overlap) chipsHtml += `<span class="act-chip overlap-badge">⚠ Overlap</span>`;
   if (s.keyInsight) chipsHtml += `<span class="act-chip act-insight-chip">💡 ${s.keyInsight}</span>`;
   if (s.people && s.people.length > 0) chipsHtml += `<span class="act-chip act-people-chip">👤 ${s.people.length}</span>`;
-  if (s.location) chipsHtml += `<span class="act-chip act-note-chip">📍 ${s.location}</span>`;
-  if (act.note) chipsHtml += `<span class="act-chip act-note-chip">📍 ${act.note}</span>`;
+  const loc = s.location || (act && act.note) || '';
+  if (loc) chipsHtml += `<span class="act-chip act-note-chip">📍 ${loc}</span>`;
   if (s.rating > 0) chipsHtml += `<span class="act-chip act-rating-chip">★ ${s.rating}</span>`;
   
   document.getElementById('chips-' + aid).innerHTML = chipsHtml;
@@ -1085,8 +1083,9 @@ function openActivity(aid) {
   data.forEach(d => d.activities.forEach(a => { if(a.id === aid) act = a; }));
   
   document.getElementById('adTitle').innerText = act.name;
-  const loc = s.location ? s.location : 'Tap to add room/hall';
-  document.getElementById('adMeta').innerHTML = `<p><strong>Time:</strong> ${act.time}</p><p><strong>Target:</strong> ${act.target}</p><p><strong>Outcome:</strong> ${act.outcome}</p><p style="margin-top:4px"><strong>📍 Location:</strong> <span style="color:${s.location ? 'var(--text)' : 'var(--text-faint)'}">${loc}</span></p>`;
+  const loc = s.location || (act && act.note) || 'Tap to add room/hall';
+  const hasLoc = !!(s.location || (act && act.note));
+  document.getElementById('adMeta').innerHTML = `<p><strong>Time:</strong> ${act.time}</p><p><strong>Target:</strong> ${act.target}</p><p><strong>Outcome:</strong> ${act.outcome}</p><p style="margin-top:4px"><strong>📍 Location:</strong> <span style="color:${hasLoc ? 'var(--text)' : 'var(--text-faint)'}">${loc}</span></p>`;
   
   const overlapWarning = document.getElementById('adOverlapWarning');
   if (act.overlap) {
@@ -1096,7 +1095,7 @@ function openActivity(aid) {
     overlapWarning.style.display = 'none';
   }
   
-  document.getElementById('adLocation').value = s.location || '';
+  document.getElementById('adLocation').value = s.location || (act && act.note) || '';
   document.getElementById('adHappened').value = s.whatHappened || '';
   document.getElementById('adLearned').value = s.whatLearned || '';
   document.getElementById('adInsight').value = s.keyInsight || '';
