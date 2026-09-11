@@ -227,30 +227,36 @@ mark { background: #fef08a; color: #854d0e; padding: 0 2px; border-radius: 2px; 
 #syncIndicator { transition: all 0.3s; }
 
 
-/* Exhibitor View */
+/* Exhibitor View & Cards */
 .exhibitor-day-group { margin-bottom: 24px; }
-.exhibitor-day-group h3 { font-size: 13px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; letter-spacing: 0.5px; }
-.exhibitor-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
-.exhibitor-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 16px; cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden; }
-.exhibitor-card:hover { border-color: var(--accent-mid); box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.exhibitor-day-group h3 { font-size: 13px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; letter-spacing: 0.5px; font-weight: 700; }
+.exhibitor-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 14px; }
+.exhibitor-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 16px; cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; }
+.exhibitor-card:hover { border-color: var(--accent-mid); box-shadow: 0 4px 12px rgba(0,0,0,0.06); transform: translateY(-1px); }
 .exhibitor-card.visited { border-left: 4px solid var(--success); }
-.exhibitor-card .ex-name { font-weight: 700; font-size: 15px; margin-bottom: 2px; }
-.exhibitor-card .ex-category { font-size: 11px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
-.exhibitor-card .ex-brief { font-size: 13px; color: var(--text-muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 10px; }
-.exhibitor-card .ex-progress { display: flex; align-items: center; gap: 8px; }
-.ex-progress-bar { flex: 1; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.exhibitor-card .ex-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px; }
+.exhibitor-card .ex-name { font-weight: 700; font-size: 16px; color: var(--text); }
+.exhibitor-card .ex-category { font-size: 11px; color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+.exhibitor-card .ex-decision-preview { background: #f1f5f9; border-radius: 6px; padding: 6px 10px; font-size: 12px; color: #1e293b; margin-bottom: 8px; line-height: 1.35; border: 1px solid #e2e8f0; }
+.exhibitor-card .ex-brief { font-size: 12px; color: var(--text-muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 12px; line-height: 1.4; }
+.exhibitor-card .ex-progress { display: flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--border); }
+.ex-progress-bar { flex: 1; height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden; }
 .ex-progress-fill { height: 100%; background: var(--success); transition: width 0.3s; }
-.ex-progress-label { font-size: 11px; color: var(--text-muted); white-space: nowrap; }
+.ex-progress-label { font-size: 11px; font-weight: 600; color: var(--text-muted); white-space: nowrap; }
+.ex-card-badges { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+.ex-badge-chip { font-size: 11px; font-weight: 500; padding: 2px 7px; border-radius: 4px; }
+.ex-badge-offer { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+.ex-badge-contact { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
 
-.ex-checklist-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.ex-checklist-item { display: flex; align-items: flex-start; gap: 10px; padding: 9px 0; border-bottom: 1px solid #f1f5f9; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .ex-checklist-item:last-child { border-bottom: none; }
-.ex-check { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-size: 12px; color: white; margin-top: 1px; }
+.ex-check { width: 20px; height: 20px; border-radius: 50%; border: 2px solid #cbd5e1; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-size: 11px; color: white; margin-top: 1px; font-weight: bold; background: white; }
 .ex-checklist-item.checked .ex-check { background: var(--success); border-color: var(--success); }
-.ex-checklist-text { font-size: 14px; line-height: 1.4; }
+.ex-checklist-text { font-size: 13px; line-height: 1.35; color: var(--text); }
 .ex-checklist-item.checked .ex-checklist-text { color: var(--text-muted); text-decoration: line-through; }
 
-.ex-question-item { background: var(--accent-light); border-radius: var(--radius); padding: 10px 14px; margin-bottom: 6px; font-size: 13px; color: var(--accent); }
-.ex-question-item::before { content: '💬 '; }
+.ex-question-item { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--radius); padding: 8px 12px; font-size: 12.5px; color: #1e293b; line-height: 1.4; display: flex; gap: 6px; align-items: flex-start; }
+.ex-question-item::before { content: '💬'; font-size: 12px; flex-shrink: 0; margin-top: 1px; }
 
 /* Toast */
 #toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--text); color: white; padding: 10px 20px; border-radius: 20px; font-size: 14px; transition: transform 0.3s; z-index: 1000; }
@@ -604,55 +610,106 @@ mark { background: #fef08a; color: #854d0e; padding: 0 2px; border-radius: 2px; 
 </dialog>
 
 
-<dialog id="exhibitorDialog" style="max-width:600px">
-  <div class="dialog-header">
-    <h3 id="exTitle">Exhibitor</h3>
-    <button class="close-btn" onclick="document.getElementById('exhibitorDialog').close()">&times;</button>
-  </div>
-  <div class="meta-info" id="exBrief"></div>
-  <div style="background:#fffbeb;border-left:4px solid #f59e0b;padding:12px;border-radius:0 6px 6px 0;margin-bottom:16px">
-    <strong style="color:#b45309">🏥 Your hospital angle:</strong>
-    <p id="exAngle" style="margin-top:4px;font-size:13px;color:#92400e"></p>
-  </div>
-  <div id="exQuestions" style="margin-bottom:16px"></div>
-  <h4 style="font-size:14px;color:#6b6b67;margin-bottom:10px">Checklist</h4>
-  <div id="exChecklist" style="margin-bottom:16px"></div>
-  <div class="form-group">
-    <label>Key contact name & role</label>
-    <input type="text" id="exContact" oninput="debouncedSaveExhibitor()">
-  </div>
-  <div class="form-group">
-    <label>What they offered / proposed</label>
-    <textarea id="exOffered" style="min-height:60px" oninput="debouncedSaveExhibitor()"></textarea>
-  </div>
-  <div class="form-group">
-    <label>Key takeaway</label>
-    <input type="text" id="exTakeaway" oninput="debouncedSaveExhibitor()">
-  </div>
-  <div class="form-group">
-    <label>Follow-up action</label>
-    <input type="text" id="exFollowUp" oninput="debouncedSaveExhibitor()">
-  </div>
-  <div class="form-group">
-    <label>Business card photo</label>
-    <div id="exCardPreview" style="display:none;margin-bottom:10px;position:relative">
-      <img id="exCardImg" style="width:100%;border-radius:6px;border:1px solid #e0ddd8" alt="Business card">
-      <button onclick="removeExCardPhoto()" style="position:absolute;top:6px;right:6px;background:rgba(0,0,0,0.6);color:white;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:14px">&times;</button>
+<dialog id="exhibitorDialog" style="max-width:640px;width:94vw;border-radius:12px;border:1px solid var(--border);box-shadow:0 20px 40px rgba(0,0,0,0.15);padding:0;overflow:hidden">
+  <div style="background:linear-gradient(to right, #f8fafc, var(--surface));padding:16px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start">
+    <div>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <h3 id="exTitle" style="font-size:18px;font-weight:700;color:var(--text);margin:0">Exhibitor</h3>
+        <span id="exCategoryBadge" style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;background:var(--accent-light);color:var(--accent);text-transform:uppercase;letter-spacing:0.5px"></span>
+      </div>
+      <div id="exFlagship" style="font-size:12px;color:var(--text-muted);margin-top:3px"></div>
     </div>
-    <div style="display:flex;gap:8px">
-      <label style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;padding:8px 14px;border-radius:6px;font-size:13px;background:#1a56a0;color:white">
-        📷 Take Photo
-        <input type="file" accept="image/*" capture="environment" onchange="handleExCardPhoto(this)" style="display:none">
-      </label>
-      <label style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;padding:8px 14px;border-radius:6px;font-size:13px;background:#f7f7f5;border:1px solid #e0ddd8">
-        📁 Choose File
-        <input type="file" accept="image/*" onchange="handleExCardPhoto(this)" style="display:none">
-      </label>
+    <button class="close-btn" onclick="document.getElementById('exhibitorDialog').close()" style="font-size:24px;line-height:1;color:var(--text-muted);background:none;border:none;cursor:pointer;padding:0 4px">&times;</button>
+  </div>
+
+  <div style="padding:16px 20px;max-height:calc(85vh - 120px);overflow-y:auto">
+    <!-- Decision-Maker briefing -->
+    <div style="background:#f1f5f9;border:1px solid #cbd5e1;border-left:4px solid #1a56a0;padding:12px;border-radius:0 6px 6px 0;margin-bottom:14px">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
+        <span style="font-size:15px">👔</span>
+        <strong style="color:#0f172a;font-size:12px;text-transform:uppercase;letter-spacing:0.5px">Target Decision-Maker to meet:</strong>
+      </div>
+      <div id="exDecisionRole" style="font-weight:700;font-size:13px;color:#1a56a0"></div>
+      <div id="exDecisionWhy" style="font-size:12px;color:#334155;margin-top:3px;line-height:1.4"></div>
+    </div>
+
+    <!-- Hospital Strategy Angle -->
+    <div style="background:#fffbeb;border:1px solid #fde68a;border-left:4px solid #f59e0b;padding:12px;border-radius:0 6px 6px 0;margin-bottom:16px">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
+        <span style="font-size:15px">🏥</span>
+        <strong style="color:#b45309;font-size:12px;text-transform:uppercase;letter-spacing:0.5px">Hospital Procurement Angle:</strong>
+      </div>
+      <p id="exAngle" style="font-size:13px;color:#92400e;line-height:1.4;margin:0"></p>
+    </div>
+
+    <!-- Key Questions -->
+    <div id="exQuestionsSection" style="margin-bottom:18px">
+      <div style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">
+        💬 Key Commercial Questions to Ask:
+      </div>
+      <div id="exQuestions" style="display:flex;flex-direction:column;gap:6px"></div>
+    </div>
+
+    <!-- Tailored Checklist -->
+    <div style="margin-bottom:18px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <span style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px">
+          📋 Commercial Execution Checklist:
+        </span>
+        <span id="exChecklistCount" style="font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px;background:#f1f5f9;color:#475569"></span>
+      </div>
+      <div id="exChecklist" style="border:1px solid var(--border);border-radius:var(--radius);padding:4px 12px;background:var(--surface)"></div>
+    </div>
+
+    <!-- Commercial Capture Form -->
+    <div style="background:#fafaf9;border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:14px">
+      <div style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px">
+        📝 Commercial Interaction Log:
+      </div>
+      
+      <div class="form-group" style="margin-bottom:10px">
+        <label style="font-size:12px;font-weight:600;color:var(--text)">Key contact name, role & direct phone/email</label>
+        <input type="text" id="exContact" placeholder="e.g. John Smith, National Accounts Director (+44 7700...)" oninput="debouncedSaveExhibitor()">
+      </div>
+
+      <div class="form-group" style="margin-bottom:10px">
+        <label style="font-size:12px;font-weight:600;color:var(--text)">What they offered / proposed (pricing, discounts, package)</label>
+        <textarea id="exOffered" style="min-height:65px" placeholder="e.g. 20% discount on capital console, tier-2 IOL rebate, free starter packs..." oninput="debouncedSaveExhibitor()"></textarea>
+      </div>
+
+      <div class="form-group" style="margin-bottom:10px">
+        <label style="font-size:12px;font-weight:600;color:var(--text)">Specific note (confidential intel, surgeon preferences, key details):</label>
+        <textarea id="exNote" style="min-height:65px" placeholder="Capture specific intelligence, pricing hints, surgeon feedback, or competitor comparisons..." oninput="debouncedSaveExhibitor()"></textarea>
+      </div>
+
+      <div class="form-group" style="margin-bottom:12px">
+        <label style="font-size:12px;font-weight:600;color:var(--text)">Follow-up action & target date</label>
+        <input type="text" id="exFollowUp" placeholder="e.g. Send clinic equipment list by Sept 22, call for final quote on Oct 2" oninput="debouncedSaveExhibitor()">
+      </div>
+
+      <div class="form-group" style="margin-bottom:0">
+        <label style="font-size:12px;font-weight:600;color:var(--text)">Business card photo</label>
+        <div id="exCardPreview" style="display:none;margin-bottom:10px;position:relative;max-width:320px">
+          <img id="exCardImg" style="width:100%;border-radius:6px;border:1px solid #e0ddd8" alt="Business card">
+          <button onclick="removeExCardPhoto()" style="position:absolute;top:6px;right:6px;background:rgba(0,0,0,0.65);color:white;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:14px;border:none;cursor:pointer">&times;</button>
+        </div>
+        <div style="display:flex;gap:8px">
+          <label style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;padding:8px 14px;border-radius:6px;font-size:13px;font-weight:500;background:#1a56a0;color:white">
+            📷 Take Photo
+            <input type="file" accept="image/*" capture="environment" onchange="handleExCardPhoto(this)" style="display:none">
+          </label>
+          <label style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;padding:8px 14px;border-radius:6px;font-size:13px;font-weight:500;background:var(--surface);border:1px solid var(--border);color:var(--text)">
+            📁 Choose File
+            <input type="file" accept="image/*" onchange="handleExCardPhoto(this)" style="display:none">
+          </label>
+        </div>
+      </div>
     </div>
   </div>
-  <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:16px;padding-top:12px;border-top:1px solid #e0ddd8">
-    <span style="font-size:12px;color:#6b6b67;margin-right:auto;align-self:center" id="exSaveStatus">All changes saved</span>
-    <button style="background:#1a56a0;color:white;padding:8px 16px;border-radius:6px;font-weight:500;border:none;cursor:pointer" onclick="document.getElementById('exhibitorDialog').close()">Done</button>
+
+  <div style="background:#f8fafc;display:flex;gap:8px;justify-content:flex-end;align-items:center;padding:12px 20px;border-top:1px solid var(--border)">
+    <span style="font-size:12px;color:var(--text-muted);margin-right:auto" id="exSaveStatus">All changes saved</span>
+    <button style="background:#1a56a0;color:white;padding:8px 20px;border-radius:6px;font-weight:600;font-size:13px;border:none;cursor:pointer" onclick="document.getElementById('exhibitorDialog').close()">Done</button>
   </div>
 </dialog>
 
@@ -679,6 +736,18 @@ function sanitizeState() {
   if (!state.report || typeof state.report !== 'object') state.report = { editedSections: {} };
   if (!state.report.editedSections) state.report.editedSections = {};
   if (!state.exhibitors || typeof state.exhibitors !== 'object') state.exhibitors = {};
+  if (typeof exhibitors !== 'undefined') {
+    exhibitors.forEach(ex => {
+      const exLen = (ex.checklist && ex.checklist.length) || 7;
+      if (!state.exhibitors[ex.id]) {
+        state.exhibitors[ex.id] = { checklist: new Array(exLen).fill(false), contact:'', offered:'', note:'', followUp:'', cardPhoto:null };
+      } else {
+        const s = state.exhibitors[ex.id];
+        if (!s.note && s.takeaway) s.note = s.takeaway;
+        if (!Array.isArray(s.checklist)) s.checklist = new Array(exLen).fill(false);
+      }
+    });
+  }
   if (typeof data !== 'undefined') {
     data.forEach(d => {
       d.activities.forEach(a => {
@@ -755,23 +824,482 @@ const data = [
 ];
 
 const exhibitors = [
-  { id:'ex_alcon', name:'Alcon', day:0, category:'Platform + IOL', brief:'Full cataract suite (Centurion/ACTIVE SENTRY), premium IOLs (PanOptix, Vivity), surgical packs', angle:'Your hospital needs a phaco platform and IOL supply chain from day one', questions:['What is your new hospital setup package?','Volume IOL pricing for first 2 years?','Is surgeon training included?','Demo unit or trial program available?','What consumables are required?'] },
-  { id:'ex_zeiss', name:'Zeiss', day:0, category:'Microscope + Diagnostics', brief:'Surgical microscopes (KINEVO/OPMI), IOLs, OCT diagnostics, femtosecond lasers', angle:'OR microscope + full diagnostic suite — potential single-vendor deal', questions:['Bundled OR microscope + diagnostics deal?','Service contract structure and cost?','Demo unit program?','Integration with digital OR?','Competitive quote vs Leica?'] },
-  { id:'ex_rayner', name:'Rayner', day:0, category:'IOL', brief:'Hydrophilic IOLs (RayOne), strong UK presence. You are attending their dinner', angle:'UK-based — strong partner for your hospital. Leverage dinner relationship', questions:['UK hospital pricing and supply terms?','Next-gen IOL pipeline?','Training partnership or sponsorship?','Volume rebates?','Clinical support program?'] },
-  { id:'ex_schwind', name:'Schwind', day:1, category:'Refractive Laser', brief:'Excimer lasers (AMARIS), femtosecond lasers, refractive surgery suite', angle:'If your hospital will offer refractive surgery, you need a laser platform', questions:['Turnkey refractive suite pricing?','Per-procedure vs outright purchase model?','Installation and room requirements?','Maintenance contract terms?','Staff training program?'] },
-  { id:'ex_bausch', name:'Bausch+Lomb', day:1, category:'IOL + Surgical', brief:'IOLs (enVista, LuxSmart), surgical equipment, vision care products', angle:'Alternative IOL supplier — compare pricing against Alcon', questions:['Multi-year IOL supply agreement?','Competitive pricing vs Alcon?','Surgical consumables catalog?','New hospital onboarding support?','Clinical education program?'] },
-  { id:'ex_staar', name:'STAAR Surgical', day:1, category:'ICL', brief:'Implantable Collamer Lens (EVO ICL) — high-margin refractive procedure', angle:'ICL is a premium revenue stream for your hospital', questions:['ICL certification pathway for surgeons?','Minimum patient volume requirements?','Marketing support for ICL services?','Device pricing and margins?','Training timeline?'] },
-  { id:'ex_glaukos', name:'Glaukos', day:2, category:'MIGS', brief:'MIGS devices (iStent), corneal health products', angle:'If your hospital will do glaucoma surgery, you need MIGS devices', questions:['Volume pricing on iStent?','Surgeon training program?','Regulatory status in your market?','Case support for new surgeons?','Combo cataract+MIGS approach?'] },
-  { id:'ex_icare', name:'iCare', day:2, category:'Diagnostics', brief:'Tonometers (iCare), perimeters — glaucoma screening equipment', angle:'Essential for your glaucoma screening and follow-up clinic', questions:['Multi-device deal for full glaucoma lane?','New clinic pricing?','Trial unit available?','Integration with EMR?','Service and calibration?'] },
-  { id:'ex_sight', name:'Sight Sciences', day:2, category:'MIGS', brief:'OMNI Surgical System — interventional glaucoma', angle:'Alternative/complement to Glaukos for your glaucoma offering', questions:['OMNI device pricing?','Surgeon certification process?','Case support program?','Clinical evidence vs iStent?','Market access support?'] },
-  { id:'ex_nidek', name:'Nidek', day:2, category:'Laser + Diagnostics', brief:'Lasers (YAG, SLT), diagnostics (OCT, autorefractors, topographers)', angle:'Combined diagnostic + laser package could save costs', questions:['Combined diagnostic + laser package pricing?','Service contract included?','Installation requirements?','Comparison to Zeiss diagnostics?','Training and support?'] },
-  { id:'ex_bvi', name:'BVI', day:3, category:'Instruments + Consumables', brief:'Surgical instruments, BSS, consumables, Visitec cannulas', angle:'Day-to-day surgical consumables supply — high recurring revenue for them', questions:['Annual consumables contract pricing?','New account setup deal?','Custom surgical pack options?','Instrument warranty?','Delivery logistics?'] },
-  { id:'ex_leica', name:'Leica', day:3, category:'Microscope', brief:'Surgical microscopes (Proveo, Envisu OCT) — Leica Microsystems', angle:'Direct competitor to Zeiss for your OR microscope purchase', questions:['Competitive quote vs Zeiss?','Proveo 8 features and pricing?','Demo program available?','Integration with digital OR recording?','Service contract terms?'] },
-  { id:'ex_ziemer', name:'Ziemer', day:3, category:'Femtosecond', brief:'Femtosecond lasers (FEMTO LDV Z series) for cataract and refractive', angle:'Compact femto platform — consider for femto-assisted cataract', questions:['FEMTO LDV platform cost?','Per-case model available?','Maintenance terms and frequency?','Room and infrastructure requirements?','Comparison to Zeiss/Alcon femto?'] },
-  { id:'ex_medinstrus', name:'MedInstrus', day:3, category:'Instruments', brief:'Ophthalmic surgical instruments and consumables', angle:'Instrument sets for cataract, glaucoma, and cornea surgery', questions:['Bulk instrument set pricing?','Instrument reprocessing support?','Starter kit for new OR?','Custom tray configuration?','Warranty and replacement policy?'] },
-  { id:'ex_rexxam', name:'Rexxam', day:4, category:'Diagnostics', brief:'Ophthalmic diagnostic equipment manufacturer', angle:'Diagnostic lane equipment for your outpatient clinic', questions:['Full diagnostic lane package?','Installation and training support?','Service contract options?','Integration capabilities?','Comparison to Nidek/Zeiss?'] },
-  { id:'ex_kol', name:'Laboratoires KÔL', day:4, category:'Pharma - Cornea', brief:'French pharma startup. Olisens® — first mRNA eye drop for corneal neovascularization. Research in rare corneal diseases (AAK, GvHD, LSCD)', angle:'Cutting-edge corneal therapy. Potential pharma partner for your cornea unit', questions:['Olisens availability and regulatory status?','Partnership model for hospitals?','Clinical trial participation possible?','Pricing and access programs?','Pipeline products timeline?'] },
-  { id:'ex_rxsight', name:'RxSight, Inc', day:4, category:'Light Adjustable Lens (LAL)', brief:'Light Adjustable Lens (LAL & LAL+) and Light Delivery Device (LDD). Only IOL customizable post-op with UV light to target 20/20 uncorrected vision.', angle:'Premium cataract & refractive cash-pay revenue driver. Key differentiator for your new hospital against traditional clinics.', questions:['What is the capital equipment cost for the Light Delivery Device (LDD), and do you offer placement or per-procedure leasing?','What are average clinic margins and patient cash-pay pricing benchmarks for LAL/LAL+ vs trifocals?','What is the surgeon and optometrist certification timeline to get our clinical team operational?','How much post-op chair time and patient follow-up is required for UV light adjustments and final lock-in?','What turnkey patient marketing and launch support do you provide for new hospital centers?','What are the maintenance terms, service contract costs, and calibration schedule on the LDD?'] }
+  {
+    "id": "ex_alcon",
+    "name": "Alcon",
+    "day": 0,
+    "category": "Cataract Platform & Premium IOLs",
+    "flagship": "Centurion ACTIVE SENTRY, Clareon PanOptix / Vivity, LuxOR Revalia, Custom-Pak",
+    "decisionMaker": {
+      "role": "National Accounts Director / Surgical Commercial Head",
+      "whyMatters": "Holds signing authority on capital equipment subsidies, multi-year IOL rebate tiers, and consignment stock approval for greenfield sites."
+    },
+    "angle": "Alcon is the market share benchmark. Use greenfield clinic status to negotiate a subsidized or placement Centurion phaco console in exchange for a committed share of Clareon PanOptix/Vivity premium IOLs and Custom-Pak consumables.",
+    "questions": [
+      "What greenfield hospital launch package do you offer—outright capital purchase discount vs a placement/consignment model tied to IOL volume?",
+      "What are your annual volume tier thresholds for Clareon PanOptix and Vivity to unlock top-bracket rebate pricing from Day 1?",
+      "Will Alcon provide clinical application specialists for in-OR surgeon proctoring and scrub nurse training during our first 6 months?",
+      "What is your guaranteed on-site service SLA and engineer response time for OR machine downtime, and what are post-warranty AMC costs?",
+      "Can Custom-Pak surgical packs be custom-configured for our exact surgical preferences with guaranteed 48-hour replenishment?"
+    ],
+    "checklist": [
+      "Introduced hospital project, planned OR capacity & opening timeline",
+      "Met National Accounts Director / Surgical Commercial Lead",
+      "Assessed Centurion ACTIVE SENTRY fluidics demo & Clareon injector system",
+      "Requested greenfield bundled proposal: Phaco console + Clareon IOLs + Custom-Pak",
+      "Clarified consignment stock terms and emergency replenishment lead times",
+      "Confirmed surgeon proctoring & clinical application specialist support",
+      "Obtained direct mobile / business card & scheduled post-congress procurement call"
+    ]
+  },
+  {
+    "id": "ex_zeiss",
+    "name": "Zeiss",
+    "day": 0,
+    "category": "Surgical Microscopes, Diagnostics & Refractive Suites",
+    "flagship": "ARTEVO 800 (Digital 3D), KINEVO 900, VisuMax 800 (SMILE pro), IOLMaster 700 with TK, CIRRUS 6000 OCT, AT LISA tri / AT ELANA",
+    "decisionMaker": {
+      "role": "Enterprise Solutions Director / Head of Key Accounts & Surgical Ophthalmology",
+      "whyMatters": "Authorized to bundle outpatient diagnostics (OCT/biometry) with surgical microscopes (ARTEVO) for substantial multi-modality discounts."
+    },
+    "angle": "Zeiss can furnish both the outpatient diagnostic clinic and the OR microscope suite. A single-vendor enterprise agreement (IOLMaster 700 + CIRRUS OCT + ARTEVO 800) provides leverage for aggressive capital price reductions and integrated digital workflow (FORUM).",
+    "questions": [
+      "What bundled enterprise discount is available if we equip both our outpatient diagnostic lanes (IOLMaster 700 + CIRRUS 6000) and OR (ARTEVO 800) exclusively with Zeiss?",
+      "How does the VisuMax 800 / SMILE pro per-procedure click-fee structure work for a new refractive center building initial volume?",
+      "What software licensing, server requirements, and annual support fees are associated with FORUM and CALLISTO eye integration?",
+      "Can we arrange a loaner or evaluation unit for ARTEVO 800 to allow our lead ophthalmic surgeons to trial the heads-up 3D cockpit?",
+      "How do your comprehensive multi-system service agreements (Zeiss Optime) compare in price versus standalone equipment warranties?"
+    ],
+    "checklist": [
+      "Introduced hospital project scale and multi-specialty clinical scope",
+      "Met Enterprise Solutions Director / Key Accounts Head",
+      "Reviewed ARTEVO 800 heads-up 3D demo & VisuMax 800 SMILE pro presentation",
+      "Requested enterprise bundle quote: Diagnostics (IOLMaster + OCT) + OR Microscope",
+      "Negotiated software integration fees for FORUM EMR connection",
+      "Inquired about demo unit availability for lead surgeon evaluation",
+      "Exchanged contact details & booked post-ESCRS enterprise review"
+    ]
+  },
+  {
+    "id": "ex_rayner",
+    "name": "Rayner",
+    "day": 0,
+    "category": "Premium IOLs & Phaco Technology",
+    "flagship": "RayOne fully preloaded platform (RayOne Galaxy AI spiral optic, RayOne Trifocal, RayOne EMV), Sophi phaco system, AEON dry eye drops",
+    "decisionMaker": {
+      "role": "Commercial Director UK/Europe / VP Global Sales",
+      "whyMatters": "Agile executive presence attending the Rayner Dinner; possesses direct discretion on aggressive pricing, consignment banks, and surgeon sponsorship."
+    },
+    "angle": "British heritage manufacturer competing head-to-head with US medtech giants. Capitalize on your invitation to the Rayner Dinner to secure high-margin IOL rebates and explore the newly launched RayOne Galaxy (world's first AI-designed spiral IOL) as a clinic differentiator.",
+    "questions": [
+      "What commercial rebate structure and consignment terms can Rayner offer a new private hospital committing to RayOne as its primary IOL line?",
+      "How is RayOne Galaxy positioned commercially against Alcon PanOptix and Zeiss AT LISA—what are the margin differentials for private clinics?",
+      "What support packages exist for the Sophi mobile phaco system—is there a placement model linked to RayOne volume?",
+      "What clinical education, surgeon certification, and marketing co-sponsorship does Rayner provide for launching premium lens services?",
+      "Can we establish a consignment lens bank with automated RFID or barcode restocking to minimize our working capital overhead?"
+    ],
+    "checklist": [
+      "Leveraged Rayner UK Dinner relationship with senior leadership",
+      "Met Commercial Director Europe / VP Global Sales",
+      "Examined RayOne Galaxy spiral optic design & preloaded injector demo",
+      "Discussed consignment lens bank agreement & automated restocking",
+      "Requested side-by-side margin comparison: RayOne Galaxy vs competitors",
+      "Explored Sophi phaco platform placement package",
+      "Exchanged direct details & agreed on post-congress commercial proposal"
+    ]
+  },
+  {
+    "id": "ex_schwind",
+    "name": "Schwind",
+    "day": 1,
+    "category": "Refractive Laser Systems & Corneal Diagnostics",
+    "flagship": "SCHWIND ATOS femtosecond laser (SmartSight lenticule extraction), SCHWIND AMARIS excimer (1050RS/750S, SmartPulse, TransPRK), MS-39 OCT",
+    "decisionMaker": {
+      "role": "Director of Global Sales / Regional Business Development Manager",
+      "whyMatters": "Controls turnkey refractive suite package pricing, flexible click-fee versus capital lease terms, and engineering installation support."
+    },
+    "angle": "If your hospital will offer advanced laser vision correction (LVC), Schwind offers an all-laser refractive suite without the corporate lock-in of Zeiss. Investigate whether the ATOS (SmartSight) + AMARIS (TransPRK) suite can be acquired on a ramp-up financing model.",
+    "questions": [
+      "What are the commercial purchase options for the ATOS + AMARIS combination: outright purchase, hybrid lease, or per-procedure click fee?",
+      "What are the specific HVAC, room dimension, and environmental stability requirements for the ATOS and AMARIS installation?",
+      "How does the per-eye procedure fee for SmartSight compare to Zeiss SMILE click fees?",
+      "What clinical onboarding, peer proctoring, and marketing toolkits do you provide to launch a new refractive brand in our region?",
+      "What is your service response SLA and what is the cost of the full-coverage preventive maintenance contract after warranty?"
+    ],
+    "checklist": [
+      "Explained hospital refractive center vision and projected procedure volumes",
+      "Met Director of Global Sales / Regional BD Lead",
+      "Participated in ATOS SmartSight lenticule extraction and AMARIS 1050RS demo",
+      "Requested commercial financial models: Capital purchase vs click-fee lease",
+      "Received facility technical requirements sheet (room, HVAC, electrical)",
+      "Discussed surgeon proctoring pathway and application specialist support",
+      "Exchanged cards & agreed on confidential quotation timeline"
+    ]
+  },
+  {
+    "id": "ex_bausch",
+    "name": "Bausch+Lomb",
+    "day": 1,
+    "category": "Surgical Cataract Platforms, IOLs & Instrumentation",
+    "flagship": "Stellaris Elite vision enhancement system (Adaptive Fluidics, Bi-Blade vitrectomy), enVista hydrophobic acrylic IOLs, LuxSmart EDoF, Storz Instruments",
+    "decisionMaker": {
+      "role": "Director of Surgical Commercial Operations / Key Account Manager Surgical",
+      "whyMatters": "Positioned as an aggressive second-source challenger hungry to displace Alcon/Zeiss; highly negotiable on equipment subsidies."
+    },
+    "angle": "Bausch + Lomb is eager to win share in new hospital facilities. Use their competitive positioning to get a rock-bottom placement quote on the Stellaris Elite and enVista IOL family, creating pricing leverage against Alcon.",
+    "questions": [
+      "What aggressive greenfield incentives can B+L offer on the Stellaris Elite platform to win our primary surgical contract over Alcon Centurion?",
+      "What are the volume pricing tiers for the enVista and LuxSmart IOL platforms across monofocal, toric, and EDoF categories?",
+      "Can we bundle Storz premium ophthalmic instrument sets into the capital placement contract with subsidized pricing?",
+      "What are the consumable pack costs per cataract case for the Stellaris Elite compared to industry averages?",
+      "What surgeon transition training and technical support do you deploy when migrating surgeons from other phaco systems?"
+    ],
+    "checklist": [
+      "Introduced hospital project and highlighted active comparison with Alcon",
+      "Met Director of Surgical Commercial Operations",
+      "Tested Stellaris Elite Adaptive Fluidics and Bi-Blade handpiece demo",
+      "Requested competitive displacement proposal: Stellaris Elite + enVista + Storz",
+      "Evaluated case consumable pack costs and annual minimums",
+      "Confirmed surgical instrument starter set bundling options",
+      "Collected direct contact details & scheduled commercial comparison review"
+    ]
+  },
+  {
+    "id": "ex_staar",
+    "name": "STAAR Surgical",
+    "day": 1,
+    "category": "Phakic Intraocular Lenses (ICL)",
+    "flagship": "EVO / EVO+ ICL (Implantable Collamer Lens) for myopia, hyperopia, and astigmatism",
+    "decisionMaker": {
+      "role": "Director of Market Development / Regional Business Director EMEA",
+      "whyMatters": "Determines clinic certification access, consignment lens bank eligibility, and clinic co-marketing co-op funding."
+    },
+    "angle": "EVO ICL represents one of the highest gross-margin cash-pay procedures in private refractive surgery, capturing patients unsuitable for LASIK. Partnering with STAAR unlocks a lucrative premium revenue stream and brand prestige.",
+    "questions": [
+      "What is the exact accreditation and clinical proctoring pathway required for our surgeons to become certified EVO ICL implanters?",
+      "What is the unit wholesale cost across standard and toric EVO+ models, and what volume rebate tiers exist for scaling centers?",
+      "What criteria determine eligibility for an on-site consignment lens bank to avoid ordering delays for patient surgery?",
+      "What patient-facing marketing support, digital assets, and co-op promotional funds does STAAR allocate to new partner hospitals?",
+      "What are the delivery lead times and exchange policies for custom toric prescriptions and non-standard vault sizes?"
+    ],
+    "checklist": [
+      "Positioned hospital refractive growth plans and high-volume cash-pay focus",
+      "Met Regional Business Director / Head of Market Development",
+      "Reviewed EVO+ ICL optical performance data and injector system",
+      "Clarified surgeon certification requirements and proctoring timeline",
+      "Inquired about consignment lens bank qualifying parameters",
+      "Secured wholesale pricing schedule and marketing co-op guidelines",
+      "Exchanged contacts & scheduled clinical onboarding call"
+    ]
+  },
+  {
+    "id": "ex_glaukos",
+    "name": "Glaukos",
+    "day": 2,
+    "category": "Micro-Invasive Glaucoma Surgery (MIGS) & Drug Delivery",
+    "flagship": "iStent inject W, iStent infinite (3 stents for standalone or combo use), iDose TR (travoprost implant), Photrexa corneal cross-linking",
+    "decisionMaker": {
+      "role": "Senior Director Commercial Europe / Health Economics & Market Access Lead",
+      "whyMatters": "Controls institutional volume pricing, private insurer reimbursement coding support, and surgical proctoring logistics."
+    },
+    "angle": "Interventional glaucoma and combo cataract-MIGS procedures significantly elevate case revenue in private ophthalmic surgery. Glaukos is the gold standard in trabecular bypass; establish direct supply terms and surgeon certification early.",
+    "questions": [
+      "What are the volume pricing tiers for iStent inject W and iStent infinite for a private surgical hospital?",
+      "What clinical proctoring and wetlab training packages do you deploy for surgeons adopting MIGS for the first time?",
+      "What reimbursement support, coding assistance, and health economics dossiers can Glaukos provide for our private payer negotiations?",
+      "What is the commercial release timeline and regulatory status of iDose TR in our target market?",
+      "Do you offer combined procurement terms spanning both your MIGS portfolio and corneal cross-linking systems?"
+    ],
+    "checklist": [
+      "Outlined hospital glaucoma service line and surgical theatre capacity",
+      "Met Senior Commercial Director / Market Access Lead",
+      "Handled iStent inject W injector mechanism and reviewed clinical trial data",
+      "Clarified private insurer reimbursement and coding landscape",
+      "Negotiated introductory device pricing for initial case cohorts",
+      "Confirmed wetlab dates and clinical specialist proctoring commitments",
+      "Collected direct business card & scheduled private payer alignment discussion"
+    ]
+  },
+  {
+    "id": "ex_icare",
+    "name": "iCare",
+    "day": 2,
+    "category": "Rebound Tonometry, Perimetry & Retinal Imaging",
+    "flagship": "iCare HOME2 (24h patient self-tonometry), iCare IC200 / IC100 rebound tonometers, DRSplus confocal fundus imaging, COMPASS perimeter",
+    "decisionMaker": {
+      "role": "Sales Director EMEA / Global Key Account Manager",
+      "whyMatters": "Authorized to bundle outpatient diagnostic equipment across tonometry, perimetry, and retinal imaging for new clinic setups."
+    },
+    "angle": "Rapid, comfortable diagnostics reduce waiting times and improve outpatient throughput. iCare's rebound tonometry eliminates topical anesthesia and air puff complaints, while iCare HOME2 enables a premium remote glaucoma monitoring service line.",
+    "questions": [
+      "What multi-device package discount can you provide for outfitting multiple consultation rooms with IC200 tonometers and DRSplus retinal cameras?",
+      "What is the commercial model for iCare HOME2 patient loaners—can the hospital purchase units to lease to glaucoma patients as a monitoring service?",
+      "How does the iCare CLINIC cloud software integrate with third-party hospital EMR and PACS systems?",
+      "What are the consumable probe costs, reorder lead times, and annual maintenance requirements across the tonometer range?",
+      "Can we arrange a 30-day clinical trial unit of DRSplus and IC200 in our pre-launch facility?"
+    ],
+    "checklist": [
+      "Presented outpatient clinic blueprint and expected daily patient flow",
+      "Met Sales Director EMEA / Key Account Lead",
+      "Tested iCare HOME2 self-tonometry and DRSplus automated image capture",
+      "Explored commercial revenue model for patient home monitoring rentals",
+      "Requested turnkey quotation for diagnostic lane package (tonometry + imaging)",
+      "Evaluated cloud EMR connectivity and recurring consumable costs",
+      "Exchanged business cards & arranged demo unit shipment details"
+    ]
+  },
+  {
+    "id": "ex_sight",
+    "name": "Sight Sciences",
+    "day": 2,
+    "category": "Interventional Glaucoma & Dry Eye Technology",
+    "flagship": "OMNI Surgical System (implant-free canaloplasty + trabeculotomy), TearCare System (interventional thermal pulsation for MGD)",
+    "decisionMaker": {
+      "role": "Vice President Commercial / Director of International Commercialization",
+      "whyMatters": "Manages device commercialization, standalone vs combination surgery reimbursement, and dry eye aesthetics service line adoption."
+    },
+    "angle": "OMNI allows your surgeons to address all three points of resistance without leaving an implant behind (effective for both standalone glaucoma and combo cataract). TearCare opens a cash-pay dry eye clinic before and after refractive surgery.",
+    "questions": [
+      "What is the unit cost and tiered volume agreement for the OMNI Surgical System for private surgical facilities?",
+      "How do you assist hospitals in establishing standalone OMNI procedures without concurrent cataract surgery?",
+      "What surgeon training and proctoring model is required before a surgeon can independently operate with OMNI?",
+      "What is the commercial business model for TearCare—capital equipment cost versus per-treatment SmartLid consumable margins?",
+      "What clinical marketing materials and patient education assets do you provide to launch a premium ocular surface / dry eye clinic?"
+    ],
+    "checklist": [
+      "Outlined hospital interventional glaucoma strategy and dry eye clinic roadmap",
+      "Met VP Commercial / International Commercial Director",
+      "Reviewed OMNI cannula deployment mechanism and 360-degree canaloplasty demo",
+      "Evaluated TearCare dry eye workstation and consumable cost-per-treatment",
+      "Inquired about volume pricing brackets and surgeon proctoring schedules",
+      "Clarified standalone glaucoma procedural billing and margin profile",
+      "Got direct contact details & booked clinical economics follow-up"
+    ]
+  },
+  {
+    "id": "ex_nidek",
+    "name": "Nidek",
+    "day": 2,
+    "category": "Workhorse Diagnostics, YAG/SLT Lasers & Biometry",
+    "flagship": "Mirante scanning laser ophthalmoscope (SLO/OCT), OPD-Scan III aberrometer/topographer, AL-Scan optical biometer, YC-200 S YAG/SLT laser",
+    "decisionMaker": {
+      "role": "International Sales Director / UK Managing Director / Commercial Distribution Head",
+      "whyMatters": "Controls bundled diagnostic + laser room capital packages with flexible distribution pricing and lower total cost of ownership."
+    },
+    "angle": "High-durability Japanese engineering that costs significantly less than Zeiss or Leica. Bundling the OPD-Scan III, AL-Scan biometer, and YC-200 S combo laser creates an efficient, cost-effective outpatient diagnostic and minor-procedure suite.",
+    "questions": [
+      "What turnkey package pricing is available if we bundle the OPD-Scan III aberrometer, AL-Scan biometer, and YC-200 S YAG/SLT combination laser?",
+      "How does the total cost of ownership (capital + 5-year maintenance) of Nidek diagnostic lanes compare against equivalent Zeiss suites?",
+      "What warranty duration and local technical service response times are guaranteed in our area?",
+      "How does the Mirante multimodal imaging system handle integration with leading hospital EMR and DICOM archives?",
+      "What payment structures, leasing partners, or deferred capital payment terms are supported for new clinic builds?"
+    ],
+    "checklist": [
+      "Outlined hospital outpatient clinic requirements and diagnostic budget",
+      "Met International Sales Director / Commercial Distribution Head",
+      "Assessed OPD-Scan III wavefront analysis and YC-200 S laser ergonomics demo",
+      "Requested comprehensive turnkey quote for Diagnostic + Laser Suite",
+      "Examined DICOM connectivity and PACS data export capabilities",
+      "Negotiated multi-year warranty extension and engineer SLA commitments",
+      "Exchanged cards & agreed on formal procurement proposal deadline"
+    ]
+  },
+  {
+    "id": "ex_bvi",
+    "name": "BVI",
+    "day": 3,
+    "category": "Custom Procedure Packs, Precision Knives & Premium IOLs",
+    "flagship": "CustomEyes procedure pack configurator, Beaver blades, Visitec cannulas, Malosa single-use instruments, FineVision HP Trifocal IOL",
+    "decisionMaker": {
+      "role": "Vice President Commercial Europe / National Accounts Director",
+      "whyMatters": "Approves hospital-wide annual consumables contracts, custom surgical pack configurations, and volume discounts on the FineVision IOL."
+    },
+    "angle": "Surgical packs (CustomEyes) and single-use consumables dictate your recurring cost-per-case. Partnering with BVI allows full customization of every tray while leveraging their newly FDA/CE approved FineVision HP trifocal IOL as a competitive premium alternative.",
+    "questions": [
+      "How does the CustomEyes configurator work to tailor procedure packs specifically to our surgeons' preferences, and what is the minimum run?",
+      "What annual consumables contract discount can you offer if we consolidate all blades, cannulas, drapes, and single-use instruments with BVI?",
+      "What is your pricing and rebate structure for the FineVision HP trifocal IOL compared to Alcon PanOptix and Zeiss AT LISA?",
+      "What are your supply chain reliability metrics, inventory buffer policies, and emergency order turnaround times?",
+      "Can you provide sample sterile packs and trial IOLs for our surgical committee evaluation?"
+    ],
+    "checklist": [
+      "Detailed hospital surgical theatre volume projections and tray setup preferences",
+      "Met Vice President Commercial Europe / National Accounts Director",
+      "Tested CustomEyes online configurator and examined sample surgical packs",
+      "Inquired about volume pricing on FineVision HP hydrophobic trifocal IOL",
+      "Negotiated consolidated annual consumables agreement terms",
+      "Requested evaluation sample packs and instrument quality review",
+      "Got direct contact details & scheduled packaging optimization workshop"
+    ]
+  },
+  {
+    "id": "ex_leica",
+    "name": "Leica",
+    "day": 3,
+    "category": "Premium Surgical Microscopes & Intraoperative OCT",
+    "flagship": "Proveo 8 / Proveo 8x ophthalmic microscope, EnFocus intraoperative OCT, MyVeo 3D digital surgical headset, M822",
+    "decisionMaker": {
+      "role": "National Sales Director Surgical / Global Key Account Manager Ophthalmology",
+      "whyMatters": "Holds pricing autonomy on flagship OR microscopes and can offer competitive trade-in/displacement packages against Zeiss ARTEVO."
+    },
+    "angle": "Leica Proveo 8 with EnFocus iOCT is the prime challenger to Zeiss ARTEVO 800. If your hospital values superior red reflex (CoAx4), optical depth of field (FusionOptics), and modular 3D cockpit headsets (MyVeo), use this conversation to drive aggressive price competition against Zeiss.",
+    "questions": [
+      "How does the Proveo 8 / Proveo 8x commercial proposal compare in capital cost and ongoing service against the Zeiss ARTEVO 800?",
+      "Can the Proveo 8 be purchased as an optical microscope initially with an unencumbered modular upgrade path to EnFocus intraoperative OCT later?",
+      "What are the terms for a clinical evaluation trial in our surgical suite prior to final procurement sign-off?",
+      "How does the MyVeo 3D digital headset integrate with OR recording and teaching displays without adding latency?",
+      "What are the inclusions and annual cost of the Leica Protect service program, and what is the guaranteed uptime commitment?"
+    ],
+    "checklist": [
+      "Introduced hospital OR design, theatre numbers, and surgical specialities",
+      "Met National Sales Director Surgical / Key Account Lead",
+      "Experienced live demonstration of Proveo 8x, EnFocus iOCT, and MyVeo 3D headset",
+      "Requested formal competitive quotation configured with and without iOCT",
+      "Clarified modular upgrade pathway and field retrofit costs",
+      "Discussed hospital trial / evaluation placement terms",
+      "Exchanged cards & scheduled technical consultation with hospital architect/planners"
+    ]
+  },
+  {
+    "id": "ex_ziemer",
+    "name": "Ziemer",
+    "day": 3,
+    "category": "Multipurpose Mobile Femtosecond Lasers",
+    "flagship": "FEMTO Z8 NEO (cataract, CLEAR lenticule extraction, Z-LASIK, keratoplasty), Galilei G6 dual-Scheimpflug diagnostic tomographer",
+    "decisionMaker": {
+      "role": "Director of International Sales / Business Development Director",
+      "whyMatters": "Structures capital purchase versus per-procedure revenue share models for the versatile, mobile Z8 NEO platform."
+    },
+    "angle": "The FEMTO Z8 NEO is mobile and compact, rolling between ORs without a dedicated laser suite. It covers both refractive lenticule extraction (CLEAR) and femto-cataract on a single investment, maximizing asset utilization for a new hospital.",
+    "questions": [
+      "What are the commercial purchase versus per-procedure click-fee options for the FEMTO Z8 NEO across cataract and refractive modes?",
+      "How does the Z8 NEO mobile footprint eliminate the need for a dedicated refractive laser room, and what are the facility savings?",
+      "How does the clinical efficacy and patient recovery of CLEAR lenticule extraction compare to Zeiss SMILE in peer-reviewed data?",
+      "What is the cost of the Galilei G6 diagnostic tomographer when bundled with the Z8 NEO laser platform?",
+      "What training, clinical proctoring, and biomedical engineering maintenance support is provided in our region?"
+    ],
+    "checklist": [
+      "Presented hospital multi-OR layout and combined cataract/refractive business model",
+      "Met Director of International Sales / Business Development Lead",
+      "Inspected FEMTO Z8 NEO physical mobility and examined CLEAR lenticule demo",
+      "Requested comprehensive financial pro forma: Outright purchase vs per-case model",
+      "Inquired about bundled pricing with Galilei G6 tomographer",
+      "Verified installation requirements and sterilization protocols for patient interface",
+      "Acquired business card & scheduled commercial feasibility analysis call"
+    ]
+  },
+  {
+    "id": "ex_medinstrus",
+    "name": "MedInstrus",
+    "day": 3,
+    "category": "Ophthalmic Examination Units & Clinical Furniture",
+    "flagship": "Refraction workstations (Beta Master, Zulu, Delta, Inspired), motorized instrument tables, ergonomic patient examination chairs, refraction arms",
+    "decisionMaker": {
+      "role": "Managing Director / Head of Global Sales & Institutional Contracts",
+      "whyMatters": "Direct factory pricing authority for complete hospital outpatient clinic outfitting and custom architectural configurations."
+    },
+    "angle": "Outpatient clinic ergonomics directly impact doctor satisfaction and patient flow. Medinstrus provides customizable, high-end European refraction units and motorized exam chairs at direct-manufacturer pricing, avoiding steep distributor markups.",
+    "questions": [
+      "What turnkey volume pricing can you offer for outfitting 4 to 8 complete ophthalmology examination lanes (chair, stand, motorized table)?",
+      "How customizable are the Beta Master and Delta units regarding color schemes, spatial footprint, and instrument arm configurations?",
+      "What are the manufacturing lead times and international shipping terms for a full hospital order?",
+      "Are the refraction workstations pre-wired for seamless integration with multiple diagnostic brands (Nidek, Zeiss, Haag-Streit)?",
+      "What warranty coverage, replacement parts availability, and on-site assembly assistance are included in your hospital contracts?"
+    ],
+    "checklist": [
+      "Outlined outpatient clinic architectural floorplans and number of consultation lanes",
+      "Met Managing Director / Head of Global Sales",
+      "Evaluated ergonomic build quality, motorized elevation, and arm balance on display units",
+      "Requested customized quote for multi-lane clinical furniture packages",
+      "Confirmed compatibility with selected diagnostic equipment brands",
+      "Clarified delivery timelines, import logistics, and assembly support",
+      "Exchanged cards & sent clinic floorplan dimensions for custom CAD layout"
+    ]
+  },
+  {
+    "id": "ex_rexxam",
+    "name": "Rexxam",
+    "day": 4,
+    "category": "Diagnostic Workstations & Optical Measurement (Booth F-340)",
+    "flagship": "RET-700 Auto Ref-Topographer (wavefront & dry eye meibography), SPM-700 Specular Microscope, ACCUREF K-900 / R-800, NCT-200 non-contact tonometer",
+    "decisionMaker": {
+      "role": "Head of International Sales / Commercial Director EMEA",
+      "whyMatters": "Can structure multi-lane package deals with direct Japanese OEM reliability at highly competitive capital entry points."
+    },
+    "angle": "High-throughput pre-testing lanes require rugged reliability that doesn't breakdown. Rexxam (formerly Shin-Nippon) delivers Japanese optical precision for pre-op cataract screening (endothelial cell count with SPM-700 and topometry with RET-700) at high value-for-money.",
+    "questions": [
+      "What package pricing is available if we equip our pre-testing diagnostic lanes with the RET-700, SPM-700 specular microscope, and NCT-200 tonometer?",
+      "How does the RET-700 multi-functionality (autorefraction, keratometry, topography, meibography) streamline pre-op exam room workflow?",
+      "What is the historical failure rate and availability of local service/parts through your UK and European distribution network?",
+      "Does Rexxam equipment support open DICOM connectivity and export to all standard ophthalmic EMR platforms without recurring license fees?",
+      "What warranty extension options exist, and can demo units be arranged for clinical staff review?"
+    ],
+    "checklist": [
+      "Walked through hospital pre-assessment screening workflow and throughput targets",
+      "Met Head of International Sales at Booth F-340",
+      "Tested RET-700 automated wavefront topography and SPM-700 endothelial cell analysis",
+      "Requested itemized quote for pre-assessment diagnostic lane bundle",
+      "Confirmed EMR / PACS software compatibility and zero recurring connection fees",
+      "Inquired about warranty terms and local distributor service response times",
+      "Secured direct contact details & booked post-congress quotation follow-up"
+    ]
+  },
+  {
+    "id": "ex_kol",
+    "name": "Laboratoires KÔL",
+    "day": 4,
+    "category": "Specialty Ophthalmic Pharma & Corneal Therapies",
+    "flagship": "Olisens® (first-in-class topical therapy for corneal neovascularization, anti-IRS1 mRNA technology), rare corneal disease pipeline, Emixustat",
+    "decisionMaker": {
+      "role": "Chief Executive Officer / VP Business Development & Licensing",
+      "whyMatters": "Direct executive partnership discussion on hospital clinical trial access, compassionate use protocols (AAC), and regional distribution/formulary agreements."
+    },
+    "angle": "Groundbreaking ophthalmic biopharma differentiates a new hospital as a center of clinical innovation. Positioning your hospital as an early-access referral site for Olisens® (corneal neovascularization) attracts high-complexity corneal cases and clinical trial prestige.",
+    "questions": [
+      "What is the current regulatory status and compassionate access pathway (AAC/expanded access) for Olisens® in our target region?",
+      "How can our new hospital participate as an investigator site in ongoing or upcoming clinical trials for your rare corneal disease pipeline?",
+      "What institutional partnership or pharmacy supply agreements does Laboratoires KÔL offer private specialized eye clinics?",
+      "What are the clinical inclusion criteria and patient referral mechanisms for treating refractory corneal neovascularization before keratoplasty?",
+      "What clinical training, scientific exchange, and educational grants are available for our cornea and ocular surface department?"
+    ],
+    "checklist": [
+      "Positioned hospital cornea department ambitions and specialized referral network",
+      "Met CEO / VP Business Development & Licensing",
+      "Reviewed scientific data and clinical trial results for Olisens® and rare disease pipeline",
+      "Discussed expanded access / compassionate use protocols for hospital pharmacy",
+      "Explored clinical trial site qualification requirements and investigator partnerships",
+      "Evaluated institutional procurement terms and patient support programs",
+      "Exchanged contact information & agreed on formal medical/commercial liaison call"
+    ]
+  },
+  {
+    "id": "ex_rxsight",
+    "name": "RxSight, Inc",
+    "day": 4,
+    "category": "Light Adjustable Lens (LAL / LAL+) & Light Delivery Device (LDD)",
+    "flagship": "RxSight Light Adjustable Lens (LAL & LAL+), Light Delivery Device (LDD)",
+    "decisionMaker": {
+      "role": "Vice President Global Commercialization / International Sales Director",
+      "whyMatters": "Approves LDD capital placement / lease programs, international distributor agreements, and regional market exclusivity arrangements."
+    },
+    "angle": "The ultimate private cataract differentiator: the only IOL that can be customized post-operatively to 20/20 or custom monovision. It commands the highest cash-pay premium in the industry. Negotiate an LDD placement model that protects clinic cash flow while ramping volume.",
+    "questions": [
+      "What are the commercial acquisition models for the Light Delivery Device (LDD)—capital purchase, per-procedure placement, or structured lease?",
+      "What are the wholesale pricing tiers for LAL and LAL+ lenses, and what gross margin percentage do partner clinics typically realize?",
+      "What does the clinical onboarding, surgeon certification, and post-op UV light adjustment training protocol involve?",
+      "What patient-facing marketing toolkits, digital campaign assets, and brand exclusivity support does RxSight provide to new hospital partners?",
+      "What are the service contract costs, UV calibration frequency, and hardware uptime guarantees for the LDD?"
+    ],
+    "checklist": [
+      "Positioned hospital as premier private cataract / refractive surgery center",
+      "Met VP Global Commercialization / International Sales Director",
+      "Experienced live demonstration of Light Delivery Device (LDD) adjustment interface",
+      "Requested financial pro forma: LDD placement vs outright capital purchase",
+      "Evaluated patient journey (lock-in visits, UV glasses compliance, margin per eye)",
+      "Confirmed surgeon certification requirements and clinical specialist support",
+      "Secured direct contact details & scheduled executive financial review meeting"
+    ]
+  }
 ];
 
 // Initialize
@@ -1418,7 +1946,7 @@ function performSearch() {
   if (typeof exhibitors !== 'undefined') {
     exhibitors.forEach(ex => {
       const s = (state.exhibitors && state.exhibitors[ex.id]) || {};
-      const textToSearch = [ex.name, ex.category, ex.brief, ex.angle, s.contact, s.offered, s.takeaway, s.followUp].join(' ').toLowerCase();
+      const textToSearch = [ex.name, ex.category, ex.flagship || '', ex.angle, s.contact, s.offered, s.note, s.takeaway, s.followUp].join(' ').toLowerCase();
       if (textToSearch.includes(q)) {
         exRes += `<div class="result-item" onclick="openExhibitor('${ex.id}')">
           <strong>${ex.name}</strong> <span style="font-size:11px;color:var(--accent);text-transform:uppercase;">(${ex.category})</span><br>
@@ -1510,19 +2038,13 @@ function importData(e) {
 let currentExhibitorId = null;
 let exSaveTimeout = null;
 let currentExCardPhotoData = null;
+let exhibitorSearchQuery = '';
 
-const EX_CHECKLIST = [
-  'Introduced myself & explained hospital project',
-  'Saw product/platform demo',
-  'Asked about equipment pricing & volume deals',
-  'Discussed partnership or distributor model',
-  'Asked about new hospital setup packages',
-  'Asked about surgeon/staff training programs',
-  'Discussed maintenance & service contracts',
-  'Asked about leasing / payment plans / financing',
-  'Got business card / key contact details',
-  'Booked post-congress call or meeting'
-];
+function filterExhibitors() {
+  const input = document.getElementById('exSearchInput');
+  exhibitorSearchQuery = input ? input.value.trim().toLowerCase() : '';
+  renderExhibitors();
+}
 
 function renderExhibitors() {
   const container = document.getElementById('exhibitorContent');
@@ -1531,34 +2053,91 @@ function renderExhibitors() {
   
   const dayNames = ['Day 1 — Friday', 'Day 2 — Saturday', 'Day 3 — Sunday', 'Day 4 — Monday', 'Day 5 — Tuesday'];
   let html = '';
+  let matchCount = 0;
   
   for (let d = 0; d <= 4; d++) {
-    const dayExhibitors = exhibitors.filter(e => e.day === d);
+    let dayExhibitors = exhibitors.filter(e => e.day === d);
+    if (dayExhibitors.length === 0) continue;
+    
+    // Apply search filter if present
+    if (exhibitorSearchQuery) {
+      dayExhibitors = dayExhibitors.filter(ex => {
+        const s = state.exhibitors[ex.id] || {};
+        const qStr = [
+          ex.name,
+          ex.category,
+          ex.flagship || '',
+          ex.angle || '',
+          ex.decisionMaker ? (ex.decisionMaker.role + ' ' + ex.decisionMaker.whyMatters) : '',
+          (ex.questions || []).join(' '),
+          s.contact || '',
+          s.offered || '',
+          s.note || '',
+          s.takeaway || '',
+          s.followUp || ''
+        ].join(' ').toLowerCase();
+        return qStr.includes(exhibitorSearchQuery);
+      });
+    }
+    
     if (dayExhibitors.length === 0) continue;
     
     html += '<div class="exhibitor-day-group">';
-    html += '<h3>' + dayNames[d] + '</h3>';
+    html += '<h3>' + dayNames[d] + ' (' + dayExhibitors.length + ')</h3>';
     html += '<div class="exhibitor-grid">';
     
     dayExhibitors.forEach(ex => {
+      matchCount++;
       const s = state.exhibitors[ex.id] || {};
+      const exChecklist = ex.checklist || [];
       const checks = s.checklist || [];
       const checkedCount = checks.filter(Boolean).length;
-      const total = EX_CHECKLIST.length;
+      const total = exChecklist.length || 7;
       const pct = Math.round((checkedCount / total) * 100);
-      const visited = checkedCount > 0 ? ' visited' : '';
+      const isVisited = checkedCount > 0 || !!s.contact || !!s.offered || !!s.note || !!s.cardPhoto;
+      const visitedClass = isVisited ? ' visited' : '';
       
-      html += '<div class="exhibitor-card' + visited + '" onclick="openExhibitor(\'' + ex.id + '\')">'
-        + '<div class="ex-name">' + ex.name + '</div>'
-        + '<div class="ex-category">' + ex.category + '</div>'
-        + '<div class="ex-brief">' + ex.brief + '</div>'
-        + '<div class="ex-progress">'
-        + '<div class="ex-progress-bar"><div class="ex-progress-fill" style="width:' + pct + '%"></div></div>'
-        + '<span class="ex-progress-label">' + checkedCount + '/' + total + '</span>'
-        + '</div></div>';
+      // Badges
+      let badgesHtml = '';
+      if (s.offered && s.offered.trim()) {
+        badgesHtml += '<span class="ex-badge-chip ex-badge-offer">🤝 Offer Logged</span>';
+      }
+      if (s.contact && s.contact.trim()) {
+        badgesHtml += '<span class="ex-badge-chip ex-badge-contact">👤 ' + escapeHtml(s.contact.split(',')[0]) + '</span>';
+      }
+      
+      const roleText = ex.decisionMaker ? ex.decisionMaker.role : 'Key Account Lead';
+      
+      html += '<div class="exhibitor-card' + visitedClass + '" onclick="openExhibitor(\'' + ex.id + '\')">';
+      html += '<div>';
+      html += '<div class="ex-header">';
+      html += '<div class="ex-name">' + ex.name + '</div>';
+      html += '</div>';
+      html += '<div class="ex-category">' + ex.category + '</div>';
+      
+      if (badgesHtml) {
+        html += '<div class="ex-card-badges">' + badgesHtml + '</div>';
+      }
+      
+      html += '<div class="ex-decision-preview"><strong>👔 Target:</strong> ' + roleText + '</div>';
+      html += '<div class="ex-brief">' + ex.angle + '</div>';
+      html += '</div>';
+      
+      html += '<div class="ex-progress">';
+      html += '<div class="ex-progress-bar"><div class="ex-progress-fill" style="width:' + pct + '%"></div></div>';
+      html += '<span class="ex-progress-label">' + checkedCount + '/' + total + ' steps</span>';
+      html += '</div></div>';
     });
     
     html += '</div></div>';
+  }
+  
+  if (matchCount === 0) {
+    html = '<div style="padding:40px 20px;text-align:center;color:var(--text-muted);background:var(--surface);border-radius:var(--radius);border:1px dashed var(--border)">'
+      + '<div style="font-size:28px;margin-bottom:8px">🔍</div>'
+      + '<div style="font-weight:600;font-size:15px">No exhibitors match "' + escapeHtml(exhibitorSearchQuery) + '"</div>'
+      + '<p style="font-size:13px;margin-top:4px">Try searching for products, categories, or company names (e.g. phaco, microscope, ICL, Zeiss).</p>'
+      + '</div>';
   }
   
   container.innerHTML = html;
@@ -1569,37 +2148,77 @@ function openExhibitor(exId) {
   const ex = exhibitors.find(e => e.id === exId);
   if (!ex) return;
   if (!state.exhibitors) state.exhibitors = {};
+  
+  const exChecklist = ex.checklist || [];
   if (!state.exhibitors[exId]) {
-    state.exhibitors[exId] = { checklist: new Array(EX_CHECKLIST.length).fill(false), contact:'', offered:'', takeaway:'', followUp:'', cardPhoto:null };
+    state.exhibitors[exId] = {
+      checklist: new Array(exChecklist.length).fill(false),
+      contact: '',
+      offered: '',
+      note: '',
+      takeaway: '',
+      followUp: '',
+      cardPhoto: null
+    };
   }
   const s = state.exhibitors[exId];
   
+  // Ensure checklist length matches
+  if (!Array.isArray(s.checklist) || s.checklist.length !== exChecklist.length) {
+    const oldChecks = Array.isArray(s.checklist) ? s.checklist : [];
+    s.checklist = new Array(exChecklist.length).fill(false);
+    for (let i = 0; i < oldChecks.length && i < s.checklist.length; i++) {
+      s.checklist[i] = !!oldChecks[i];
+    }
+  }
+  
+  // Header
   document.getElementById('exTitle').innerText = ex.name;
-  document.getElementById('exBrief').innerHTML = '<p><strong>Category:</strong> ' + ex.category + '</p><p style="margin-top:4px">' + ex.brief + '</p>';
+  document.getElementById('exCategoryBadge').innerText = ex.category;
+  document.getElementById('exFlagship').innerHTML = '<strong>Flagship Platforms:</strong> ' + (ex.flagship || ex.category);
+  
+  // Decision-Maker
+  if (ex.decisionMaker) {
+    document.getElementById('exDecisionRole').innerText = ex.decisionMaker.role;
+    document.getElementById('exDecisionWhy').innerText = ex.decisionMaker.whyMatters;
+  } else {
+    document.getElementById('exDecisionRole').innerText = 'Commercial Director / National Accounts Head';
+    document.getElementById('exDecisionWhy').innerText = 'Holds pricing and institutional contract discretion.';
+  }
+  
+  // Hospital Angle
   document.getElementById('exAngle').innerText = ex.angle;
   
   // Questions
-  let qHtml = '<h4 style="font-size:14px;color:#6b6b67;margin-bottom:8px">Key questions to ask</h4>';
-  ex.questions.forEach(q => { qHtml += '<div class="ex-question-item">' + q + '</div>'; });
+  let qHtml = '';
+  const questions = ex.questions || [];
+  questions.forEach(q => {
+    qHtml += '<div class="ex-question-item"><span>' + q + '</span></div>';
+  });
   document.getElementById('exQuestions').innerHTML = qHtml;
   
   // Checklist
   let cHtml = '';
-  EX_CHECKLIST.forEach((item, idx) => {
-    const checked = s.checklist[idx] ? ' checked' : '';
-    cHtml += '<div class="ex-checklist-item' + checked + '" onclick="toggleExCheck(' + idx + ')">';
-    cHtml += '<div class="ex-check">' + (s.checklist[idx] ? '✓' : '') + '</div>';
+  let checkedCount = 0;
+  exChecklist.forEach((item, idx) => {
+    const isChecked = !!s.checklist[idx];
+    if (isChecked) checkedCount++;
+    const checkedClass = isChecked ? ' checked' : '';
+    cHtml += '<div class="ex-checklist-item' + checkedClass + '" onclick="toggleExCheck(' + idx + ')">';
+    cHtml += '<div class="ex-check">' + (isChecked ? '✓' : '') + '</div>';
     cHtml += '<div class="ex-checklist-text">' + item + '</div></div>';
   });
   document.getElementById('exChecklist').innerHTML = cHtml;
+  document.getElementById('exChecklistCount').innerText = checkedCount + '/' + exChecklist.length + ' Completed';
   
-  // Fields
+  // Form Fields
   document.getElementById('exContact').value = s.contact || '';
   document.getElementById('exOffered').value = s.offered || '';
-  document.getElementById('exTakeaway').value = s.takeaway || '';
+  // Support migration from old takeaway to specific note
+  document.getElementById('exNote').value = s.note || s.takeaway || '';
   document.getElementById('exFollowUp').value = s.followUp || '';
   
-  // Photo
+  // Business Card Photo
   currentExCardPhotoData = s.cardPhoto || null;
   const preview = document.getElementById('exCardPreview');
   if (currentExCardPhotoData) {
@@ -1609,18 +2228,31 @@ function openExhibitor(exId) {
     preview.style.display = 'none';
   }
   
+  document.getElementById('exSaveStatus').innerText = 'All changes saved';
   document.getElementById('exhibitorDialog').showModal();
 }
 
 function toggleExCheck(idx) {
+  const ex = exhibitors.find(e => e.id === currentExhibitorId);
   const s = state.exhibitors[currentExhibitorId];
+  if (!s || !ex) return;
+  if (!Array.isArray(s.checklist)) s.checklist = [];
+  
   s.checklist[idx] = !s.checklist[idx];
   saveState();
-  // Re-render checklist
+  
   const items = document.querySelectorAll('#exChecklist .ex-checklist-item');
-  items[idx].classList.toggle('checked');
-  const check = items[idx].querySelector('.ex-check');
-  check.innerText = s.checklist[idx] ? '\u2713' : '';
+  if (items[idx]) {
+    items[idx].classList.toggle('checked', !!s.checklist[idx]);
+    const check = items[idx].querySelector('.ex-check');
+    if (check) check.innerText = s.checklist[idx] ? '✓' : '';
+  }
+  
+  const total = (ex.checklist || []).length;
+  const checkedCount = s.checklist.filter(Boolean).length;
+  const countBadge = document.getElementById('exChecklistCount');
+  if (countBadge) countBadge.innerText = checkedCount + '/' + total + ' Completed';
+  
   renderExhibitors();
 }
 
@@ -1629,15 +2261,18 @@ function debouncedSaveExhibitor() {
   clearTimeout(exSaveTimeout);
   exSaveTimeout = setTimeout(() => {
     const s = state.exhibitors[currentExhibitorId];
+    if (!s) return;
     s.contact = document.getElementById('exContact').value;
     s.offered = document.getElementById('exOffered').value;
-    s.takeaway = document.getElementById('exTakeaway').value;
+    const noteVal = document.getElementById('exNote').value;
+    s.note = noteVal;
+    s.takeaway = noteVal; // preserve compatibility
     s.followUp = document.getElementById('exFollowUp').value;
     s.cardPhoto = currentExCardPhotoData;
     saveState();
     renderExhibitors();
     document.getElementById('exSaveStatus').innerText = 'All changes saved';
-  }, 800);
+  }, 600);
 }
 
 function handleExCardPhoto(input) {
@@ -1648,7 +2283,7 @@ function handleExCardPhoto(input) {
     const img = new Image();
     img.onload = function() {
       const canvas = document.createElement('canvas');
-      const MAX = 800;
+      const MAX = 900;
       let w = img.width, h = img.height;
       if (w > MAX || h > MAX) {
         if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
@@ -1656,7 +2291,7 @@ function handleExCardPhoto(input) {
       }
       canvas.width = w; canvas.height = h;
       canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-      currentExCardPhotoData = canvas.toDataURL('image/jpeg', 0.7);
+      currentExCardPhotoData = canvas.toDataURL('image/jpeg', 0.75);
       document.getElementById('exCardImg').src = currentExCardPhotoData;
       document.getElementById('exCardPreview').style.display = 'block';
       debouncedSaveExhibitor();
