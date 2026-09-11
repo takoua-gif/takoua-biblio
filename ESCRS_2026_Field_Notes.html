@@ -683,7 +683,9 @@ function sanitizeState() {
     data.forEach(d => {
       d.activities.forEach(a => {
         if (!state.activities[a.id]) {
-          state.activities[a.id] = { status:'planned', whatHappened:'', whatLearned:'', keyInsight:'', people:[], idea:'', relevance:'', followUp:'', shareWithClinic:false, rating:0, attachments:[], location:'' };
+          state.activities[a.id] = { status:'planned', whatHappened:'', whatLearned:'', keyInsight:'', people:[], idea:'', relevance:'', followUp:'', shareWithClinic:false, rating:0, attachments:[], location:(a.note || '') };
+        } else if (!state.activities[a.id].location && a.note) {
+          state.activities[a.id].location = a.note;
         }
       });
     });
@@ -695,7 +697,6 @@ const data = [
     dayIdx: 0, title: "DAY 1 — FRIDAY 11 SEPTEMBER", focus: "Learning + networking",
     activities: [
       { id: "d0a0", time: "09:00–12:30", name: "iNovation® Day", outcome: "Understand emerging technologies AI and new directions in eye care", target: "5 useful insights" },
-      { id:"d0a6", time:"TBC", name:"LBI: How to Negotiate", outcome:"Learn negotiation frameworks for industry partnerships, equipment pricing, deal structures", target:"Negotiation framework to use all week", type:"lbi" },
       { id: "d0a1", time: "12:30–14:00", name: "Networking — lunch / congress", outcome: "Meet clinicians industry professionals and innovators", target: "3–5 meaningful conversations" },
       { id: "d0a2", time: "14:00–14:45", name: "Exhibition: Alcon, Zeiss, Rayner", outcome: "Get an overview of relevant companies / technologies to revisit", target: "Priority shortlist" },
       { id: "d0a3", time: "14:45–16:00", name: "Legends of the Lens", outcome: "Understand how cataract and glaucoma care connect and what is changing", target: "3 takeaways" },
@@ -720,10 +721,10 @@ const data = [
     activities: [
       { id: "d2a0", time: "09:00–12:00", name: "Modern MIGS Techniques USING Implants", outcome: "Compare the implant and non-implant approaches", target: "3 comparison insights", overlap: true, overlapNote: "Overlaps with AI Summit (10:15–12:00) — choose one" },
       { id: "d2a1", time: "10:15–12:00", name: "AI Summit", outcome: "Understand practical AI applications limitations and direction in ophthalmology", target: "5 AI insights", overlap: true, overlapNote: "Overlaps with MIGS Implants (09:00–12:00) — choose one" },
-      { id: "d2a2", time: "12:00–13:30", name: "Networking — lunch / exhibition", outcome: "Exchange views on AI surgery and technology", target: "3–5 conversations" },
-      { id:"d2a7", time:"13:00-13:45", name:"BoSS Connect: Diversity Networking", note:"South Gallery Room 22", outcome:"Joint networking event by BoSS and Orbis. Meet diverse professionals", target:"3 new connections", type:"boss" },
-      { id: "d2a3", time: "13:30–15:30", name: "Exhibition: Glaukos, iCare, Sight Sciences, Nidek", outcome: "Identify technologies worth understanding further", target: "3 relevant solutions" },
-      { id: "d2a4", time: "15:30–17:00", name: "Targeted sessions / exhibition", outcome: "Follow themes that emerged during the day", target: "2 new insights" },
+      { id: "d2a2", time: "12:00–13:00", name: "Networking — lunch / exhibition", outcome: "Exchange views on AI surgery and technology", target: "3–5 conversations" },
+      { id:"d2a7", time:"13:00–13:45", name:"BoSS Connect: Diversity Networking", note:"South Gallery Room 22", outcome:"Joint networking event by BoSS and Orbis. Meet diverse professionals", target:"3 new connections", type:"boss" },
+      { id:"d2a8", time:"14:00–16:00", name:"LBI: How to Negotiate (Interactive Workshop & Role-Play)", note:"Capital Suite Room 2-4", outcome:"Core principles of effective negotiation (industry partnerships, hospital management, suppliers). Led by Steven Callens & Vincent Qin with an interactive role-play simulation in an ophthalmology context.", target:"Negotiation framework & role-play practice", type:"lbi" },
+      { id: "d2a3", time: "16:00–17:00", name: "Exhibition: Glaukos, iCare, Sight Sciences, Nidek", outcome: "Identify technologies worth understanding further", target: "3 relevant solutions" },
       { id: "d2a5", time: "17:00–18:20", name: "World Café: Refractive", outcome: "Interactive discussion and expert perspectives on refractive care", target: "3 perspectives" },
       { id: "d2a6", time: "18:00–22:30", name: "Lift Off in London 2026", outcome: "Informal evening networking and relationship building", target: "3–5 conversations" }
     ]
