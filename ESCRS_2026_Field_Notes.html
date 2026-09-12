@@ -767,7 +767,7 @@ const data = [
     activities: [
       { id: "d0a0", time: "08:15–12:30", name: "iNovation® Day (M&A, MedTech & AI)", note: "ICC Auditorium", outcome: "Key business sessions: M&A Ins & Outs (08:23), Innovators Den (08:50), Global Leadership Trends (09:38), AI & Robotics (10:27), Expanding Refractive & Corneal Markets (11:27).", target: "5 high-level commercial & M&A insights", type: "inovation" },
       { id: "d0a1", time: "12:45–14:00", name: "GRS04: Technological Innovation in Refractive Surgery", note: "Victoria Room 5/6", outcome: "Global Refractive Summit: Excimer & femto laser platforms (KLEx), phakic IOL vault sizing, Full DOFi Simultaneous Vision IOLs. Chairs: Bryan Lin, Kevin Miller, Mun Wai Lee.", target: "Laser & Phakic IOL tech comparison for new hospital", type: "refractive" },
-      { id: "d0a2", time: "14:00–14:45", name: "Exhibition: Alcon, Zeiss, Rayner", note: "Exhibition Hall", outcome: "Key commercial meetings: Alcon (new UNITY VCS/CS launch), Zeiss Head of Global Distribution (pitching Zeiss Center of Excellence, easily hitting targets from market study, waiving £52k fee, upgrading to Artevo 800, Year-3 lens prices from Day 1), Rayner (RayOne Galaxy & dinner prep).", target: "Negotiate SEA V4.9 improvements & book follow-up", type: "exhibition" },
+      { id: "d0a2", time: "14:00–16:00", name: "Exhibition: Alcon, Sight Sciences & Hoya", note: "Exhibition Hall", outcome: "Supplier meetings debrief & notes: Alcon (new UNITY VCS/CS launch & Centurion terms), Sight Sciences (OMNI glaucoma system & TearCare dry eye), Hoya (Vivinex preloaded hydrophobic IOLs & multiSert).", target: "Log meeting notes, agreed offers & key contacts", type: "exhibition" },
       { id: "d0a3", time: "14:45–16:00", name: "Legends of the Lens: Navigating Cataract & Glaucoma", note: "George V Room 2", outcome: "Video & voting session with Karsten Klabe & Uday Devgan. Managing combined cataract + glaucoma pathways and complication management.", target: "3 surgical & technology takeaways", type: "clinical" },
       { id: "d0a4", time: "16:00–17:00", name: "IME01: Refractive Surgery IME Forum", note: "Victoria Room 5/6", outcome: "Modern Refractive Surgery: Bridging Technology, Outcomes, and Patient Expectations. Chairs: Andreia Rosa & Eric Donnenfeld.", target: "3 patient expectation & premium conversion insights", type: "ime" },
       { id: "d0a5", time: "17:00+", name: "Strategic Networking — End of Day 1", note: "Exhibition & Main Foyer", outcome: "Deepen conversations with industry heads, key surgeons, and device reps met during iNovation Day.", target: "2 high-quality follow-up meetings booked", type: "networking" }
@@ -780,31 +780,8 @@ const data = [
       { id: "d1a1", time: "12:00–13:00", name: "Networking — Lunch / Exhibition", note: "Exhibition Hall", outcome: "Discuss morning findings with clinicians and explore mid-tier equipment suppliers.", target: "3 meaningful conversations", type: "networking" },
       { id: "d1a2", time: "13:00–14:00", name: "IME02: Complex Phaco — Best Practices", note: "Victoria Room 5/6", outcome: "Managing complex cataract cases, dense lenses, zonular weakness, and emergency surgical protocols for new hospital OR.", target: "Safety & OR readiness checklist", type: "ime" },
       { id: "d1a3", time: "14:30–16:45", name: "Near-Live Surgery: Complex Cases & New Tech", note: "ICC Auditorium", outcome: "Ultra-dense cataracts, 4D phaco fluidics, 3D visualization, and surgical efficiency in action.", target: "3 technology takeaways for OR equipping", type: "surgical" },
-      { id: "d1a4", time: "16:45–17:30", name: "Exhibition: Schwind, Bausch+Lomb, STAAR Surgical", note: "Exhibition Hall", outcome: "Evaluate Schwind AMARIS/ATOS lasers, STAAR EVO ICL certification pathways, and Bausch+Lomb consumables.", target: "Compare laser & ICL business models", type: "exhibition" },
-      { id: "d1a5", time: "18:30+", name: "Rayner UK ESCRS Dinner", note: "Roe Canary Wharf", outcome: "High-level professional networking and partnership building with Rayner leadership and UK surgeons.", target: "3–5 senior relationship connections", type: "networking" }
-    ]
-  },
-  {
-    dayIdx: 2, title: "DAY 3 — SUNDAY 13 SEPTEMBER", focus: "LBI Sunday Bootcamp, Practice Scaling, AI & Negotiation",
-    activities: [
-      { id: "d2a9", time: "09:00–11:00", name: "LBI: Podium Presentation Skills", note: "Capital Suite Room 2-4", outcome: "Masterclass with David Lockington & Artemis Matsou: pitching hospital projects to investors, rapid-fire talks, and overcoming public speaking hurdles.", target: "Pitch framework for hospital project", type: "lbi" },
-      { id: "d2a1", time: "10:15–12:00", name: "3D AI Digital Summit", note: "Victoria Room 3", outcome: "Today’s application of AI to improve decision-making and practice efficiency. Chairs: Bruce Allan & Julie Schallhorn.", target: "AI diagnostic & workflow tools for clinic", overlap: true, overlapNote: "Overlaps with LBI Bootcamp morning — choose based on investor pitch vs AI priority", type: "ai" },
-      { id: "d2a10", time: "11:30–13:00", name: "LBI: Wealth Management & Clinic Reinvestment", note: "Capital Suite Room 2-4", outcome: "Financial decisions for starting/scaling your clinic. Led by Christina Grupcheva with J.P. Morgan & Cazenove Capital bankers.", target: "Clinic scaling & capitalization model", type: "lbi" },
-      { id: "d2a11", time: "12:30–14:00", name: "3D Operating Microscope Showdown", note: "Victoria Room 3", outcome: "Heads-up 3D visualization, intraoperative OCT, and digital microscope platforms (Burkhard Dick, Gerd Auffarth). Compare Leica Proveo 8, Zeiss KINEVO & Alcon NGENUITY for hospital OR.", target: "Microscope selection criteria", overlap: true, overlapNote: "Overlaps with BoSS Connect (13:00–13:45) — choose based on OR equipment vs networking priority", type: "technology" },
-      { id: "d2a7", time: "13:00–13:45", name: "BoSS Connect: Diversity Networking", note: "South Gallery Room 22", outcome: "Joint networking event by BoSS and Orbis. Meet clinic managers, healthcare administrators, and diverse surgical leaders.", target: "3 key management contacts", type: "boss" },
-      { id: "d2a8", time: "14:00–16:00", name: "LBI: How to Negotiate (Workshop & Role-Play)", note: "Capital Suite Room 2-4", outcome: "Principles of effective negotiation (hospital management, supplier deals, partnerships). Live role-play simulation led by Steven Callens & Vincent Qin.", target: "Deal negotiation playbook for equipment vendors", type: "lbi" },
-      { id: "d2a3", time: "16:00–17:00", name: "Exhibition: Glaukos, iCare, Sight Sciences, Nidek", note: "Exhibition Hall", outcome: "Review MIGS stents (iStent vs OMNI), iCare tonometry suites, and Nidek diagnostic laser combos.", target: "Glaucoma lane package quotes", type: "exhibition" },
-      { id: "d2a12", time: "16:45–18:15", name: "BoSS Course: From Surgeon to Leader — Essential Leadership Skills", note: "South Gallery Room 22", outcome: "Transitioning from peer to leader, communication, delegation, and decision-making across multidisciplinary clinical teams (Mohamed Elalfy, Beatrice Cochener-Lamard).", target: "3 leadership & team delegation frameworks", overlap: true, overlapNote: "Overlaps with World Café Refractive (17:00–18:20) & Exhibition", type: "boss" },
-      { id: "d2a5", time: "17:00–18:20", name: "World Café: Refractive", note: "The World Café Area", outcome: "Interactive roundtable with clinical and practice management leaders on refractive conversion and patient journeys.", target: "3 patient conversion strategies", type: "worldcafe" },
-      { id: "d2a6", time: "18:00–22:30", name: "Lift Off in London 2026", note: "Social Venue", outcome: "Informal evening networking with surgeons, clinic owners, and industry directors.", target: "3–5 strong commercial contacts", type: "networking" }
-    ]
-  },
-  {
-    dayIdx: 3, title: "DAY 4 — MONDAY 14 SEPTEMBER", focus: "Digital OR Technologies, Cornea Therapies & Instrument Contracts",
-    activities: [
-      { id: "d3a0", time: "09:00–10:45", name: "Targeted Clinical Sessions & Floor Walk", note: "Exhibition Hall", outcome: "Follow up with shortlisted diagnostic and microscope vendors from Days 1–3.", target: "Clarify warranty & maintenance proposals", type: "exhibition" },
-      { id: "d3a1", time: "11:00–12:20", name: "World Café: Cornea", note: "The World Café Area", outcome: "Interactive discussion on modern corneal surgery, DMEK adoption, and premium ocular surface therapies.", target: "3 clinical & market takeaways", type: "worldcafe" },
-      { id: "d3a2", time: "12:20–13:00", name: "Networking — Lunch", note: "Catering Area", outcome: "Reconnect with key clinicians and partners met over the weekend.", target: "3 touchpoint check-ins", type: "networking" },
+      { id: "d1a4", time: "16:00–17:30", name: "Exhibition: Zeiss, Rexxam & RxSight", note: "Exhibition Hall", outcome: "Targeted booth meetings: Zeiss Head of Global Distribution (SEA V4.9 negotiation & Center of Excellence), Rexxam (pre-testing diagnostic lane packages), RxSight (Light Adjustable Lens placement & margin structure).", target: "Negotiate terms, log offers & direct contacts", type: "exhibition" },
+      { id: "d1a5", time: "18:30+", name: "Rayner UK ESCRS Dinner", note: "Roe Canary Wharf", outcome: "High-level professional networking and partnership building with Rayner leadership (RayOne Galaxy AI spiral lens, UK hospital consignment, volume rebates).", target: "3–5 senior relationship connections", type: "networking" },
       { id: "d3a3", time: "13:00–14:00", name: "IME04: Digital Operating Room Technologies", note: "Victoria Room 5/6", outcome: "Digital OR workflow, surgical recording systems, 3D heads-up surgery, and EMR integration.", target: "Digital OR architecture plan for hospital", type: "ime" },
       { id: "d3a4", time: "14:00–17:00", name: "Exhibition: BVI, Leica, Ziemer, MedInstrus", note: "Exhibition Hall", outcome: "Deep dive: Leica Proveo 8 OR microscope quote, Ziemer femto platform, BVI/MedInstrus bulk surgical instrument trays.", target: "Instrument & microscope terms negotiated", type: "exhibition" },
       { id: "d3a5", time: "17:00+", name: "Daily Reflection & Vendor Dossier Review", note: "Quiet Lounge", outcome: "Consolidate supplier notes, pricing models, and prepare final decision matrix.", target: "Draft supplier comparison grid", type: "reflection" }
@@ -815,7 +792,7 @@ const data = [
     activities: [
       { id: "d4a0", time: "08:30–10:00", name: "Delivering Safe Surgery in Low-Resource Settings", note: "Instructional Course", outcome: "High-efficiency operating protocols, sterile processing optimization, and cost-containment strategies.", target: "3 operational efficiency protocols", type: "instructional" },
       { id: "d4a1", time: "10:00–11:00", name: "Networking — Final Coffee & Contact Exchange", note: "Main Foyer", outcome: "Closing conversations with international colleagues, potential visiting surgeons, and advisors.", target: "2–3 confirmed post-congress follow-ups", type: "networking" },
-      { id: "d4a2", time: "11:00–13:00", name: "Exhibition: Rexxam, Laboratoires KÔL, RxSight + follow-ups", note: "Exhibition Hall", outcome: "Final booth meetings: Rexxam lane packages, Laboratoires KÔL cornea drop partnership, and RxSight LAL device placement model.", target: "Final commercial proposals secured", type: "exhibition" },
+      { id: "d4a2", time: "11:00–13:00", name: "Exhibition: Laboratoires KÔL & Final Follow-ups", note: "Exhibition Hall", outcome: "Final booth meetings: Laboratoires KÔL cornea drop partnership, contract follow-ups with shortlisted suppliers from Days 1-4.", target: "Final commercial proposals secured", type: "exhibition" },
       { id: "d4a3", time: "13:00–14:00", name: "Networking — Final Congress Lunch", note: "Catering Area", outcome: "Wrap up informal discussions and exchange direct contact details.", target: "Final connection confirmations", type: "networking" },
       { id: "d4a4", time: "14:00–15:00", name: "Personal ESCRS Debrief & Action Plan", note: "Meeting Hub", outcome: "Synthesize week’s learnings, vendor quotes, and partnerships into executive recommendations.", target: "Executive summary ready for board/investors", type: "debrief" },
       { id: "d4a5", time: "15:00+", name: "Close / Organize Notes & Procurement Dossier", note: "Business Centre", outcome: "Archive all business card photos, finalize notes, and export comprehensive congress report.", target: "Ready-to-report dossier + follow-up list", type: "close" }
@@ -857,9 +834,38 @@ const exhibitors = [
     ]
   },
   {
+    "id": "ex_hoya",
+    "name": "Hoya Surgical Optics",
+    "day": 0,
+    "category": "Preloaded Hydrophobic IOLs & Micro-Incision Optics",
+    "flagship": "Vivinex™ multiSert & iSert preloaded IOL platform (XY1, Toric XY1A, Gemetric / Gemetric Plus trifocal), Nanex multiSert (1.8mm MICS)",
+    "decisionMaker": {
+      "role": "Commercial Operations Director / European Key Accounts Manager",
+      "whyMatters": "Controls bulk hospital procurement terms, preloaded injector rebates, and consignment stock agreements for private surgical centers."
+    },
+    "angle": "Hoya is the gold standard for glistening-free hydrophobic acrylic lenses and the smoothest preloaded injectors (multiSert) on the market. Surgeons love the injector reliability. Use Hoya as your direct pricing hammer against Alcon to get rock-bottom monofocal pricing, high-tier rebates, and full hospital consignment stock.",
+    "questions": [
+      "What volume discount or rebate tiers can you offer our new hospital if we make Vivinex our primary monofocal and toric lens?",
+      "How does the price of your Vivinex Gemetric trifocal compare to Alcon PanOptix and Zeiss AT LISA?",
+      "Can Hoya place a complete consignment stock of Vivinex lenses (all powers and toric axes) in our hospital OR so we only pay upon implantation?",
+      "Do your preloaded multiSert injectors require any special proprietary viscoelastic or can we use our standard OVD?",
+      "What on-site training and clinical specialist support do you provide for our scrub nurses and surgeons when we open?"
+    ],
+    "checklist": [
+      "Introduced our new hospital project, OR capacity, and launch timeline",
+      "Spoke with the commercial director or European key accounts manager",
+      "Tested the Vivinex multiSert and Nanex preloaded injector demos at the booth",
+      "Requested an itemized pricing sheet for Vivinex monofocal, toric, and Gemetric trifocal lenses",
+      "Negotiated 100% consignment stocking with monthly billing based only on used units",
+      "Compared Vivinex pack costs and rebates directly against Alcon Clareon",
+      "Confirmed on-site scrub nurse training support for our hospital opening",
+      "Exchanged business cards / WhatsApp contacts and scheduled a formal commercial follow-up"
+    ]
+  },
+  {
     "id": "ex_zeiss",
     "name": "Zeiss",
-    "day": 0,
+    "day": 1,
     "category": "Full Hospital Diagnostics & OR Suite (SEA V4.9 Proposal)",
     "flagship": "SEA V4.9 Offer (£520k eqpt + £103k service): IOLMaster 700, Artevo 750 (ask 800!), Cirrus 6000 w/ AngioPlex, Quatera 700 phaco, Visulas Combi, Clarus 500, HFA860, AT ELANA & AT LISA",
     "decisionMaker": {
@@ -894,7 +900,7 @@ const exhibitors = [
   {
     "id": "ex_rayner",
     "name": "Rayner",
-    "day": 0,
+    "day": 1,
     "category": "Premium IOLs & Phaco Technology",
     "flagship": "RayOne fully preloaded platform (RayOne Galaxy AI spiral optic, RayOne Trifocal, RayOne EMV), Sophi phaco system, AEON dry eye drops",
     "decisionMaker": {
@@ -922,7 +928,7 @@ const exhibitors = [
   {
     "id": "ex_schwind",
     "name": "Schwind",
-    "day": 1,
+    "day": 2,
     "category": "Refractive Laser Systems & Corneal Diagnostics",
     "flagship": "SCHWIND ATOS femtosecond laser (SmartSight lenticule extraction), SCHWIND AMARIS excimer (1050RS/750S, SmartPulse, TransPRK), MS-39 OCT",
     "decisionMaker": {
@@ -950,7 +956,7 @@ const exhibitors = [
   {
     "id": "ex_bausch",
     "name": "Bausch+Lomb",
-    "day": 1,
+    "day": 2,
     "category": "Surgical Cataract Platforms, IOLs & Instrumentation",
     "flagship": "Stellaris Elite vision enhancement system (Adaptive Fluidics, Bi-Blade vitrectomy), enVista hydrophobic acrylic IOLs, LuxSmart EDoF, Storz Instruments",
     "decisionMaker": {
@@ -978,7 +984,7 @@ const exhibitors = [
   {
     "id": "ex_staar",
     "name": "STAAR Surgical",
-    "day": 1,
+    "day": 2,
     "category": "Phakic Intraocular Lenses (ICL)",
     "flagship": "EVO / EVO+ ICL (Implantable Collamer Lens) for myopia, hyperopia, and astigmatism",
     "decisionMaker": {
@@ -1062,7 +1068,7 @@ const exhibitors = [
   {
     "id": "ex_sight",
     "name": "Sight Sciences",
-    "day": 2,
+    "day": 0,
     "category": "Interventional Glaucoma & Dry Eye Technology",
     "flagship": "OMNI Surgical System (implant-free canaloplasty + trabeculotomy), TearCare System (interventional thermal pulsation for MGD)",
     "decisionMaker": {
@@ -1230,7 +1236,7 @@ const exhibitors = [
   {
     "id": "ex_rexxam",
     "name": "Rexxam",
-    "day": 4,
+    "day": 1,
     "category": "Diagnostic Workstations & Optical Measurement (Booth F-340)",
     "flagship": "RET-700 Auto Ref-Topographer (wavefront & dry eye meibography), SPM-700 Specular Microscope, ACCUREF K-900 / R-800, NCT-200 non-contact tonometer",
     "decisionMaker": {
@@ -1286,7 +1292,7 @@ const exhibitors = [
   {
     "id": "ex_rxsight",
     "name": "RxSight, Inc",
-    "day": 4,
+    "day": 1,
     "category": "Light Adjustable Lens (LAL / LAL+) & Light Delivery Device (LDD)",
     "flagship": "RxSight Light Adjustable Lens (LAL & LAL+), Light Delivery Device (LDD)",
     "decisionMaker": {
