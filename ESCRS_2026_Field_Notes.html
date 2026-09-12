@@ -118,7 +118,33 @@ main { max-width: 1000px; margin: 0 auto; padding: 20px 20px 80px; }
 .act-note-chip { background: #f1f5f9; color: #475569; }
 .act-rating-chip { color: #f59e0b; }
 
-.act-status-col { padding-top: 12px; }
+.act-status-col { padding-top: 10px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.act-remove-card-btn {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 15px;
+  line-height: 1;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: all 0.2s;
+}
+.act-remove-card-btn:hover {
+  background: #fee2e2;
+  color: #ef4444;
+  opacity: 1;
+}
+.btn-remove-act:hover {
+  background: #fecaca !important;
+  border-color: #f87171 !important;
+  color: #7f1d1d !important;
+}
 .status-btn { width: 44px; height: 44px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid var(--border); background: var(--surface); transition: all 0.2s; }
 .status-btn:hover { background: var(--bg); }
 .status-icon { font-size: 16px; margin-bottom: 2px; }
@@ -449,18 +475,25 @@ mark { background: #fef08a; color: #854d0e; padding: 0 2px; border-radius: 2px; 
         <span style="font-size:16px">📸</span>
         <strong style="color:#0369a1;font-size:12px;text-transform:uppercase;letter-spacing:0.5px">Lecture Slide Photos</strong>
       </div>
-      <span id="adPhotoCount" style="font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;background:#e0f2fe;color:#0284c7">0 slides</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <button id="adPhotoClearBtn" onclick="clearAllActivityPhotos()" style="display:none;background:none;border:none;color:#ef4444;font-size:11px;font-weight:600;cursor:pointer;text-decoration:underline">Clear all</button>
+        <span id="adPhotoCount" style="font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;background:#e0f2fe;color:#0284c7">0 slides</span>
+      </div>
     </div>
     
-    <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
-      <label style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;padding:8px 16px;border-radius:6px;font-size:13px;font-weight:600;background:#0284c7;color:white;box-shadow:0 1px 3px rgba(0,0,0,0.1)">
-        📷 Snap Slide Photo
-        <input type="file" accept="image/*" capture="environment" onchange="handleActivityPhotos(this)" style="display:none">
-      </label>
-      <label style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;padding:8px 14px;border-radius:6px;font-size:13px;font-weight:500;background:var(--surface);border:1px solid var(--border);color:var(--text)">
-        📁 Choose Photos
-        <input type="file" accept="image/*" multiple onchange="handleActivityPhotos(this)" style="display:none">
-      </label>
+    <div id="adPhotoDropZone" ondragover="event.preventDefault(); this.style.borderColor='#0284c7'; this.style.background='#e0f2fe';" ondragleave="this.style.borderColor='#bae6fd'; this.style.background='#f8fafc';" ondrop="handlePhotoDrop(event)" style="border:2px dashed #bae6fd;border-radius:8px;padding:12px;margin-bottom:10px;background:#f8fafc;transition:all 0.2s">
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <label style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;padding:10px 18px;border-radius:8px;font-size:13px;font-weight:700;background:#0284c7;color:white;box-shadow:0 2px 5px rgba(2,132,199,0.25)">
+          <span>🖼️</span> Select Multiple Photos (from Library)
+          <input type="file" accept="image/*" multiple onchange="handleActivityPhotos(this)" style="display:none">
+        </label>
+        <label style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;padding:10px 14px;border-radius:8px;font-size:13px;font-weight:600;background:#ffffff;border:1px solid #cbd5e1;color:#334155">
+          <span>📷</span> Live Camera
+          <input type="file" accept="image/*" capture="environment" onchange="handleActivityPhotos(this)" style="display:none">
+        </label>
+        <span style="font-size:12px;color:#64748b;margin-left:auto">Select multiple slide photos at once</span>
+      </div>
+      <div id="adPhotoLoading" style="display:none;margin-top:10px;padding:8px 12px;background:#e0f2fe;border:1px solid #bae6fd;border-radius:6px;font-size:12px;color:#0369a1;font-weight:600"></div>
     </div>
 
     <div id="adPhotosGrid" style="display:grid;grid-template-columns:repeat(auto-fill, minmax(110px, 1fr));gap:8px"></div>
@@ -512,9 +545,12 @@ mark { background: #fef08a; color: #854d0e; padding: 0 2px; border-radius: 2px; 
     </div>
   </div>
   
-  <div class="sticky-save-bar">
-    <span class="save-status" id="adSaveStatus">All changes saved locally</span>
-    <button class="btn-primary" onclick="document.getElementById('activityDialog').close()">Done</button>
+  <div class="sticky-save-bar" style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+    <button type="button" class="btn-remove-act" onclick="removeCurrentActivity()" style="background:#fef2f2;color:#991b1b;border:1px solid #fecaca;padding:8px 14px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px">
+      🗑️ Remove from Plan
+    </button>
+    <span class="save-status" id="adSaveStatus" style="flex:1;text-align:center">All changes saved locally</span>
+    <button type="button" class="btn-primary" onclick="document.getElementById('activityDialog').close()">Done</button>
   </div>
 </dialog>
 
@@ -777,6 +813,7 @@ function sanitizeState() {
   if (!state.report || typeof state.report !== 'object') state.report = { editedSections: {} };
   if (!state.report.editedSections) state.report.editedSections = {};
   if (!state.exhibitors || typeof state.exhibitors !== 'object') state.exhibitors = {};
+  if (!Array.isArray(state.removedActivities)) state.removedActivities = [];
   if (typeof exhibitors !== 'undefined') {
     exhibitors.forEach(ex => {
       const exLen = (ex.checklist && ex.checklist.length) || 7;
@@ -1853,9 +1890,12 @@ function renderApp() {
   
   // Render Days
   data.forEach(d => {
-    const total = d.activities.length;
-    const completed = d.activities.filter(a => (state.activities[a.id] || {}).status === 'completed').length;
-    const progress = Math.round((completed / total) * 100);
+    const removedIds = state.removedActivities || [];
+    const activeActivities = d.activities.filter(a => !removedIds.includes(a.id));
+    const removedActivities = d.activities.filter(a => removedIds.includes(a.id));
+    const total = activeActivities.length;
+    const completed = activeActivities.filter(a => (state.activities[a.id] || {}).status === 'completed').length;
+    const progress = total > 0 ? Math.round((completed / total) * 100) : 0;
     
     html += `<div id="view-day${d.dayIdx}" class="view-section">
       <div class="day-header">
@@ -1870,7 +1910,7 @@ function renderApp() {
       
       <div class="steering-timeline">`;
       
-    d.activities.forEach(a => {
+    activeActivities.forEach(a => {
       const s = (state.activities && state.activities[a.id]) || { status:'planned', whatHappened:'', whatLearned:'', keyInsight:'', people:[], idea:'', relevance:'', followUp:'', shareWithClinic:false, rating:0, attachments:[], location:'' };
       const timePart = (a.time || '').split('–')[0];
       html += `<div class="act-card" id="card-${a.id}" data-status="${s.status || 'planned'}">
@@ -1890,6 +1930,7 @@ function renderApp() {
             <div class="status-icon" id="s-icon-${a.id}"></div>
             <div class="status-label" id="s-label-${a.id}"></div>
           </button>
+          <button class="act-remove-card-btn" title="Remove from plan" onclick="removeActivity('${a.id}', event)">&times;</button>
         </div>
       </div>`;
     });
@@ -2023,12 +2064,16 @@ function updateDayProgress(aid) {
   if (dayIdx === -1) return;
   
   const d = data[dayIdx];
-  const total = d.activities.length;
-  const completed = d.activities.filter(a => (state.activities[a.id] || {}).status === 'completed').length;
-  const progress = Math.round((completed / total) * 100);
+  const removedIds = state.removedActivities || [];
+  const activeActivities = d.activities.filter(a => !removedIds.includes(a.id));
+  const total = activeActivities.length;
+  const completed = activeActivities.filter(a => (state.activities[a.id] || {}).status === 'completed').length;
+  const progress = total > 0 ? Math.round((completed / total) * 100) : 0;
   
-  document.getElementById('prog-day' + dayIdx).style.width = progress + '%';
-  document.getElementById('stat-comp-day' + dayIdx).innerText = `Completed: ${completed}`;
+  const progEl = document.getElementById('prog-day' + dayIdx);
+  if (progEl) progEl.style.width = progress + '%';
+  const compEl = document.getElementById('stat-comp-day' + dayIdx);
+  if (compEl) compEl.innerText = `Completed: ${completed}`;
 }
 
 let currentActivityId = null;
@@ -2148,22 +2193,45 @@ function saveReflection(dayIdx, field) {
 
 
 // ========== LECTURE SLIDE PHOTOS ==========
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 function compressSlidePhoto(file, callback) {
   const reader = new FileReader();
+  reader.onerror = function() {
+    console.error("FileReader error", file && file.name);
+    callback(null);
+  };
   reader.onload = function(e) {
     const img = new Image();
+    img.onerror = function() {
+      console.error("Image load error", file && file.name);
+      callback(null);
+    };
     img.onload = function() {
-      const canvas = document.createElement('canvas');
-      const MAX = 1280;
-      let w = img.width, h = img.height;
-      if (w > MAX || h > MAX) {
-        if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
-        else { w = Math.round(w * MAX / h); h = MAX; }
+      try {
+        const canvas = document.createElement('canvas');
+        const MAX = 1280;
+        let w = img.width, h = img.height;
+        if (w > MAX || h > MAX) {
+          if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
+          else { w = Math.round(w * MAX / h); h = MAX; }
+        }
+        canvas.width = w; canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, w, h);
+        callback(canvas.toDataURL('image/jpeg', 0.72));
+      } catch(err) {
+        console.error("Canvas compression error", err);
+        callback(null);
       }
-      canvas.width = w; canvas.height = h;
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(img, 0, 0, w, h);
-      callback(canvas.toDataURL('image/jpeg', 0.72));
     };
     img.src = e.target.result;
   };
@@ -2173,31 +2241,95 @@ function compressSlidePhoto(file, callback) {
 function handleActivityPhotos(input) {
   const files = Array.from(input.files || []);
   if (!files.length) return;
+  processSlidePhotoFiles(files);
+  input.value = '';
+}
+
+function handlePhotoDrop(e) {
+  e.preventDefault();
+  const dropZone = document.getElementById('adPhotoDropZone');
+  if (dropZone) {
+    dropZone.style.borderColor = '#bae6fd';
+    dropZone.style.background = '#f8fafc';
+  }
+  const files = [];
+  if (e.dataTransfer && e.dataTransfer.items) {
+    for (let i = 0; i < e.dataTransfer.items.length; i++) {
+      if (e.dataTransfer.items[i].kind === 'file') {
+        const file = e.dataTransfer.items[i].getAsFile();
+        if (file && file.type.startsWith('image/')) files.push(file);
+      }
+    }
+  } else if (e.dataTransfer && e.dataTransfer.files) {
+    for (let i = 0; i < e.dataTransfer.files.length; i++) {
+      const file = e.dataTransfer.files[i];
+      if (file && file.type.startsWith('image/')) files.push(file);
+    }
+  }
+  if (files.length > 0) {
+    processSlidePhotoFiles(files);
+  }
+}
+
+function processSlidePhotoFiles(files) {
   const aid = currentActivityId;
+  if (!aid) return;
   const s = state.activities[aid];
   if (!Array.isArray(s.photos)) s.photos = [];
 
+  const loadingEl = document.getElementById('adPhotoLoading');
+  if (loadingEl) {
+    loadingEl.style.display = 'block';
+    loadingEl.innerText = '⏳ Loading & compressing ' + files.length + ' slide photo' + (files.length > 1 ? 's' : '') + '...';
+  }
+
   let processed = 0;
-  files.forEach(file => {
-    compressSlidePhoto(file, (dataUrl) => {
-      s.photos.push({
-        id: 'slide_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
-        data: dataUrl,
-        caption: '',
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+  let successful = 0;
+
+  const promises = files.map((file, i) => {
+    return new Promise((resolve) => {
+      compressSlidePhoto(file, (dataUrl) => {
+        if (dataUrl) {
+          s.photos.push({
+            id: 'slide_' + Date.now() + '_' + i + '_' + Math.random().toString(36).substr(2, 4),
+            data: dataUrl,
+            caption: '',
+            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+          });
+          successful++;
+        }
+        processed++;
+        if (loadingEl) {
+          loadingEl.innerText = '⏳ Compressed ' + processed + '/' + files.length + ' photos...';
+        }
+        resolve();
       });
-      processed++;
-      if (processed === files.length) {
-        if (s.status === 'planned') s.status = 'inprogress';
-        saveState();
-        renderActivityPhotos();
-        refreshCard(aid);
-        updateDayProgress(aid);
-        showToast(`📸 Saved ${processed} slide photo${processed > 1 ? 's' : ''}`);
-      }
     });
   });
-  input.value = '';
+
+  Promise.all(promises).then(() => {
+    if (loadingEl) loadingEl.style.display = 'none';
+    if (s.status === 'planned') s.status = 'inprogress';
+    saveState();
+    renderActivityPhotos();
+    refreshCard(aid);
+    updateDayProgress(aid);
+    showToast('📸 Added ' + successful + ' slide photo' + (successful > 1 ? 's' : ''));
+  });
+}
+
+function clearAllActivityPhotos() {
+  const aid = currentActivityId;
+  if (!aid) return;
+  const s = (state.activities && state.activities[aid]) || {};
+  const photos = s.photos || [];
+  if (!photos.length) return;
+  if (!confirm('Delete all ' + photos.length + ' slide photos for this session?')) return;
+  s.photos = [];
+  saveState();
+  renderActivityPhotos();
+  refreshCard(aid);
+  showToast('🗑️ Cleared all slide photos');
 }
 
 function renderActivityPhotos() {
@@ -2207,27 +2339,25 @@ function renderActivityPhotos() {
   const grid = document.getElementById('adPhotosGrid');
   const countEl = document.getElementById('adPhotoCount');
   const hintEl = document.getElementById('adNoPhotosHint');
+  const clearBtn = document.getElementById('adPhotoClearBtn');
   if (!grid) return;
 
   countEl.innerText = photos.length + ' slide' + (photos.length !== 1 ? 's' : '');
   hintEl.style.display = photos.length > 0 ? 'none' : 'block';
+  if (clearBtn) clearBtn.style.display = photos.length > 1 ? 'inline' : 'none';
 
   let html = '';
   photos.forEach((p, idx) => {
     const captionVal = p.caption || '';
-    html += `<div style="position:relative;border:1px solid #cbd5e1;border-radius:6px;overflow:hidden;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,0.08);display:flex;flex-direction:column">
-      <div onclick="openPhotoLightbox(${idx})" style="cursor:pointer;aspect-ratio:4/3;background:#0f172a;display:flex;align-items:center;justify-content:center;overflow:hidden">
-        <img src="${p.data}" style="width:100%;height:100%;object-fit:cover" alt="Slide">
-      </div>
-      <button onclick="removeActivityPhoto(${idx}, event)" style="position:absolute;top:4px;right:4px;background:rgba(0,0,0,0.7);color:#fff;border:none;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:13px;line-height:1;cursor:pointer" title="Delete slide photo">&times;</button>
-      <div style="padding:4px 6px;background:#f8fafc">
-        <input type="text" placeholder="Add note/title..." value="${escapeHtml(captionVal)}" onchange="updatePhotoCaption(${idx}, this.value)" style="width:100%;font-size:11px;padding:2px 4px;border:1px solid #cbd5e1;border-radius:3px;background:#fff;margin-bottom:2px">
-        <div style="font-size:10px;color:var(--text-faint);display:flex;justify-content:space-between">
-          <span>Slide ${idx + 1}</span>
-          <span>${p.timestamp || ''}</span>
-        </div>
-      </div>
-    </div>`;
+    html += '<div style="position:relative;border:1px solid #cbd5e1;border-radius:6px;overflow:hidden;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,0.08);display:flex;flex-direction:column">'
+      + '<div onclick="openPhotoLightbox(' + idx + ')" style="cursor:pointer;aspect-ratio:4/3;background:#0f172a;display:flex;align-items:center;justify-content:center;overflow:hidden">'
+      + '<img src="' + p.data + '" style="width:100%;height:100%;object-fit:cover" alt="Slide">'
+      + '</div>'
+      + '<button onclick="removeActivityPhoto(' + idx + ', event)" style="position:absolute;top:4px;right:4px;background:rgba(0,0,0,0.7);color:#fff;border:none;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:13px;line-height:1;cursor:pointer" title="Delete slide photo">&times;</button>'
+      + '<div style="padding:4px 6px;background:#f8fafc;border-top:1px solid #e2e8f0;display:flex;align-items:center;gap:4px">'
+      + '<input type="text" placeholder="Note/Topic..." value="' + escapeHtml(captionVal) + '" onchange="updatePhotoCaption(' + idx + ', this.value)" style="width:100%;font-size:11px;padding:2px 4px;border:1px solid transparent;border-radius:3px;background:transparent;outline:none" onfocus="this.style.border=\'1px solid #94a3b8\';this.style.background=\'#fff\'" onblur="this.style.border=\'1px solid transparent\';this.style.background=\'transparent\'">'
+      + '</div>'
+      + '</div>';
   });
   grid.innerHTML = html;
 }
@@ -2237,7 +2367,7 @@ function openPhotoLightbox(idx) {
   if (!s || !s.photos || !s.photos[idx]) return;
   const p = s.photos[idx];
   document.getElementById('lbImage').src = p.data;
-  document.getElementById('lbCaption').innerText = (p.caption ? p.caption + ' • ' : '') + `Slide ${idx + 1} (${p.timestamp || ''})`;
+  document.getElementById('lbCaption').innerText = (p.caption ? p.caption + ' • ' : '') + 'Slide ' + (idx + 1) + ' (' + (p.timestamp || '') + ')';
   document.getElementById('photoLightboxDialog').showModal();
 }
 
@@ -2262,7 +2392,45 @@ function updatePhotoCaption(idx, val) {
   }
 }
 
-// Quick Notes
+// ========== ACTIVITY REMOVAL & RESTORATION ==========
+function removeActivity(aid, event) {
+  if (event) event.stopPropagation();
+  let actName = "this session";
+  for (let d of data) {
+    const found = d.activities.find(a => a.id === aid);
+    if (found) { actName = found.name; break; }
+  }
+  if (!confirm('Remove "' + actName + '" from your plan?\n\nYou can restore it anytime from the bottom of the day view.')) {
+    return;
+  }
+  if (!Array.isArray(state.removedActivities)) state.removedActivities = [];
+  if (!state.removedActivities.includes(aid)) {
+    state.removedActivities.push(aid);
+  }
+  saveState();
+  renderApp();
+  
+  const dlg = document.getElementById('activityDialog');
+  if (dlg && dlg.open && currentActivityId === aid) {
+    dlg.close();
+  }
+  showToast('🗑️ Removed "' + actName + '" from plan');
+}
+
+function removeCurrentActivity() {
+  if (currentActivityId) {
+    removeActivity(currentActivityId);
+  }
+}
+
+function restoreActivity(aid) {
+  if (!Array.isArray(state.removedActivities)) return;
+  state.removedActivities = state.removedActivities.filter(id => id !== aid);
+  saveState();
+  renderApp();
+  showToast('↺ Restored session to plan');
+}
+
 function openQuickNote() {
   document.getElementById('qnNote').value = '';
   document.getElementById('qnPerson').value = '';
