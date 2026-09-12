@@ -247,6 +247,9 @@ mark { background: #fef08a; color: #854d0e; padding: 0 2px; border-radius: 2px; 
 .ex-badge-chip { font-size: 11px; font-weight: 500; padding: 2px 7px; border-radius: 4px; }
 .ex-badge-offer { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
 .ex-badge-contact { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+.ex-badge-priority { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; font-weight: 600; }
+.ex-badge-explore { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; font-weight: 500; }
+.ex-badge-dinner { background: #f3e8ff; color: #6b21a8; border: 1px solid #e9d5ff; font-weight: 600; }
 
 .ex-checklist-item { display: flex; align-items: flex-start; gap: 10px; padding: 9px 0; border-bottom: 1px solid #f1f5f9; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .ex-checklist-item:last-child { border-bottom: none; }
@@ -802,39 +805,394 @@ function sanitizeState() {
 
 const data = [
   {
-    dayIdx: 0, title: "DAY 1 — FRIDAY 11 SEPTEMBER", focus: "M&A, Innovation, Refractive Tech & Supplier Setup",
-    activities: [
-      { id: "d0a0", time: "08:15–12:30", name: "iNovation® Day (M&A, MedTech & AI)", note: "ICC Auditorium", outcome: "Key business sessions: M&A Ins & Outs (08:23), Innovators Den (08:50), Global Leadership Trends (09:38), AI & Robotics (10:27), Expanding Refractive & Corneal Markets (11:27).", target: "5 high-level commercial & M&A insights", type: "inovation" },
-      { id: "d0a1", time: "12:45–14:00", name: "GRS04: Technological Innovation in Refractive Surgery", note: "Victoria Room 5/6", outcome: "Global Refractive Summit: Excimer & femto laser platforms (KLEx), phakic IOL vault sizing, Full DOFi Simultaneous Vision IOLs. Chairs: Bryan Lin, Kevin Miller, Mun Wai Lee.", target: "Laser & Phakic IOL tech comparison for new hospital", type: "refractive" },
-      { id: "d0a2", time: "14:00–16:00", name: "Exhibition: Alcon, Sight Sciences & Hoya", note: "Exhibition Hall", outcome: "Supplier meetings debrief & notes: Alcon (new UNITY VCS/CS launch & Centurion terms), Sight Sciences (OMNI glaucoma system & TearCare dry eye), Hoya (Vivinex preloaded hydrophobic IOLs & multiSert).", target: "Log meeting notes, agreed offers & key contacts", type: "exhibition" },
-      { id: "d0a3", time: "14:45–16:00", name: "Legends of the Lens: Navigating Cataract & Glaucoma", note: "George V Room 2", outcome: "Video & voting session with Karsten Klabe & Uday Devgan. Managing combined cataract + glaucoma pathways and complication management.", target: "3 surgical & technology takeaways", type: "clinical" },
-      { id: "d0a4", time: "16:00–17:00", name: "IME01: Refractive Surgery IME Forum", note: "Victoria Room 5/6", outcome: "Modern Refractive Surgery: Bridging Technology, Outcomes, and Patient Expectations. Chairs: Andreia Rosa & Eric Donnenfeld.", target: "3 patient expectation & premium conversion insights", type: "ime" },
-      { id: "d0a5", time: "17:00+", name: "Strategic Networking — End of Day 1", note: "Exhibition & Main Foyer", outcome: "Deepen conversations with industry heads, key surgeons, and device reps met during iNovation Day.", target: "2 high-quality follow-up meetings booked", type: "networking" }
+    "dayIdx": 0,
+    "title": "DAY 1 — FRIDAY 11 SEPTEMBER",
+    "focus": "M&A, Innovation, Refractive Tech & Supplier Setup",
+    "activities": [
+      {
+        "id": "d0a0",
+        "time": "08:15–12:30",
+        "name": "iNovation® Day (M&A, MedTech & AI)",
+        "note": "ICC Auditorium",
+        "outcome": "Key business sessions: M&A Ins & Outs (08:23), Innovators Den (08:50), Global Leadership Trends (09:38), AI & Robotics (10:27), Expanding Refractive & Corneal Markets (11:27).",
+        "target": "5 high-level commercial & M&A insights",
+        "type": "inovation"
+      },
+      {
+        "id": "d0a1",
+        "time": "12:45–14:00",
+        "name": "GRS04: Technological Innovation in Refractive Surgery",
+        "note": "Victoria Room 5/6",
+        "outcome": "Global Refractive Summit: Excimer & femto laser platforms (KLEx), phakic IOL vault sizing, Full DOFi Simultaneous Vision IOLs. Chairs: Bryan Lin, Kevin Miller, Mun Wai Lee.",
+        "target": "Laser & Phakic IOL tech comparison for new hospital",
+        "type": "refractive"
+      },
+      {
+        "id": "d0a2",
+        "time": "14:00–16:00",
+        "name": "Exhibition: Alcon, Sight Sciences & Hoya",
+        "note": "Exhibition Hall",
+        "outcome": "Supplier meetings debrief & notes: Alcon (new UNITY VCS/CS launch & Centurion terms), Sight Sciences (OMNI glaucoma system & TearCare dry eye), Hoya (Vivinex preloaded hydrophobic IOLs & multiSert).",
+        "target": "Log meeting notes, agreed offers & key contacts",
+        "type": "exhibition"
+      },
+      {
+        "id": "d0a3",
+        "time": "14:45–16:00",
+        "name": "Legends of the Lens: Navigating Cataract & Glaucoma",
+        "note": "George V Room 2",
+        "outcome": "Video & voting session with Karsten Klabe & Uday Devgan. Managing combined cataract + glaucoma pathways and complication management.",
+        "target": "3 surgical & technology takeaways",
+        "type": "clinical"
+      },
+      {
+        "id": "d0a4",
+        "time": "16:00–17:00",
+        "name": "IME01: Refractive Surgery IME Forum",
+        "note": "Victoria Room 5/6",
+        "outcome": "Modern Refractive Surgery: Bridging Technology, Outcomes, and Patient Expectations. Chairs: Andreia Rosa & Eric Donnenfeld.",
+        "target": "3 patient expectation & premium conversion insights",
+        "type": "ime"
+      },
+      {
+        "id": "d0a5",
+        "time": "17:00+",
+        "name": "Strategic Networking — End of Day 1",
+        "note": "Exhibition & Main Foyer",
+        "outcome": "Deepen conversations with industry heads, key surgeons, and device reps met during iNovation Day.",
+        "target": "2 high-quality follow-up meetings booked",
+        "type": "networking"
+      }
     ]
   },
   {
-    dayIdx: 1, title: "DAY 2 — SATURDAY 12 SEPTEMBER", focus: "MIGS, Complex Phaco, Near-Live Surgery & Rayner Dinner",
-    activities: [
-      { id: "d1a0", time: "09:00–12:00", name: "Modern MIGS Techniques NOT Using Implants — Skill Lab", note: "Wetlab Area", outcome: "Non-implant MIGS approaches (GATT, canaloplasty). Compare surgical consumable costs vs implant-based stents.", target: "Cost-per-case analysis for glaucoma lane", type: "surgical" },
-      { id: "d1a1", time: "12:00–13:00", name: "Networking — Lunch / Exhibition", note: "Exhibition Hall", outcome: "Discuss morning findings with clinicians and explore mid-tier equipment suppliers.", target: "3 meaningful conversations", type: "networking" },
-      { id: "d1a2", time: "13:00–14:00", name: "IME02: Complex Phaco — Best Practices", note: "Victoria Room 5/6", outcome: "Managing complex cataract cases, dense lenses, zonular weakness, and emergency surgical protocols for new hospital OR.", target: "Safety & OR readiness checklist", type: "ime" },
-      { id: "d1a3", time: "14:30–16:45", name: "Near-Live Surgery: Complex Cases & New Tech", note: "ICC Auditorium", outcome: "Ultra-dense cataracts, 4D phaco fluidics, 3D visualization, and surgical efficiency in action.", target: "3 technology takeaways for OR equipping", type: "surgical" },
-      { id: "d1a4", time: "16:00–17:30", name: "Exhibition: Zeiss, Rexxam & RxSight", note: "Exhibition Hall", outcome: "Targeted booth meetings: Zeiss Head of Global Distribution (SEA V4.9 negotiation & Center of Excellence), Rexxam (pre-testing diagnostic lane packages), RxSight (Light Adjustable Lens placement & margin structure).", target: "Negotiate terms, log offers & direct contacts", type: "exhibition" },
-      { id: "d1a5", time: "18:30+", name: "Rayner UK ESCRS Dinner", note: "Roe Canary Wharf", outcome: "High-level professional networking and partnership building with Rayner leadership (RayOne Galaxy AI spiral lens, UK hospital consignment, volume rebates).", target: "3–5 senior relationship connections", type: "networking" },
-      { id: "d3a3", time: "13:00–14:00", name: "IME04: Digital Operating Room Technologies", note: "Victoria Room 5/6", outcome: "Digital OR workflow, surgical recording systems, 3D heads-up surgery, and EMR integration.", target: "Digital OR architecture plan for hospital", type: "ime" },
-      { id: "d3a4", time: "14:00–17:00", name: "Exhibition: BVI, Leica, Ziemer, MedInstrus", note: "Exhibition Hall", outcome: "Deep dive: Leica Proveo 8 OR microscope quote, Ziemer femto platform, BVI/MedInstrus bulk surgical instrument trays.", target: "Instrument & microscope terms negotiated", type: "exhibition" },
-      { id: "d3a5", time: "17:00+", name: "Daily Reflection & Vendor Dossier Review", note: "Quiet Lounge", outcome: "Consolidate supplier notes, pricing models, and prepare final decision matrix.", target: "Draft supplier comparison grid", type: "reflection" }
+    "dayIdx": 1,
+    "title": "DAY 2 — SATURDAY 12 SEPTEMBER",
+    "focus": "AI in Practice, Sustainability, Priority Booths (Zeiss, Rexxam, RxSight), Exploration & Rayner Dinner",
+    "activities": [
+      {
+        "id": "d1a1",
+        "time": "09:30–10:30",
+        "name": "2026 Update on AI Tools in Ophthalmic Practice",
+        "note": "George V Room 2",
+        "outcome": "Practical AI triage tools, automated diagnostic screening algorithms, clinic workflow efficiency, and medical liability frameworks. Chairs: Liz Tomlin & Sofi Navarro Santos.",
+        "target": "3 actionable AI screening workflows for outpatient clinic",
+        "type": "ai"
+      },
+      {
+        "id": "d1a2",
+        "time": "10:45–12:15",
+        "name": "Applied AI for Cataract & Refractive Surgery: From Fundamentals to Decisions",
+        "note": "George V Room 2",
+        "outcome": "AI-driven surgical planning, IOL power calculation formulas, corneal risk stratification (tomography/biomechanics), and patient conversion algorithms. Chair: Renato Ambrósio Jr.",
+        "target": "AI platform selection for premium refractive screening",
+        "type": "ai"
+      },
+      {
+        "id": "d1a3",
+        "time": "11:00–11:45",
+        "name": "The Titans of Sustainability",
+        "note": "M2 (Arena)",
+        "outcome": "Green ophthalmology, OR single-use waste reduction, sustainable hospital procurement, and cost containment in high-volume cataract units. Chairs: Akanksha Bagchi, Ben Lahood, Sjoerd Elferink.",
+        "target": "2 green procurement policies that cut OR supply costs",
+        "overlap": true,
+        "overlapNote": "Runs parallel to Applied AI (10:45–12:15) — choose based on AI surgical planning vs Green OR procurement",
+        "type": "sustainability"
+      },
+      {
+        "id": "d1a4",
+        "time": "12:00–13:30",
+        "name": "Networking Lunch & Strategic Partner Exchange",
+        "note": "Exhibition Hall / Catering Area",
+        "outcome": "Connect with clinic owners, healthcare directors, and commercial reps to discuss practice scaling, staffing, and supplier terms.",
+        "target": "3 valuable management or clinician contacts",
+        "type": "networking"
+      },
+      {
+        "id": "d1a5",
+        "time": "13:30–15:30",
+        "name": "Priority Booth Meetings: Zeiss, Rexxam & RxSight",
+        "note": "Exhibition Hall",
+        "outcome": "Execute core commercial meetings: 1) Zeiss Head of Global Distribution (SEA V4.9 £0 upfront placement, Center of Excellence, Year 3 lens pricing), 2) Rexxam (pre-testing lane packages & reliability), 3) RxSight (Light Adjustable Lens placement & premium private margins).",
+        "target": "Lock in negotiated terms, log offers & confirm key contacts",
+        "type": "exhibition"
+      },
+      {
+        "id": "d1a6",
+        "time": "15:30–17:30",
+        "name": "Exhibition Exploration: Bausch + Lomb, BVI & Schwind (+ Connecting)",
+        "note": "Exhibition Hall",
+        "outcome": "Explore & network: 1) Bausch + Lomb (Stellaris phaco & LuxSmart IOL quotes to leverage against Alcon), 2) BVI (custom surgical packs & consumables pricing), 3) Schwind (ATOS/AMARIS refractive lasers & per-procedure terms). Connect with booth leaders and peers on the floor.",
+        "target": "Gather competitive pricing sheets & connect with 3 commercial managers",
+        "type": "exhibition"
+      },
+      {
+        "id": "d1a7",
+        "time": "16:15–17:15",
+        "name": "From Metrics to Mastery: Transforming Eye Surgery (Psychological Safety & Quality Indicators)",
+        "note": "George V Room 2",
+        "outcome": "Surgical audit metrics, team psychological safety, operational quality indicators, and error reporting culture for clinical governance. Chairs: Clare Sheehan & Lyn Millbank.",
+        "target": "Psychological safety & quality dashboard framework",
+        "overlap": true,
+        "overlapNote": "Optional parallel session during exhibition exploration — valuable for hospital clinical governance & team safety",
+        "type": "management"
+      },
+      {
+        "id": "d1a8",
+        "time": "16:30–17:30",
+        "name": "System-Level Sustainability in Ophthalmology",
+        "note": "Capital Suite Room 6/13",
+        "outcome": "Hospital management frameworks for sustainable eye clinics, energy reduction, and eco-friendly cataract surgery. Chairs: Diana Silveira e Silva & Mahsaw Mansoor.",
+        "target": "Hospital sustainability metrics framework",
+        "overlap": true,
+        "overlapNote": "Optional parallel session during exhibition exploration for clinic ESG strategy",
+        "type": "sustainability"
+      },
+      {
+        "id": "d1a9",
+        "time": "18:30+",
+        "name": "Rayner UK ESCRS Dinner (Evening Closer)",
+        "note": "Roe Canary Wharf",
+        "outcome": "Executive networking with Rayner leadership and prominent UK/international ophthalmic surgeons. Leverage informal setting for RayOne Galaxy AI lens partnership, hospital consignment terms, and volume rebates.",
+        "target": "3–5 senior relationship connections & follow-up meetings",
+        "type": "networking"
+      }
     ]
   },
   {
-    dayIdx: 4, title: "DAY 5 — TUESDAY 15 SEPTEMBER", focus: "Final Vendor Deals, RxSight LAL & Hospital Debrief",
-    activities: [
-      { id: "d4a0", time: "08:30–10:00", name: "Delivering Safe Surgery in Low-Resource Settings", note: "Instructional Course", outcome: "High-efficiency operating protocols, sterile processing optimization, and cost-containment strategies.", target: "3 operational efficiency protocols", type: "instructional" },
-      { id: "d4a1", time: "10:00–11:00", name: "Networking — Final Coffee & Contact Exchange", note: "Main Foyer", outcome: "Closing conversations with international colleagues, potential visiting surgeons, and advisors.", target: "2–3 confirmed post-congress follow-ups", type: "networking" },
-      { id: "d4a2", time: "11:00–13:00", name: "Exhibition: Laboratoires KÔL & Final Follow-ups", note: "Exhibition Hall", outcome: "Final booth meetings: Laboratoires KÔL cornea drop partnership, contract follow-ups with shortlisted suppliers from Days 1-4.", target: "Final commercial proposals secured", type: "exhibition" },
-      { id: "d4a3", time: "13:00–14:00", name: "Networking — Final Congress Lunch", note: "Catering Area", outcome: "Wrap up informal discussions and exchange direct contact details.", target: "Final connection confirmations", type: "networking" },
-      { id: "d4a4", time: "14:00–15:00", name: "Personal ESCRS Debrief & Action Plan", note: "Meeting Hub", outcome: "Synthesize week’s learnings, vendor quotes, and partnerships into executive recommendations.", target: "Executive summary ready for board/investors", type: "debrief" },
-      { id: "d4a5", time: "15:00+", name: "Close / Organize Notes & Procurement Dossier", note: "Business Centre", outcome: "Archive all business card photos, finalize notes, and export comprehensive congress report.", target: "Ready-to-report dossier + follow-up list", type: "close" }
+    "dayIdx": 2,
+    "title": "DAY 3 — SUNDAY 13 SEPTEMBER",
+    "focus": "LBI Sunday Bootcamp, Practice Scaling, AI, Psychological Safety & Negotiation",
+    "activities": [
+      {
+        "id": "d2a9",
+        "time": "09:00–11:00",
+        "name": "LBI: Podium Presentation Skills",
+        "note": "Capital Suite Room 2-4",
+        "outcome": "Masterclass with David Lockington & Artemis Matsou: pitching hospital projects to investors, rapid-fire talks, and overcoming public speaking hurdles.",
+        "target": "Pitch framework for hospital project",
+        "type": "lbi"
+      },
+      {
+        "id": "d2a1",
+        "time": "10:15–12:00",
+        "name": "3D AI Digital Summit",
+        "note": "Victoria Room 3",
+        "outcome": "Today’s application of AI to improve decision-making and practice efficiency. Chairs: Bruce Allan & Julie Schallhorn.",
+        "target": "AI diagnostic & workflow tools for clinic",
+        "overlap": true,
+        "overlapNote": "Overlaps with LBI Bootcamp morning — choose based on investor pitch vs AI priority",
+        "type": "ai"
+      },
+      {
+        "id": "d2a13",
+        "time": "11:00–12:30",
+        "name": "BoSS Symposium: Psychological Safety and Inclusive Leadership",
+        "note": "South Gallery Room 22",
+        "outcome": "Creating psychological safety in surgical departments, speaking up against hierarchical intimidation, and inclusive leadership models. Chairs: Rod Solar & Mayank Nanavaty.",
+        "target": "3 team safety & retention frameworks",
+        "overlap": true,
+        "overlapNote": "Overlaps with AI Summit & LBI Wealth Management — essential for clinical team culture",
+        "type": "boss"
+      },
+      {
+        "id": "d2a10",
+        "time": "11:30–13:00",
+        "name": "LBI: Wealth Management & Clinic Reinvestment",
+        "note": "Capital Suite Room 2-4",
+        "outcome": "Financial decisions for starting/scaling your clinic. Led by Christina Grupcheva with J.P. Morgan & Cazenove Capital bankers.",
+        "target": "Clinic scaling & capitalization model",
+        "type": "lbi"
+      },
+      {
+        "id": "d2a11",
+        "time": "12:30–14:00",
+        "name": "3D Operating Microscope Showdown",
+        "note": "Victoria Room 3",
+        "outcome": "Heads-up 3D visualization, intraoperative OCT, and digital microscope platforms (Burkhard Dick, Gerd Auffarth). Compare Leica Proveo 8, Zeiss KINEVO & Alcon NGENUITY for hospital OR.",
+        "target": "Microscope selection criteria",
+        "overlap": true,
+        "overlapNote": "Overlaps with BoSS Connect (13:00–13:45) — choose based on OR equipment vs networking priority",
+        "type": "technology"
+      },
+      {
+        "id": "d2a7",
+        "time": "13:00–13:45",
+        "name": "BoSS Connect: Diversity Networking",
+        "note": "South Gallery Room 22",
+        "outcome": "Joint networking event by BoSS and Orbis. Meet clinic managers, healthcare administrators, and diverse surgical leaders.",
+        "target": "3 key management contacts",
+        "type": "boss"
+      },
+      {
+        "id": "d2a8",
+        "time": "14:00–16:00",
+        "name": "LBI: How to Negotiate (Workshop & Role-Play)",
+        "note": "Capital Suite Room 2-4",
+        "outcome": "Principles of effective negotiation (hospital management, supplier deals, partnerships). Live role-play simulation led by Steven Callens & Vincent Qin.",
+        "target": "Deal negotiation playbook for equipment vendors",
+        "type": "lbi"
+      },
+      {
+        "id": "d2a3",
+        "time": "16:00–17:00",
+        "name": "Exhibition: Glaukos, iCare, STAAR Surgical, Nidek",
+        "note": "Exhibition Hall",
+        "outcome": "Review MIGS stents (iStent vs OMNI), iCare tonometry suites, STAAR EVO ICL margins, and Nidek diagnostic laser combos.",
+        "target": "Glaucoma & refractive ICL package quotes",
+        "type": "exhibition"
+      },
+      {
+        "id": "d2a12",
+        "time": "16:45–18:15",
+        "name": "BoSS Course: From Surgeon to Leader — Essential Leadership Skills",
+        "note": "South Gallery Room 22",
+        "outcome": "Transitioning from peer to leader, communication, delegation, and decision-making across multidisciplinary clinical teams (Mohamed Elalfy, Beatrice Cochener-Lamard).",
+        "target": "3 leadership & team delegation frameworks",
+        "overlap": true,
+        "overlapNote": "Overlaps with World Café Refractive (17:00–18:20) & Exhibition",
+        "type": "boss"
+      },
+      {
+        "id": "d2a5",
+        "time": "17:00–18:20",
+        "name": "World Café: Refractive",
+        "note": "The World Café Area",
+        "outcome": "Interactive roundtable with clinical and practice management leaders on refractive conversion and patient journeys.",
+        "target": "3 patient conversion strategies",
+        "type": "worldcafe"
+      },
+      {
+        "id": "d2a6",
+        "time": "18:00–22:30",
+        "name": "Lift Off in London 2026",
+        "note": "Social Venue",
+        "outcome": "Informal evening networking with surgeons, clinic owners, and industry directors.",
+        "target": "3–5 strong commercial contacts",
+        "type": "networking"
+      }
+    ]
+  },
+  {
+    "dayIdx": 3,
+    "title": "DAY 4 — MONDAY 14 SEPTEMBER",
+    "focus": "Digital OR Technologies, Cornea Therapies & Instrument Contracts",
+    "activities": [
+      {
+        "id": "d3a0",
+        "time": "09:00–10:45",
+        "name": "Targeted Clinical Sessions & Floor Walk",
+        "note": "Exhibition Hall",
+        "outcome": "Follow up with shortlisted diagnostic and microscope vendors from Days 1–3.",
+        "target": "Clarify warranty & maintenance proposals",
+        "type": "exhibition"
+      },
+      {
+        "id": "d3a1",
+        "time": "11:00–12:20",
+        "name": "World Café: Cornea",
+        "note": "The World Café Area",
+        "outcome": "Interactive discussion on modern corneal surgery, DMEK adoption, and premium ocular surface therapies.",
+        "target": "3 clinical & market takeaways",
+        "type": "worldcafe"
+      },
+      {
+        "id": "d3a2",
+        "time": "12:20–13:00",
+        "name": "Networking — Lunch",
+        "note": "Catering Area",
+        "outcome": "Reconnect with key clinicians and partners met over the weekend.",
+        "target": "3 touchpoint check-ins",
+        "type": "networking"
+      },
+      {
+        "id": "d3a3",
+        "time": "13:00–14:00",
+        "name": "IME04: Digital Operating Room Technologies",
+        "note": "Victoria Room 5/6",
+        "outcome": "Digital OR workflow, surgical recording systems, 3D heads-up surgery, and EMR integration.",
+        "target": "Digital OR architecture plan for hospital",
+        "type": "ime"
+      },
+      {
+        "id": "d3a4",
+        "time": "14:00–17:00",
+        "name": "Exhibition: Leica, Ziemer, MedInstrus",
+        "note": "Exhibition Hall",
+        "outcome": "Deep dive: Leica Proveo 8 OR microscope quote, Ziemer femto platform, MedInstrus bulk surgical instrument trays.",
+        "target": "Instrument & microscope terms negotiated",
+        "type": "exhibition"
+      },
+      {
+        "id": "d3a5",
+        "time": "17:00+",
+        "name": "Daily Reflection & Vendor Dossier Review",
+        "note": "Quiet Lounge",
+        "outcome": "Consolidate supplier notes, pricing models, and prepare final decision matrix.",
+        "target": "Draft supplier comparison grid",
+        "type": "reflection"
+      }
+    ]
+  },
+  {
+    "dayIdx": 4,
+    "title": "DAY 5 — TUESDAY 15 SEPTEMBER",
+    "focus": "Final Vendor Deals, Laboratoires KÔL & Hospital Debrief",
+    "activities": [
+      {
+        "id": "d4a0",
+        "time": "08:30–10:00",
+        "name": "Delivering Safe Surgery in Low-Resource Settings",
+        "note": "Instructional Course",
+        "outcome": "High-efficiency operating protocols, sterile processing optimization, and cost-containment strategies.",
+        "target": "3 operational efficiency protocols",
+        "type": "instructional"
+      },
+      {
+        "id": "d4a1",
+        "time": "10:00–11:00",
+        "name": "Networking — Final Coffee & Contact Exchange",
+        "note": "Main Foyer",
+        "outcome": "Closing conversations with international colleagues, potential visiting surgeons, and advisors.",
+        "target": "2–3 confirmed post-congress follow-ups",
+        "type": "networking"
+      },
+      {
+        "id": "d4a2",
+        "time": "11:00–13:00",
+        "name": "Exhibition: Laboratoires KÔL & Final Follow-ups",
+        "note": "Exhibition Hall",
+        "outcome": "Final booth meetings: Laboratoires KÔL cornea drop partnership, contract follow-ups with shortlisted suppliers from Days 1-4.",
+        "target": "Final commercial proposals secured",
+        "type": "exhibition"
+      },
+      {
+        "id": "d4a3",
+        "time": "13:00–14:00",
+        "name": "Networking — Final Congress Lunch",
+        "note": "Catering Area",
+        "outcome": "Wrap up informal discussions and exchange direct contact details.",
+        "target": "Final connection confirmations",
+        "type": "networking"
+      },
+      {
+        "id": "d4a4",
+        "time": "14:00–15:00",
+        "name": "Personal ESCRS Debrief & Action Plan",
+        "note": "Meeting Hub",
+        "outcome": "Synthesize week’s learnings, vendor quotes, and partnerships into executive recommendations.",
+        "target": "Executive summary ready for board/investors",
+        "type": "debrief"
+      },
+      {
+        "id": "d4a5",
+        "time": "15:00+",
+        "name": "Close / Organize Notes & Procurement Dossier",
+        "note": "Business Centre",
+        "outcome": "Archive all business card photos, finalize notes, and export comprehensive congress report.",
+        "target": "Ready-to-report dossier + follow-up list",
+        "type": "close"
+      }
     ]
   }
 ];
@@ -870,7 +1228,37 @@ const exhibitors = [
       "Checked if they can keep lenses in stock at our hospital on consignment",
       "Confirmed on-site specialist training for our surgeons and scrub nurses",
       "Got the director business card or direct phone number and set up a follow-up meeting"
-    ]
+    ],
+    "slot": "⭐ Day 1 Primary Meeting"
+  },
+  {
+    "id": "ex_sight",
+    "name": "Sight Sciences",
+    "day": 0,
+    "category": "Interventional Glaucoma & Dry Eye Technology",
+    "flagship": "OMNI Surgical System (implant-free canaloplasty + trabeculotomy), TearCare System (interventional thermal pulsation for MGD)",
+    "decisionMaker": {
+      "role": "Vice President Commercial / Director of International Commercialization",
+      "whyMatters": "Manages pricing, doctor training, and business models for both glaucoma surgery and dry eye services."
+    },
+    "angle": "The OMNI tool treats glaucoma without leaving a permanent implant in the eye, and can be used on its own or during cataract surgery. Their TearCare system also allows you to set up a profitable cash-pay dry eye clinic.",
+    "questions": [
+      "What is the price per unit for the OMNI system, and do you offer discounts as our order size grows?",
+      "Can our surgeons use OMNI on glaucoma patients by itself, without doing cataract surgery at the same time?",
+      "What training does a surgeon need to complete before using OMNI independently?",
+      "For the TearCare dry eye system, how much is the machine and what do the single-use eye pads cost per treatment?",
+      "What marketing help and patient materials do you provide to launch a private dry eye clinic?"
+    ],
+    "checklist": [
+      "Described our plans for glaucoma care and our new dry eye clinic",
+      "Spoke with the commercial director or head of sales",
+      "Saw a hands-on demo of the OMNI device in action",
+      "Checked the cost of the TearCare machine and single-use supplies",
+      "Asked about volume pricing tiers and doctor training sessions",
+      "Checked how standalone glaucoma procedures are billed to insurers",
+      "Got their contact details and planned a commercial follow-up call"
+    ],
+    "slot": "⭐ Day 1 Primary Meeting"
   },
   {
     "id": "ex_hoya",
@@ -899,7 +1287,8 @@ const exhibitors = [
       "Compared Vivinex pack costs and rebates directly against Alcon Clareon",
       "Confirmed on-site scrub nurse training support for our hospital opening",
       "Exchanged business cards / WhatsApp contacts and scheduled a formal commercial follow-up"
-    ]
+    ],
+    "slot": "⭐ Day 1 Primary Meeting"
   },
   {
     "id": "ex_zeiss",
@@ -934,343 +1323,8 @@ const exhibitors = [
       "Confirmed full consignment stock so we only pay for lenses after surgery",
       "Clarified Clarus 500 terms: requested a brand-new unit instead of ex-demo",
       "Exchanged direct contact details with the Head of Global Distribution for final sign-off"
-    ]
-  },
-  {
-    "id": "ex_rayner",
-    "name": "Rayner",
-    "day": 1,
-    "category": "Premium IOLs & Phaco Technology",
-    "flagship": "RayOne fully preloaded platform (RayOne Galaxy AI spiral optic, RayOne Trifocal, RayOne EMV), Sophi phaco system, AEON dry eye drops",
-    "decisionMaker": {
-      "role": "Commercial Director UK/Europe / VP Global Sales",
-      "whyMatters": "A senior executive attending the Rayner Dinner who can approve aggressive lens discounts, consignment stock, and doctor sponsorships."
-    },
-    "angle": "Rayner is a UK company competing with the big US giants. Use the Rayner Dinner connection to get high profit margins on their lenses and explore their new RayOne Galaxy AI lens as a unique hospital offering.",
-    "questions": [
-      "What discount or rebate can you give our new hospital if we choose RayOne as our main lens brand?",
-      "How does the RayOne Galaxy lens compare in price and profit margin against Alcon and Zeiss lenses?",
-      "Can you provide your Sophi phaco machine on a placement deal if we commit to buying your lenses?",
-      "What help and marketing support do you give clinics to help promote your premium lenses to patients?",
-      "Can you keep a stock of lenses inside our hospital on consignment so we only pay for what we use?"
     ],
-    "checklist": [
-      "Mentioned our connection or meeting from the Rayner Dinner",
-      "Spoke with the commercial director or head of sales",
-      "Looked at the new RayOne Galaxy spiral lens and injector",
-      "Asked about keeping a consignment stock of lenses at our hospital",
-      "Compared their lens profit margins against other major brands",
-      "Asked about getting their Sophi cataract machine placed in our clinic",
-      "Got their direct contact details and set up a post-event meeting"
-    ]
-  },
-  {
-    "id": "ex_schwind",
-    "name": "Schwind",
-    "day": 2,
-    "category": "Refractive Laser Systems & Corneal Diagnostics",
-    "flagship": "SCHWIND ATOS femtosecond laser (SmartSight lenticule extraction), SCHWIND AMARIS excimer (1050RS/750S, SmartPulse, TransPRK), MS-39 OCT",
-    "decisionMaker": {
-      "role": "Director of Global Sales / Regional Business Development Manager",
-      "whyMatters": "Can negotiate package prices for laser suites, flexible lease options, and technician installation support."
-    },
-    "angle": "If you plan to offer laser eye surgery, Schwind provides a complete laser suite without tying you into Zeiss. See if you can get the ATOS and AMARIS lasers on a flexible payment plan while you build up patient numbers.",
-    "questions": [
-      "What are our payment options for the ATOS and AMARIS lasers—can we pay per procedure, lease them, or buy outright?",
-      "What exact room size, power, and air conditioning do these lasers need in our building?",
-      "How much do you charge per eye for the SmartSight laser treatment compared to Zeiss SMILE?",
-      "What training and marketing materials do you provide to help us launch laser eye surgery at our clinic?",
-      "If a laser needs maintenance, how quickly can your technician arrive, and how much is the yearly service contract?"
-    ],
-    "checklist": [
-      "Explained our clinic's plans for laser eye surgery and expected patient volume",
-      "Spoke with the head of sales or business development",
-      "Watched the SmartSight and AMARIS laser demos",
-      "Asked for pricing options: paying per treatment vs buying the machines",
-      "Got the room and building requirements for installing the lasers",
-      "Checked what training they provide for our doctors and staff",
-      "Exchanged business cards and agreed on a deadline for a formal quote"
-    ]
-  },
-  {
-    "id": "ex_bausch",
-    "name": "Bausch+Lomb",
-    "day": 2,
-    "category": "Surgical Cataract Platforms, IOLs & Instrumentation",
-    "flagship": "Stellaris Elite vision enhancement system (Adaptive Fluidics, Bi-Blade vitrectomy), enVista hydrophobic acrylic IOLs, LuxSmart EDoF, Storz Instruments",
-    "decisionMaker": {
-      "role": "Director of Surgical Commercial Operations / Key Account Manager Surgical",
-      "whyMatters": "Hungry to win business away from Alcon and Zeiss, meaning they are very open to offering big equipment discounts."
-    },
-    "angle": "Bausch + Lomb wants to win new hospital accounts. Use their hunger to get an aggressive price on their Stellaris phaco machine and lenses, which gives you strong leverage when negotiating with Alcon.",
-    "questions": [
-      "What special deal can you offer our new hospital on the Stellaris machine to win our business over Alcon?",
-      "What are your price discounts on enVista and LuxSmart lenses if our volume grows over the next two years?",
-      "Can you include Storz surgical instrument sets in our equipment package at a discounted rate?",
-      "How much do your disposable packs cost per cataract operation compared to other brands?",
-      "What training and support do you give our surgeons if they are switching from another phaco machine?"
-    ],
-    "checklist": [
-      "Introduced our hospital and made it clear we are also talking to Alcon",
-      "Spoke with the surgical commercial manager",
-      "Tested the Stellaris machine and handpieces",
-      "Asked for a competitive quote covering the machine, lenses, and instruments",
-      "Checked the cost of disposable packs for each operation",
-      "Asked about starter sets of Storz surgical tools",
-      "Got their direct contact details and set a date to review their proposal"
-    ]
-  },
-  {
-    "id": "ex_staar",
-    "name": "STAAR Surgical",
-    "day": 2,
-    "category": "Phakic Intraocular Lenses (ICL)",
-    "flagship": "EVO / EVO+ ICL (Implantable Collamer Lens) for myopia, hyperopia, and astigmatism",
-    "decisionMaker": {
-      "role": "Director of Market Development / Regional Business Director EMEA",
-      "whyMatters": "Approves doctor certification, consignment lens stock for your hospital, and clinic advertising funds."
-    },
-    "angle": "EVO ICL is one of the most profitable cash-pay procedures in eye care for patients who cannot have LASIK. Partnering with STAAR creates a high-margin revenue stream for your refractive clinic.",
-    "questions": [
-      "What are the exact steps and training for our surgeons to get certified to implant EVO ICL lenses?",
-      "How much do EVO and EVO Toric lenses cost wholesale, and what discounts do you offer as our volume grows?",
-      "What volume of surgery do we need to keep a bank of lenses in our clinic so patients don't have to wait?",
-      "What patient brochures, videos, and marketing support do you provide to help us promote ICL surgery?",
-      "How quickly can you deliver custom lenses, and what is your return policy if a lens isn't used?"
-    ],
-    "checklist": [
-      "Explained our hospital's focus on high-end private refractive surgery",
-      "Spoke with the regional business manager or market lead",
-      "Looked at the EVO lens designs and delivery tools",
-      "Checked the certification requirements and training timeline for our surgeons",
-      "Inquired about keeping a consignment lens stock at our hospital",
-      "Got the wholesale price list and clinic marketing support guidelines",
-      "Exchanged contact details and arranged a follow-up call"
-    ]
-  },
-  {
-    "id": "ex_glaukos",
-    "name": "Glaukos",
-    "day": 2,
-    "category": "Micro-Invasive Glaucoma Surgery (MIGS) & Drug Delivery",
-    "flagship": "iStent inject W, iStent infinite (3 stents for standalone or combo use), iDose TR (travoprost implant), Photrexa corneal cross-linking",
-    "decisionMaker": {
-      "role": "Senior Director Commercial Europe / Health Economics & Market Access Lead",
-      "whyMatters": "Controls hospital volume pricing, insurance reimbursement codes, and on-site doctor training."
-    },
-    "angle": "Minimally invasive glaucoma surgery (MIGS) combined with cataract surgery significantly boosts clinic revenue. Glaukos is the leader in this space, so secure good supply pricing and doctor training early.",
-    "questions": [
-      "What is your best price for iStent inject and iStent infinite for a new private hospital?",
-      "Do you provide hands-on wetlab training and in-person surgeon support for our doctors' first cases?",
-      "Can you help us with billing and insurance coverage codes for private insurance companies?",
-      "When will the new iDose implant be available to buy and use in our market?",
-      "Can we get a package deal that covers both your glaucoma stents and your corneal cross-linking machine?"
-    ],
-    "checklist": [
-      "Outlined our hospital's glaucoma surgery plans and clinic capacity",
-      "Spoke with the commercial director or insurance market access lead",
-      "Checked the iStent injector and reviewed the clinical results",
-      "Discussed private insurance coverage and reimbursement in our area",
-      "Asked for starter pricing on our first batches of stents",
-      "Confirmed training dates and on-site surgical support for our doctors",
-      "Got their business card and scheduled a follow-up call"
-    ]
-  },
-  {
-    "id": "ex_icare",
-    "name": "iCare",
-    "day": 2,
-    "category": "Rebound Tonometry, Perimetry & Retinal Imaging",
-    "flagship": "iCare HOME2 (24h patient self-tonometry), iCare IC200 / IC100 rebound tonometers, DRSplus confocal fundus imaging, COMPASS perimeter",
-    "decisionMaker": {
-      "role": "Sales Director EMEA / Global Key Account Manager",
-      "whyMatters": "Can bundle clinic eye pressure devices and retinal cameras together for a multi-room clinic discount."
-    },
-    "angle": "Fast, comfortable eye pressure testing speeds up patient visits and avoids uncomfortable air puffs. The iCare HOME device also lets you create a profitable home-monitoring rental service for glaucoma patients.",
-    "questions": [
-      "What package price can you give us if we buy multiple eye pressure devices and a retinal camera for our exam rooms?",
-      "Can our hospital buy iCare HOME devices to rent out to glaucoma patients for home monitoring?",
-      "Does your software easily send patient test results into our hospital computer system?",
-      "How much do the disposable tips cost, and how often do the devices need factory calibration?",
-      "Can you send a demo unit to our clinic for a 30-day trial so our staff can test it?"
-    ],
-    "checklist": [
-      "Shared our clinic layout and expected daily patient flow",
-      "Spoke with the sales manager or accounts lead",
-      "Tried out the iCare HOME device and the DRSplus camera",
-      "Explored renting home devices to patients as an extra clinic service",
-      "Asked for a package quote for multiple exam rooms",
-      "Checked software connections to our electronic health records",
-      "Exchanged cards and arranged for a trial demo unit"
-    ]
-  },
-  {
-    "id": "ex_sight",
-    "name": "Sight Sciences",
-    "day": 0,
-    "category": "Interventional Glaucoma & Dry Eye Technology",
-    "flagship": "OMNI Surgical System (implant-free canaloplasty + trabeculotomy), TearCare System (interventional thermal pulsation for MGD)",
-    "decisionMaker": {
-      "role": "Vice President Commercial / Director of International Commercialization",
-      "whyMatters": "Manages pricing, doctor training, and business models for both glaucoma surgery and dry eye services."
-    },
-    "angle": "The OMNI tool treats glaucoma without leaving a permanent implant in the eye, and can be used on its own or during cataract surgery. Their TearCare system also allows you to set up a profitable cash-pay dry eye clinic.",
-    "questions": [
-      "What is the price per unit for the OMNI system, and do you offer discounts as our order size grows?",
-      "Can our surgeons use OMNI on glaucoma patients by itself, without doing cataract surgery at the same time?",
-      "What training does a surgeon need to complete before using OMNI independently?",
-      "For the TearCare dry eye system, how much is the machine and what do the single-use eye pads cost per treatment?",
-      "What marketing help and patient materials do you provide to launch a private dry eye clinic?"
-    ],
-    "checklist": [
-      "Described our plans for glaucoma care and our new dry eye clinic",
-      "Spoke with the commercial director or head of sales",
-      "Saw a hands-on demo of the OMNI device in action",
-      "Checked the cost of the TearCare machine and single-use supplies",
-      "Asked about volume pricing tiers and doctor training sessions",
-      "Checked how standalone glaucoma procedures are billed to insurers",
-      "Got their contact details and planned a commercial follow-up call"
-    ]
-  },
-  {
-    "id": "ex_nidek",
-    "name": "Nidek",
-    "day": 2,
-    "category": "Workhorse Diagnostics, YAG/SLT Lasers & Biometry",
-    "flagship": "Mirante scanning laser ophthalmoscope (SLO/OCT), OPD-Scan III aberrometer/topographer, AL-Scan optical biometer, YC-200 S YAG/SLT laser",
-    "decisionMaker": {
-      "role": "International Sales Director / UK Managing Director / Commercial Distribution Head",
-      "whyMatters": "Can package clinic eye scanners and treatment lasers together at a much lower cost than Zeiss or Leica."
-    },
-    "angle": "Reliable, durable Japanese machines that cost significantly less than Zeiss. Bundling their eye scanner, biometer, and combination laser gives you a complete, budget-friendly outpatient clinic setup.",
-    "questions": [
-      "What bundle discount can you give us if we buy our eye scanner, optical biometer, and YAG/SLT laser together?",
-      "How does the total cost of your machines over 5 years compare to buying from Zeiss?",
-      "How long is your warranty, and how fast will a technician come if a machine breaks down?",
-      "Can your Mirante scanner send images directly to our hospital patient records system without issues?",
-      "What financing, leasing, or delayed payment plans can you offer for a new hospital build?"
-    ],
-    "checklist": [
-      "Explained our clinic budget and the diagnostic equipment we need",
-      "Spoke with the international sales director or distribution manager",
-      "Tested the OPD-Scan eye scanner and YC-200 combination laser",
-      "Requested a package quote for our complete diagnostic and laser room",
-      "Checked that the machines connect easily to our hospital computer system",
-      "Negotiated a longer warranty and fast technician response times",
-      "Exchanged cards and agreed on a date to receive their formal quote"
-    ]
-  },
-  {
-    "id": "ex_bvi",
-    "name": "BVI",
-    "day": 3,
-    "category": "Custom Procedure Packs, Precision Knives & Premium IOLs",
-    "flagship": "CustomEyes procedure pack configurator, Beaver blades, Visitec cannulas, Malosa single-use instruments, FineVision HP Trifocal IOL",
-    "decisionMaker": {
-      "role": "Vice President Commercial Europe / National Accounts Director",
-      "whyMatters": "Approves yearly surgical supply contracts, custom packs for each doctor, and discounts on FineVision lenses."
-    },
-    "angle": "Surgical packs and disposable tools make up your main day-to-day surgery cost. BVI can build custom packs for each of your surgeons while offering their FineVision trifocal lens as a more affordable premium option.",
-    "questions": [
-      "Can you build custom surgical packs with the exact tools and drapes our doctors want, and what is the minimum order?",
-      "What discount can we get if we buy all our surgical blades, needles, drapes, and disposable tools from BVI?",
-      "How does the price of your FineVision trifocal lens compare to Alcon PanOptix and Zeiss AT LISA?",
-      "How fast do you deliver orders, and how do you make sure you never run out of our hospital's packs?",
-      "Can you send us sample surgical packs and trial lenses so our doctors can test them?"
-    ],
-    "checklist": [
-      "Shared our surgical schedule and what our doctors prefer in their packs",
-      "Spoke with the commercial director or hospital accounts manager",
-      "Tried out their online pack builder and looked at sample surgical trays",
-      "Inquired about pricing on the FineVision trifocal lens",
-      "Negotiated an annual contract discount for all our surgical disposables",
-      "Requested sample packs and trial tools for our doctors to inspect",
-      "Got direct contact details and scheduled a meeting to finalize pack designs"
-    ]
-  },
-  {
-    "id": "ex_leica",
-    "name": "Leica",
-    "day": 3,
-    "category": "Premium Surgical Microscopes & Intraoperative OCT",
-    "flagship": "Proveo 8 / Proveo 8x ophthalmic microscope, EnFocus intraoperative OCT, MyVeo 3D digital surgical headset, M822",
-    "decisionMaker": {
-      "role": "National Sales Director Surgical / Global Key Account Manager Ophthalmology",
-      "whyMatters": "Can negotiate microscope purchase prices and offer trade-in discounts to compete against Zeiss."
-    },
-    "angle": "The Leica Proveo 8 microscope is the top rival to the Zeiss ARTEVO. It has great lighting, sharp depth of view, and you can add a live OCT scanner later. Use this to drive down prices between Leica and Zeiss.",
-    "questions": [
-      "How does the price of your Proveo 8 microscope compare to the Zeiss ARTEVO?",
-      "Can we buy the basic Proveo 8 microscope now and add the live intraoperative OCT scanner later when our budget grows?",
-      "Can our doctors trial a demo microscope in our operating room before we make a final decision?",
-      "How does the MyVeo 3D headset work, and can other people in the room see what the surgeon sees on external screens?",
-      "What does your yearly service contract include, and how fast do you guarantee repairs?"
-    ],
-    "checklist": [
-      "Described our hospital operating rooms and the types of surgery we will do",
-      "Spoke with the national sales director for surgical microscopes",
-      "Tested the Proveo 8 microscope, live OCT scanner, and 3D headset",
-      "Asked for quotes for the microscope both with and without the OCT scanner",
-      "Confirmed that we can upgrade and add features to the microscope later",
-      "Asked about trying a demo microscope in our operating room",
-      "Exchanged cards and planned a technical talk with our clinic architect"
-    ]
-  },
-  {
-    "id": "ex_ziemer",
-    "name": "Ziemer",
-    "day": 3,
-    "category": "Multipurpose Mobile Femtosecond Lasers",
-    "flagship": "FEMTO Z8 NEO (cataract, CLEAR lenticule extraction, Z-LASIK, keratoplasty), Galilei G6 dual-Scheimpflug diagnostic tomographer",
-    "decisionMaker": {
-      "role": "Director of International Sales / Business Development Director",
-      "whyMatters": "Structures machine sales or pay-per-procedure deals for their mobile Z8 laser platform."
-    },
-    "angle": "The Z8 laser is on wheels and rolls between operating rooms, so you don't need to build a separate laser room. It handles both cataract surgery and laser vision correction on one machine, saving capital.",
-    "questions": [
-      "What are our buying options for the Z8 laser—can we buy it outright, lease it, or pay per operation?",
-      "Since the Z8 is on wheels, can we roll it between operating rooms instead of building a special laser room?",
-      "How does your CLEAR lenticule treatment compare to Zeiss SMILE in patient visual results and recovery?",
-      "What is the price of the Galilei eye scanner if we buy it together with the Z8 laser?",
-      "What training do you provide for our surgeons, and who handles repairs in our area?"
-    ],
-    "checklist": [
-      "Explained our hospital layout and plan to offer both cataract and laser surgery",
-      "Spoke with the international sales director or business development lead",
-      "Looked at how the mobile Z8 laser moves and saw the CLEAR treatment demo",
-      "Asked for financial comparisons: buying the machine vs paying per case",
-      "Inquired about bundle discounts with the Galilei scanner",
-      "Checked room requirements and how the patient interface is cleaned",
-      "Got their business card and set up a call to review the numbers"
-    ]
-  },
-  {
-    "id": "ex_medinstrus",
-    "name": "MedInstrus",
-    "day": 3,
-    "category": "Ophthalmic Examination Units & Clinical Furniture",
-    "flagship": "Refraction workstations (Beta Master, Zulu, Delta, Inspired), motorized instrument tables, ergonomic patient examination chairs, refraction arms",
-    "decisionMaker": {
-      "role": "Managing Director / Head of Global Sales & Institutional Contracts",
-      "whyMatters": "Can give direct factory prices on complete consultation room furniture, avoiding distributor markups."
-    },
-    "angle": "Comfortable, high-quality exam chairs and motorized instrument tables make your clinic look modern and help doctors work faster. Buying directly from this European maker saves 30% to 40% on clinic outfitting.",
-    "questions": [
-      "What discount can you give us if we buy exam chairs and motorized tables for 4 to 8 doctor consultation rooms?",
-      "Can you customize the colors, size, and instrument arms on the Beta Master units to match our clinic brand?",
-      "How long does it take from placing an order to having the furniture delivered and installed?",
-      "Are your units ready to hold diagnostic devices from different brands like Nidek, Zeiss, or Haag-Streit?",
-      "What warranty do you offer, and do you send someone to help assemble the furniture on site?"
-    ],
-    "checklist": [
-      "Shared our outpatient clinic floorplans and the number of exam rooms",
-      "Spoke with the managing director or head of sales",
-      "Checked the build quality, electric lift, and arm balance on the display chairs",
-      "Asked for a package quote to furnish all our consultation rooms",
-      "Confirmed that our diagnostic devices will fit onto their swivel arms",
-      "Clarified delivery timelines, shipping costs, and assembly help",
-      "Exchanged cards and sent our room measurements for a custom layout plan"
-    ]
+    "slot": "⭐ Priority Meeting (13:30–15:30)"
   },
   {
     "id": "ex_rexxam",
@@ -1298,35 +1352,8 @@ const exhibitors = [
       "Confirmed that there are no hidden or recurring software connection fees",
       "Checked warranty terms and local repair service speed",
       "Got their contact details and agreed on a date for a formal quote"
-    ]
-  },
-  {
-    "id": "ex_kol",
-    "name": "Laboratoires KÔL",
-    "day": 4,
-    "category": "Specialty Ophthalmic Pharma & Corneal Therapies",
-    "flagship": "Olisens® (first-in-class topical therapy for corneal neovascularization, anti-IRS1 mRNA technology), rare corneal disease pipeline, Emixustat",
-    "decisionMaker": {
-      "role": "Chief Executive Officer / VP Business Development & Licensing",
-      "whyMatters": "Can discuss clinical trial partnerships, early access to new eye drops, and hospital pharmacy supply deals."
-    },
-    "angle": "Offering unique new eye treatments makes your new hospital stand out as a center of medical innovation. Becoming an early-access center for Olisens (corneal blood vessel treatment) brings in high-profile patient referrals.",
-    "questions": [
-      "Is Olisens available right now in our country through early access or special hospital prescription rules?",
-      "Can our new hospital become a testing center for your upcoming clinical trials on rare eye diseases?",
-      "What direct hospital supply or pharmacy agreements do you offer to private specialized eye clinics?",
-      "Which patients with abnormal blood vessels in the cornea are the best candidates for Olisens treatment?",
-      "What training, scientific briefings, or educational support do you provide for our corneal doctors?"
     ],
-    "checklist": [
-      "Explained our hospital's corneal specialty plans and patient referral network",
-      "Spoke with the CEO or head of business development",
-      "Reviewed the clinical trial results for Olisens and their pipeline medicines",
-      "Discussed hospital pharmacy access and early prescription programs",
-      "Asked about qualifying our hospital as a clinical trial partner site",
-      "Checked pharmacy supply terms and patient support programs",
-      "Exchanged business cards and planned a formal follow-up discussion"
-    ]
+    "slot": "⭐ Priority Meeting (13:30–15:30)"
   },
   {
     "id": "ex_rxsight",
@@ -1354,7 +1381,356 @@ const exhibitors = [
       "Reviewed the patient journey: visits needed, UV glasses, and profit per eye",
       "Confirmed surgeon training requirements and on-site support from RxSight",
       "Got their direct contact details and booked an executive financial review meeting"
-    ]
+    ],
+    "slot": "⭐ Priority Meeting (13:30–15:30)"
+  },
+  {
+    "id": "ex_bausch",
+    "name": "Bausch+Lomb",
+    "day": 1,
+    "category": "Surgical Cataract Platforms, IOLs & Instrumentation",
+    "flagship": "Stellaris Elite vision enhancement system (Adaptive Fluidics, Bi-Blade vitrectomy), enVista hydrophobic acrylic IOLs, LuxSmart EDoF, Storz Instruments",
+    "decisionMaker": {
+      "role": "Director of Surgical Commercial Operations / Key Account Manager Surgical",
+      "whyMatters": "Hungry to win business away from Alcon and Zeiss, meaning they are very open to offering big equipment discounts."
+    },
+    "angle": "Bausch + Lomb wants to win new hospital accounts. Use their hunger to get an aggressive price on their Stellaris phaco machine and lenses, which gives you strong leverage when negotiating with Alcon.",
+    "questions": [
+      "What special deal can you offer our new hospital on the Stellaris machine to win our business over Alcon?",
+      "What are your price discounts on enVista and LuxSmart lenses if our volume grows over the next two years?",
+      "Can you include Storz surgical instrument sets in our equipment package at a discounted rate?",
+      "How much do your disposable packs cost per cataract operation compared to other brands?",
+      "What training and support do you give our surgeons if they are switching from another phaco machine?"
+    ],
+    "checklist": [
+      "Introduced our hospital and made it clear we are also talking to Alcon",
+      "Spoke with the surgical commercial manager",
+      "Tested the Stellaris machine and handpieces",
+      "Asked for a competitive quote covering the machine, lenses, and instruments",
+      "Checked the cost of disposable packs for each operation",
+      "Asked about starter sets of Storz surgical tools",
+      "Got their direct contact details and set a date to review their proposal"
+    ],
+    "slot": "🔍 Explore & Connect (15:30–17:30)"
+  },
+  {
+    "id": "ex_bvi",
+    "name": "BVI",
+    "day": 1,
+    "category": "Custom Procedure Packs, Precision Knives & Premium IOLs",
+    "flagship": "CustomEyes procedure pack configurator, Beaver blades, Visitec cannulas, Malosa single-use instruments, FineVision HP Trifocal IOL",
+    "decisionMaker": {
+      "role": "Vice President Commercial Europe / National Accounts Director",
+      "whyMatters": "Approves yearly surgical supply contracts, custom packs for each doctor, and discounts on FineVision lenses."
+    },
+    "angle": "Surgical packs and disposable tools make up your main day-to-day surgery cost. BVI can build custom packs for each of your surgeons while offering their FineVision trifocal lens as a more affordable premium option.",
+    "questions": [
+      "Can you build custom surgical packs with the exact tools and drapes our doctors want, and what is the minimum order?",
+      "What discount can we get if we buy all our surgical blades, needles, drapes, and disposable tools from BVI?",
+      "How does the price of your FineVision trifocal lens compare to Alcon PanOptix and Zeiss AT LISA?",
+      "How fast do you deliver orders, and how do you make sure you never run out of our hospital's packs?",
+      "Can you send us sample surgical packs and trial lenses so our doctors can test them?"
+    ],
+    "checklist": [
+      "Shared our surgical schedule and what our doctors prefer in their packs",
+      "Spoke with the commercial director or hospital accounts manager",
+      "Tried out their online pack builder and looked at sample surgical trays",
+      "Inquired about pricing on the FineVision trifocal lens",
+      "Negotiated an annual contract discount for all our surgical disposables",
+      "Requested sample packs and trial tools for our doctors to inspect",
+      "Got direct contact details and scheduled a meeting to finalize pack designs"
+    ],
+    "slot": "🔍 Explore & Connect (15:30–17:30)"
+  },
+  {
+    "id": "ex_schwind",
+    "name": "Schwind",
+    "day": 1,
+    "category": "Refractive Laser Systems & Corneal Diagnostics",
+    "flagship": "SCHWIND ATOS femtosecond laser (SmartSight lenticule extraction), SCHWIND AMARIS excimer (1050RS/750S, SmartPulse, TransPRK), MS-39 OCT",
+    "decisionMaker": {
+      "role": "Director of Global Sales / Regional Business Development Manager",
+      "whyMatters": "Can negotiate package prices for laser suites, flexible lease options, and technician installation support."
+    },
+    "angle": "If you plan to offer laser eye surgery, Schwind provides a complete laser suite without tying you into Zeiss. See if you can get the ATOS and AMARIS lasers on a flexible payment plan while you build up patient numbers.",
+    "questions": [
+      "What are our payment options for the ATOS and AMARIS lasers—can we pay per procedure, lease them, or buy outright?",
+      "What exact room size, power, and air conditioning do these lasers need in our building?",
+      "How much do you charge per eye for the SmartSight laser treatment compared to Zeiss SMILE?",
+      "What training and marketing materials do you provide to help us launch laser eye surgery at our clinic?",
+      "If a laser needs maintenance, how quickly can your technician arrive, and how much is the yearly service contract?"
+    ],
+    "checklist": [
+      "Explained our clinic's plans for laser eye surgery and expected patient volume",
+      "Spoke with the head of sales or business development",
+      "Watched the SmartSight and AMARIS laser demos",
+      "Asked for pricing options: paying per treatment vs buying the machines",
+      "Got the room and building requirements for installing the lasers",
+      "Checked what training they provide for our doctors and staff",
+      "Exchanged business cards and agreed on a deadline for a formal quote"
+    ],
+    "slot": "🔍 Explore & Connect (15:30–17:30)"
+  },
+  {
+    "id": "ex_rayner",
+    "name": "Rayner",
+    "day": 1,
+    "category": "Premium IOLs & Phaco Technology",
+    "flagship": "RayOne fully preloaded platform (RayOne Galaxy AI spiral optic, RayOne Trifocal, RayOne EMV), Sophi phaco system, AEON dry eye drops",
+    "decisionMaker": {
+      "role": "Commercial Director UK/Europe / VP Global Sales",
+      "whyMatters": "A senior executive attending the Rayner Dinner who can approve aggressive lens discounts, consignment stock, and doctor sponsorships."
+    },
+    "angle": "Rayner is a UK company competing with the big US giants. Use the Rayner Dinner connection to get high profit margins on their lenses and explore their new RayOne Galaxy AI lens as a unique hospital offering.",
+    "questions": [
+      "What discount or rebate can you give our new hospital if we choose RayOne as our main lens brand?",
+      "How does the RayOne Galaxy lens compare in price and profit margin against Alcon and Zeiss lenses?",
+      "Can you provide your Sophi phaco machine on a placement deal if we commit to buying your lenses?",
+      "What help and marketing support do you give clinics to help promote your premium lenses to patients?",
+      "Can you keep a stock of lenses inside our hospital on consignment so we only pay for what we use?"
+    ],
+    "checklist": [
+      "Mentioned our connection or meeting from the Rayner Dinner",
+      "Spoke with the commercial director or head of sales",
+      "Looked at the new RayOne Galaxy spiral lens and injector",
+      "Asked about keeping a consignment stock of lenses at our hospital",
+      "Compared their lens profit margins against other major brands",
+      "Asked about getting their Sophi cataract machine placed in our clinic",
+      "Got their direct contact details and set up a post-event meeting"
+    ],
+    "slot": "🍷 Evening Closer (18:30+ Dinner)"
+  },
+  {
+    "id": "ex_staar",
+    "name": "STAAR Surgical",
+    "day": 2,
+    "category": "Phakic Intraocular Lenses (ICL)",
+    "flagship": "EVO / EVO+ ICL (Implantable Collamer Lens) for myopia, hyperopia, and astigmatism",
+    "decisionMaker": {
+      "role": "Director of Market Development / Regional Business Director EMEA",
+      "whyMatters": "Approves doctor certification, consignment lens stock for your hospital, and clinic advertising funds."
+    },
+    "angle": "EVO ICL is one of the most profitable cash-pay procedures in eye care for patients who cannot have LASIK. Partnering with STAAR creates a high-margin revenue stream for your refractive clinic.",
+    "questions": [
+      "What are the exact steps and training for our surgeons to get certified to implant EVO ICL lenses?",
+      "How much do EVO and EVO Toric lenses cost wholesale, and what discounts do you offer as our volume grows?",
+      "What volume of surgery do we need to keep a bank of lenses in our clinic so patients don't have to wait?",
+      "What patient brochures, videos, and marketing support do you provide to help us promote ICL surgery?",
+      "How quickly can you deliver custom lenses, and what is your return policy if a lens isn't used?"
+    ],
+    "checklist": [
+      "Explained our hospital's focus on high-end private refractive surgery",
+      "Spoke with the regional business manager or market lead",
+      "Looked at the EVO lens designs and delivery tools",
+      "Checked the certification requirements and training timeline for our surgeons",
+      "Inquired about keeping a consignment lens stock at our hospital",
+      "Got the wholesale price list and clinic marketing support guidelines",
+      "Exchanged contact details and arranged a follow-up call"
+    ],
+    "slot": "💎 Premium Refractive ICL"
+  },
+  {
+    "id": "ex_glaukos",
+    "name": "Glaukos",
+    "day": 2,
+    "category": "Micro-Invasive Glaucoma Surgery (MIGS) & Drug Delivery",
+    "flagship": "iStent inject W, iStent infinite (3 stents for standalone or combo use), iDose TR (travoprost implant), Photrexa corneal cross-linking",
+    "decisionMaker": {
+      "role": "Senior Director Commercial Europe / Health Economics & Market Access Lead",
+      "whyMatters": "Controls hospital volume pricing, insurance reimbursement codes, and on-site doctor training."
+    },
+    "angle": "Minimally invasive glaucoma surgery (MIGS) combined with cataract surgery significantly boosts clinic revenue. Glaukos is the leader in this space, so secure good supply pricing and doctor training early.",
+    "questions": [
+      "What is your best price for iStent inject and iStent infinite for a new private hospital?",
+      "Do you provide hands-on wetlab training and in-person surgeon support for our doctors' first cases?",
+      "Can you help us with billing and insurance coverage codes for private insurance companies?",
+      "When will the new iDose implant be available to buy and use in our market?",
+      "Can we get a package deal that covers both your glaucoma stents and your corneal cross-linking machine?"
+    ],
+    "checklist": [
+      "Outlined our hospital's glaucoma surgery plans and clinic capacity",
+      "Spoke with the commercial director or insurance market access lead",
+      "Checked the iStent injector and reviewed the clinical results",
+      "Discussed private insurance coverage and reimbursement in our area",
+      "Asked for starter pricing on our first batches of stents",
+      "Confirmed training dates and on-site surgical support for our doctors",
+      "Got their business card and scheduled a follow-up call"
+    ],
+    "slot": "🩺 MIGS & Stents"
+  },
+  {
+    "id": "ex_icare",
+    "name": "iCare",
+    "day": 2,
+    "category": "Rebound Tonometry, Perimetry & Retinal Imaging",
+    "flagship": "iCare HOME2 (24h patient self-tonometry), iCare IC200 / IC100 rebound tonometers, DRSplus confocal fundus imaging, COMPASS perimeter",
+    "decisionMaker": {
+      "role": "Sales Director EMEA / Global Key Account Manager",
+      "whyMatters": "Can bundle clinic eye pressure devices and retinal cameras together for a multi-room clinic discount."
+    },
+    "angle": "Fast, comfortable eye pressure testing speeds up patient visits and avoids uncomfortable air puffs. The iCare HOME device also lets you create a profitable home-monitoring rental service for glaucoma patients.",
+    "questions": [
+      "What package price can you give us if we buy multiple eye pressure devices and a retinal camera for our exam rooms?",
+      "Can our hospital buy iCare HOME devices to rent out to glaucoma patients for home monitoring?",
+      "Does your software easily send patient test results into our hospital computer system?",
+      "How much do the disposable tips cost, and how often do the devices need factory calibration?",
+      "Can you send a demo unit to our clinic for a 30-day trial so our staff can test it?"
+    ],
+    "checklist": [
+      "Shared our clinic layout and expected daily patient flow",
+      "Spoke with the sales manager or accounts lead",
+      "Tried out the iCare HOME device and the DRSplus camera",
+      "Explored renting home devices to patients as an extra clinic service",
+      "Asked for a package quote for multiple exam rooms",
+      "Checked software connections to our electronic health records",
+      "Exchanged cards and arranged for a trial demo unit"
+    ],
+    "slot": "👁️ Diagnostics Lane"
+  },
+  {
+    "id": "ex_nidek",
+    "name": "Nidek",
+    "day": 2,
+    "category": "Workhorse Diagnostics, YAG/SLT Lasers & Biometry",
+    "flagship": "Mirante scanning laser ophthalmoscope (SLO/OCT), OPD-Scan III aberrometer/topographer, AL-Scan optical biometer, YC-200 S YAG/SLT laser",
+    "decisionMaker": {
+      "role": "International Sales Director / UK Managing Director / Commercial Distribution Head",
+      "whyMatters": "Can package clinic eye scanners and treatment lasers together at a much lower cost than Zeiss or Leica."
+    },
+    "angle": "Reliable, durable Japanese machines that cost significantly less than Zeiss. Bundling their eye scanner, biometer, and combination laser gives you a complete, budget-friendly outpatient clinic setup.",
+    "questions": [
+      "What bundle discount can you give us if we buy our eye scanner, optical biometer, and YAG/SLT laser together?",
+      "How does the total cost of your machines over 5 years compare to buying from Zeiss?",
+      "How long is your warranty, and how fast will a technician come if a machine breaks down?",
+      "Can your Mirante scanner send images directly to our hospital patient records system without issues?",
+      "What financing, leasing, or delayed payment plans can you offer for a new hospital build?"
+    ],
+    "checklist": [
+      "Explained our clinic budget and the diagnostic equipment we need",
+      "Spoke with the international sales director or distribution manager",
+      "Tested the OPD-Scan eye scanner and YC-200 combination laser",
+      "Requested a package quote for our complete diagnostic and laser room",
+      "Checked that the machines connect easily to our hospital computer system",
+      "Negotiated a longer warranty and fast technician response times",
+      "Exchanged cards and agreed on a date to receive their formal quote"
+    ],
+    "slot": "⚡ Laser + Diagnostics"
+  },
+  {
+    "id": "ex_leica",
+    "name": "Leica",
+    "day": 3,
+    "category": "Premium Surgical Microscopes & Intraoperative OCT",
+    "flagship": "Proveo 8 / Proveo 8x ophthalmic microscope, EnFocus intraoperative OCT, MyVeo 3D digital surgical headset, M822",
+    "decisionMaker": {
+      "role": "National Sales Director Surgical / Global Key Account Manager Ophthalmology",
+      "whyMatters": "Can negotiate microscope purchase prices and offer trade-in discounts to compete against Zeiss."
+    },
+    "angle": "The Leica Proveo 8 microscope is the top rival to the Zeiss ARTEVO. It has great lighting, sharp depth of view, and you can add a live OCT scanner later. Use this to drive down prices between Leica and Zeiss.",
+    "questions": [
+      "How does the price of your Proveo 8 microscope compare to the Zeiss ARTEVO?",
+      "Can we buy the basic Proveo 8 microscope now and add the live intraoperative OCT scanner later when our budget grows?",
+      "Can our doctors trial a demo microscope in our operating room before we make a final decision?",
+      "How does the MyVeo 3D headset work, and can other people in the room see what the surgeon sees on external screens?",
+      "What does your yearly service contract include, and how fast do you guarantee repairs?"
+    ],
+    "checklist": [
+      "Described our hospital operating rooms and the types of surgery we will do",
+      "Spoke with the national sales director for surgical microscopes",
+      "Tested the Proveo 8 microscope, live OCT scanner, and 3D headset",
+      "Asked for quotes for the microscope both with and without the OCT scanner",
+      "Confirmed that we can upgrade and add features to the microscope later",
+      "Asked about trying a demo microscope in our operating room",
+      "Exchanged cards and planned a technical talk with our clinic architect"
+    ],
+    "slot": "🔬 OR Microscope Alternative"
+  },
+  {
+    "id": "ex_ziemer",
+    "name": "Ziemer",
+    "day": 3,
+    "category": "Multipurpose Mobile Femtosecond Lasers",
+    "flagship": "FEMTO Z8 NEO (cataract, CLEAR lenticule extraction, Z-LASIK, keratoplasty), Galilei G6 dual-Scheimpflug diagnostic tomographer",
+    "decisionMaker": {
+      "role": "Director of International Sales / Business Development Director",
+      "whyMatters": "Structures machine sales or pay-per-procedure deals for their mobile Z8 laser platform."
+    },
+    "angle": "The Z8 laser is on wheels and rolls between operating rooms, so you don't need to build a separate laser room. It handles both cataract surgery and laser vision correction on one machine, saving capital.",
+    "questions": [
+      "What are our buying options for the Z8 laser—can we buy it outright, lease it, or pay per operation?",
+      "Since the Z8 is on wheels, can we roll it between operating rooms instead of building a special laser room?",
+      "How does your CLEAR lenticule treatment compare to Zeiss SMILE in patient visual results and recovery?",
+      "What is the price of the Galilei eye scanner if we buy it together with the Z8 laser?",
+      "What training do you provide for our surgeons, and who handles repairs in our area?"
+    ],
+    "checklist": [
+      "Explained our hospital layout and plan to offer both cataract and laser surgery",
+      "Spoke with the international sales director or business development lead",
+      "Looked at how the mobile Z8 laser moves and saw the CLEAR treatment demo",
+      "Asked for financial comparisons: buying the machine vs paying per case",
+      "Inquired about bundle discounts with the Galilei scanner",
+      "Checked room requirements and how the patient interface is cleaned",
+      "Got their business card and set up a call to review the numbers"
+    ],
+    "slot": "⚡ Femto Laser Alternative"
+  },
+  {
+    "id": "ex_medinstrus",
+    "name": "MedInstrus",
+    "day": 3,
+    "category": "Ophthalmic Examination Units & Clinical Furniture",
+    "flagship": "Refraction workstations (Beta Master, Zulu, Delta, Inspired), motorized instrument tables, ergonomic patient examination chairs, refraction arms",
+    "decisionMaker": {
+      "role": "Managing Director / Head of Global Sales & Institutional Contracts",
+      "whyMatters": "Can give direct factory prices on complete consultation room furniture, avoiding distributor markups."
+    },
+    "angle": "Comfortable, high-quality exam chairs and motorized instrument tables make your clinic look modern and help doctors work faster. Buying directly from this European maker saves 30% to 40% on clinic outfitting.",
+    "questions": [
+      "What discount can you give us if we buy exam chairs and motorized tables for 4 to 8 doctor consultation rooms?",
+      "Can you customize the colors, size, and instrument arms on the Beta Master units to match our clinic brand?",
+      "How long does it take from placing an order to having the furniture delivered and installed?",
+      "Are your units ready to hold diagnostic devices from different brands like Nidek, Zeiss, or Haag-Streit?",
+      "What warranty do you offer, and do you send someone to help assemble the furniture on site?"
+    ],
+    "checklist": [
+      "Shared our outpatient clinic floorplans and the number of exam rooms",
+      "Spoke with the managing director or head of sales",
+      "Checked the build quality, electric lift, and arm balance on the display chairs",
+      "Asked for a package quote to furnish all our consultation rooms",
+      "Confirmed that our diagnostic devices will fit onto their swivel arms",
+      "Clarified delivery timelines, shipping costs, and assembly help",
+      "Exchanged cards and sent our room measurements for a custom layout plan"
+    ],
+    "slot": "✂️ Surgical Trays & Tools"
+  },
+  {
+    "id": "ex_kol",
+    "name": "Laboratoires KÔL",
+    "day": 4,
+    "category": "Specialty Ophthalmic Pharma & Corneal Therapies",
+    "flagship": "Olisens® (first-in-class topical therapy for corneal neovascularization, anti-IRS1 mRNA technology), rare corneal disease pipeline, Emixustat",
+    "decisionMaker": {
+      "role": "Chief Executive Officer / VP Business Development & Licensing",
+      "whyMatters": "Can discuss clinical trial partnerships, early access to new eye drops, and hospital pharmacy supply deals."
+    },
+    "angle": "Offering unique new eye treatments makes your new hospital stand out as a center of medical innovation. Becoming an early-access center for Olisens (corneal blood vessel treatment) brings in high-profile patient referrals.",
+    "questions": [
+      "Is Olisens available right now in our country through early access or special hospital prescription rules?",
+      "Can our new hospital become a testing center for your upcoming clinical trials on rare eye diseases?",
+      "What direct hospital supply or pharmacy agreements do you offer to private specialized eye clinics?",
+      "Which patients with abnormal blood vessels in the cornea are the best candidates for Olisens treatment?",
+      "What training, scientific briefings, or educational support do you provide for our corneal doctors?"
+    ],
+    "checklist": [
+      "Explained our hospital's corneal specialty plans and patient referral network",
+      "Spoke with the CEO or head of business development",
+      "Reviewed the clinical trial results for Olisens and their pipeline medicines",
+      "Discussed hospital pharmacy access and early prescription programs",
+      "Asked about qualifying our hospital as a clinical trial partner site",
+      "Checked pharmacy supply terms and patient support programs",
+      "Exchanged business cards and planned a formal follow-up discussion"
+    ],
+    "slot": "🧪 Cornea Pharma Partnership"
   }
 ];
 
@@ -2273,6 +2649,12 @@ function renderExhibitors() {
       
       // Badges
       let badgesHtml = '';
+      if (ex.slot) {
+        let slotClass = 'ex-badge-explore';
+        if (ex.slot.includes('Priority') || ex.slot.includes('Primary')) slotClass = 'ex-badge-priority';
+        if (ex.slot.includes('Closer') || ex.slot.includes('Dinner')) slotClass = 'ex-badge-dinner';
+        badgesHtml += '<span class="ex-badge-chip ' + slotClass + '">' + ex.slot + '</span>';
+      }
       if (s.offered && s.offered.trim()) {
         badgesHtml += '<span class="ex-badge-chip ex-badge-offer">🤝 Offer Logged</span>';
       }
