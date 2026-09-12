@@ -438,6 +438,33 @@ mark { background: #fef08a; color: #854d0e; padding: 0 2px; border-radius: 2px; 
   </div>
   <div class="meta-info" id="adMeta"></div>
   <div id="adOverlapWarning" class="schedule-note" style="display:none"></div>
+
+  <!-- Lecture Slide Photos Section -->
+  <div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:12px 14px;margin-bottom:16px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <div style="display:flex;align-items:center;gap:6px">
+        <span style="font-size:16px">📸</span>
+        <strong style="color:#0369a1;font-size:12px;text-transform:uppercase;letter-spacing:0.5px">Lecture Slide Photos</strong>
+      </div>
+      <span id="adPhotoCount" style="font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;background:#e0f2fe;color:#0284c7">0 slides</span>
+    </div>
+    
+    <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
+      <label style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;padding:8px 16px;border-radius:6px;font-size:13px;font-weight:600;background:#0284c7;color:white;box-shadow:0 1px 3px rgba(0,0,0,0.1)">
+        📷 Snap Slide Photo
+        <input type="file" accept="image/*" capture="environment" onchange="handleActivityPhotos(this)" style="display:none">
+      </label>
+      <label style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;padding:8px 14px;border-radius:6px;font-size:13px;font-weight:500;background:var(--surface);border:1px solid var(--border);color:var(--text)">
+        📁 Choose Photos
+        <input type="file" accept="image/*" multiple onchange="handleActivityPhotos(this)" style="display:none">
+      </label>
+    </div>
+
+    <div id="adPhotosGrid" style="display:grid;grid-template-columns:repeat(auto-fill, minmax(110px, 1fr));gap:8px"></div>
+    <div id="adNoPhotosHint" style="font-size:12px;color:#0284c7;margin-top:4px;line-height:1.4">
+      <em>Snap pictures of lecture slides so you don't have to write everything manually. Tap any photo to view full size.</em>
+    </div>
+  </div>
   
   <div class="form-group">
     <label>📍 Room / Hall</label>
@@ -485,6 +512,17 @@ mark { background: #fef08a; color: #854d0e; padding: 0 2px; border-radius: 2px; 
   <div class="sticky-save-bar">
     <span class="save-status" id="adSaveStatus">All changes saved locally</span>
     <button class="btn-primary" onclick="document.getElementById('activityDialog').close()">Done</button>
+  </div>
+</dialog>
+
+<!-- Photo Lightbox Dialog -->
+<dialog id="photoLightboxDialog" style="max-width:96vw;max-height:96vh;padding:0;background:#0f172a;border:none;border-radius:12px;overflow:hidden;box-shadow:0 25px 50px -12px rgba(0,0,0,0.5)" onclick="if(event.target===this)this.close()">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 18px;background:#1e293b;border-bottom:1px solid #334155">
+    <span id="lbCaption" style="color:#f8fafc;font-size:14px;font-weight:600">Lecture Slide Photo</span>
+    <button onclick="document.getElementById('photoLightboxDialog').close()" style="background:none;border:none;color:#94a3b8;font-size:26px;line-height:1;cursor:pointer;padding:0 4px">&times;</button>
+  </div>
+  <div style="display:flex;justify-content:center;align-items:center;padding:12px;max-height:calc(90vh - 60px);overflow:auto;background:#020617">
+    <img id="lbImage" style="max-width:100%;max-height:78vh;object-fit:contain;border-radius:6px;box-shadow:0 4px 20px rgba(0,0,0,0.4)" alt="Full slide">
   </div>
 </dialog>
 
@@ -756,6 +794,7 @@ function sanitizeState() {
         } else if (!state.activities[a.id].location && a.note) {
           state.activities[a.id].location = a.note;
         }
+        if (!Array.isArray(state.activities[a.id].photos)) state.activities[a.id].photos = [];
       });
     });
   }
@@ -1592,6 +1631,7 @@ function refreshCard(aid) {
   
   let chipsHtml = `<span class="act-chip act-target">◎ ${act.target}</span>`;
   if (act.overlap) chipsHtml += `<span class="act-chip overlap-badge">⚠ Overlap</span>`;
+  if (s.photos && s.photos.length > 0) chipsHtml += `<span class="act-chip" style="background:#e0f2fe;color:#0369a1;border:1px solid #bae6fd;font-weight:600">📸 ${s.photos.length} slide${s.photos.length > 1 ? 's' : ''}</span>`;
   if (s.keyInsight) chipsHtml += `<span class="act-chip act-insight-chip">💡 ${s.keyInsight}</span>`;
   if (s.people && s.people.length > 0) chipsHtml += `<span class="act-chip act-people-chip">👤 ${s.people.length}</span>`;
   const loc = s.location || (act && act.note) || '';
@@ -1654,6 +1694,7 @@ function openActivity(aid) {
   else tgl.classList.remove('on');
   
   renderActivityPeople();
+  renderActivityPhotos();
   document.getElementById('activityDialog').showModal();
 }
 
@@ -1727,6 +1768,122 @@ function removePerson(idx) {
 function saveReflection(dayIdx, field) {
   state.reflections[dayIdx][field] = document.getElementById(`ref-${dayIdx}-${field}`).value;
   saveState();
+}
+
+
+// ========== LECTURE SLIDE PHOTOS ==========
+function compressSlidePhoto(file, callback) {
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const img = new Image();
+    img.onload = function() {
+      const canvas = document.createElement('canvas');
+      const MAX = 1280;
+      let w = img.width, h = img.height;
+      if (w > MAX || h > MAX) {
+        if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
+        else { w = Math.round(w * MAX / h); h = MAX; }
+      }
+      canvas.width = w; canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, w, h);
+      callback(canvas.toDataURL('image/jpeg', 0.72));
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function handleActivityPhotos(input) {
+  const files = Array.from(input.files || []);
+  if (!files.length) return;
+  const aid = currentActivityId;
+  const s = state.activities[aid];
+  if (!Array.isArray(s.photos)) s.photos = [];
+
+  let processed = 0;
+  files.forEach(file => {
+    compressSlidePhoto(file, (dataUrl) => {
+      s.photos.push({
+        id: 'slide_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
+        data: dataUrl,
+        caption: '',
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      });
+      processed++;
+      if (processed === files.length) {
+        if (s.status === 'planned') s.status = 'inprogress';
+        saveState();
+        renderActivityPhotos();
+        refreshCard(aid);
+        updateDayProgress(aid);
+        showToast(`📸 Saved ${processed} slide photo${processed > 1 ? 's' : ''}`);
+      }
+    });
+  });
+  input.value = '';
+}
+
+function renderActivityPhotos() {
+  const aid = currentActivityId;
+  const s = (state.activities && state.activities[aid]) || {};
+  const photos = s.photos || [];
+  const grid = document.getElementById('adPhotosGrid');
+  const countEl = document.getElementById('adPhotoCount');
+  const hintEl = document.getElementById('adNoPhotosHint');
+  if (!grid) return;
+
+  countEl.innerText = photos.length + ' slide' + (photos.length !== 1 ? 's' : '');
+  hintEl.style.display = photos.length > 0 ? 'none' : 'block';
+
+  let html = '';
+  photos.forEach((p, idx) => {
+    const captionVal = p.caption || '';
+    html += `<div style="position:relative;border:1px solid #cbd5e1;border-radius:6px;overflow:hidden;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,0.08);display:flex;flex-direction:column">
+      <div onclick="openPhotoLightbox(${idx})" style="cursor:pointer;aspect-ratio:4/3;background:#0f172a;display:flex;align-items:center;justify-content:center;overflow:hidden">
+        <img src="${p.data}" style="width:100%;height:100%;object-fit:cover" alt="Slide">
+      </div>
+      <button onclick="removeActivityPhoto(${idx}, event)" style="position:absolute;top:4px;right:4px;background:rgba(0,0,0,0.7);color:#fff;border:none;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:13px;line-height:1;cursor:pointer" title="Delete slide photo">&times;</button>
+      <div style="padding:4px 6px;background:#f8fafc">
+        <input type="text" placeholder="Add note/title..." value="${escapeHtml(captionVal)}" onchange="updatePhotoCaption(${idx}, this.value)" style="width:100%;font-size:11px;padding:2px 4px;border:1px solid #cbd5e1;border-radius:3px;background:#fff;margin-bottom:2px">
+        <div style="font-size:10px;color:var(--text-faint);display:flex;justify-content:space-between">
+          <span>Slide ${idx + 1}</span>
+          <span>${p.timestamp || ''}</span>
+        </div>
+      </div>
+    </div>`;
+  });
+  grid.innerHTML = html;
+}
+
+function openPhotoLightbox(idx) {
+  const s = state.activities[currentActivityId];
+  if (!s || !s.photos || !s.photos[idx]) return;
+  const p = s.photos[idx];
+  document.getElementById('lbImage').src = p.data;
+  document.getElementById('lbCaption').innerText = (p.caption ? p.caption + ' • ' : '') + `Slide ${idx + 1} (${p.timestamp || ''})`;
+  document.getElementById('photoLightboxDialog').showModal();
+}
+
+function removeActivityPhoto(idx, event) {
+  if (event) event.stopPropagation();
+  const aid = currentActivityId;
+  const s = state.activities[aid];
+  if (s && s.photos) {
+    s.photos.splice(idx, 1);
+    saveState();
+    renderActivityPhotos();
+    refreshCard(aid);
+    showToast('Slide photo removed');
+  }
+}
+
+function updatePhotoCaption(idx, val) {
+  const s = state.activities[currentActivityId];
+  if (s && s.photos && s.photos[idx]) {
+    s.photos[idx].caption = val;
+    saveState();
+  }
 }
 
 // Quick Notes
