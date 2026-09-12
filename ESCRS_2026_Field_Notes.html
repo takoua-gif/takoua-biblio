@@ -307,7 +307,6 @@ mark { background: #fef08a; color: #854d0e; padding: 0 2px; border-radius: 2px; 
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
   import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-database.js";
   
-  // ⚠️ REPLACE THESE WITH YOUR FIREBASE CONFIG (see setup guide below)
   const firebaseConfig = {
     apiKey: "AIzaSyBcpl2tW17QTx6JsTcJhU2qEZ5QMOlEzgw",
     authDomain: "escrs2026-notes.firebaseapp.com",
@@ -318,108 +317,197 @@ mark { background: #fef08a; color: #854d0e; padding: 0 2px; border-radius: 2px; 
     appId: "1:51522298164:web:67c6738e7711ec54e10561"
   };
   
+  const REST_URL = "https://escrs2026-notes-default-rtdb.europe-west1.firebasedatabase.app/escrs2026/state.json";
+  
   let db = null;
   let syncEnabled = false;
   let isSyncing = false;
   let lastSyncTime = 0;
   
+  // REST API Push: Handles payloads up to 256MB without WebSocket frame limits
+  async function pushViaRest(stateObj) {
+    try {
+      updateSyncIndicator('syncing');
+      const jsonStr = JSON.stringify(stateObj);
+      const res = await fetch(REST_URL, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: jsonStr
+      });
+      if (res.ok) {
+        lastSyncTime = Date.now();
+        updateSyncIndicator('synced');
+        if (typeof showToast === 'function') {
+          showToast('☁️ Synced with cloud (all slides & notes)');
+        }
+        return true;
+      } else {
+        throw new Error('HTTP ' + res.status);
+      }
+    } catch(err) {
+      console.warn('REST push warning:', err.message);
+      updateSyncIndicator('error');
+      return false;
+    }
+  }
+  
   try {
     const app = initializeApp(firebaseConfig);
     db = getDatabase(app);
+    syncEnabled = true;
     
-    // Check if config is real (not placeholder)
-    if (!firebaseConfig.apiKey.startsWith('PASTE')) {
-      syncEnabled = true;
+    const stateRef = ref(db, 'escrs2026/state');
+    let initialCheckDone = false;
+    
+    onValue(stateRef, (snapshot) => {
+      const remoteData = snapshot.val();
       
-      // Listen for remote changes across devices
-      const stateRef = ref(db, 'escrs2026/state');
-      let initialCheckDone = false;
-      
-      onValue(stateRef, (snapshot) => {
-        const remoteData = snapshot.val();
-        
-        // If Firebase is completely empty on very first load, check if we need to seed it
-        if (!initialCheckDone) {
-          initialCheckDone = true;
-          if (!remoteData) {
-            const localSaved = localStorage.getItem('escrs2026v3');
-            if (localSaved) {
-              try {
-                const localData = JSON.parse(localSaved);
-                const hasLocalContent = Object.values(localData.activities || {}).some(a => 
-                  a.whatHappened || a.whatLearned || a.keyInsight || a.location
-                ) || (localData.quickNotes && localData.quickNotes.length > 0) 
-                  || (localData.contacts && localData.contacts.length > 0);
-                if (hasLocalContent) {
-                  lastSyncTime = Date.now();
-                  set(stateRef, localData);
-                }
-              } catch(e) {}
-            }
-            updateSyncIndicator('connected');
-            return;
+      // Initial seed check if cloud is empty
+      if (!initialCheckDone) {
+        initialCheckDone = true;
+        if (!remoteData) {
+          const localSaved = localStorage.getItem('escrs2026v3');
+          if (localSaved) {
+            try {
+              const localData = JSON.parse(localSaved);
+              if (localData && (localData.activities || localData.contacts || localData.quickNotes)) {
+                lastSyncTime = Date.now();
+                pushViaRest(localData);
+              }
+            } catch(e) {}
           }
-        }
-        
-        if (!remoteData) return;
-        
-        // If we just pushed this change from this device within 1.5s, skip re-render
-        if (Date.now() - lastSyncTime < 1500) {
-          updateSyncIndicator('synced');
+          updateSyncIndicator('connected');
           return;
         }
-        
-        isSyncing = true;
-        window._escrsState = remoteData;
-        localStorage.setItem('escrs2026v3', JSON.stringify(remoteData));
-        
-        // Update in-memory state and re-render app live
-        if (typeof state !== 'undefined') {
-          Object.assign(state, remoteData);
-          if (typeof sanitizeState === 'function') sanitizeState();
-          if (typeof renderApp === 'function') {
-            renderApp();
+      }
+      
+      if (!remoteData) return;
+      
+      // If this device pushed within 2.5s, skip local re-render
+      if (Date.now() - lastSyncTime < 2500) {
+        updateSyncIndicator('synced');
+        return;
+      }
+      
+      // SMART MERGE: Check if local device has data (especially slide photos or notes) that remote is missing
+      const localSaved = localStorage.getItem('escrs2026v3');
+      let localData = null;
+      try { if (localSaved) localData = JSON.parse(localSaved); } catch(e) {}
+      
+      let localHasMoreData = false;
+      if (localData && localData.activities) {
+        for (const [aid, lAct] of Object.entries(localData.activities)) {
+          const rAct = (remoteData.activities && remoteData.activities[aid]) || {};
+          const lPhotos = (lAct && Array.isArray(lAct.photos)) ? lAct.photos : [];
+          const rPhotos = (rAct && Array.isArray(rAct.photos)) ? rAct.photos : [];
+          
+          // PRESERVE local photos if local device has more slides than cloud!
+          if (lPhotos.length > rPhotos.length) {
+            if (!remoteData.activities) remoteData.activities = {};
+            if (!remoteData.activities[aid]) remoteData.activities[aid] = lAct;
+            else remoteData.activities[aid].photos = lPhotos;
+            localHasMoreData = true;
+          }
+          
+          // Preserve local notes if remote is empty
+          if (lAct.whatLearned && !rAct.whatLearned) {
+            if (!remoteData.activities[aid]) remoteData.activities[aid] = lAct;
+            else remoteData.activities[aid].whatLearned = lAct.whatLearned;
+            localHasMoreData = true;
+          }
+          if (lAct.keyInsight && !rAct.keyInsight) {
+            if (!remoteData.activities[aid]) remoteData.activities[aid] = lAct;
+            else remoteData.activities[aid].keyInsight = lAct.keyInsight;
+            localHasMoreData = true;
           }
         }
-        
-        isSyncing = false;
-        updateSyncIndicator('synced');
-      });
+      }
       
-      updateSyncIndicator('connected');
-    }
+      isSyncing = true;
+      window._escrsState = remoteData;
+      localStorage.setItem('escrs2026v3', JSON.stringify(remoteData));
+      
+      if (typeof state !== 'undefined') {
+        Object.assign(state, remoteData);
+        if (typeof sanitizeState === 'function') sanitizeState();
+        if (typeof renderApp === 'function') {
+          renderApp();
+        }
+      }
+      
+      isSyncing = false;
+      
+      // If local device had more slides/content, push the merged state back to cloud immediately
+      if (localHasMoreData) {
+        pushViaRest(remoteData);
+      } else {
+        updateSyncIndicator('synced');
+      }
+    });
+    
+    updateSyncIndicator('connected');
   } catch(e) {
-    console.log('Firebase init error:', e.message);
+    console.error('Firebase init error:', e.message);
   }
   
-  // Expose sync function globally
-  window._firebasePush = function(stateObj) {
-    if (!syncEnabled || !db || isSyncing) return;
+  // Expose global push function: tries WebSocket, automatically falls back to REST
+  window._firebasePush = async function(stateObj) {
+    if (!syncEnabled || isSyncing) return;
     lastSyncTime = Date.now();
-    const stateRef = ref(db, 'escrs2026/state');
-    set(stateRef, stateObj).then(() => {
-      updateSyncIndicator('synced');
-      const adSave = document.getElementById('adSaveStatus');
-      if (adSave) adSave.innerText = '☁️ Synced to both devices';
-      const exSave = document.getElementById('exSaveStatus');
-      if (exSave) exSave.innerText = '☁️ Synced to both devices';
-    }).catch(err => {
-      console.error('Sync error:', err);
-      updateSyncIndicator('error');
-    });
+    
+    // Check estimated payload size: if large (>1MB), use REST directly to bypass WebSocket limit
+    const jsonStr = JSON.stringify(stateObj);
+    if (jsonStr.length > 1000000) {
+      return await pushViaRest(stateObj);
+    }
+    
+    // For smaller payloads, try WebSocket with REST fallback
+    if (db) {
+      try {
+        const stateRef = ref(db, 'escrs2026/state');
+        await set(stateRef, stateObj);
+        updateSyncIndicator('synced');
+        const adSave = document.getElementById('adSaveStatus');
+        if (adSave) adSave.innerText = '☁️ Synced to cloud';
+        const exSave = document.getElementById('exSaveStatus');
+        if (exSave) exSave.innerText = '☁️ Synced to cloud';
+        return true;
+      } catch(err) {
+        console.warn('WebSocket push failed, falling back to REST:', err.message);
+        return await pushViaRest(stateObj);
+      }
+    } else {
+      return await pushViaRest(stateObj);
+    }
+  };
+  
+  // Expose manual force sync globally
+  window.forceCloudSync = async function() {
+    if (typeof state === 'undefined') return;
+    showToast('☁️ Force syncing with cloud...');
+    updateSyncIndicator('syncing');
+    const success = await pushViaRest(state);
+    if (success) {
+      showToast('☁️ Cloud sync complete!');
+    } else {
+      showToast('⚠️ Cloud sync failed. Check connection.');
+    }
   };
   
   function updateSyncIndicator(status) {
     const el = document.getElementById('syncIndicator');
     if (!el) return;
     if (status === 'synced') {
-      el.innerHTML = '☁️ 🟢 Synced (Both Devices)';
+      el.innerHTML = '☁️ 🟢 Synced';
       el.style.color = '#16803c';
+    } else if (status === 'syncing') {
+      el.innerHTML = '☁️ ⏳ Syncing...';
+      el.style.color = '#0284c7';
     } else if (status === 'connected') {
-      el.innerHTML = '☁️ 🔵 Connected to Cloud';
+      el.innerHTML = '☁️ 🔵 Connected';
       el.style.color = '#1a56a0';
     } else if (status === 'error') {
-      el.innerHTML = '☁️ 🔴 Sync Error';
+      el.innerHTML = '☁️ 🔴 Sync Error (Tap to retry)';
       el.style.color = '#991b1b';
     }
     el.style.display = 'inline-block';
@@ -429,7 +517,7 @@ mark { background: #fef08a; color: #854d0e; padding: 0 2px; border-radius: 2px; 
 <body>
 <nav class="top-bar" id="topNav">
   <h1>ESCRS 2026</h1>
-  <span id="lastSaved" style="font-size:10px;color:var(--text-faint);white-space:nowrap;flex-shrink:0"></span><span id="syncIndicator" style="display:none;font-size:10px;font-weight:600;padding:3px 6px;border-radius:10px;background:var(--bg);white-space:nowrap;flex-shrink:0"></span>
+  <span id="lastSaved" style="font-size:10px;color:var(--text-faint);white-space:nowrap;flex-shrink:0"></span><span id="syncIndicator" onclick="window.forceCloudSync && window.forceCloudSync()" style="display:none;font-size:10px;font-weight:600;padding:3px 8px;border-radius:10px;background:var(--bg);white-space:nowrap;flex-shrink:0;cursor:pointer" title="Click to sync with cloud"></span>
   <button data-view="day0" class="active">Day 1</button>
   <button data-view="day1">Day 2</button>
   <button data-view="day2">Day 3</button>
@@ -2218,7 +2306,7 @@ function compressSlidePhoto(file, callback) {
     img.onload = function() {
       try {
         const canvas = document.createElement('canvas');
-        const MAX = 1280;
+        const MAX = 1024;
         let w = img.width, h = img.height;
         if (w > MAX || h > MAX) {
           if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
@@ -2227,7 +2315,7 @@ function compressSlidePhoto(file, callback) {
         canvas.width = w; canvas.height = h;
         const ctx = canvas.getContext('2d');
         ctx.drawImage(img, 0, 0, w, h);
-        callback(canvas.toDataURL('image/jpeg', 0.72));
+        callback(canvas.toDataURL('image/jpeg', 0.62));
       } catch(err) {
         console.error("Canvas compression error", err);
         callback(null);
