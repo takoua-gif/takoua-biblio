@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ESCRS 2026 Executive Slides & Exhibition Field Notes</title>
+<style>
+:root {
+  --bg: #0b0f19;
+  --surface: #111827;
+  --surface-card: #1f2937;
+  --surface-border: #374151;
+  --accent-blue: #3b82f6;
+  --accent-cyan: #06b6d4;
+  --accent-teal: #14b8a6;
+  --accent-gold: #f59e0b;
+  --text-main: #f9fafb;
+  --text-muted: #9ca3af;
+  --text-faint: #6b7280;
+  --success: #10b981;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+body { background: var(--bg); color: var(--text-main); overflow: hidden; height: 100vh; display: flex; flex-direction: column; }
+
+/* Top Control Bar */
+.top-bar {
+  height: 52px;
+  background: rgba(17, 24, 39, 0.9);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--surface-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 100;
+}
+.brand { font-size: 13px; font-weight: 700; letter-spacing: 0.5px; color: var(--accent-cyan); display: flex; align-items: center; gap: 8px; }
+.slide-indicator { font-size: 13px; font-weight: 600; color: var(--text-muted); background: var(--surface-card); padding: 4px 12px; border-radius: 20px; border: 1px solid var(--surface-border); }
+.controls { display: flex; gap: 8px; align-items: center; }
+.btn {
+  background: var(--surface-card);
+  color: var(--text-main);
+  border: 1px solid var(--surface-border);
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn:hover { background: var(--surface-border); border-color: var(--accent-cyan); color: white; }
+.btn-primary { background: var(--accent-blue); border-color: var(--accent-blue); color: white; }
+.btn-primary:hover { background: #2563eb; }
+
+/* Slide Viewport */
+.deck-container {
+  flex: 1;
+  position: relative;
+  overflow-y: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.slide {
+  display: none;
+  width: 100%;
+  max-width: 1240px;
+  min-height: 680px;
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+  animation: fadeIn 0.25s ease-out;
+  flex-direction: column;
+}
+.slide.active { display: flex; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.99); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.slide-category {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--accent-cyan);
+  margin-bottom: 6px;
+}
+.slide-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 24px;
+  line-height: 1.25;
+}
+
+/* Grid Layouts */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; flex: 1; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; flex: 1; }
+
+.card {
+  background: var(--surface-card);
+  border: 1px solid var(--surface-border);
+  border-radius: 12px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.card-title { font-size: 16px; font-weight: 700; color: var(--text-main); }
+.badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.badge-blue { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.4); }
+.badge-cyan { background: rgba(6, 182, 212, 0.2); color: #22d3ee; border: 1px solid rgba(6, 182, 212, 0.4); }
+.badge-gold { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
+.badge-teal { background: rgba(20, 184, 166, 0.2); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.4); }
+
+.item-list { list-style: none; display: flex; flex-direction: column; gap: 12px; font-size: 13px; line-height: 1.5; }
+.item-list li { position: relative; padding-left: 18px; color: var(--text-muted); }
+.item-list li::before { content: "•"; position: absolute; left: 4px; color: var(--accent-cyan); font-weight: bold; }
+.item-list strong { color: var(--text-main); font-weight: 600; }
+
+/* Tables */
+.table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--surface-border); }
+table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }
+th { background: #172033; color: var(--accent-cyan); padding: 12px 14px; font-weight: 700; border-bottom: 1px solid var(--surface-border); }
+td { padding: 12px 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); color: var(--text-muted); }
+tr:nth-child(even) td { background: rgba(255, 255, 255, 0.02); }
+td strong { color: var(--text-main); }
+
+/* Exhibition Fillable Forms */
+.form-section { display: flex; flex-direction: column; gap: 14px; flex: 1; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); }
+.form-input, .form-textarea {
+  background: #0b0f19;
+  border: 1px solid var(--surface-border);
+  color: var(--text-main);
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.form-input:focus, .form-textarea:focus { border-color: var(--accent-cyan); }
+.form-textarea { min-height: 80px; resize: vertical; line-height: 1.4; }
+
+.status-tag { font-size: 11px; color: var(--accent-teal); display: flex; align-items: center; gap: 4px; }
+
+/* Bottom Bar */
+.bottom-bar {
+  height: 50px;
+  background: var(--surface);
+  border-top: 1px solid var(--surface-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.keys-hint { display: flex; gap: 12px; }
+.key-badge { background: var(--surface-card); border: 1px solid var(--surface-border); padding: 2px 6px; border-radius: 4px; font-family: monospace; font-size: 11px; }
+
+@media print {
+  body { overflow: visible; height: auto; background: white; color: black; }
+  .top-bar, .bottom-bar { display: none; }
+  .deck-container { padding: 0; }
+  .slide { display: flex !important; page-break-after: always; min-height: auto; border: 1px solid #ccc; box-shadow: none; margin-bottom: 20px; }
+  .card, .form-input, .form-textarea { background: white; color: black; border-color: #ddd; }
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="brand">
+    <span>🔬</span>
+    <span>ESCRS 2026 EXECUTIVE REPORT & FIELD DEBRIEF</span>
+  </div>
+  <div class="slide-indicator" id="slideNum">Slide 1 / 20</div>
+  <div class="controls">
+    <button class="btn" onclick="prevSlide()">◀ Prev</button>
+    <button class="btn btn-primary" onclick="nextSlide()">Next ▶</button>
+    <button class="btn" onclick="toggleFullscreen()">⛶ Fullscreen</button>
+    <button class="btn" onclick="window.print()">🖨️ Print / PDF</button>
+  </div>
+</div>
+
+<div class="deck-container">
+
+  <!-- SLIDE 1: Title -->
+  <div class="slide active">
+    <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; text-align: center; max-width: 900px; margin: 0 auto;">
+      <div class="slide-category" style="font-size: 14px; margin-bottom: 12px;">ESCRS 2026 CONGRESS EXECUTIVE FIELD BRIEFING</div>
+      <h1 class="slide-title" style="font-size: 40px; margin-bottom: 16px;">Clinical Laser Innovation, Executive Pitching & Strategic Exhibition Log</h1>
+      <p style="font-size: 18px; color: var(--accent-gold); margin-bottom: 32px; font-weight: 500;">
+        Part 1: Refractive Laser Benchmark | Part 2: Podium Pitching Masterclass | Part 3: Exhibition Field Notes
+      </p>
+      <div style="display: flex; justify-content: center; gap: 16px; margin-top: 10px;">
+        <div class="card" style="padding: 14px 24px; text-align: left;">
+          <div style="font-size: 11px; color: var(--text-faint); text-transform: uppercase;">Laser Analysis</div>
+          <div style="font-weight: 700; color: var(--accent-cyan);">Dr. Patrick Versace</div>
+        </div>
+        <div class="card" style="padding: 14px 24px; text-align: left;">
+          <div style="font-size: 11px; color: var(--text-faint); text-transform: uppercase;">Executive Pitching</div>
+          <div style="font-weight: 700; color: var(--accent-teal);">Bostanci, Matsou, Lockington, Eskina</div>
+        </div>
+        <div class="card" style="padding: 14px 24px; text-align: left;">
+          <div style="font-size: 11px; color: var(--text-faint); text-transform: uppercase;">Application</div>
+          <div style="font-weight: 700; color: var(--accent-gold);">Private Eye Clinic & Hospital Growth</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: Agenda -->
+  <div class="slide">
+    <div class="slide-category">Executive Agenda</div>
+    <div class="slide-title">Structure of the Intelligence Report</div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Part 1: Laser Benchmark</span>
+          <span class="badge badge-blue">Technology</span>
+        </div>
+        <ul class="item-list">
+          <li><strong>Excimer Limits:</strong> Non-normal incidence, peripheral energy falloff & toxic ArF gas overhead.</li>
+          <li><strong>The KLEx Era:</strong> 4 CE-marked contenders: VisuMax 800 vs ATOS vs ELITA vs Z8 NEO.</li>
+          <li><strong>Day-1 Clarity:</strong> Biological trade-off: Sub-100 nJ energy vs cavitation bubble haze.</li>
+          <li><strong>Commercial Impact:</strong> Cash-pay pricing tiers and vendor procurement leverage.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Part 2: Pitching Masterclass</span>
+          <span class="badge badge-cyan">Leadership</span>
+        </div>
+        <ul class="item-list">
+          <li><strong>Core Philosophy:</strong> "Emotion creates memory" — what matters vs all you know.</li>
+          <li><strong>ABCDE Framework:</strong> 6-slide rule, accuracy, brevity, clarity, delivery, enthusiasm.</li>
+          <li><strong>Q&A Defense:</strong> De-escalating show-offs, senior critics, and hostile questions.</li>
+          <li><strong>Stage Mastery:</strong> The Power Triangle, anxiety reappraisal, and foreign language fluency.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Part 3: Exhibition Log</span>
+          <span class="badge badge-gold">Interactive</span>
+        </div>
+        <ul class="item-list">
+          <li><strong>Interactive Forms:</strong> Live fillable fields that auto-save directly to your browser.</li>
+          <li><strong>Key Vendors:</strong> Pre-configured slides for Zeiss, Schwind, Ziemer, Alcon, J&J, Rayner.</li>
+          <li><strong>Meeting Data:</strong> Capture who you met, phone/email, offered pricing, and next actions.</li>
+          <li><strong>PDF Ready:</strong> Print or export your complete meeting log for leadership review.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: Section Divider - Part 1 -->
+  <div class="slide" style="justify-content: center; text-align: center;">
+    <div class="slide-category" style="font-size: 16px;">SECTION 01</div>
+    <h1 class="slide-title" style="font-size: 42px; margin-bottom: 16px;">Takeaways from the Laser Benchmark Session</h1>
+    <p style="font-size: 18px; color: var(--accent-cyan);">GRS04: Technological Innovation in Refractive Surgery | Dr. Patrick Versace</p>
+  </div>
+
+  <!-- SLIDE 4: Excimer Limitations & Solid-State -->
+  <div class="slide">
+    <div class="slide-category">Part 1: Laser Benchmark</div>
+    <div class="slide-title">Excimer Lasers: 30-Year Benchmark & Physical Limitations</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">The Clinical Standard</span>
+          <span class="badge badge-blue">Proven Results</span>
+        </div>
+        <ul class="item-list">
+          <li><strong>Predictability:</strong> 92% to 98.7% within ±0.50 D across MEL 90, AMARIS 1050RS, B&L Teneo, and EX500.</li>
+          <li><strong>Sub-Micron Precision:</strong> Proven corneal photoablation established over 30 years of clinical practice.</li>
+          <li><strong>Presbyopia Solutions:</strong> PresbyMAX (Schwind), PRESBYOND (Zeiss), Read (Alcon), and SUPRACOR (B&L).</li>
+          <li><strong>High Surgeon Comfort:</strong> Established gold-standard protocols across global refractive clinics.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Physics & Operational Constraints</span>
+          <span class="badge badge-gold">The Bottleneck</span>
+        </div>
+        <ul class="item-list">
+          <li><strong>Cosine Effect & Peripheral Loss:</strong> Curved cornea leads to non-normal incident angles, dropping peripheral fluence (Arba-Mosquera & de Ortueta). Requires compensatory tissue removal.</li>
+          <li><strong>Hydration & Thermal Spikes:</strong> Second-by-second stromal bed moisture shifts cause unpredictable ablation depth. Thermal load triggers keratocyte death.</li>
+          <li><strong>Toxic Gas Overhead:</strong> Hazardous Argon Fluoride & Xenon tanks require dedicated room exhaust, hazmat licensing, and costly service contracts.</li>
+          <li><strong>Solid-State Wet Ablation:</strong> Ziemer AQUARIUZ delivers 97.7% within ±0.50 D without toxic gas cylinders or acoustic shock waves.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: KLEx Overview -->
+  <div class="slide">
+    <div class="slide-category">Part 1: Laser Benchmark</div>
+    <div class="slide-title">The KLEx Paradigm (Keratorefractive Lenticule Extraction)</div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">1. Clinical Advantages</span>
+          <span class="badge badge-cyan">Safety</span>
+        </div>
+        <ul class="item-list">
+          <li><strong>Flapless:</strong> Eliminates flap dislocation, micro-striae, and traumatic flap tear risks.</li>
+          <li><strong>Biomechanical Strength:</strong> Preserves strong anterior 100-120 µm of stroma.</li>
+          <li><strong>Dry-Eye Sparing:</strong> Sparing of sub-basal nerve plexus preserves corneal sensation.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">2. Surgical Dynamics</span>
+          <span class="badge badge-blue">Workflow</span>
+        </div>
+        <ul class="item-list">
+          <li><strong>Two-Plane Cut:</strong> Femto cuts lower refractive plane then upper cap plane.</li>
+          <li><strong>Manual Dissection:</strong> Dissector separates tissue bridges before forceps extraction.</li>
+          <li><strong>Core Takeaway:</strong> "A faster laser does not mean a faster total case." Interface & dissection dominate.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">3. Multi-Vendor Era</span>
+          <span class="badge badge-gold">Commercial</span>
+        </div>
+        <ul class="item-list">
+          <li><strong>Monopoly Broken:</strong> Zeiss SMILE no longer sole option; 4 platforms now CE-marked.</li>
+          <li><strong>Technological Divergence:</strong> Pulse energy varies from 40 nJ to 170 nJ across platforms.</li>
+          <li><strong>Commercial Leverage:</strong> Multi-vendor competition drives down capital and click fees.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: Benchmark Table -->
+  <div class="slide">
+    <div class="slide-category">Part 1: Laser Benchmark</div>
+    <div class="slide-title">Four-Way KLEx Technical Benchmark Matrix</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Technical Parameter</th>
+            <th>Zeiss VisuMax 800 (SMILE Pro)</th>
+            <th>Schwind ATOS (SmartSight)</th>
+            <th>J&J Vision ELITA (SILK)</th>
+            <th>Ziemer FEMTO Z8 NEO</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Regulatory Status</strong></td>
+            <td>FDA (2024) / CE Mark</td>
+            <td>CE Mark</td>
+            <td>CE Mark</td>
+            <td>CE Mark</td>
+          </tr>
+          <tr>
+            <td><strong>Repetition Rate</strong></td>
+            <td>2 MHz</td>
+            <td>Up to 4 MHz</td>
+            <td>10 MHz</td>
+            <td>Up to 20 MHz</td>
+          </tr>
+          <tr>
+            <td><strong>Pulse Energy</strong></td>
+            <td>85 - 160 nJ (Typ. 125-170 nJ)</td>
+            <td>80 - 125 nJ (&lt; 100 nJ)</td>
+            <td>40 - 50 nJ</td>
+            <td>&lt; 50 nJ (Sub-nanojoule)</td>
+          </tr>
+          <tr>
+            <td><strong>Lenticule Cut Time</strong></td>
+            <td>&lt; 10 seconds</td>
+            <td>~ 23 - 30 seconds</td>
+            <td>~ 16 seconds</td>
+            <td>41.5 - 50 seconds</td>
+          </tr>
+          <tr>
+            <td><strong>Patient Interface</strong></td>
+            <td>Curved liquid interface</td>
+            <td>Curved contact interface</td>
+            <td>Flat applanation</td>
+            <td>Flat low-vacuum</td>
+          </tr>
+          <tr>
+            <td><strong>Lenticule Geometry</strong></td>
+            <td>Plano-convex</td>
+            <td>Tapered edge (Tissue saving)</td>
+            <td>Biconvex profile</td>
+            <td>Plano-convex (Q-customized)</td>
+          </tr>
+          <tr>
+            <td><strong>Scan Pattern</strong></td>
+            <td>Raster scan</td>
+            <td>Spiral cut geometry</td>
+            <td>Radial scan pattern</td>
+            <td>Stippled + guiding tunnels</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: Day-1 Clarity -->
+  <div class="slide">
+    <div class="slide-category">Part 1: Laser Benchmark</div>
+    <div class="slide-title">Biology of Recovery: The Formula for Day-1 Clarity</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">The Energy vs Dissection Trade-Off</span>
+          <span class="badge badge-gold">Tissue Trauma</span>
+        </div>
+        <ul class="item-list">
+          <li><strong>High Energy (&gt; 130 nJ):</strong> Creates large gas cavitation bubbles. Makes manual dissection easy for beginners, but triggers keratocyte apoptosis and stromal edema.</li>
+          <li><strong>The "SMILE Fog":</strong> Patients experience cloudy vision on Day 1, requiring up to two weeks for crisp contrast.</li>
+          <li><strong>Sub-100 nJ Advantage:</strong> Sub-nanojoule overlapping pulses eliminate cavitation bubbles (OBL), keeping the cornea crystal clear immediately post-op.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">The Formula for Day-1 Clarity (Versace)</span>
+          <span class="badge badge-cyan">Clinical Edge</span>
+        </div>
+        <div style="background: rgba(6, 182, 212, 0.1); border: 1px solid rgba(6, 182, 212, 0.3); border-radius: 8px; padding: 14px; margin-bottom: 14px; font-size: 13px; color: var(--accent-cyan); font-weight: 600; text-align: center;">
+          (Low Pulse Energy + High Frequency) + (Overlapping Spot Spacing) + (Spiral Cut Pattern) = Day-1 20/20 Clarity
+        </div>
+        <ul class="item-list">
+          <li><strong>Spiral vs Radial:</strong> Radial cut (ELITA) delivers concentrated central energy. Spiral cut (ATOS) diffuses energy outward, sparing the visual axis.</li>
+          <li><strong>Tapered Edge:</strong> Smooth corneal remodeling without abrupt peripheral stromal steps.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: Business Development Takeaways -->
+  <div class="slide">
+    <div class="slide-category">Part 1: Laser Benchmark</div>
+    <div class="slide-title">Refractive Laser Business Development Impact</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Commercial & Procurement Leverage</span>
+          <span class="badge badge-blue">Margins</span>
+        </div>
+        <ul class="item-list">
+          <li><strong>Multi-Vendor Leverage:</strong> Play Schwind (ATOS) and Ziemer (Z8) against Zeiss to slash capital purchase and per-case click fees by 15-25%.</li>
+          <li><strong>Flagship Cash-Pay Pricing:</strong> Package flapless KLEx at a +30% to +40% premium over conventional LASIK (€2,200 - €3,000 per eye).</li>
+          <li><strong>Day-1 Marketing:</strong> Market "Return to work tomorrow with zero flap displacement risk" to corporate executives and sports professionals.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Operational Efficiency & OPEX</span>
+          <span class="badge badge-teal">Efficiency</span>
+        </div>
+        <ul class="item-list">
+          <li><strong>Gas Elimination:</strong> Solid-state (Ziemer) and all-femtosecond platforms eliminate toxic ArF canisters, saving €15k/year in maintenance.</li>
+          <li><strong>Presbyopia Demographics:</strong> PRESBYOND and PresbyMAX open the 45-60 age group (highest disposable income).</li>
+          <li><strong>Reduced Learning Curve:</strong> Active cyclotorsion (Centrax / CentraLign) minimizes surgeon retreatment rates and builds confidence.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: Section Divider - Part 2 -->
+  <div class="slide" style="justify-content: center; text-align: center;">
+    <div class="slide-category" style="font-size: 16px;">SECTION 02</div>
+    <h1 class="slide-title" style="font-size: 42px; margin-bottom: 16px;">Executive Pitching, Presentation & Influence Masterclass</h1>
+    <p style="font-size: 18px; color: var(--accent-gold);">LBI & BoSS Leadership Sessions | Bostanci, Matsou, Lockington, Eskina & Joachim</p>
+  </div>
+
+  <!-- SLIDE 10: Pitching Philosophy -->
+  <div class="slide">
+    <div class="slide-category">Part 2: Pitching Masterclass</div>
+    <div class="slide-title">Philosophy of a Winning Pitch & The ABCDE Framework</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Core Presentation Philosophy</span>
+          <span class="badge badge-cyan">Bostanci</span>
+        </div>
+        <ul class="item-list">
+          <li><strong>The Golden Rule:</strong> "A presentation is not about showing everything you know; it's helping the audience understand what matters."</li>
+          <li><strong>Emotion Creates Memory:</strong> Data convinces logic, but emotion creates conviction and drives decisions. People remember how you made them feel.</li>
+          <li><strong>Audience Stakes:</strong> Anchor every slide in what the listener gains (patient safety, margin expansion, risk mitigation).</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">The ABCDE Framework (David Lockington)</span>
+          <span class="badge badge-gold">Delivery</span>
+        </div>
+        <ul class="item-list">
+          <li><strong>A — Accuracy:</strong> Scientific rigor and transparent sample sizes build trust.</li>
+          <li><strong>B — Brevity:</strong> The 300-word abstract rule. Limit pitch to 6 punchy slides.</li>
+          <li><strong>C — Clarity / Content:</strong> Exactly one core message per slide.</li>
+          <li><strong>D — Delivery:</strong> Grounded posture, vocal resonance, and deliberate silence.</li>
+          <li><strong>E — Enthusiasm:</strong> Unapologetic conviction in your clinic's vision.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 11: Slide Ergonomics & Rapid Fire -->
+  <div class="slide">
+    <div class="slide-category">Part 2: Pitching Masterclass</div>
+    <div class="slide-title">Auditorium Ergonomics & The 6-Slide Pitch Structure</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Slide Ergonomics (Eskina & Joachim)</span>
+          <span class="badge badge-blue">Visual Design</span>
+        </div>
+        <ul class="item-list">
+          <li><strong>Solid Black Backgrounds:</strong> White slides blind the audience and put the speaker in dark silhouette. Black backgrounds create crisp contrast and frame the presenter.</li>
+          <li><strong>One Idea Per Slide:</strong> No paragraphs of text. Use visual anchors and bullet fragments.</li>
+          <li><strong>Ban Memes & Cartoons:</strong> They take too long to explain, look amateur, and fail across cultures ("If you have to explain a joke, it wasn't funny").</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Rapid-Fire Pitch (3-6 Minutes)</span>
+          <span class="badge badge-cyan">Structure</span>
+        </div>
+        <ul class="item-list">
+          <li><strong>Slide 1 (The Hook):</strong> 1 urgent unmet medical or operational problem (30s).</li>
+          <li><strong>Slide 2-3 (The Solution):</strong> Your clinical methodology or technological platform.</li>
+          <li><strong>Slide 4 (The Proof):</strong> 1 decisive dataset or pilot outcome metric.</li>
+          <li><strong>Slide 5 (Business Impact):</strong> Margin expansion, safety profile, or volume capacity.</li>
+          <li><strong>Slide 6 (The Call to Action):</strong> Concrete next step or partnership ask.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 12: Defending Q&A -->
+  <div class="slide">
+    <div class="slide-category">Part 2: Pitching Masterclass</div>
+    <div class="slide-title">Mastering Hostile Q&A & Podium Defense (Artemis Matsou)</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">The 4 Question Archetypes</span>
+          <span class="badge badge-gold">Tactics</span>
+        </div>
+        <ul class="item-list">
+          <li><strong>The Show-Off:</strong> "I did this 15 years ago..." -> Acknowledge their pioneering contribution, then highlight the technology delta.</li>
+          <li><strong>The Irrelevant:</strong> Digressing into rare edge cases -> "Fascinating, but outside our predefined cohort; let's discuss offline."</li>
+          <li><strong>The Direct Skeptic:</strong> "Why not Platform X?" -> State inclusion criteria calmly without defensiveness.</li>
+          <li><strong>The Senior Critic:</strong> Validate their historical baseline, then lean on prospective data.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Golden Defense Rules</span>
+          <span class="badge badge-teal">Poise</span>
+        </div>
+        <ul class="item-list">
+          <li><strong>Never Bluff or Guess:</strong> "I don't have that specific data point, and I don't want to guess. Let's connect right after." Projects supreme confidence.</li>
+          <li><strong>The 2-Second Strategic Pause:</strong> Breathe before answering. Prevents defensive reaction and signals executive control.</li>
+          <li><strong>Restate the Question:</strong> Ensures the hall hears it and gives you 5 seconds to formulate your structure.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 13: Overcoming Stage Fright & Nerves -->
+  <div class="slide">
+    <div class="slide-category">Part 2: Pitching Masterclass</div>
+    <div class="slide-title">Neurobiology of Fear & Overcoming Imposter Syndrome</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Psychological Insights</span>
+          <span class="badge badge-cyan">Science of Fear</span>
+        </div>
+        <ul class="item-list">
+          <li><strong>The Illusion of Transparency (Savitsky & Gilovich):</strong> Speakers overestimate how nervous they appear by up to 80%. The audience cannot see your adrenaline.</li>
+          <li><strong>Anxiety Reappraisal (Brooks, Harvard):</strong> Telling yourself "I am calm" fails. Switching to "I AM EXCITED" channels adrenaline into charisma and boosts competence ratings.</li>
+          <li><strong>Cognitive Reframing:</strong> 95%+ of the room wants you to succeed. Reframe: "I am not taking an exam; I am sharing a valuable contribution."</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Rehearse Failure Recovery</span>
+          <span class="badge badge-gold">Contingency</span>
+        </div>
+        <ul class="item-list">
+          <li><strong>Screen / Tech Fails:</strong> Never apologize profusely. Say: "Let me describe exactly what the data shows..."</li>
+          <li><strong>Mind Goes Blank:</strong> Take a sip of water and state: "The essential takeaway here is..."</li>
+          <li><strong>Post-Presentation Audit:</strong> Write down what worked well first. Never fixate solely on minor awkward moments.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 14: Non-Verbal Dominance & Stage Presence -->
+  <div class="slide">
+    <div class="slide-category">Part 2: Pitching Masterclass</div>
+    <div class="slide-title">Executive Non-Verbal Dominance & International Delivery</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">The First 5 Seconds (Mehrabian)</span>
+          <span class="badge badge-blue">Body Language</span>
+        </div>
+        <ul class="item-list">
+          <li><strong>55% Visual:</strong> Posture, grounding, and eye contact speak before words.</li>
+          <li><strong>38% Vocal Tone:</strong> Cadence, pitch, and pauses convey authority.</li>
+          <li><strong>7% Literal Words:</strong> Pure verbiage means nothing if posture signals insecurity.</li>
+          <li><strong>The Power Triangle:</strong> Two feet shoulder-width apart, open visible hands, deliberate stillness during key takeaways.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Delivering in a Foreign Language (Eskina)</span>
+          <span class="badge badge-teal">International</span>
+        </div>
+        <ul class="item-list">
+          <li><strong>International Reality:</strong> Over 80% at global medical congresses speak English as a non-native language.</li>
+          <li><strong>Visible Bravery:</strong> Audiences do not care about your accent; they care about clarity and understanding.</li>
+          <li><strong>The 4 Simplification Rules:</strong> 1. Short sentences. 2. One idea per slide. 3. Zero complex puns. 4. Strategic 2-second pauses.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 15: LinkedIn Strategy -->
+  <div class="slide">
+    <div class="slide-category">Part 2: Pitching Masterclass</div>
+    <div class="slide-title">B2B Digital Influence: The LinkedIn Playbook (Bostanci)</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">The 3-Phase Cadence</span>
+          <span class="badge badge-cyan">Cadence</span>
+        </div>
+        <ul class="item-list">
+          <li><strong>Before Congress:</strong> Signal research questions and sessions you are investigating.</li>
+          <li><strong>During Congress:</strong> Share 1-2 real-time clinical data insights with high signal-to-noise ratio.</li>
+          <li><strong>Post-Congress Synthesis:</strong> Publish a structured debrief: "What we learned & what changes our clinical protocols" + 1 graphic + tag partners.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Reputation Principles</span>
+          <span class="badge badge-gold">Authority</span>
+        </div>
+        <ul class="item-list">
+          <li><strong>Digital Permanence:</strong> Everything posted online is permanent. Reflect hospital-grade professionalism.</li>
+          <li><strong>Confidentiality:</strong> Respect patient privacy and intellectual property.</li>
+          <li><strong>Commercial Value:</strong> Inbound surgeon recruitment and distributor partnerships originate from digital credibility.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 16: Section Divider - Part 3 -->
+  <div class="slide" style="justify-content: center; text-align: center;">
+    <div class="slide-category" style="font-size: 16px;">SECTION 03</div>
+    <h1 class="slide-title" style="font-size: 42px; margin-bottom: 16px;">Strategic Exhibition Field Notes & Meeting Log</h1>
+    <p style="font-size: 18px; color: var(--accent-gold);">Interactive, editable meeting templates for vendor discussions. Auto-saves locally.</p>
+  </div>
+
+  <!-- SLIDE 17: Exhibition Slide - Carl Zeiss Meditec -->
+  <div class="slide" data-ex-id="zeiss">
+    <div class="slide-category">Exhibition Debrief • Refractive & Microscope</div>
+    <div class="slide-title">Vendor Meeting: Carl Zeiss Meditec</div>
+    <div class="grid-2">
+      <div class="form-section">
+        <div class="card" style="padding: 14px; background: rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.3);">
+          <div style="font-size: 11px; font-weight: 700; color: var(--accent-gold);">TARGET PLATFORMS & STRATEGIC ANGLE:</div>
+          <div style="font-size: 12px; color: var(--text-main); margin-top: 4px;">
+            VisuMax 800 (SMILE Pro), PRESBYOND, KINEVO Microscope, Cirrus OCT.<br>
+            <em>Single-vendor OR + Diagnostic lane bundle; leverage ATOS/Z8 quotes against VisuMax pricing.</em>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Key Contact Name & Role</label>
+          <input class="form-input" id="ex_zeiss_contact" placeholder="e.g. Dr. Markus Weber, VP Refractive Surgery" oninput="saveExData('zeiss')">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input class="form-input" id="ex_zeiss_email" placeholder="contact@zeiss.com" oninput="saveExData('zeiss')">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone / Mobile</label>
+            <input class="form-input" id="ex_zeiss_phone" placeholder="+49 ..." oninput="saveExData('zeiss')">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Office / Territory</label>
+          <input class="form-input" id="ex_zeiss_office" placeholder="e.g. UK & EMEA Commercial Division" oninput="saveExData('zeiss')">
+        </div>
+      </div>
+      <div class="form-section">
+        <div class="form-group">
+          <label class="form-label">What Did We Discuss / Demo Seen</label>
+          <textarea class="form-textarea" id="ex_zeiss_discuss" placeholder="Write discussion points, VisuMax 800 live demo observations, OcuLign cyclotorsion..." oninput="saveExData('zeiss')"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Commercial Offer / Proposed Pricing</label>
+          <textarea class="form-textarea" id="ex_zeiss_terms" placeholder="Capital quote, per-procedure click fee, microscope bundle discount..." oninput="saveExData('zeiss')"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Action Items & Follow-Up Timeline</label>
+          <input class="form-input" id="ex_zeiss_action" placeholder="e.g. Formal RFP meeting scheduled for Oct 5; send clinic floor plan" oninput="saveExData('zeiss')">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 18: Exhibition Slide - Schwind -->
+  <div class="slide" data-ex-id="schwind">
+    <div class="slide-category">Exhibition Debrief • Refractive Suite</div>
+    <div class="slide-title">Vendor Meeting: Schwind Eye-Tech-Solutions</div>
+    <div class="grid-2">
+      <div class="form-section">
+        <div class="card" style="padding: 14px; background: rgba(6, 182, 212, 0.1); border-color: rgba(6, 182, 212, 0.3);">
+          <div style="font-size: 11px; font-weight: 700; color: var(--accent-gold);">TARGET PLATFORMS & STRATEGIC ANGLE:</div>
+          <div style="font-size: 12px; color: var(--text-main); margin-top: 4px;">
+            ATOS (SmartSight KLEx), AMARIS 1050RS Excimer, MS-39 OCT, PresbyMAX.<br>
+            <em>Turnkey refractive suite; evaluate capital vs click fee and tissue-saving spiral scan advantage.</em>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Key Contact Name & Role</label>
+          <input class="form-input" id="ex_schwind_contact" placeholder="e.g. Regional Director EMEA" oninput="saveExData('schwind')">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input class="form-input" id="ex_schwind_email" placeholder="contact@eye-tech.net" oninput="saveExData('schwind')">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone / Mobile</label>
+            <input class="form-input" id="ex_schwind_phone" placeholder="+49 ..." oninput="saveExData('schwind')">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Office / Territory</label>
+          <input class="form-input" id="ex_schwind_office" placeholder="Germany HQ / International Sales" oninput="saveExData('schwind')">
+        </div>
+      </div>
+      <div class="form-section">
+        <div class="form-group">
+          <label class="form-label">What Did We Discuss / Demo Seen</label>
+          <textarea class="form-textarea" id="ex_schwind_discuss" placeholder="ATOS SmartSight demo, Centrax centration, EASE surface ablation data..." oninput="saveExData('schwind')"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Commercial Offer / Proposed Pricing</label>
+          <textarea class="form-textarea" id="ex_schwind_terms" placeholder="Turnkey suite pricing (ATOS + AMARIS 1050RS), maintenance contract terms..." oninput="saveExData('schwind')"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Action Items & Follow-Up Timeline</label>
+          <input class="form-input" id="ex_schwind_action" placeholder="e.g. Schedule wet lab session in Kleinostheim; request proctor list" oninput="saveExData('schwind')">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 19: Exhibition Slide - Alcon -->
+  <div class="slide" data-ex-id="alcon">
+    <div class="slide-category">Exhibition Debrief • Cataract & IOL Suite</div>
+    <div class="slide-title">Vendor Meeting: Alcon</div>
+    <div class="grid-2">
+      <div class="form-section">
+        <div class="card" style="padding: 14px; background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3);">
+          <div style="font-size: 11px; font-weight: 700; color: var(--accent-gold);">TARGET PLATFORMS & STRATEGIC ANGLE:</div>
+          <div style="font-size: 12px; color: var(--text-main); margin-top: 4px;">
+            Centurion with ACTIVE SENTRY, PanOptix, Vivity, WaveLight Plus.<br>
+            <em>New hospital setup bundle: high-volume phaco consignment and multi-year premium IOL rebate.</em>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Key Contact Name & Role</label>
+          <input class="form-input" id="ex_alcon_contact" placeholder="e.g. Surgical Account Director" oninput="saveExData('alcon')">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input class="form-input" id="ex_alcon_email" placeholder="contact@alcon.com" oninput="saveExData('alcon')">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone / Mobile</label>
+            <input class="form-input" id="ex_alcon_phone" placeholder="+41 ..." oninput="saveExData('alcon')">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Office / Territory</label>
+          <input class="form-input" id="ex_alcon_office" placeholder="Hospital Division" oninput="saveExData('alcon')">
+        </div>
+      </div>
+      <div class="form-section">
+        <div class="form-group">
+          <label class="form-label">What Did We Discuss / Demo Seen</label>
+          <textarea class="form-textarea" id="ex_alcon_discuss" placeholder="Centurion fluidics demo, WaveLight Plus raytracing update, PanOptix delivery packs..." oninput="saveExData('alcon')"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Commercial Offer / Proposed Pricing</label>
+          <textarea class="form-textarea" id="ex_alcon_terms" placeholder="New hospital setup consignment package, custom procedural pack pricing..." oninput="saveExData('alcon')"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Action Items & Follow-Up Timeline</label>
+          <input class="form-input" id="ex_alcon_action" placeholder="e.g. Request consumable pack catalog and trial unit delivery date" oninput="saveExData('alcon')">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 20: Exhibition Slide - Blank Open Template -->
+  <div class="slide" data-ex-id="open1">
+    <div class="slide-category">Exhibition Debrief • Open Meeting Template</div>
+    <div class="slide-title">Vendor Meeting: <input class="form-input" id="ex_open1_name" placeholder="[Enter Company / Partner Name]" style="display:inline-block; width:450px; font-size:22px; font-weight:700;" oninput="saveExData('open1')"></div>
+    <div class="grid-2">
+      <div class="form-section">
+        <div class="form-group">
+          <label class="form-label">Technology / Product Discussed</label>
+          <input class="form-input" id="ex_open1_tech" placeholder="e.g. Diagnostics, Surgical Consumables, EMR, IOLs..." oninput="saveExData('open1')">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Key Contact Person & Title</label>
+          <input class="form-input" id="ex_open1_contact" placeholder="Name and Job Title" oninput="saveExData('open1')">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input class="form-input" id="ex_open1_email" placeholder="email@company.com" oninput="saveExData('open1')">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone / Mobile</label>
+            <input class="form-input" id="ex_open1_phone" placeholder="+1 / +44 / +33 ..." oninput="saveExData('open1')">
+          </div>
+        </div>
+      </div>
+      <div class="form-section">
+        <div class="form-group">
+          <label class="form-label">What Did We Discuss / What Did We Do</label>
+          <textarea class="form-textarea" id="ex_open1_discuss" placeholder="Meeting discussion points, booth demo impressions..." oninput="saveExData('open1')"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Terms Offered / Pricing / Proposals</label>
+          <textarea class="form-textarea" id="ex_open1_terms" placeholder="Commercial proposals, pricing discounts, trial agreements..." oninput="saveExData('open1')"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Next Action & Owner</label>
+          <input class="form-input" id="ex_open1_action" placeholder="Next step and follow-up deadline..." oninput="saveExData('open1')">
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="bottom-bar">
+  <div class="keys-hint">
+    <span>Navigate: <span class="key-badge">◀</span> <span class="key-badge">▶</span> or <span class="key-badge">Space</span></span>
+    <span>Auto-Save: <span style="color:var(--accent-teal);">Active in LocalStorage</span></span>
+  </div>
+  <div>ESCRS 2026 Executive Field Briefing • Confidential Clinic Intelligence</div>
+</div>
+
+<script>
+let currentSlideIndex = 0;
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+
+function showSlide(index) {
+  if (index < 0) index = 0;
+  if (index >= totalSlides) index = totalSlides - 1;
+  currentSlideIndex = index;
+  slides.forEach((s, i) => s.classList.toggle('active', i === index));
+  document.getElementById('slideNum').innerText = `Slide ${index + 1} / ${totalSlides}`;
+}
+
+function nextSlide() { showSlide(currentSlideIndex + 1); }
+function prevSlide() { showSlide(currentSlideIndex - 1); }
+
+function toggleFullscreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen();
+  } else {
+    if (document.exitFullscreen) document.exitFullscreen();
+  }
+}
+
+// Keyboard navigation
+window.addEventListener('keydown', (e) => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') nextSlide();
+  if (e.key === 'ArrowLeft' || e.key === 'PageUp') prevSlide();
+});
+
+// LocalStorage Auto-Save for Exhibition Slides
+const STORAGE_KEY = 'escrs_slides_exhibitions_v1';
+let exData = {};
+
+function loadExData() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) exData = JSON.parse(raw);
+  } catch(e) {}
+  
+  const fields = document.querySelectorAll('[id^="ex_"]');
+  fields.forEach(f => {
+    if (exData[f.id] !== undefined) f.value = exData[f.id];
+  });
+}
+
+function saveExData(vendorId) {
+  const fields = document.querySelectorAll(`[id^="ex_${vendorId}"]`);
+  fields.forEach(f => {
+    exData[f.id] = f.value;
+  });
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(exData));
+}
+
+window.onload = () => {
+  loadExData();
+  showSlide(0);
+};
+</script>
+</body>
+</html>
