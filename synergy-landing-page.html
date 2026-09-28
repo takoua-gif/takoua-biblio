@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Synergy by EyePros: the shared care partnership for UK optometrists. Refer patients to NHS consultant ophthalmologists, stay involved throughout the journey, and track every step through Syndesis.">
+<title>Synergy by EyePros | Shared Care Partnership for Optometrists</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0F2B4C;
+  --navy-light: #1A3A5C;
+  --navy-dark: #0A1F38;
+  --teal: #0D9488;
+  --teal-hover: #0B7B72;
+  --teal-light: #F0FDFA;
+  --teal-10: rgba(13,148,136,.1);
+  --text-dark: #1E293B;
+  --text-med: #475569;
+  --text-light: #64748B;
+  --bg-white: #FFFFFF;
+  --bg-light: #F8FAFC;
+  --bg-warm: #F1F5F9;
+  --border: #E2E8F0;
+  --border-light: #F1F5F9;
+  --confirm-bg: #FEF3C7;
+  --confirm-text: #92400E;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --radius-lg: 16px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.06);
+  --shadow-md: 0 4px 16px rgba(0,0,0,.08);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,.1);
+  --max-w: 1200px;
+  --font: 'Inter',system-ui,-apple-system,sans-serif;
+  --ease: cubic-bezier(.4,0,.2,1);
+  --ease-out: cubic-bezier(0,0,.2,1);
+  --ease-spring: cubic-bezier(.34,1.56,.64,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:80px}
+body{font-family:var(--font);font-size:17px;line-height:1.7;color:var(--text-dark);background:var(--bg-white);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+h1,h2,h3,h4{line-height:1.25;color:var(--navy)}
+h1{font-size:clamp(2rem,4vw,3rem);font-weight:800;letter-spacing:-.02em}
+h2{font-size:clamp(1.6rem,3vw,2.25rem);font-weight:700;letter-spacing:-.015em}
+h3{font-size:1.25rem;font-weight:700}
+h4{font-size:1.1rem;font-weight:600}
+.confirm{background:var(--confirm-bg);color:var(--confirm-text);padding:2px 8px;border-radius:4px;font-size:.85em;font-weight:600;white-space:nowrap}
+.container{max-width:var(--max-w);margin:0 auto;padding:0 24px}
+.section{padding:80px 0}
+.section-alt{background:var(--bg-light)}
+.section-navy{background:var(--navy);color:#fff}
+.section-navy h2,.section-navy h3,.section-navy h4{color:#fff}
+.section-navy .text-med{color:rgba(255,255,255,.75)}
+.eyebrow{font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:12px}
+.section-navy .eyebrow{color:rgba(255,255,255,.6)}
+.text-med{color:var(--text-med)}
+.text-light{color:var(--text-light)}
+.text-center{text-align:center}
+.mx-auto{margin-left:auto;margin-right:auto}
+.max-w-prose{max-width:680px}
+.mt-12{margin-top:12px}.mt-16{margin-top:16px}.mt-24{margin-top:24px}.mt-32{margin-top:32px}.mt-48{margin-top:48px}
+.mb-8{margin-bottom:8px}.mb-12{margin-bottom:12px}.mb-16{margin-bottom:16px}.mb-24{margin-bottom:24px}.mb-32{margin-bottom:32px}.mb-48{margin-bottom:48px}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.grid-5{display:grid;grid-template-columns:repeat(5,1fr);gap:20px}
+/* ── Accent strip ── */
+.nav-strip{position:fixed;top:0;left:0;right:0;height:3px;z-index:1001;background:linear-gradient(90deg,var(--teal),var(--navy-light),var(--teal));background-size:200% 100%;animation:stripShimmer 6s ease infinite}
+@keyframes stripShimmer{0%,100%{background-position:0% 0%}50%{background-position:100% 0%}}
+/* ── Buttons ── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 32px;border-radius:var(--radius);font-size:.95rem;font-weight:600;border:none;transition:all .35s var(--ease);min-height:48px}
+.btn:active{transform:scale(.97)!important}
+.btn-primary{background:var(--teal);color:#fff;box-shadow:0 2px 8px rgba(13,148,136,.25)}
+.btn-primary:hover{background:var(--teal-hover);transform:translateY(-2px);box-shadow:0 8px 24px rgba(13,148,136,.3)}
+.btn-secondary{background:transparent;color:var(--teal);border:2px solid var(--teal)}
+.btn-secondary:hover{background:var(--teal-light);transform:translateY(-2px)}
+.btn-outline-white{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.3)}
+.btn-outline-white:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.6);transform:translateY(-2px)}
+.btn-sm{padding:10px 20px;font-size:.875rem;min-height:40px}
+.btn-disabled{opacity:.5;cursor:not-allowed;pointer-events:none}
+/* ── Nav ── */
+.nav{position:fixed;top:3px;left:0;right:0;z-index:1000;background:rgba(15,43,76,.95);backdrop-filter:blur(16px) saturate(180%);-webkit-backdrop-filter:blur(16px) saturate(180%);border-bottom:1px solid rgba(255,255,255,.06);transition:all .4s var(--ease)}
+.nav.scrolled{background:rgba(10,31,56,.98);box-shadow:0 4px 30px rgba(0,0,0,.2)}
+.nav-inner{max-width:var(--max-w);margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-size:1.15rem;font-weight:800;color:#fff;display:flex;align-items:center;gap:4px;white-space:nowrap;transition:opacity .3s var(--ease)}
+.nav-logo:hover{opacity:.85}
+.nav-logo .accent{color:var(--teal)}
+.nav-logo .tag{font-size:.7rem;font-weight:500;opacity:.5;margin-left:8px;letter-spacing:.05em}
+.nav-links{display:flex;align-items:center;gap:2px;list-style:none}
+.nav-links a{color:rgba(255,255,255,.65);font-size:.85rem;font-weight:500;padding:8px 14px;border-radius:var(--radius-sm);transition:all .3s var(--ease);position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:2px;left:50%;width:0;height:2px;background:var(--teal);border-radius:1px;transform:translateX(-50%);transition:width .35s var(--ease)}
+.nav-links a:hover{color:#fff}
+.nav-links a:hover::after{width:20px}
+.nav-links a.active{color:#fff}
+.nav-links a.active::after{width:20px}
+.nav-actions{display:flex;align-items:center;gap:8px}
+.nav-actions .btn{padding:8px 18px;font-size:.85rem;min-height:36px}
+.nav-toggle{display:none;background:none;border:none;color:#fff;font-size:1.5rem;padding:8px;cursor:pointer;transition:transform .3s var(--ease)}
+.nav-toggle:hover{transform:scale(1.1)}
+.mobile-cta-bar{display:none}
+/* ── Hero ── */
+.hero{padding:150px 0 100px;background:linear-gradient(160deg,var(--navy-dark) 0%,var(--navy) 40%,var(--navy-light) 100%);color:#fff;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-40%;right:-15%;width:700px;height:700px;background:radial-gradient(circle,rgba(13,148,136,.12) 0%,transparent 65%);pointer-events:none;animation:heroFloat 8s ease-in-out infinite alternate}
+.hero::after{content:'';position:absolute;bottom:-20%;left:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(13,148,136,.06) 0%,transparent 65%);pointer-events:none;animation:heroFloat 10s ease-in-out infinite alternate-reverse}
+@keyframes heroFloat{0%{transform:translate(0,0) scale(1)}100%{transform:translate(30px,-20px) scale(1.08)}}
+.hero h1{color:#fff;font-size:clamp(2.2rem,4.5vw,3.2rem)}
+.hero h1 br{display:none}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center;position:relative;z-index:1}
+.hero-eyebrow{font-size:.75rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:16px}
+.hero-sub{font-size:1.1rem;color:rgba(255,255,255,.7);margin-bottom:36px;max-width:540px;line-height:1.8}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:36px}
+.hero-chips{display:flex;flex-wrap:wrap;gap:10px}
+.hero-chip{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:rgba(255,255,255,.06);color:rgba(255,255,255,.8);font-size:.8rem;font-weight:500;border-radius:100px;border:1px solid rgba(255,255,255,.1);transition:all .35s var(--ease)}
+.hero-chip:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2)}
+.hero-chip svg{width:16px;height:16px;flex-shrink:0;color:var(--teal)}
+.hero-image{border-radius:var(--radius-lg);height:440px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.08);transition:transform .6s var(--ease),box-shadow .6s var(--ease)}
+.hero-image:hover{transform:scale(1.02);box-shadow:0 32px 80px rgba(0,0,0,.35)}
+/* ── Credibility Bar ── */
+.cred-bar{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:28px 0;background:var(--bg-white)}
+.cred-bar-inner{display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap}
+.cred-item{display:flex;align-items:center;gap:10px;font-size:.9rem;font-weight:600;color:var(--navy);transition:color .3s var(--ease)}
+.cred-item:hover{color:var(--teal)}
+.cred-item svg{width:20px;height:20px;color:var(--teal);flex-shrink:0;transition:transform .4s var(--ease-spring)}
+.cred-item:hover svg{transform:scale(1.15)}
+/* ── Cards ── */
+.card{background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:36px;transition:all .4s var(--ease);position:relative}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--teal);border-radius:var(--radius-lg) var(--radius-lg) 0 0;transform:scaleX(0);transition:transform .4s var(--ease);transform-origin:left}
+.card:hover{border-color:var(--teal);box-shadow:var(--shadow-lg);transform:translateY(-4px)}
+.card:hover::before{transform:scaleX(1)}
+.card-icon{width:52px;height:52px;background:var(--teal-light);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-size:1.5rem;color:var(--teal);transition:all .4s var(--ease-spring)}
+.card:hover .card-icon{transform:scale(1.1) rotate(-3deg);background:var(--teal);color:#fff}
+.card h3{margin-bottom:8px}
+.card p{color:var(--text-med);font-size:.95rem}
+/* ── Positioning mini cards ── */
+.mini-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.mini-card{padding:24px 20px;background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius);text-align:center;transition:all .35s var(--ease)}
+.mini-card:hover{border-color:var(--teal);transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.mini-card-icon{font-size:1.5rem;margin-bottom:10px;transition:transform .4s var(--ease-spring)}
+.mini-card:hover .mini-card-icon{transform:scale(1.2)}
+.mini-card h4{font-size:.9rem;margin-bottom:4px}
+.mini-card p{font-size:.8rem;color:var(--text-light)}
+/* ── Partner logos ── */
+.partner-logos{display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap}
+.partner-logo{display:flex;align-items:center;justify-content:center;height:70px;padding:8px 16px;border-radius:var(--radius);transition:all .5s var(--ease);filter:grayscale(100%) opacity(.4)}
+.partner-logo:hover{filter:grayscale(0) opacity(1);transform:scale(1.05)}
+.partner-logo img{max-height:100%;max-width:160px;object-fit:contain}
+/* ── Timeline ── */
+.timeline{display:flex;gap:0;position:relative;margin-top:48px}
+.timeline::before{content:'';position:absolute;top:28px;left:10%;right:10%;height:3px;background:linear-gradient(90deg,var(--teal),var(--border) 20%,var(--border) 80%,var(--navy));z-index:0}
+.timeline-step{flex:1;text-align:center;position:relative;z-index:1;padding:0 12px}
+.timeline-dot{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:800;margin:0 auto 16px;position:relative;z-index:2;border:3px solid var(--bg-light);transition:all .4s var(--ease-spring);box-shadow:var(--shadow-sm)}
+.timeline-dot:hover{transform:scale(1.15);box-shadow:var(--shadow-md)}
+.timeline-dot.optom{background:var(--teal);color:#fff}
+.timeline-dot.eyepros{background:var(--navy);color:#fff}
+.timeline-label{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.timeline-label.optom{color:var(--teal)}
+.timeline-label.eyepros{color:var(--navy)}
+.timeline-step h4{font-size:.95rem;margin-bottom:6px}
+.timeline-step p{font-size:.82rem;color:var(--text-light);line-height:1.5}
+/* ── Syndesis ── */
+.syndesis-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.syndesis-features{list-style:none;display:flex;flex-direction:column;gap:16px;margin:24px 0 32px}
+.syndesis-features li{display:flex;align-items:flex-start;gap:12px;font-size:.95rem;transition:transform .3s var(--ease)}
+.syndesis-features li:hover{transform:translateX(4px)}
+.syndesis-features li svg{width:20px;height:20px;color:var(--teal);flex-shrink:0;margin-top:3px}
+.syndesis-features li strong{color:var(--navy)}
+.syndesis-mockup{background:var(--bg-warm);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-lg);transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+.syndesis-mockup:hover{transform:translateY(-6px);box-shadow:0 30px 60px rgba(0,0,0,.15)}
+.mockup-bar{height:36px;background:var(--navy-dark);display:flex;align-items:center;padding:0 12px;gap:6px}
+.mockup-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.15)}
+.mockup-body{padding:24px;display:grid;grid-template-columns:180px 1fr;gap:16px;min-height:280px}
+.mockup-sidebar{display:flex;flex-direction:column;gap:8px}
+.mockup-sidebar-item{height:12px;background:var(--border);border-radius:4px;width:80%}
+.mockup-sidebar-item.active{background:var(--teal);width:100%}
+.mockup-content{display:flex;flex-direction:column;gap:12px}
+.mockup-content-line{height:10px;background:var(--border);border-radius:4px}
+.mockup-content-line.short{width:60%}
+.mockup-content-line.med{width:80%}
+.mockup-content-card{height:60px;background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius-sm)}
+/* ── Shared Care ── */
+.shared-table{width:100%;border-collapse:collapse;margin-top:32px;background:var(--bg-white);border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow-sm)}
+.shared-table thead{background:var(--navy)}
+.shared-table th{padding:16px 24px;color:#fff;font-size:.85rem;font-weight:700;text-align:left;letter-spacing:.03em}
+.shared-table td{padding:14px 24px;border-bottom:1px solid var(--border-light);font-size:.9rem;transition:background .25s var(--ease)}
+.shared-table tr:last-child td{border-bottom:none}
+.shared-table tbody tr:hover{background:var(--teal-light)}
+.shared-table .check{color:var(--teal);font-weight:700;font-size:1.1rem}
+.shared-table .label-col{font-weight:600;color:var(--navy)}
+/* ── Consultants ── */
+.consultant-card{display:grid;grid-template-columns:200px 1fr;background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;transition:all .4s var(--ease)}
+.consultant-card:hover{box-shadow:var(--shadow-lg);border-color:var(--teal);transform:translateY(-3px)}
+.consultant-photo{background:linear-gradient(135deg,var(--bg-warm),var(--border));display:flex;align-items:center;justify-content:center;min-height:260px}
+.consultant-photo-placeholder{width:100px;height:100px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:700}
+.consultant-info{padding:32px}
+.consultant-info h3{margin-bottom:4px}
+.consultant-role{font-size:.9rem;color:var(--teal);font-weight:600;margin-bottom:16px}
+.consultant-badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.consultant-badge{font-size:.75rem;font-weight:600;padding:4px 10px;border-radius:100px;background:var(--bg-light);color:var(--navy);border:1px solid var(--border);transition:all .3s var(--ease)}
+.consultant-badge:hover{background:var(--teal-light);border-color:var(--teal)}
+.consultant-bio{font-size:.9rem;color:var(--text-med);line-height:1.6}
+/* ── Treatments ── */
+.treatment-group{margin-bottom:32px}
+.treatment-group h3{margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.treatment-group h3 .icon{width:32px;height:32px;background:var(--teal-light);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:.9rem}
+.treatment-list{display:flex;flex-wrap:wrap;gap:8px}
+.treatment-tag{padding:8px 16px;background:var(--bg-light);border:1px solid var(--border);border-radius:100px;font-size:.85rem;font-weight:500;color:var(--text-dark);transition:all .3s var(--ease)}
+.treatment-tag:hover{border-color:var(--teal);background:var(--teal-light);transform:translateY(-1px)}
+/* ── Locations ── */
+.location-card{padding:28px;background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius);text-align:center;transition:all .35s var(--ease)}
+.location-card:hover{border-color:var(--teal);transform:translateY(-4px);box-shadow:var(--shadow-md)}
+.location-card h4{margin-bottom:4px}
+.location-card p{font-size:.85rem;color:var(--text-light)}
+/* ── FAQ ── */
+.faq-list{max-width:800px;margin:32px auto 0;display:flex;flex-direction:column;gap:10px}
+.faq-item{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:all .35s var(--ease)}
+.faq-item:hover{border-color:rgba(13,148,136,.3)}
+.faq-item.open{border-color:var(--teal);box-shadow:0 4px 16px rgba(13,148,136,.08)}
+.faq-q{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;background:var(--bg-white);cursor:pointer;font-weight:600;font-size:.95rem;color:var(--navy);gap:12px;border:none;width:100%;text-align:left;font-family:var(--font);transition:background .3s var(--ease)}
+.faq-q:hover{background:var(--bg-light)}
+.faq-q svg{width:20px;height:20px;transition:transform .4s var(--ease-spring);flex-shrink:0;color:var(--text-light)}
+.faq-item.open .faq-q svg{transform:rotate(180deg);color:var(--teal)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .5s var(--ease-out);background:var(--bg-white)}
+.faq-a-inner{padding:0 24px 20px;color:var(--text-med);font-size:.9rem;line-height:1.7}
+/* ── Form ── */
+.form-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:48px;align-items:start}
+.form-card{background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:40px;box-shadow:var(--shadow-md);transition:box-shadow .4s var(--ease)}
+.form-card:hover{box-shadow:var(--shadow-lg)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-group{margin-bottom:20px}
+.form-group label{display:block;font-size:.85rem;font-weight:600;color:var(--navy);margin-bottom:6px}
+.form-group label .req{color:var(--teal)}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:.95rem;font-family:var(--font);transition:all .3s var(--ease);background:var(--bg-white);min-height:48px}
+.form-group textarea{min-height:100px;resize:vertical}
+.form-group input:hover,.form-group select:hover,.form-group textarea:hover{border-color:var(--text-light)}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 4px var(--teal-10)}
+.form-group.error input,.form-group.error select,.form-group.error textarea{border-color:#EF4444}
+.form-group.error input:focus,.form-group.error select:focus{box-shadow:0 0 0 4px rgba(239,68,68,.1)}
+.form-error{font-size:.8rem;color:#EF4444;margin-top:4px;display:none}
+.form-group.error .form-error{display:block}
+.form-privacy{font-size:.8rem;color:var(--text-light);margin-top:12px}
+.form-privacy a{color:var(--teal);text-decoration:underline}
+.form-success,.form-fail{display:none;padding:40px;text-align:center}
+.form-success.show,.form-fail.show{display:block}
+.form-success svg{width:64px;height:64px;color:var(--teal);margin:0 auto 16px}
+.form-fail svg{width:64px;height:64px;color:#EF4444;margin:0 auto 16px}
+.contact-aside{padding:32px;background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);transition:all .4s var(--ease)}
+.contact-aside:hover{box-shadow:var(--shadow-md)}
+.contact-aside h3{margin-bottom:16px}
+.contact-detail{display:flex;align-items:center;gap:10px;margin-bottom:12px;font-size:.9rem;color:var(--text-med);transition:color .3s var(--ease)}
+.contact-detail:hover{color:var(--teal)}
+.contact-detail svg{width:18px;height:18px;color:var(--teal);flex-shrink:0}
+/* ── Footer ── */
+.footer{background:var(--navy-dark);color:rgba(255,255,255,.7);padding:56px 0 28px}
+.footer-inner{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px}
+.footer h4{color:#fff;font-size:.85rem;font-weight:700;margin-bottom:16px;letter-spacing:.05em;text-transform:uppercase}
+.footer a{font-size:.85rem;display:block;margin-bottom:8px;transition:all .3s var(--ease)}
+.footer a:hover{color:var(--teal);transform:translateX(3px)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.08);margin-top:36px;padding-top:24px;display:flex;justify-content:space-between;align-items:center;font-size:.8rem}
+.footer-brand{font-size:1.1rem;font-weight:800;color:#fff;margin-bottom:8px}
+.footer-brand .accent{color:var(--teal)}
+.footer-desc{font-size:.85rem;max-width:300px;line-height:1.6}
+/* ── Scroll Reveal with stagger ── */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s var(--ease-out),transform .7s var(--ease-out)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+/* ── Stagger children on reveal ── */
+.grid-3.reveal.visible .card,
+.grid-2.reveal.visible .consultant-card,
+.grid-5.reveal.visible .location-card,
+.mini-cards.reveal.visible .mini-card{animation:staggerIn .5s var(--ease-out) both}
+.grid-3.reveal.visible .card:nth-child(1),.mini-cards.reveal.visible .mini-card:nth-child(1){animation-delay:.05s}
+.grid-3.reveal.visible .card:nth-child(2),.mini-cards.reveal.visible .mini-card:nth-child(2){animation-delay:.12s}
+.grid-3.reveal.visible .card:nth-child(3),.mini-cards.reveal.visible .mini-card:nth-child(3){animation-delay:.19s}
+.grid-3.reveal.visible .card:nth-child(4),.mini-cards.reveal.visible .mini-card:nth-child(4){animation-delay:.26s}
+.grid-3.reveal.visible .card:nth-child(5){animation-delay:.33s}
+.grid-2.reveal.visible .consultant-card:nth-child(odd){animation-delay:.05s}
+.grid-2.reveal.visible .consultant-card:nth-child(even){animation-delay:.15s}
+.grid-5.reveal.visible .location-card:nth-child(1){animation-delay:.05s}
+.grid-5.reveal.visible .location-card:nth-child(2){animation-delay:.1s}
+.grid-5.reveal.visible .location-card:nth-child(3){animation-delay:.15s}
+.grid-5.reveal.visible .location-card:nth-child(4){animation-delay:.2s}
+.grid-5.reveal.visible .location-card:nth-child(5){animation-delay:.25s}
+@keyframes staggerIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+/* ── Focus ── */
+:focus-visible{outline:2px solid var(--teal);outline-offset:3px;border-radius:4px}
+/* ── Selection ── */
+::selection{background:var(--teal);color:#fff}
+/* ── Reduced Motion ── */
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-delay:0ms!important;transition-duration:.01ms!important}.reveal{opacity:1;transform:none}}
+/* ── Print ── */
+@media print{.nav,.mobile-cta-bar,.footer{display:none!important}body{font-size:12pt;color:#000}.section-navy{background:#fff;color:#000}.card,.form-card{border:1px solid #ccc;box-shadow:none}}
+/* ── Responsive 1024 ── */
+@media(max-width:1024px){
+.hero-grid,.syndesis-grid{grid-template-columns:1fr;gap:40px}
+.hero-image{height:300px}
+.mini-cards{grid-template-columns:repeat(2,1fr)}
+.grid-3{grid-template-columns:repeat(2,1fr)}
+.form-grid{grid-template-columns:1fr}
+.footer-inner{grid-template-columns:repeat(2,1fr)}
+.consultant-card{grid-template-columns:160px 1fr}
+}
+/* ── Responsive 768 ── */
+@media(max-width:768px){
+.nav-links,.nav-actions .btn-outline-white{display:none}
+.nav-toggle{display:block}
+.nav-menu{display:none;position:absolute;top:64px;left:0;right:0;background:var(--navy);border-top:1px solid rgba(255,255,255,.08);padding:16px 24px;flex-direction:column}
+.nav-menu.open{display:flex}
+.nav-menu a{color:rgba(255,255,255,.8);padding:12px 0;font-size:1rem;border-bottom:1px solid rgba(255,255,255,.06)}
+.mobile-cta-bar{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:999;background:var(--bg-white);border-top:1px solid var(--border);padding:12px 16px;box-shadow:0 -4px 12px rgba(0,0,0,.08)}
+.mobile-cta-bar .btn{width:100%}
+body{padding-bottom:72px}
+.hero{padding:88px 0 48px}
+.hero-sub{font-size:1rem}
+.hero-chips{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;padding-bottom:4px}
+.hero-chip{flex-shrink:0}
+.section{padding:56px 0}
+.mini-cards{grid-template-columns:1fr 1fr}
+.grid-2,.grid-3,.grid-5{grid-template-columns:1fr}
+#synergy .container > .reveal:first-child{grid-template-columns:1fr!important}
+.timeline{flex-direction:column;gap:24px}
+.timeline::before{top:0;bottom:0;left:28px;right:auto;width:3px;height:auto}
+.timeline-step{text-align:left;display:flex;gap:16px;padding:0}
+.timeline-dot{margin:0;flex-shrink:0}
+.timeline-step-content{padding-top:8px}
+.consultant-card{grid-template-columns:1fr}
+.consultant-photo{min-height:200px}
+.form-row{grid-template-columns:1fr}
+.form-card{padding:24px}
+.mockup-body{grid-template-columns:1fr}
+.mockup-sidebar{display:none}
+.footer-inner{grid-template-columns:1fr}
+.footer-bottom{flex-direction:column;gap:8px;text-align:center}
+.shared-table{font-size:.82rem}
+.shared-table th,.shared-table td{padding:10px 14px}
+.cred-bar-inner{gap:20px;flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+<!-- Skip to main -->
+<a href="#main" class="sr-only" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden">Skip to main content</a>
+
+<!-- Accent strip -->
+<div class="nav-strip"></div>
+
+<!-- ═══ NAVIGATION ═══ -->
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo" aria-label="Synergy by EyePros">Eye<span class="accent">Pros</span> <span class="tag">Synergy</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#synergy">Synergy</a></li>
+      <li><a href="#benefits">Benefits</a></li>
+      <li><a href="#referral-process">How it works</a></li>
+      <li><a href="#syndesis">Syndesis</a></li>
+      <li><a href="#consultants">Consultants</a></li>
+      <li><a href="#faq">FAQs</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="#" class="btn btn-sm btn-outline-white" aria-label="Partner login (placeholder)">Partner login</a>
+      <a href="#partner-form" class="btn btn-sm btn-primary">Become a partner</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
+  </div>
+  <!-- Mobile menu -->
+  <div class="nav-menu" id="navMenu" role="menu">
+    <a href="#synergy" role="menuitem">Synergy</a>
+    <a href="#benefits" role="menuitem">Benefits</a>
+    <a href="#referral-process" role="menuitem">How it works</a>
+    <a href="#syndesis" role="menuitem">Syndesis</a>
+    <a href="#consultants" role="menuitem">Consultants</a>
+    <a href="#faq" role="menuitem">FAQs</a>
+    <a href="#" role="menuitem">Partner login</a>
+  </div>
+</nav>
+
+<!-- Mobile sticky CTA -->
+<div class="mobile-cta-bar"><a href="#partner-form" class="btn btn-primary">Become a Synergy partner</a></div>
+
+<main id="main">
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="reveal">
+        <p class="hero-eyebrow">SYNERGY BY EYEPROS · FOR OPTOMETRISTS</p>
+        <h1>Refer to a consultant you can talk&nbsp;to. Keep the patient you&nbsp;know.</h1>
+        <p class="hero-sub">Your patients see NHS consultant ophthalmologists in the Midlands. You keep direct access to the surgeon, do the post-op at your practice, and track every step through Syndesis.</p>
+        <div class="hero-ctas">
+          <a href="#partner-form" class="btn btn-primary">Become a Synergy partner</a>
+          <a href="#referral-process" class="btn btn-outline-white">See how a referral works</a>
+        </div>
+        <div class="hero-chips">
+          <span class="hero-chip"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg> NHS consultant ophthalmologists</span>
+          <span class="hero-chip"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg> Track your patient's full journey via Syndesis</span>
+          <span class="hero-chip"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg> Refer in minutes through Syndesis</span>
+        </div>
+      </div>
+      <div class="hero-image reveal">
+        <img src="images/optometrist-partners.jpg" alt="Two optometrists collaborating in a modern optical practice" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius-lg)" loading="eager">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CREDIBILITY BAR ═══ -->
+<div class="cred-bar">
+  <div class="container">
+    <div class="cred-bar-inner">
+      <div class="cred-item"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg> NHS consultant ophthalmologists</div>
+      <div class="cred-item"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg> 20+ years clinical experience</div>
+      <div class="cred-item"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg> 5 Midlands locations</div>
+      <div class="cred-item"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z"/><path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z"/></svg> Direct consultant access</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PARTNERS ═══ -->
+<section class="section" style="padding:48px 0">
+  <div class="container">
+    <p class="text-center" style="font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-light);margin-bottom:32px">TRUSTED BY</p>
+    <div class="partner-logos reveal">
+      <a href="#" class="partner-logo" aria-label="Pinders Optometrists">
+        <img src="images/partner-pinders.png" alt="Pinders" loading="lazy">
+      </a>
+      <!-- Add more partner logos here:
+      <a href="#" class="partner-logo" aria-label="Partner Name">
+        <img src="images/partner-name.png" alt="Partner Name" loading="lazy">
+      </a>
+      -->
+    </div>
+  </div>
+</section>
+
+<!-- ═══ POSITIONING ═══ -->
+<section id="synergy" class="section section-alt">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center" class="reveal">
+      <div>
+        <p class="eyebrow">THE SYNERGY DIFFERENCE</p>
+        <h2>Referring shouldn't mean letting&nbsp;go</h2>
+        <p class="text-med mt-16">Other referral pathways lose the patient. Synergy brings them back. You stay informed at every stage, do the post-op, and track the full journey through Syndesis.</p>
+      </div>
+      <div>
+        <img src="images/patient-exam.jpg" alt="Consultant ophthalmologist conducting a slit-lamp examination" style="width:100%;border-radius:var(--radius-lg);box-shadow:var(--shadow-lg)" loading="lazy">
+      </div>
+    </div>
+    <div class="mini-cards mt-48 reveal">
+      <div class="mini-card"><div class="mini-card-icon">🔄</div><h4>Patient retention</h4><p>Your patient returns to you</p></div>
+      <div class="mini-card"><div class="mini-card-icon">🛡️</div><h4>Clinical safety</h4><p>Direct access to the consultant</p></div>
+      <div class="mini-card"><div class="mini-card-icon">🔬</div><h4>Extra diagnostics covered</h4><p>We cover the cost for the patient</p></div>
+      <div class="mini-card"><div class="mini-card-icon">⚡</div><h4>Simple admin</h4><p>Refer in minutes through Syndesis</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ BENEFITS ═══ -->
+<section id="benefits" class="section">
+  <div class="container">
+    <div class="text-center max-w-prose mx-auto mb-48 reveal">
+      <p class="eyebrow">PARTNERSHIP BENEFITS</p>
+      <h2>Why optometrists choose Synergy</h2>
+    </div>
+    <div class="grid-3 reveal">
+      <div class="card">
+        <div class="card-icon">↩️</div>
+        <h3>Your patient comes back to you</h3>
+        <p>Post-op assessment happens at your practice. The relationship stays intact.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📞</div>
+        <h3>Direct access to the consultant</h3>
+        <p>No gatekeepers. Speak to the treating surgeon at any stage.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔬</div>
+        <h3>Additional diagnostics covered</h3>
+        <p>If we need extra tests from your practice, we cover the cost for the patient. No financial burden on them or you.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">⚡</div>
+        <h3>Refer in minutes via Syndesis</h3>
+        <p>One portal for referrals, tracking, letters, and reports.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">👥</div>
+        <h3>Every patient is welcome</h3>
+        <p>Self-pay, insured, or NHS patients exploring private options.</p>
+      </div>
+    </div>
+    <div class="text-center mt-48 reveal">
+      <a href="#partner-form" class="btn btn-primary">Become a Synergy partner</a>
+    </div>
+  </div>
+</section>
+<!-- ═══ REFERRAL PROCESS ═══ -->
+<section id="referral-process" class="section section-alt">
+  <div class="container">
+    <div class="text-center max-w-prose mx-auto reveal">
+      <p class="eyebrow">HOW IT WORKS</p>
+      <h2>Five steps. That's&nbsp;it.</h2>
+    </div>
+    <div class="timeline reveal">
+      <div class="timeline-step">
+        <div class="timeline-dot optom">1</div>
+        <div class="timeline-step-content">
+          <p class="timeline-label optom">You</p>
+          <h4>Refer via Syndesis</h4>
+          <p>Submit a referral in minutes.</p>
+        </div>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-dot eyepros">2</div>
+        <div class="timeline-step-content">
+          <p class="timeline-label eyepros">EyePros</p>
+          <h4>We book the patient</h4>
+          <p>We contact your patient and arrange a consultation.</p>
+        </div>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-dot eyepros">3</div>
+        <div class="timeline-step-content">
+          <p class="timeline-label eyepros">EyePros</p>
+          <h4>Consultant treats</h4>
+          <p>NHS consultant assesses and treats. You have direct access throughout.</p>
+        </div>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-dot optom">4</div>
+        <div class="timeline-step-content">
+          <p class="timeline-label optom">You</p>
+          <h4>Post-op at your practice</h4>
+          <p>Patient returns to you. Submit findings via Syndesis.</p>
+        </div>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-dot optom">5</div>
+        <div class="timeline-step-content">
+          <p class="timeline-label optom">You</p>
+          <h4>You upload the post-op</h4>
+          <p>Submit your findings and feedback to Syndesis. The patient journey is complete.</p>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-48 reveal">
+      <a href="#partner-form" class="btn btn-primary">Become a Synergy partner</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SYNDESIS ═══ -->
+<section id="syndesis" class="section section-navy">
+  <div class="container">
+    <div class="syndesis-grid">
+      <div class="reveal">
+        <p class="eyebrow">YOUR REFERRAL PORTAL</p>
+        <h2>One place for every&nbsp;referral</h2>
+        <p class="text-med mt-16" style="color:rgba(255,255,255,.75)">Syndesis is your secure portal for managing referrals, tracking patients, and accessing reports. Built for busy practices.</p>
+        <ul class="syndesis-features">
+          <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><span>Submit and track referrals in minutes</span></li>
+          <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><span>Access clinic letters and surgery reports</span></li>
+          <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><span>Submit post-op findings directly</span></li>
+          <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><span>Multi-user team access <span class="confirm">[CONFIRM TEAM LOGINS]</span></span></li>
+        </ul>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <a href="#partner-form" class="btn btn-primary">Become a partner</a>
+          <a href="#" class="btn btn-outline-white" aria-label="Partner login">Partner login</a>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="syndesis-mockup">
+          <div class="mockup-bar"><span class="mockup-dot"></span><span class="mockup-dot"></span><span class="mockup-dot"></span></div>
+          <div class="mockup-body">
+            <div class="mockup-sidebar">
+              <div class="mockup-sidebar-item active"></div>
+              <div class="mockup-sidebar-item"></div>
+              <div class="mockup-sidebar-item"></div>
+              <div class="mockup-sidebar-item"></div>
+              <div class="mockup-sidebar-item"></div>
+            </div>
+            <div class="mockup-content">
+              <div class="mockup-content-line med"></div>
+              <div class="mockup-content-line short"></div>
+              <div class="mockup-content-card"></div>
+              <div class="mockup-content-card"></div>
+              <div class="mockup-content-line"></div>
+              <div class="mockup-content-line med"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SHARED CARE ═══ -->
+<section id="shared-care" class="section">
+  <div class="container">
+    <div class="text-center max-w-prose mx-auto mb-32 reveal">
+      <p class="eyebrow">SHARED CARE</p>
+      <h2>Who does what</h2>
+    </div>
+    <div class="reveal" style="overflow-x:auto">
+      <table class="shared-table">
+        <thead>
+          <tr>
+            <th style="width:40%">Responsibility</th>
+            <th style="width:30%">You (the optometrist)</th>
+            <th style="width:30%">EyePros</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="label-col">Identify and refer patient</td><td class="check">✓ <span style="font-weight:400;font-size:.8rem;color:var(--text-light)">via Syndesis</span></td><td></td></tr>
+          <tr><td class="label-col">Consultant assessment</td><td></td><td class="check">✓</td></tr>
+          <tr><td class="label-col">Surgery / treatment</td><td></td><td class="check">✓</td></tr>
+          <tr><td class="label-col">Post-operative assessment</td><td class="check">✓</td><td></td></tr>
+          <tr><td class="label-col">Clinic letters &amp; reports</td><td></td><td class="check">✓ <span style="font-weight:400;font-size:.8rem;color:var(--text-light)">via Syndesis</span></td></tr>
+          <tr><td class="label-col">Submit findings through Syndesis</td><td class="check">✓</td><td></td></tr>
+          <tr><td class="label-col">Direct consultant access</td><td class="check">✓</td><td class="check">✓</td></tr>
+          <tr><td class="label-col">Additional diagnostic costs</td><td>&mdash;</td><td style="color:var(--teal);font-weight:600">Covered for patient</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="text-center mt-32 reveal">
+      <button class="btn btn-secondary btn-disabled" disabled aria-label="Download not yet available" title="Available when partnership is confirmed">
+        <svg style="width:18px;height:18px" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+        Download the Synergy shared care protocol <span class="confirm">[CONFIRM SHARED CARE PROTOCOL]</span>
+      </button>
+    </div>
+  </div>
+</section>
+<!-- ═══ CONSULTANTS ═══ -->
+<section id="consultants" class="section section-alt">
+  <div class="container">
+    <div class="text-center max-w-prose mx-auto mb-48 reveal">
+      <p class="eyebrow">YOUR CONSULTANTS</p>
+      <h2>NHS consultants. 20+ years each.</h2>
+    </div>
+    <div class="grid-2 reveal">
+      <!-- Mr Ahmad Elsahn -->
+      <div class="consultant-card" style="grid-template-columns:1fr">
+        <div class="consultant-info">
+          <h3>Mr Ahmad Elsahn</h3>
+          <p class="consultant-role">Consultant Ophthalmic Surgeon</p>
+          <div class="consultant-badges">
+            <span class="consultant-badge">FRCOphth</span>
+            <span class="consultant-badge">FRCS (Glasgow)</span>
+            <span class="consultant-badge">PhD</span>
+            <span class="consultant-badge">CertLRS</span>
+          </div>
+          <p class="consultant-bio">Head of Service, Sherwood Forest Hospitals NHS Foundation Trust. Honorary Assistant Professor, University of Nottingham. Specialist in cataract surgery, MIGS glaucoma, laser eye surgery, and anterior segment.</p>
+        </div>
+      </div>
+      <!-- Ms Yasmine Abdalla -->
+      <div class="consultant-card" style="grid-template-columns:1fr">
+        <div class="consultant-info">
+          <h3>Ms Yasmine Abdalla</h3>
+          <p class="consultant-role">Consultant Ophthalmologist</p>
+          <div class="consultant-badges">
+            <span class="consultant-badge">FRCOphth</span>
+          </div>
+          <p class="consultant-bio">Uveitis Service Lead, University Hospitals of Derby and Burton NHS Foundation Trust. Specialist in diabetic eye disease, AMD, uveitis, and intravitreal injections. Royal College Tutor, Royal Derby Hospital.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TREATMENTS ═══ -->
+<section id="treatments" class="section">
+  <div class="container">
+    <div class="text-center max-w-prose mx-auto mb-48 reveal">
+      <p class="eyebrow">TREATMENTS</p>
+      <h2>What you can refer</h2>
+    </div>
+    <div class="reveal" style="margin-bottom:40px">
+      <img src="images/hero-clinic.jpg" alt="Modern ophthalmic surgical suite with advanced equipment" style="width:100%;height:240px;object-fit:cover;border-radius:var(--radius-lg);box-shadow:var(--shadow-sm)" loading="lazy">
+    </div>
+    <div class="grid-2 reveal">
+      <div class="treatment-group">
+        <h3><span class="icon">👁️</span> Cataract &amp; Lens</h3>
+        <div class="treatment-list">
+          <span class="treatment-tag">Cataract surgery</span>
+          <span class="treatment-tag">Lens replacement</span>
+          <span class="treatment-tag">Presbyopia correction</span>
+          <span class="treatment-tag">YAG laser capsulotomy</span>
+        </div>
+      </div>
+      <div class="treatment-group">
+        <h3><span class="icon">🔬</span> Refractive</h3>
+        <div class="treatment-list">
+          <span class="treatment-tag">Laser eye surgery</span>
+          <span class="treatment-tag">Implantable contact lenses</span>
+        </div>
+      </div>
+      <div class="treatment-group">
+        <h3><span class="icon">🩺</span> Glaucoma</h3>
+        <div class="treatment-list">
+          <span class="treatment-tag">Glaucoma laser treatment</span>
+          <span class="treatment-tag">Glaucoma surgery</span>
+          <span class="treatment-tag">Minimally invasive options (MIGS)</span>
+        </div>
+      </div>
+      <div class="treatment-group">
+        <h3><span class="icon">🔴</span> Medical Retina</h3>
+        <div class="treatment-list">
+          <span class="treatment-tag">Diabetic eye disease</span>
+          <span class="treatment-tag">AMD</span>
+          <span class="treatment-tag">Intravitreal injections</span>
+          <span class="treatment-tag confirm">[CONFIRM PRIVATE MEDICAL RETINA SERVICES]</span>
+        </div>
+      </div>
+      <div class="treatment-group">
+        <h3><span class="icon">💧</span> Ocular Surface &amp; Inflammation</h3>
+        <div class="treatment-list">
+          <span class="treatment-tag">Dry eye</span>
+          <span class="treatment-tag">Uveitis</span>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-48 reveal">
+      <a href="#partner-form" class="btn btn-primary">Become a Synergy partner</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ LOCATIONS ═══ -->
+<section id="locations" class="section section-alt">
+  <div class="container">
+    <div class="text-center max-w-prose mx-auto mb-48 reveal">
+      <p class="eyebrow">LOCATIONS</p>
+      <h2>Where we operate</h2>
+    </div>
+    <div class="grid-5 reveal">
+      <div class="location-card">
+        <h4>Loughborough</h4>
+        <p>EyePros Loughborough</p>
+      </div>
+      <div class="location-card">
+        <h4>Nottingham</h4>
+        <p>The Park Hospital</p>
+      </div>
+      <div class="location-card">
+        <h4>Birmingham</h4>
+        <p>Modality Treatment Centre</p>
+      </div>
+      <div class="location-card">
+        <h4>Leicester</h4>
+        <p>Optimax Eye Clinic <span class="confirm" style="font-size:.7rem">[CONFIRM LEICESTER VENUE]</span></p>
+      </div>
+      <div class="location-card">
+        <h4>Derby</h4>
+        <p>Derby Private Health</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ═══ FAQ ═══ -->
+<section id="faq" class="section">
+  <div class="container">
+    <div class="text-center max-w-prose mx-auto reveal">
+      <p class="eyebrow">FAQs</p>
+      <h2>Quick answers</h2>
+    </div>
+    <div class="faq-list reveal">
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" aria-controls="faq1"><span>Who can join?</span><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg></button>
+        <div class="faq-a" id="faq1" role="region"><div class="faq-a-inner">Any GOC-registered optometrist or optical practice in the UK. Single practitioner or multi-site.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" aria-controls="faq2"><span>Is there a minimum number of referrals?</span><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg></button>
+        <div class="faq-a" id="faq2" role="region"><div class="faq-a-inner">No. Refer when it's clinically appropriate. No minimums, no quotas.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" aria-controls="faq3"><span>What if you need additional tests?</span><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg></button>
+        <div class="faq-a" id="faq3" role="region"><div class="faq-a-inner">We may ask you to run additional diagnostics at your practice. When that happens, we cover the cost for the patient.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" aria-controls="faq4"><span>Can I track where my patient is in the journey?</span><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg></button>
+        <div class="faq-a" id="faq4" role="region"><div class="faq-a-inner">Yes. Syndesis shows you exactly what stage your patient is at and what we've offered them.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" aria-controls="faq5"><span>Does the patient come back to me?</span><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg></button>
+        <div class="faq-a" id="faq5" role="region"><div class="faq-a-inner">Yes. Every patient returns to your practice for the post-op.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" aria-controls="faq6"><span>What do I do after surgery?</span><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg></button>
+        <div class="faq-a" id="faq6" role="region"><div class="faq-a-inner">Conduct the post-op assessment and submit findings via Syndesis. All reports are already in the portal.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" aria-controls="faq7"><span>What if I'm worried about a patient?</span><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg></button>
+        <div class="faq-a" id="faq7" role="region"><div class="faq-a-inner">Contact the consultant directly. No gatekeepers, any stage. <span class="confirm">[CONFIRM URGENT CONTACT ROUTE]</span></div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" aria-controls="faq8"><span>Can I refer NHS patients?</span><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg></button>
+        <div class="faq-a" id="faq8" role="region"><div class="faq-a-inner">Yes. Self-pay, insured, or NHS patients exploring private options. All welcome.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" aria-controls="faq9"><span>Do you accept private insurance?</span><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg></button>
+        <div class="faq-a" id="faq9" role="region"><div class="faq-a-inner">Yes. We work with major insurers.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" aria-controls="faq10"><span>Does it cost anything to join?</span><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg></button>
+        <div class="faq-a" id="faq10" role="region"><div class="faq-a-inner">No. Free to join. Apply, get Syndesis access, start referring.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" aria-controls="faq11"><span>How do I get Syndesis access?</span><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg></button>
+        <div class="faq-a" id="faq11" role="region"><div class="faq-a-inner">We set you up once your application is approved. <span class="confirm">[CONFIRM SYNDESIS FEATURES]</span></div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- ═══ PARTNER FORM ═══ -->
+<section id="partner-form" class="section section-alt">
+  <div class="container">
+    <div class="text-center max-w-prose mx-auto mb-48 reveal">
+      <p class="eyebrow">GET STARTED</p>
+      <h2>Become a Synergy partner</h2>
+      <p class="text-med mt-16">Takes two minutes. We'll be in touch.</p>
+    </div>
+    <div class="form-grid reveal">
+      <div>
+        <div class="form-card" id="formCard">
+          <!-- The live form -->
+          <form id="partnerForm" novalidate>
+            <div class="form-row">
+              <div class="form-group" data-field="fullName">
+                <label for="fullName">Full name <span class="req">*</span></label>
+                <input type="text" id="fullName" name="fullName" required autocomplete="name" aria-required="true">
+                <p class="form-error" id="fullNameError" role="alert">Please enter your full name</p>
+              </div>
+              <div class="form-group" data-field="practiceName">
+                <label for="practiceName">Practice name <span class="req">*</span></label>
+                <input type="text" id="practiceName" name="practiceName" required autocomplete="organization" aria-required="true">
+                <p class="form-error" id="practiceNameError" role="alert">Please enter your practice name</p>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group" data-field="postcode">
+                <label for="postcode">Practice postcode <span class="req">*</span></label>
+                <input type="text" id="postcode" name="postcode" required autocomplete="postal-code" aria-required="true">
+                <p class="form-error" id="postcodeError" role="alert">Please enter your practice postcode</p>
+              </div>
+              <div class="form-group" data-field="email">
+                <label for="email">Email <span class="req">*</span></label>
+                <input type="email" id="email" name="email" required autocomplete="email" aria-required="true">
+                <p class="form-error" id="emailError" role="alert">Please enter a valid email address</p>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group" data-field="phone">
+                <label for="phone">Phone <span class="req">*</span></label>
+                <input type="tel" id="phone" name="phone" required autocomplete="tel" aria-required="true">
+                <p class="form-error" id="phoneError" role="alert">Please enter a valid UK phone number</p>
+              </div>
+              <div class="form-group" data-field="gocNumber">
+                <label for="gocNumber">GOC number <span class="req">*</span></label>
+                <input type="text" id="gocNumber" name="gocNumber" required aria-required="true">
+                <p class="form-error" id="gocNumberError" role="alert">Please enter your GOC number</p>
+              </div>
+            </div>
+            <div class="form-group" data-field="role">
+              <label for="role">Role <span class="req">*</span></label>
+              <select id="role" name="role" required aria-required="true">
+                <option value="">Select your role</option>
+                <option value="practice-owner">Practice owner</option>
+                <option value="optometrist">Optometrist</option>
+                <option value="practice-manager">Practice manager</option>
+                <option value="other">Other</option>
+              </select>
+              <p class="form-error" id="roleError" role="alert">Please select your role</p>
+            </div>
+            <div class="form-group">
+              <label for="comments">Questions or comments <span style="font-weight:400;color:var(--text-light)">(optional)</span></label>
+              <textarea id="comments" name="comments" rows="4"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" id="submitBtn" style="width:100%">Request partnership</button>
+            <p class="form-privacy">We'll only use your details to contact you about Synergy. <a href="#" aria-label="Privacy policy (link to be confirmed)">[Privacy policy]</a></p>
+          </form>
+
+          <!-- Success state -->
+          <div class="form-success" id="formSuccess">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l2.5 2.5L16 9"/></svg>
+            <h3>Request received.</h3>
+            <p class="text-med mt-12">The Synergy team will be in touch <span class="confirm">[CONFIRM TIMING]</span>.</p>
+          </div>
+
+          <!-- Error state -->
+          <div class="form-fail" id="formFail">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>
+            <h3 style="color:#EF4444">Something went wrong while sending your request.</h3>
+            <p class="text-med mt-12">Please try again or contact the Synergy team directly.</p>
+            <button class="btn btn-primary mt-24" id="retryBtn" type="button">Try again</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact aside -->
+      <div>
+        <img src="images/oct-scan.jpg" alt="OCT retinal scan during ophthalmic assessment" style="width:100%;border-radius:var(--radius-lg);margin-bottom:24px;box-shadow:var(--shadow-sm)" loading="lazy">
+        <div class="contact-aside">
+          <h3>Rather talk first?</h3>
+          <p class="text-med mb-24">Get in touch directly.</p>
+          <div class="contact-detail"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg> <span class="confirm">[CONFIRM CONTACT NAME]</span></div>
+          <div class="contact-detail"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/></svg> <span class="confirm">[CONFIRM ROLE]</span></div>
+          <div class="contact-detail"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg> <span class="confirm">[CONFIRM PHONE]</span></div>
+          <div class="contact-detail"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg> <span class="confirm">[CONFIRM SYNERGY EMAIL]</span></div>
+        </div>
+        <div style="margin-top:24px;padding:20px;background:var(--teal-light);border-radius:var(--radius);border:1px solid rgba(13,148,136,.15)">
+          <p style="font-size:.85rem;font-weight:600;color:var(--teal);margin-bottom:4px">No cost to join</p>
+          <p style="font-size:.85rem;color:var(--text-med);margin:0">Synergy partnership is free. Apply, get Syndesis access, and start referring.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">Eye<span class="accent">Pros</span> Synergy</div>
+        <p class="footer-desc">Shared care partnership for UK optometrists.</p>
+      </div>
+      <div>
+        <h4>Partnership</h4>
+        <a href="#synergy">About Synergy</a>
+        <a href="#benefits">Benefits</a>
+        <a href="#referral-process">How it works</a>
+        <a href="#partner-form">Become a partner</a>
+      </div>
+      <div>
+        <h4>Resources</h4>
+        <a href="#syndesis">Syndesis portal</a>
+        <a href="#shared-care">Shared care protocol</a>
+        <a href="#consultants">Our consultants</a>
+        <a href="#faq">FAQs</a>
+      </div>
+      <div>
+        <h4>EyePros</h4>
+        <a href="https://www.eyepros.co.uk" target="_blank" rel="noopener">eyepros.co.uk</a>
+        <a href="tel:03337727277">0333 77 272 77</a>
+        <a href="mailto:info@eyepros.co.uk">info@eyepros.co.uk</a>
+        <a href="https://www.eyepros.co.uk/privacy-policy" target="_blank" rel="noopener">Privacy policy</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; EyePros 2025. All rights reserved.</span>
+      <span>Synergy is a professional shared care agreement for GOC-registered optometrists.</span>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+'use strict';
+
+/* ── Analytics stub ── */
+function track(event, data) {
+  // TODO: Connect to confirmed analytics provider (GA4, GTM, etc.)
+  if (typeof console !== 'undefined') console.log('[Synergy Track]', event, data || '');
+}
+
+/* ── Nav scroll state ── */
+var nav = document.querySelector('.nav');
+window.addEventListener('scroll', function() {
+  nav.classList.toggle('scrolled', window.scrollY > 20);
+}, {passive: true});
+
+/* ── Mobile nav toggle ── */
+var toggle = document.getElementById('navToggle');
+var menu = document.getElementById('navMenu');
+if (toggle && menu) {
+  toggle.addEventListener('click', function() {
+    var open = menu.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open);
+  });
+  menu.querySelectorAll('a').forEach(function(a) {
+    a.addEventListener('click', function() {
+      menu.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+}
+
+/* ── Smooth scroll for all anchor links ── */
+document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+  a.addEventListener('click', function(e) {
+    var id = this.getAttribute('href');
+    if (id === '#') return;
+    var el = document.querySelector(id);
+    if (el) {
+      e.preventDefault();
+      var offset = 80;
+      var top = el.getBoundingClientRect().top + window.pageYOffset - offset;
+      window.scrollTo({top: top, behavior: 'smooth'});
+      el.setAttribute('tabindex', '-1');
+      el.focus({preventScroll: true});
+    }
+  });
+});
+
+/* ── Scroll reveal ── */
+var reveals = document.querySelectorAll('.reveal');
+if ('IntersectionObserver' in window) {
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, {threshold: 0.1, rootMargin: '0px 0px -40px 0px'});
+  reveals.forEach(function(el) { obs.observe(el); });
+} else {
+  reveals.forEach(function(el) { el.classList.add('visible'); });
+}
+
+/* ── FAQ Accordion ── */
+document.querySelectorAll('.faq-q').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var item = this.closest('.faq-item');
+    var answer = item.querySelector('.faq-a');
+    var expanded = item.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.faq-item.open').forEach(function(openItem) {
+      openItem.classList.remove('open');
+      openItem.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+      openItem.querySelector('.faq-a').style.maxHeight = null;
+    });
+    // Toggle current
+    if (!expanded) {
+      item.classList.add('open');
+      this.setAttribute('aria-expanded', 'true');
+      answer.style.maxHeight = answer.scrollHeight + 'px';
+    }
+  });
+});
+
+/* ── Form tracking: view ── */
+var formSection = document.getElementById('partner-form');
+if (formSection && 'IntersectionObserver' in window) {
+  var formObs = new IntersectionObserver(function(entries) {
+    if (entries[0].isIntersecting) { track('partner_form_view'); formObs.disconnect(); }
+  }, {threshold: 0.3});
+  formObs.observe(formSection);
+}
+
+/* ── Form tracking: start (first interaction) ── */
+var formStarted = false;
+var form = document.getElementById('partnerForm');
+if (form) {
+  form.addEventListener('focusin', function() {
+    if (!formStarted) { formStarted = true; track('partner_form_start'); }
+  }, {once: false});
+}
+
+/* ── Form Validation & Submission ── */
+var submitBtn = document.getElementById('submitBtn');
+var formCard = document.getElementById('formCard');
+var formSuccess = document.getElementById('formSuccess');
+var formFail = document.getElementById('formFail');
+var retryBtn = document.getElementById('retryBtn');
+
+var validators = {
+  fullName: function(v) { return v.trim().length > 0; },
+  practiceName: function(v) { return v.trim().length > 0; },
+  postcode: function(v) { return v.trim().length > 0; },
+  email: function(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); },
+  phone: function(v) { return /^[\d\s\+\-\(\)]{7,20}$/.test(v.trim()); },
+  gocNumber: function(v) { return v.trim().length > 0; },
+  role: function(v) { return v !== ''; }
+};
+
+function validateField(name) {
+  var input = form.elements[name];
+  var group = input.closest('.form-group');
+  var valid = validators[name](input.value);
+  group.classList.toggle('error', !valid);
+  input.setAttribute('aria-invalid', !valid);
+  if (!valid) {
+    var errEl = group.querySelector('.form-error');
+    if (errEl) input.setAttribute('aria-describedby', errEl.id);
+  } else {
+    input.removeAttribute('aria-describedby');
+  }
+  return valid;
+}
+
+// Live validation on blur
+Object.keys(validators).forEach(function(name) {
+  var input = form.elements[name];
+  if (input) {
+    input.addEventListener('blur', function() { validateField(name); });
+    input.addEventListener('input', function() {
+      var group = this.closest('.form-group');
+      if (group.classList.contains('error')) validateField(name);
+    });
+  }
+});
+
+var isSubmitting = false;
+
+form.addEventListener('submit', function(e) {
+  e.preventDefault();
+  if (isSubmitting) return;
+
+  // Validate all
+  var allValid = true;
+  var firstInvalid = null;
+  Object.keys(validators).forEach(function(name) {
+    var valid = validateField(name);
+    if (!valid && allValid) { allValid = false; firstInvalid = form.elements[name]; }
+  });
+
+  if (!allValid) {
+    track('partner_form_validation_error');
+    if (firstInvalid) firstInvalid.focus();
+    return;
+  }
+
+  // Collect data
+  var data = {};
+  new FormData(form).forEach(function(val, key) { data[key] = val; });
+
+  track('partner_form_submit', data);
+
+  // Set loading state
+  isSubmitting = true;
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Sending\u2026';
+
+  // TODO: Connect to confirmed EyePros form/CRM/email endpoint
+  // The function below is a DEMO stub. Replace with actual fetch/XHR call.
+  submitToBackend(data)
+    .then(function() {
+      track('partner_form_success');
+      form.style.display = 'none';
+      formSuccess.classList.add('show');
+    })
+    .catch(function() {
+      track('partner_form_error');
+      form.style.display = 'none';
+      formFail.classList.add('show');
+    })
+    .finally(function() {
+      isSubmitting = false;
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Request partnership';
+    });
+});
+
+/**
+ * DEMO/DEVELOPMENT STUB
+ * This function simulates a backend submission.
+ * In production, replace with a real API call:
+ *
+ *   return fetch('https://confirmed-endpoint.eyepros.co.uk/api/synergy-partner', {
+ *     method: 'POST',
+ *     headers: {'Content-Type': 'application/json'},
+ *     body: JSON.stringify(data)
+ *   }).then(function(r) { if (!r.ok) throw new Error(r.status); return r.json(); });
+ *
+ * WARNING: This demo mode shows intended UX states.
+ * It does NOT send data anywhere. Do NOT deploy without a real endpoint.
+ */
+function submitToBackend(data) {
+  return new Promise(function(resolve, reject) {
+    console.warn('[SYNERGY DEV MODE] Form submission simulated. Data NOT sent to any server:', data);
+    setTimeout(function() {
+      // Simulate success. Change to reject() to test error state.
+      resolve();
+    }, 1500);
+  });
+}
+
+// Retry button
+if (retryBtn) {
+  retryBtn.addEventListener('click', function() {
+    formFail.classList.remove('show');
+    form.style.display = '';
+  });
+}
+
+})();
+</script>
+</body>
+</html>
