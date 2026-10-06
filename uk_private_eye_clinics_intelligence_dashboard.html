@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UK Private Eye Clinics: Strategic Analysis Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Longsighted Sidebar Navigation -->
+    <link rel="stylesheet" href="css/sidebar.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+            color: #1a202c;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+
+        .bmc-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 12px;
+            min-height: 600px;
+        }
+
+        .bmc-cell {
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .bmc-cell:hover {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-color: #cbd5e0;
+        }
+
+        .active-tab {
+            border-bottom: 3px solid #4f46e5;
+            color: #4f46e5;
+            font-weight: 600;
+        }
+
+        .clinic-card {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .clinic-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .status-badge {
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 9999px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="bg-stone-50 longsighted-theme">
+<div class="main-content">
+
+    <!-- Chosen Palette: Warm Professional (Stone-50 background, Indigo/Slate accents) -->
+    
+    <!-- Application Structure Plan: 
+        1. Navigation: A sticky top-bar allowing users to toggle between "Market Overview", "Clinic Profiles", and "Strategic Dynamics".
+        2. Market Overview: Uses interactive charts (Chart.js) to show the £1.55B market ecosystem, NHS backlog data, and growth projections.
+        3. Clinic Profiles: A central selection area where clicking a clinic dynamically updates a full Business Model Canvas (BMC) and detailed strategic analysis.
+        4. Strategic Dynamics: A qualitative section using interactive cards to explain macro trends (PE consolidation, AI, and Tariff cuts).
+        5. Justification: This dashboard structure moves from the 'big picture' (Market) to specific 'competitors' (Clinics) to 'future outlook' (Strategy), mirroring a professional consultant's briefing.
+    -->
+
+    <!-- Visualization & Content Choices: 
+        - Market Growth: Chart.js Bar Chart to show the surge from $10.6B to $21.7B.
+        - NHS vs Private: Chart.js Pie Chart showing the % shift in cataract delivery.
+        - Clinic Comparison: Interactive BMC (HTML Grid) for detailed breakdown of 5 clinics.
+        - Interaction: Selection of clinic updates the BMC state variables via JS.
+        - Navigation: JS event listeners handle section visibility.
+        - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. Unicode used for icons.
+    -->
+
+    <nav class="sticky top-0 z-50 bg-white border-b border-stone-200 px-6 py-4 shadow-sm">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <div class="flex items-center space-x-2">
+                <span class="text-2xl font-bold text-indigo-700">👁️ EyeCare</span>
+                <span class="text-lg font-semibold text-stone-600">Strategic Intelligence</span>
+            </div>
+            <div class="flex space-x-6 text-sm font-medium">
+                <button onclick="showSection('market')" class="nav-btn active-tab pb-1" id="btn-market">Market Context</button>
+                <button onclick="showSection('clinics')" class="nav-btn pb-1" id="btn-clinics">Clinic Profiles</button>
+                <button onclick="showSection('trends')" class="nav-btn pb-1" id="btn-trends">Future Dynamics</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-6 py-8">
+
+        <!-- SECTION: MARKET CONTEXT -->
+        <section id="section-market" class="space-y-12">
+            <div class="bg-white rounded-2xl p-8 shadow-sm border border-stone-200">
+                <h1 class="text-3xl font-bold text-stone-800 mb-4">UK Ophthalmic Market Ecosystem</h1>
+                <p class="text-stone-600 leading-relaxed max-w-4xl">
+                    The UK ophthalmology sector is navigating a period of profound transformation. Valued at <strong>£1.55 billion</strong> across clinical services, the market is expanding at a robust CAGR of 6-7.5%. This growth is driven by an aging population (28% over 65 by 2025) and a massive NHS backlog of 646,000 cases, forcing a pivot toward private independent sector providers (ISPs).
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
+                    <div class="bg-stone-50 p-6 rounded-xl border border-stone-100">
+                        <h3 class="text-lg font-semibold mb-4 text-center">Vision Care Market Growth ($ Billions)</h3>
+                        <div class="chart-container">
+                            <canvas id="marketGrowthChart"></canvas>
+                        </div>
+                        <p class="text-xs text-stone-500 mt-4 text-center italic">Projected valuation surge 2026-2036. Data Source: UCL/Vision Care Market Forecasts.</p>
+                    </div>
+                    <div class="bg-stone-50 p-6 rounded-xl border border-stone-100">
+                        <h3 class="text-lg font-semibold mb-4 text-center">NHS Cataract Delivery Shift (%)</h3>
+                        <div class="chart-container">
+                            <canvas id="nhsShiftChart"></canvas>
+                        </div>
+                        <p class="text-xs text-stone-500 mt-4 text-center italic">Growth of private sector (ISP) delivery of public cataract operations.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-indigo-50 p-6 rounded-xl border border-indigo-100">
+                    <div class="text-indigo-700 text-3xl font-bold mb-1">7.13M</div>
+                    <div class="text-indigo-900 font-semibold">Total NHS Waitlist</div>
+                    <p class="text-indigo-700 text-sm mt-2">Highest level on record as of mid-2025.</p>
+                </div>
+                <div class="bg-emerald-50 p-6 rounded-xl border border-emerald-100">
+                    <div class="text-emerald-700 text-3xl font-bold mb-1">60%</div>
+                    <div class="text-emerald-900 font-semibold">ISP Cataract Share</div>
+                    <p class="text-emerald-700 text-sm mt-2">Private providers now perform the majority of NHS cataract surgeries.</p>
+                </div>
+                <div class="bg-rose-50 p-6 rounded-xl border border-rose-100">
+                    <div class="text-rose-700 text-3xl font-bold mb-1">9.4%</div>
+                    <div class="text-rose-900 font-semibold">Consultant Vacancy</div>
+                    <p class="text-rose-700 text-sm mt-2">Structural workforce deficit driving outsourcing demand.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: CLINIC PROFILES -->
+        <section id="section-clinics" class="hidden space-y-8">
+            <div class="flex flex-wrap gap-4 justify-center">
+                <button onclick="selectClinic('spaMedica')" class="clinic-toggle bg-white px-6 py-3 rounded-full shadow-sm border border-stone-200 hover:border-indigo-500 transition font-semibold" data-clinic="spaMedica">SpaMedica</button>
+                <button onclick="selectClinic('optegra')" class="clinic-toggle bg-white px-6 py-3 rounded-full shadow-sm border border-stone-200 hover:border-indigo-500 transition font-semibold" data-clinic="optegra">Optegra</button>
+                <button onclick="selectClinic('opticalExpress')" class="clinic-toggle bg-white px-6 py-3 rounded-full shadow-sm border border-stone-200 hover:border-indigo-500 transition font-semibold" data-clinic="opticalExpress">Optical Express</button>
+                <button onclick="selectClinic('moorfields')" class="clinic-toggle bg-white px-6 py-3 rounded-full shadow-sm border border-stone-200 hover:border-indigo-500 transition font-semibold" data-clinic="moorfields">Moorfields Private</button>
+                <button onclick="selectClinic('londonVision')" class="clinic-toggle bg-white px-6 py-3 rounded-full shadow-sm border border-stone-200 hover:border-indigo-500 transition font-semibold" data-clinic="londonVision">London Vision Clinic</button>
+            </div>
+
+            <div id="clinic-detail-pane" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Left: Summary Info -->
+                <div class="lg:col-span-1 space-y-6">
+                    <div class="bg-white p-8 rounded-2xl shadow-sm border border-stone-200">
+                        <div id="clinic-logo-placeholder" class="h-16 flex items-center mb-6">
+                            <span id="display-name" class="text-2xl font-bold text-indigo-900">SpaMedica</span>
+                        </div>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="text-xs font-bold text-stone-400 uppercase tracking-wider">Strategic Typology</label>
+                                <p id="display-typology" class="text-stone-800 font-medium italic">"Focused Factory" - High Volume NHS Outsourcing</p>
+                            </div>
+                            <div>
+                                <label class="text-xs font-bold text-stone-400 uppercase tracking-wider">Market Dominance</label>
+                                <p id="display-financials" class="text-stone-800 font-medium">£281.1m Turnover (2023)</p>
+                            </div>
+                            <div>
+                                <label class="text-xs font-bold text-stone-400 uppercase tracking-wider">Parent/Backing</label>
+                                <p id="display-parent" class="text-stone-800 font-medium">Veonet Group (PAI Partners / OTPP)</p>
+                            </div>
+                            <hr class="border-stone-100">
+                            <div>
+                                <label class="text-xs font-bold text-stone-400 uppercase tracking-wider">Strategic Posture</label>
+                                <p id="display-strategy" class="text-sm text-stone-600 mt-2 leading-relaxed">
+                                    SpaMedica optimizes for high-throughput elective surgeries, processing up to 25 patients daily per site by focusing exclusively on low-complexity cases like cataracts.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: BMC -->
+                <div class="lg:col-span-2">
+                    <div class="bg-stone-800 text-white p-4 rounded-t-2xl flex justify-between items-center">
+                        <span class="font-bold">Business Model Canvas</span>
+                        <span class="text-xs bg-stone-700 px-3 py-1 rounded">Interactive View</span>
+                    </div>
+                    <div class="bmc-grid bg-stone-200 p-3 rounded-b-2xl border-x border-b border-stone-200">
+                        <!-- Key Partners -->
+                        <div class="bmc-cell row-span-2">
+                            <div class="flex items-center space-x-2 mb-2">
+                                <span class="text-xl">🤝</span>
+                                <span class="text-[10px] font-bold text-stone-400 uppercase">Key Partners</span>
+                            </div>
+                            <ul id="bmc-partners" class="text-xs space-y-2 text-stone-700"></ul>
+                        </div>
+                        <!-- Key Activities -->
+                        <div class="bmc-cell">
+                            <div class="flex items-center space-x-2 mb-2">
+                                <span class="text-xl">⚙️</span>
+                                <span class="text-[10px] font-bold text-stone-400 uppercase">Key Activities</span>
+                            </div>
+                            <ul id="bmc-activities" class="text-xs space-y-2 text-stone-700"></ul>
+                        </div>
+                        <!-- Value Prop -->
+                        <div class="bmc-cell row-span-2">
+                            <div class="flex items-center space-x-2 mb-2">
+                                <span class="text-xl">💎</span>
+                                <span class="text-[10px] font-bold text-stone-400 uppercase">Value Prop</span>
+                            </div>
+                            <ul id="bmc-value" class="text-xs space-y-2 text-indigo-700 font-semibold"></ul>
+                        </div>
+                        <!-- Customer Relationships -->
+                        <div class="bmc-cell">
+                            <div class="flex items-center space-x-2 mb-2">
+                                <span class="text-xl">❤️</span>
+                                <span class="text-[10px] font-bold text-stone-400 uppercase">Relationships</span>
+                            </div>
+                            <ul id="bmc-relationships" class="text-xs space-y-2 text-stone-700"></ul>
+                        </div>
+                        <!-- Customer Segments -->
+                        <div class="bmc-cell row-span-2">
+                            <div class="flex items-center space-x-2 mb-2">
+                                <span class="text-xl">👥</span>
+                                <span class="text-[10px] font-bold text-stone-400 uppercase">Segments</span>
+                            </div>
+                            <ul id="bmc-segments" class="text-xs space-y-2 text-stone-700"></ul>
+                        </div>
+                        <!-- Key Resources -->
+                        <div class="bmc-cell">
+                            <div class="flex items-center space-x-2 mb-2">
+                                <span class="text-xl">🛠️</span>
+                                <span class="text-[10px] font-bold text-stone-400 uppercase">Resources</span>
+                            </div>
+                            <ul id="bmc-resources" class="text-xs space-y-2 text-stone-700"></ul>
+                        </div>
+                        <!-- Channels -->
+                        <div class="bmc-cell">
+                            <div class="flex items-center space-x-2 mb-2">
+                                <span class="text-xl">📢</span>
+                                <span class="text-[10px] font-bold text-stone-400 uppercase">Channels</span>
+                            </div>
+                            <ul id="bmc-channels" class="text-xs space-y-2 text-stone-700"></ul>
+                        </div>
+                        <!-- Cost Structure -->
+                        <div class="bmc-cell col-span-2">
+                            <div class="flex items-center space-x-2 mb-2">
+                                <span class="text-xl">💰</span>
+                                <span class="text-[10px] font-bold text-stone-400 uppercase">Cost Structure</span>
+                            </div>
+                            <ul id="bmc-costs" class="text-xs grid grid-cols-2 gap-2 text-stone-700"></ul>
+                        </div>
+                        <!-- Revenue Streams -->
+                        <div class="bmc-cell col-span-3">
+                            <div class="flex items-center space-x-2 mb-2">
+                                <span class="text-xl">📈</span>
+                                <span class="text-[10px] font-bold text-stone-400 uppercase">Revenue Streams</span>
+                            </div>
+                            <ul id="bmc-revenue" class="text-xs grid grid-cols-2 gap-2 text-stone-700"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: FUTURE DYNAMICS -->
+        <section id="section-trends" class="hidden space-y-12">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-stone-800">Macro Trends & Future Outlook</h2>
+                <p class="text-stone-500 mt-2">Synthesizing the structural forces redefining UK eye care.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-stone-200">
+                    <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center text-indigo-600 text-2xl mb-6">📉</div>
+                    <h3 class="text-xl font-bold text-indigo-900 mb-3">The NHS Tariff Cliff</h3>
+                    <p class="text-stone-600 text-sm leading-relaxed mb-4">
+                        NHS England has proposed an <strong>18% tariff reduction</strong> for routine cataracts by 2026. This creates a "violent margin compression" for companies like SpaMedica whose entire model relies on public funding.
+                    </p>
+                    <div class="bg-stone-50 p-4 rounded-lg border-l-4 border-indigo-400">
+                        <span class="text-xs font-bold text-indigo-700 block mb-1">STRATEGIC PIVOT:</span>
+                        <span class="text-xs text-stone-600">Firms must shift from NHS reliance to self-pay Refractive Lens Exchange (RLE) to survive.</span>
+                    </div>
+                </div>
+
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-stone-200">
+                    <div class="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center text-emerald-600 text-2xl mb-6">🔗</div>
+                    <h3 class="text-xl font-bold text-emerald-900 mb-3">Vertical Integration</h3>
+                    <p class="text-stone-600 text-sm leading-relaxed mb-4">
+                        EssilorLuxottica's acquisition of Optegra creates a "closed-loop" system. They control the retail test (Vision Express), the lens manufacturing, and the surgical delivery.
+                    </p>
+                    <div class="bg-stone-50 p-4 rounded-lg border-l-4 border-emerald-400">
+                        <span class="text-xs font-bold text-emerald-700 block mb-1">ECOSYSTEM MOAT:</span>
+                        <span class="text-xs text-stone-600">Standalone clinics will struggle to compete with entities owning the entire patient lifecycle.</span>
+                    </div>
+                </div>
+
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-stone-200">
+                    <div class="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center text-amber-600 text-2xl mb-6">🤖</div>
+                    <h3 class="text-xl font-bold text-amber-900 mb-3">AI & Triage Arbitrage</h3>
+                    <p class="text-stone-600 text-sm leading-relaxed mb-4">
+                        Automation is slashing Patient Acquisition Costs (PAC). Optegra uses DRUID AI bots for 1,000 pre-op assessments weekly, maintaining 97% NPS while scaling.
+                    </p>
+                    <div class="bg-stone-50 p-4 rounded-lg border-l-4 border-amber-400">
+                        <span class="text-xs font-bold text-amber-700 block mb-1">EFFICIENCY PLAY:</span>
+                        <span class="text-xs text-stone-600">AI-driven identification of surgical candidates via high-street OCT scanners will redefine market entry.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-stone-800 text-white rounded-2xl p-10 mt-12 flex flex-col md:flex-row items-center justify-between">
+                <div class="md:w-2/3">
+                    <h2 class="text-2xl font-bold mb-4">Summary of Strategic Imperatives</h2>
+                    <p class="text-stone-300 leading-relaxed mb-6">
+                        The future belongs to operators who can either achieve <strong>unmatched scale</strong> through technological efficiency (AI/Vertical Integration) or <strong>unassailable prestige</strong> (Elite R&D). Middle-market entities that fail to differentiate will likely be absorbed in the ongoing Private Equity consolidation wave.
+                    </p>
+                </div>
+                <div class="md:w-1/3 flex justify-center">
+                    <div class="text-center p-6 border border-stone-700 rounded-xl bg-stone-900">
+                        <div class="text-4xl font-bold text-indigo-400 mb-1">7.5%</div>
+                        <div class="text-stone-400 text-sm uppercase tracking-widest">Market CAGR</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-white border-t border-stone-200 mt-16 py-8 px-6 text-center text-stone-400 text-sm">
+        UK Private Eye Clinics: Strategic Analysis & BMC Dashboard • Data synthesized from 2024-2025 Market Reports
+    </footer>
+
+    <script>
+        const clinicData = {
+            spaMedica: {
+                name: "SpaMedica",
+                typology: "High-Volume NHS Outsourcing (Focused Factory)",
+                financials: "£281.1m (2023) | £71.8m Profit",
+                parent: "Veonet Group (PAI Partners / OTPP)",
+                strategy: "Hyper-specialization in cataract surgery enables treatment of up to 25 patients daily per site. Deep integration with high-street optometrists bypasses traditional hospital referral bottlenecks.",
+                bmc: {
+                    partners: ["Optometrist Networks", "NHS ICBs", "Surgical Suppliers", "PAI Partners"],
+                    activities: ["High-Volume Cataract Surgery", "Process Optimization", "Digital Referral Mapping"],
+                    value: ["Wait times < 4 weeks", "Free at point-of-care", "Backlog clearance for NHS"],
+                    relationships: ["Supportive/Transactional", "Automated Protocols", "Community Engagement"],
+                    segments: ["NHS Cataract Patients", "Aged 65+ Population"],
+                    resources: ["69 Surgical Facilities", "Veonet Capital", "Throughput Systems"],
+                    channels: ["Optometry B2B", "NHS SPOA Gateway", "Direct Digital Awareness"],
+                    costs: ["High Fixed Assets", "Clinical Salaries", "Debt Servicing (Veonet Level)"],
+                    revenue: ["NHS Framework Payments", "Fixed Tariff Contracts"]
+                }
+            },
+            optegra: {
+                name: "Optegra",
+                typology: "Vertically Integrated Hybrid (NHS & Private)",
+                financials: "£99.8m Revenue (2024) | £11.9m Profit",
+                parent: "EssilorLuxottica",
+                strategy: "Leverages a 'Closed-Loop' ecosystem owning both retail eyewear (Vision Express) and clinical delivery. Radical digitization with AI voice-bots for pre-operative assessments.",
+                bmc: {
+                    partners: ["Vision Express (Internal)", "DRUID AI Software", "Purpose Coalition", "NHS"],
+                    activities: ["Hybrid Cataract/Refractive", "AI-Bot Triaging", "ESG Reporting"],
+                    value: ["One-Stop Ecosystem", "AI-Assisted Diagnostics", "Global Tech Support"],
+                    relationships: ["Digitally Enhanced", "Personalized Concierge", "Lifetime Management"],
+                    segments: ["NHS Patients", "Self-Pay Laser Patients", "Insurance (PMI) Patients"],
+                    resources: ["70+ European Clinics", "EssilorLuxottica Chain", "Cloud EMR (OpenEyes)"],
+                    channels: ["Vision Express Retail", "Digital Marketing", "NHS e-Referral"],
+                    costs: ["IT Infrastructure", "Facility Maintenance", "Patient Acquisition"],
+                    revenue: ["NHS Tariffs", "Out-of-Pocket Elective", "Premium Lens Upgrades"]
+                }
+            },
+            opticalExpress: {
+                name: "Optical Express",
+                typology: "Retail-to-Clinical Funnel (Elective Laser)",
+                financials: "£101.9m Total (2018 Data Est.)",
+                parent: "Lorena Investments (David Moulsdale)",
+                strategy: "Utilizes 200 retail stores as a patient funnel. Employs 'tiered pricing' psychology (bait-and-escalate) to monetize elective refractive upgrades.",
+                bmc: {
+                    partners: ["SVP Franchisees", "Johnson & Johnson Vision", "Ambassadors"],
+                    activities: ["Retail Optometry", "High-Velocity Conversion", "Franchise Management"],
+                    value: ["National Convenience", "Low Entry Price Points", "Advanced Laser Tech"],
+                    relationships: ["Sales-Driven", "Conversion Focused", "Localized Trust"],
+                    segments: ["Price-Sensitive Consumers", "Independence Seekers (18-45)"],
+                    resources: ["200 Retail Locations", "Femtosecond Lasers", "sk:n/Harley Brands"],
+                    channels: ["High Street Stores", "National TV Advertising", "SEO Optimization"],
+                    costs: ["Massive Marketing Spend", "Retail Leaseholds", "Capital Depreciation"],
+                    revenue: ["LASIK/LASEK Fees", "Spectacle/Retail Sales", "Franchise Fees"]
+                }
+            },
+            moorfields: {
+                name: "Moorfields Private",
+                typology: "Academic/Institutional Prestige (Complex Care)",
+                financials: "£19.8m Trust Surplus | £111m Capex (24/25)",
+                parent: "Moorfields Eye Hospital NHS Foundation Trust",
+                strategy: "Institutional cross-subsidization where private profits fund the NHS trust. Capitalizes on unassailable academic prestige and research-driven complex cases.",
+                bmc: {
+                    partners: ["UCL (Institute of Ophthalmology)", "Dubai Health Authority", "Moorfields Charity"],
+                    activities: ["Complex Tertiary Care", "Elite Clinical Trials", "International Expansion"],
+                    value: ["Ultimate Clinical Safety", "Global Brand Prestige", "Philanthropic Alignment"],
+                    relationships: ["Consultant-Led", "Bespoke MDT Care", "Lifelong Chronic Support"],
+                    segments: ["Affluent Domestic Self-Pay", "International Medical Tourists", "Complex Pathologies"],
+                    resources: ["'Moorfields' Brand", "World-Class Consultants", "Project Oriel (New Site)"],
+                    channels: ["Consultant Referrals", "Embassies/GCC Networks", "Academic Publications"],
+                    costs: ["Top Consultant Salaries", "R&D/Equipment", "Hospital Infrastructure"],
+                    revenue: ["Premium Self-Pay Surgery", "International Contracts", "Insurance Referrals"]
+                }
+            },
+            londonVision: {
+                name: "London Vision Clinic",
+                typology: "Ultra-Premium Boutique (R&D Led)",
+                financials: "Premium Valuation (Acquired by EuroEyes)",
+                parent: "EuroEyes International Eye Clinic Ltd",
+                strategy: "Explicitly anti-sales factory. Focuses on 'VIP, not numbers' model. proprietary intellectual property (PRESBYOND) allows them to treat cases others reject.",
+                bmc: {
+                    partners: ["Carl Zeiss Meditec", "EuroEyes Parent", "Prof. Dan Reinstein"],
+                    activities: ["Bespoke Refractive Surgery", "Peer-Reviewed R&D", "Surgical Training"],
+                    value: ["Elite Technical Expertise", "No-Pressure Consults", "Exclusive IP (SMILE)"],
+                    relationships: ["High-Touch Concierge", "Education-Led", "Outcome Tracking"],
+                    segments: ["UHNW Individuals", "Presbyopic Demographic (40+)", "Extreme Prescriptions"],
+                    resources: ["Harley Street Clinic", "Arcscan Ultrasound Tech", "Dan Reinstein Reputation"],
+                    channels: ["Peer Referrals", "Elite PR", "Conferences/Academic"],
+                    costs: ["Elite Staff Comp", "Hardware Capex", "Central London Facilities"],
+                    revenue: ["Top-Tier Surgery Fees", "B2B Training Revenues", "Royalties/Consulting"]
+                }
+            }
+        };
+
+        function showSection(id) {
+            document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
+            document.getElementById(`section-${id}`).classList.remove('hidden');
+            
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active-tab'));
+            document.getElementById(`btn-${id}`).classList.add('active-tab');
+        }
+
+        function selectClinic(key) {
+            const data = clinicData[key];
+            
+            // UI Selection State
+            document.querySelectorAll('.clinic-toggle').forEach(b => {
+                b.classList.remove('border-indigo-500', 'bg-indigo-50', 'text-indigo-700');
+                if(b.dataset.clinic === key) b.classList.add('border-indigo-500', 'bg-indigo-50', 'text-indigo-700');
+            });
+
+            // Update Details
+            document.getElementById('display-name').innerText = data.name;
+            document.getElementById('display-typology').innerText = data.typology;
+            document.getElementById('display-financials').innerText = data.financials;
+            document.getElementById('display-parent').innerText = data.parent;
+            document.getElementById('display-strategy').innerText = data.strategy;
+
+            // Update BMC
+            updateList('bmc-partners', data.bmc.partners);
+            updateList('bmc-activities', data.bmc.activities);
+            updateList('bmc-value', data.bmc.value);
+            updateList('bmc-relationships', data.bmc.relationships);
+            updateList('bmc-segments', data.bmc.segments);
+            updateList('bmc-resources', data.bmc.resources);
+            updateList('bmc-channels', data.bmc.channels);
+            updateList('bmc-costs', data.bmc.costs);
+            updateList('bmc-revenue', data.bmc.revenue);
+        }
+
+        function updateList(id, items) {
+            const list = document.getElementById(id);
+            list.innerHTML = items.map(i => `<li>• ${i}</li>`).join('');
+        }
+
+        // Initialize Charts
+        window.onload = function() {
+            // Market Growth Chart
+            const ctx1 = document.getElementById('marketGrowthChart').getContext('2d');
+            new Chart(ctx1, {
+                type: 'bar',
+                data: {
+                    labels: ['2026 Forecast', '2036 Projection'],
+                    datasets: [{
+                        label: 'Market Value ($ Billions)',
+                        data: [10.6, 21.7],
+                        backgroundColor: ['#6366f1', '#4f46e5'],
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    scales: { y: { beginAtZero: true } },
+                    plugins: { legend: { display: false } }
+                }
+            });
+
+            // NHS Shift Chart
+            const ctx2 = document.getElementById('nhsShiftChart').getContext('2d');
+            new Chart(ctx2, {
+                type: 'line',
+                data: {
+                    labels: ['2018/19', '2020', '2022', '2024'],
+                    datasets: [{
+                        label: '% NHS Cataracts by Private Sector',
+                        data: [24, 33, 46, 60],
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom' } }
+                }
+            });
+
+            // Initial selection
+            selectClinic('spaMedica');
+        };
+    </script>
+</div><!-- /.main-content -->
+<script src="js/sidebar.js"></script>
+</body>
+</html>

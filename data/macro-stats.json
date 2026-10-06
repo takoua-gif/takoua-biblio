@@ -1,0 +1,80 @@
+{
+  "_meta": {
+    "lastUpdated": "2025-08-01",
+    "updatedBy": "Takoua Selmi",
+    "sources": [
+      { "name": "RCOphth", "url": "https://www.rcophth.ac.uk/" },
+      { "name": "NHS England RTT", "url": "https://www.england.nhs.uk/statistics/statistical-work-areas/rtt-waiting-times/" },
+      { "name": "Glaucoma UK", "url": "https://glaucoma.uk/" },
+      { "name": "PHIN", "url": "https://www.phin.org.uk/" }
+    ],
+    "nextExpectedUpdate": "2025-11-01",
+    "notes": "Update quarterly. NHS RTT published monthly, PHIN annually, RCOphth periodically."
+  },
+  "indicators": [
+    {
+      "id": "cataract",
+      "stat": "450k",
+      "label": "Cataract Surgeries / Year",
+      "sub": "RCOphth projects sustained growth driven by an ageing UK population.",
+      "trend": "up",
+      "trendLabel": "↑ +25% by 2027",
+      "fillPct": 45,
+      "source": "RCOphth · 2024",
+      "sourceUrl": "https://www.rcophth.ac.uk/",
+      "accentColor": "linear-gradient(90deg,#1B2B5C,#3b5bdb)",
+      "numColor": "#1B2B5C",
+      "iconBg": "#e8ecf7",
+      "iconColor": "#1B2B5C",
+      "icon": "fa-eye"
+    },
+    {
+      "id": "nhs-waitlist",
+      "stat": "7.11m",
+      "label": "NHS Total Wait List",
+      "sub": "Ophthalmology is the 2nd largest backlog — primary driver for self-pay conversion.",
+      "trend": "warn",
+      "trendLabel": "⚠ 26-week wait",
+      "fillPct": 92,
+      "source": "NHS England · RTT 2025",
+      "sourceUrl": "https://www.england.nhs.uk/statistics/statistical-work-areas/rtt-waiting-times/",
+      "accentColor": "linear-gradient(90deg,#dc2626,#ef4444)",
+      "numColor": "#dc2626",
+      "iconBg": "#fee2e2",
+      "iconColor": "#b91c1c",
+      "icon": "fa-clock-o"
+    },
+    {
+      "id": "glaucoma",
+      "stat": "700k",
+      "label": "UK Glaucoma Diagnoses",
+      "sub": "Chronic condition requiring lifelong IOP checks, visual fields & OCT — ideal subscription model.",
+      "trend": "up",
+      "trendLabel": "♻ Lifetime monitoring",
+      "fillPct": 68,
+      "source": "Glaucoma UK · 2024",
+      "sourceUrl": "https://glaucoma.uk/",
+      "accentColor": "linear-gradient(90deg,#16a34a,#22c55e)",
+      "numColor": "#16a34a",
+      "iconBg": "#dcfce7",
+      "iconColor": "#15803d",
+      "icon": "fa-refresh"
+    },
+    {
+      "id": "private-admissions",
+      "stat": "898k",
+      "label": "Record Private Admissions",
+      "sub": "Self-pay cataract grew 12.4%. 61.4% of patients now paying directly — no insurer.",
+      "trend": "gold",
+      "trendLabel": "↑ +7% YoY",
+      "fillPct": 80,
+      "source": "PHIN Private Healthcare · 2025",
+      "sourceUrl": "https://www.phin.org.uk/",
+      "accentColor": "linear-gradient(90deg,#B8975A,#d4a94e)",
+      "numColor": "#b8975a",
+      "iconBg": "rgba(184,151,90,0.12)",
+      "iconColor": "#b8975a",
+      "icon": "fa-line-chart"
+    }
+  ]
+}

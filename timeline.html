@@ -1,0 +1,1912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Longsighted · Internship Timeline — EyePros × Takoua</title>
+  <meta name="description" content="Authentic 23-week internship timeline. Double Diamond framework — Discover, Define, Develop, Deliver. Takoua Selmi × EyePros × Hyper Island 2026.">
+  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/longsighted.css">
+
+  <style>
+    /* ── Page hero */
+    .ls-page-hero {
+      background: var(--ls-ink);
+      color: var(--ls-white);
+      padding: 100px 0 60px;
+    }
+
+    /* ── Double Diamond Visual Banner ── */
+    .dd-banner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .dd-diamond-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius-lg);
+      padding: 18px 22px;
+      backdrop-filter: blur(8px);
+      transition: all var(--dur-fast);
+    }
+
+    .dd-diamond-card.active-diamond {
+      background: rgba(184,151,90,0.12);
+      border-color: rgba(184,151,90,0.4);
+    }
+
+    .dd-tag {
+      font-size: 0.65rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--ls-gold);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    .dd-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 6px;
+    }
+
+    .dd-desc {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.45;
+      margin: 0;
+    }
+
+    @media (max-width: 768px) {
+      .dd-banner { grid-template-columns: 1fr; }
+    }
+
+    /* ── Sticky progress / filter bar */
+    .ls-timeline-bar {
+      position: sticky;
+      top: var(--nav-h);
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--ls-border);
+      z-index: 500;
+      padding: 14px 0;
+    }
+
+    .ls-progress-track {
+      height: 4px;
+      background: var(--ls-border);
+      border-radius: var(--radius-pill);
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+
+    .ls-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--ls-navy), var(--ls-gold));
+      border-radius: var(--radius-pill);
+      transition: width 0.4s var(--ease-out);
+    }
+
+    .ls-phase-jumps {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      align-items: center;
+    }
+
+    .ls-phase-jump {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--ls-border);
+      background: var(--ls-white);
+      color: var(--ls-muted);
+      cursor: pointer;
+      transition: all var(--dur-fast);
+      font-family: var(--font-body);
+    }
+
+    .ls-phase-jump:hover { background: var(--ls-cream-deep); color: var(--ls-ink); }
+    .ls-phase-jump.current { background: var(--ls-navy); color: white; border-color: transparent; }
+
+    .ls-stream-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      align-items: center;
+    }
+
+    .ls-stream-btn {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 5px 11px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--ls-border);
+      background: var(--ls-white);
+      color: var(--ls-muted);
+      cursor: pointer;
+      transition: all var(--dur-fast);
+      font-family: var(--font-body);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .ls-stream-btn.active, .ls-stream-btn:hover {
+      background: var(--ls-ink);
+      color: white;
+      border-color: transparent;
+    }
+
+    /* ── Vertical spine */
+    .ls-timeline-spine-wrap {
+      position: relative;
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 20px 0 60px;
+    }
+
+    .ls-spine-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 28px;
+      width: 2px;
+      background: var(--ls-border);
+      z-index: 1;
+    }
+
+    @media (min-width: 768px) {
+      .ls-spine-line { left: 32px; }
+    }
+
+    /* Phase gate headers */
+    .ls-phase-gate {
+      position: relative;
+      z-index: 2;
+      margin: 44px 0 20px;
+      scroll-margin-top: 155px;
+    }
+
+    .ls-phase-gate:first-child { margin-top: 10px; }
+
+    .ls-phase-banner {
+      background: var(--ls-white);
+      border: 1px solid var(--ls-border);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      margin-left: 64px;
+      box-shadow: var(--shadow-sm);
+      transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
+    }
+
+    @media (min-width: 768px) { .ls-phase-banner { margin-left: 72px; } }
+
+    .ls-phase-banner.active-phase {
+      border-left: 4px solid var(--ls-navy);
+      background: linear-gradient(90deg, var(--ls-navy-light) 0%, white 45%);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* Milestone nodes */
+    .ls-milestone-node {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      cursor: pointer;
+      transition: all var(--dur-fast);
+    }
+
+    .ls-milestone-node:hover .ls-milestone-card {
+      border-color: var(--ls-navy);
+      transform: translateX(4px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+    }
+
+    .ls-milestone-node.selected .ls-milestone-card {
+      border-left: 3px solid var(--ls-navy);
+      border-color: var(--ls-navy);
+      background: var(--ls-navy-light);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* Dot markers */
+    .ls-dot {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--ls-white);
+      border: 2px solid var(--ls-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 16px;
+      margin-left: 17px;
+      z-index: 3;
+      transition: all var(--dur-fast);
+    }
+
+    @media (min-width: 768px) { .ls-dot { margin-left: 21px; width: 24px; height: 24px; } }
+
+    .ls-dot.completed {
+      background: var(--ls-navy);
+      border-color: var(--ls-navy);
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .ls-dot.completed::after { content: '✓'; }
+
+    .ls-dot.active {
+      background: var(--ls-gold);
+      border-color: var(--ls-gold-hover);
+      box-shadow: 0 0 0 5px rgba(184,151,90,0.25);
+      animation: ls-pulse 2s infinite;
+    }
+
+    @keyframes ls-pulse {
+      0%, 100% { box-shadow: 0 0 0 3px rgba(184,151,90,0.25); }
+      50%       { box-shadow: 0 0 0 8px rgba(184,151,90,0.08); }
+    }
+
+    /* Milestone card summary */
+    .ls-milestone-card {
+      background: var(--ls-white);
+      border: 1px solid var(--ls-border);
+      border-radius: var(--radius-lg);
+      padding: 16px 20px;
+      margin-left: 26px;
+      flex-grow: 1;
+      transition: all var(--dur-fast);
+    }
+
+    /* Stream tags */
+    .ls-stream-tag {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .tag-school   { background: #fdf2f0; color: #991b1b; border: 1px solid #fca5a5; }
+    .tag-people   { background: #f0fdfa; color: #115e59; border: 1px solid #5eead4; }
+    .tag-research { background: #f5f3ff; color: #5b21b6; border: 1px solid #c4b5fd; }
+    .tag-social   { background: #f0f9ff; color: #075985; border: 1px solid #7dd3fc; }
+    .tag-brand    { background: #fefce8; color: #854d0e; border: 1px solid #fde047; }
+    .tag-playbook { background: #f0fdf4; color: #166534; border: 1px solid #86efac; }
+
+    /* ── UK Visit Grid ── */
+    .uk-visit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .uk-day-card {
+      background: var(--ls-white);
+      border: 1px solid var(--ls-border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .uk-day-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--ls-navy);
+    }
+
+    .uk-day-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--ls-border);
+      padding-bottom: 10px;
+    }
+
+    .uk-day-tag {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ls-navy);
+    }
+
+    /* ── Playbook Content Cards ── */
+    .playbook-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .playbook-card {
+      background: var(--ls-white);
+      border: 1px solid var(--ls-border);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .playbook-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* ── What is coming up Section ── */
+    .coming-up-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .coming-card {
+      background: var(--ls-white);
+      border: 1px solid var(--ls-border);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .coming-card.current-week {
+      border-left: 4px solid var(--ls-gold);
+      background: linear-gradient(135deg, rgba(184,151,90,0.06) 0%, white 60%);
+    }
+
+    .coming-card.on-hold {
+      border-left: 4px solid #ef4444;
+      background: linear-gradient(135deg, #fff1f2 0%, white 60%);
+    }
+
+    /* ── Detail drawer */
+    .ls-drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(13,13,26,0.55);
+      backdrop-filter: blur(6px);
+      z-index: 2000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--dur-base) var(--ease-out);
+    }
+
+    .ls-drawer-backdrop.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .ls-detail-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      max-width: 580px;
+      background: var(--ls-white);
+      border-left: 1px solid var(--ls-border);
+      box-shadow: -12px 0 48px rgba(13,13,26,0.18);
+      z-index: 2010;
+      transform: translateX(100%);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .ls-drawer-backdrop.active .ls-detail-drawer {
+      transform: translateX(0);
+    }
+
+    .ls-drawer-header {
+      padding: 24px;
+      border-bottom: 1px solid var(--ls-border);
+      background: var(--ls-cream);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .ls-drawer-body {
+      padding: 28px 24px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .ls-drawer-section-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ls-subtle);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ls-drawer-box {
+      background: var(--ls-cream);
+      border: 1px solid var(--ls-border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+    }
+
+    .ls-drawer-box.highlight {
+      background: var(--ls-navy-light);
+      border-color: rgba(27,43,92,0.15);
+    }
+
+    .ls-drawer-footer {
+      padding: 16px 24px;
+      border-top: 1px solid var(--ls-border);
+      background: var(--ls-cream);
+      position: sticky;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Status badge */
+    .ls-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: var(--radius-pill);
+    }
+
+    .ls-status-badge.done     { background: #f0fdf4; color: #166534; border: 1px solid #86efac; }
+    .ls-status-badge.active   { background: var(--ls-gold-light); color: var(--ls-gold-hover); border: 1px solid var(--ls-gold-border); }
+    .ls-status-badge.upcoming { background: var(--ls-cream-deep); color: var(--ls-subtle); border: 1px solid var(--ls-border); }
+    .ls-status-badge.hold     { background: #fff1f2; color: #b91c1c; border: 1px solid #fecaca; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV injected by js/ls-nav.js -->
+
+  <!-- ── Page Hero -->
+  <section class="ls-page-hero" style="position:relative; overflow:hidden;">
+    <!-- Background -->
+    <div style="position:absolute;inset:0;z-index:0;">
+      <img src="images/eye-macro.jpg" alt="Eye precision" style="width:100%;height:100%;object-fit:cover;opacity:0.12;filter:saturate(0.3);">
+      <div style="position:absolute;inset:0;background:var(--ls-ink);opacity:0.82;"></div>
+    </div>
+    <!-- Right bleed image (desktop) -->
+    <div class="ls-hide-mobile" style="position:absolute;right:0;top:0;bottom:0;width:38%;z-index:1;pointer-events:none;overflow:hidden;">
+      <img src="images/cataract-surgery.jpg" alt="Clinical excellence" style="width:100%;height:100%;object-fit:cover;opacity:0.25;mix-blend-mode:luminosity;">
+      <div style="position:absolute;inset:0;background:linear-gradient(to right,var(--ls-ink) 0%,transparent 40%);"></div>
+    </div>
+    <div class="ls-container" style="position:relative;z-index:2;">
+      <div class="ls-reveal">
+        <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;font-size:0.8rem;color:rgba(255,255,255,0.5);margin-bottom:20px;text-decoration:none;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">
+          <i class="fa fa-arrow-left"></i> Home
+        </a>
+        <div class="ls-eyebrow" style="color:var(--ls-gold); margin-bottom:10px;">
+          <i class="fa fa-calendar-check-o" style="margin-right:4px;"></i>
+          15 JULY – 15 DECEMBER 2026 · 23 WEEKS · DOUBLE DIAMOND FRAMEWORK
+        </div>
+        <h1 class="ls-hero-title">EYEPROS × TAKOUA<br>Internship Timeline</h1>
+        <p style="color:rgba(255,255,255,0.75); font-size:1.05rem; line-height:1.6; max-width:620px; margin-top:16px;">
+          My internship, week by week · 15 July to 15 December 2026.
+        </p>
+
+        <!-- Official Principle Quote -->
+        <div style="background:rgba(255,255,255,0.06); border-left:3px solid var(--ls-gold); border-radius:0 var(--radius-md) var(--radius-md) 0; padding:12px 18px; margin-top:20px; max-width:680px;">
+          <p style="font-size:0.82rem; color:rgba(255,255,255,0.85); font-style:italic; margin:0; line-height:1.5;">
+            "Only work that is real: things I have already done, things that are booked, and things I am waiting on. Anything not yet decided is left blank on purpose."
+          </p>
+        </div>
+
+        <!-- Double Diamond Visual Summary -->
+        <div class="dd-banner">
+          <div class="dd-diamond-card active-diamond">
+            <div class="dd-tag"><i class="fa fa-diamond"></i> DIAMOND 1 · WEEKS 1–8 (CURRENT)</div>
+            <div class="dd-title">Finding the right problem</div>
+            <p class="dd-desc"><strong>Discover (W1–4)</strong>: Understanding the business and the market · <strong>Define (W5–8)</strong>: Talking to patients and partners (UK visit, surveys, clinics).</p>
+          </div>
+          <div class="dd-diamond-card">
+            <div class="dd-tag" style="color:rgba(255,255,255,0.5);"><i class="fa fa-diamond"></i> DIAMOND 2 · WEEKS 9–23</div>
+            <div class="dd-title">Building the right answer</div>
+            <p class="dd-desc"><strong>Develop (W9–20)</strong>: Building the 8 brand strategies &amp; operations · <strong>Deliver (W21–23)</strong>: Finishing, master handover &amp; graduation.</p>
+          </div>
+        </div>
+
+        <div style="margin-top:24px; display:flex; flex-wrap:wrap; gap:10px;">
+          <button onclick="exportMonthlyReport()" class="ls-btn ls-btn-ghost-light">
+            <i class="fa fa-download" style="margin-right:6px;"></i> Export Roadmap &amp; My Notes
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Sticky progress + filter bar -->
+  <div class="ls-timeline-bar" id="timelineStickyBar">
+    <div class="ls-container">
+      <!-- Progress -->
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <span style="font-family:var(--font-display); font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--ls-subtle);">
+          Internship Progress: Week 7 of 23 (30%) · Diamond 1
+        </span>
+        <span class="ls-pill ls-pill-gold" style="font-size:0.65rem;">
+          <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--ls-gold-hover);margin-right:4px;"></span>
+          TODAY · 24–28 Aug (W7)
+        </span>
+      </div>
+      <div class="ls-progress-track">
+        <div class="ls-progress-fill" style="width:30.4%;"></div>
+      </div>
+
+      <!-- Phase jumps + 6 stream filters -->
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px;">
+        <div class="ls-phase-jumps">
+          <span style="font-size:0.72rem; font-weight:700; color:var(--ls-subtle); margin-right:4px;">Phases:</span>
+          <button class="ls-phase-jump" onclick="scrollToPhase('phase-1')">1. Discover (W1–4)</button>
+          <button class="ls-phase-jump current" onclick="scrollToPhase('phase-2')">2. Define (W5–8) · NOW</button>
+          <button class="ls-phase-jump" onclick="scrollToPhase('phase-3')">3. Develop (W9–20)</button>
+          <button class="ls-phase-jump" onclick="scrollToPhase('phase-4')">4. Deliver (W21–23)</button>
+        </div>
+
+        <div class="ls-stream-filters">
+          <button class="ls-stream-btn active" onclick="filterStream('all')" id="filter-all">All Streams</button>
+          <button class="ls-stream-btn" onclick="filterStream('school')" id="filter-school"><i class="fa fa-graduation-cap"></i> School</button>
+          <button class="ls-stream-btn" onclick="filterStream('people')" id="filter-people"><i class="fa fa-users"></i> People</button>
+          <button class="ls-stream-btn" onclick="filterStream('research')" id="filter-research"><i class="fa fa-search"></i> Research</button>
+          <button class="ls-stream-btn" onclick="filterStream('social')" id="filter-social"><i class="fa fa-video-camera"></i> Social Media</button>
+          <button class="ls-stream-btn" onclick="filterStream('brand')" id="filter-brand"><i class="fa fa-briefcase"></i> Brand</button>
+          <button class="ls-stream-btn" onclick="filterStream('playbook')" id="filter-playbook"><i class="fa fa-book"></i> The Playbook</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Vertical Timeline Spine (All authentic entries) ── -->
+  <section class="ls-section-sm ls-bg-cream" style="padding-top:24px;">
+    <div class="ls-container">
+      <div class="ls-timeline-spine-wrap">
+        <!-- Spine line -->
+        <div class="ls-spine-line"></div>
+        <!-- Dynamic milestones -->
+        <div id="verticalTimelineContainer"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── The UK Visit Section (Exact 6-day log) ── -->
+  <section id="uk-visit-section" class="ls-section ls-bg-white" style="border-top:1px solid var(--ls-border);">
+    <div class="ls-container">
+      <div class="ls-reveal">
+        <div class="ls-eyebrow" style="color:var(--ls-navy); margin-bottom:8px;">
+          <i class="fa fa-map-marker"></i> UK VISIT · 10 TO 15 AUGUST
+        </div>
+        <h2 class="ls-section-title">Six Days On Site: What Actually Happened</h2>
+        <p class="ls-body" style="max-width:640px; margin-top:8px;">
+          Direct clinical shadowing, NHS hospital observations, surgery filming at The Park, optometry field visits with Steve, and patient survey distribution.
+        </p>
+
+        <div class="uk-visit-grid">
+          <!-- Mon -->
+          <div class="uk-day-card">
+            <div class="uk-day-header">
+              <span class="uk-day-tag">Monday 10 Aug</span>
+              <span class="ls-status-badge done">✓ Complete</span>
+            </div>
+            <div style="font-family:var(--font-display); font-size:1rem; font-weight:700; color:var(--ls-ink);">NHS Hospital Clinic</div>
+            <p style="font-size:0.82rem; color:var(--ls-muted); line-height:1.5; margin:0;">
+              Mapped the referral route and where patients move over to private. Also saw how a working day runs there.
+            </p>
+          </div>
+
+          <!-- Tue -->
+          <div class="uk-day-card">
+            <div class="uk-day-header">
+              <span class="uk-day-tag">Tuesday 11 Aug</span>
+              <span class="ls-status-badge done">✓ Complete</span>
+            </div>
+            <div style="font-family:var(--font-display); font-size:1rem; font-weight:700; color:var(--ls-ink);">NHS, Second Day</div>
+            <p style="font-size:0.82rem; color:var(--ls-muted); line-height:1.5; margin:0;">
+              The rest of the pathway, and time talking to patients. The waiting lists are very long, which is the main reason people go private.
+            </p>
+          </div>
+
+          <!-- Wed -->
+          <div class="uk-day-card">
+            <div class="uk-day-header">
+              <span class="uk-day-tag">Wednesday 12 Aug</span>
+              <span class="ls-status-badge done">✓ Complete</span>
+            </div>
+            <div style="font-family:var(--font-display); font-size:1rem; font-weight:700; color:var(--ls-ink);">The Park Hospital, then EyePros</div>
+            <p style="font-size:0.82rem; color:var(--ls-muted); line-height:1.5; margin:0;">
+              Morning at The Park Hospital to see how it runs. Afternoon at EyePros.
+            </p>
+          </div>
+
+          <!-- Thu -->
+          <div class="uk-day-card">
+            <div class="uk-day-header">
+              <span class="uk-day-tag">Thursday 13 Aug</span>
+              <span class="ls-status-badge done">✓ Complete</span>
+            </div>
+            <div style="font-family:var(--font-display); font-size:1rem; font-weight:700; color:var(--ls-ink);">Optometrist Visit with Steve</div>
+            <p style="font-size:0.82rem; color:var(--ls-muted); line-height:1.5; margin:0;">
+              Shadowing in the morning, then their pain points and where they send patients now. This is where the commercial operations workflow came from.
+            </p>
+          </div>
+
+          <!-- Fri -->
+          <div class="uk-day-card">
+            <div class="uk-day-header">
+              <span class="uk-day-tag">Friday 14 Aug</span>
+              <span class="ls-status-badge done">✓ Complete</span>
+            </div>
+            <div style="font-family:var(--font-display); font-size:1rem; font-weight:700; color:var(--ls-ink);">Patient Survey, then the Set</div>
+            <p style="font-size:0.82rem; color:var(--ls-muted); line-height:1.5; margin:0;">
+              The patient interviews did not happen. I wrote the survey instead and shared it with the team. Afternoon: getting the site ready for filming.
+            </p>
+          </div>
+
+          <!-- Sat -->
+          <div class="uk-day-card">
+            <div class="uk-day-header">
+              <span class="uk-day-tag">Saturday 15 Aug</span>
+              <span class="ls-status-badge done">✓ Complete</span>
+            </div>
+            <div style="font-family:var(--font-display); font-size:1rem; font-weight:700; color:var(--ls-ink);">Filming with Mr Ahmad</div>
+            <p style="font-size:0.82rem; color:var(--ls-muted); line-height:1.5; margin:0;">
+              FAQ films and patient reels. I wrote the questions and did the filming. The footage went to the agency.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── What the Website Playbook Will Contain ── -->
+  <section id="playbook-structure" class="ls-section ls-bg-cream" style="border-top:1px solid var(--ls-border);">
+    <div class="ls-container">
+      <div class="ls-reveal">
+        <div class="ls-eyebrow" style="color:var(--ls-navy); margin-bottom:8px;">
+          <i class="fa fa-book"></i> THE MAIN HANDOVER
+        </div>
+        <h2 class="ls-section-title">What the Website Playbook Will Contain</h2>
+        <p class="ls-body" style="max-width:640px; margin-top:8px;">
+          One website, seven sections. Each one gets filled in as the work behind it is finished.
+        </p>
+
+        <div class="playbook-grid">
+          <!-- 1 -->
+          <div class="playbook-card">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+                <span style="font-size:0.7rem; font-weight:700; color:var(--ls-subtle); text-transform:uppercase;">01 · Intelligence</span>
+                <span class="ls-status-badge done">✓ Built</span>
+              </div>
+              <h3 style="font-family:var(--font-display); font-size:1.05rem; font-weight:700; margin:0 0 8px; color:var(--ls-ink);">Benchmarking &amp; News</h3>
+              <p style="font-size:0.82rem; color:var(--ls-muted); line-height:1.5; margin:0;">
+                A section that watches what is happening in the landscape, so the team can see it without asking.
+              </p>
+            </div>
+          </div>
+
+          <!-- 2 -->
+          <div class="playbook-card">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+                <span style="font-size:0.7rem; font-weight:700; color:var(--ls-subtle); text-transform:uppercase;">02 · Ecosystem</span>
+                <span class="ls-status-badge done">✓ Done</span>
+              </div>
+              <h3 style="font-family:var(--font-display); font-size:1.05rem; font-weight:700; margin:0 0 8px; color:var(--ls-ink);">Stakeholder Map</h3>
+              <p style="font-size:0.82rem; color:var(--ls-muted); line-height:1.5; margin:0;">
+                Who matters around EyePros and how they connect.
+              </p>
+            </div>
+          </div>
+
+          <!-- 3 -->
+          <div class="playbook-card">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+                <span style="font-size:0.7rem; font-weight:700; color:var(--ls-subtle); text-transform:uppercase;">03 · Audience</span>
+                <span class="ls-status-badge active">● Profiles Done</span>
+              </div>
+              <h3 style="font-family:var(--font-display); font-size:1.05rem; font-weight:700; margin:0 0 8px; color:var(--ls-ink);">Personas with Empathy Map</h3>
+              <p style="font-size:0.82rem; color:var(--ls-muted); line-height:1.5; margin:0;">
+                The 19 profiles, with an empathy map added to each. (Empathy maps to revise).
+              </p>
+            </div>
+          </div>
+
+          <!-- 4 -->
+          <div class="playbook-card">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+                <span style="font-size:0.7rem; font-weight:700; color:var(--ls-subtle); text-transform:uppercase;">04 · Economics</span>
+                <span class="ls-status-badge active">● Shared · Checking</span>
+              </div>
+              <h3 style="font-family:var(--font-display); font-size:1.05rem; font-weight:700; margin:0 0 8px; color:var(--ls-ink);">Market Analysis</h3>
+              <p style="font-size:0.82rem; color:var(--ls-muted); line-height:1.5; margin:0;">
+                How big the market is and where the money is. (Market sizing shared, checking the numbers).
+              </p>
+            </div>
+          </div>
+
+          <!-- 5 -->
+          <div class="playbook-card">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+                <span style="font-size:0.7rem; font-weight:700; color:var(--ls-subtle); text-transform:uppercase;">05 · Landscape</span>
+                <span class="ls-status-badge done">✓ Done</span>
+              </div>
+              <h3 style="font-family:var(--font-display); font-size:1.05rem; font-weight:700; margin:0 0 8px; color:var(--ls-ink);">Competitor Analysis</h3>
+              <p style="font-size:0.82rem; color:var(--ls-muted); line-height:1.5; margin:0;">
+                Who else is out there and how they work.
+              </p>
+            </div>
+          </div>
+
+          <!-- 6 -->
+          <div class="playbook-card">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+                <span style="font-size:0.7rem; font-weight:700; color:var(--ls-subtle); text-transform:uppercase;">06 · Commercials</span>
+                <span class="ls-status-badge active">● Started</span>
+              </div>
+              <h3 style="font-family:var(--font-display); font-size:1.05rem; font-weight:700; margin:0 0 8px; color:var(--ls-ink);">Business Plan</h3>
+              <p style="font-size:0.82rem; color:var(--ls-muted); line-height:1.5; margin:0;">
+                How EyePros makes money and where it grows.
+              </p>
+            </div>
+          </div>
+
+          <!-- 7 -->
+          <div class="playbook-card">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+                <span style="font-size:0.7rem; font-weight:700; color:var(--ls-subtle); text-transform:uppercase;">07 · Execution</span>
+                <span class="ls-status-badge active">● Started</span>
+              </div>
+              <h3 style="font-family:var(--font-display); font-size:1.05rem; font-weight:700; margin:0 0 8px; color:var(--ls-ink);">Useful Toolbox</h3>
+              <p style="font-size:0.82rem; color:var(--ls-muted); line-height:1.5; margin:0;">
+                The templates and tools the team can pick up and use.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── What is coming up Section ── -->
+  <section id="coming-up" class="ls-section ls-bg-white" style="border-top:1px solid var(--ls-border);">
+    <div class="ls-container">
+      <div class="ls-reveal">
+        <div class="ls-eyebrow" style="color:var(--ls-gold-hover); margin-bottom:8px;">
+          <i class="fa fa-clock-o"></i> LIVE LOOKAHEAD &amp; STATUS
+        </div>
+        <h2 class="ls-section-title">What Is Coming Up</h2>
+        <p class="ls-body" style="max-width:640px; margin-top:8px;">
+          Immediate focus areas, upcoming fieldwork trips, and tracked dependencies.
+        </p>
+
+        <div class="coming-up-grid">
+          <!-- This Week -->
+          <div class="coming-card current-week">
+            <div style="font-size:0.68rem; font-weight:800; text-transform:uppercase; letter-spacing:0.1em; color:var(--ls-gold-hover); margin-bottom:6px;">
+              ● THIS WEEK · 24 TO 28 AUGUST
+            </div>
+            <p style="font-size:0.85rem; color:var(--ls-ink); line-height:1.55; margin:0; font-weight:500;">
+              The commercial operations workflow went to Ahmad Elsahn: the deck, the tracker and a note splitting the tasks between the team. Starting the PracticePartners proposal. The patient survey needs to go live with the team so data starts coming in.
+            </p>
+          </div>
+
+          <!-- Next Two Weeks -->
+          <div class="coming-card">
+            <div style="font-size:0.68rem; font-weight:800; text-transform:uppercase; letter-spacing:0.1em; color:var(--ls-navy); margin-bottom:6px;">
+              NEXT TWO WEEKS
+            </div>
+            <p style="font-size:0.85rem; color:var(--ls-ink); line-height:1.55; margin:0; font-weight:500;">
+              Business plan and market sizing, checking the numbers before they go further. Reading the PracticePartners proposal for selling shares. Building the business model canvases myself, for Synergy and EyeSpa.
+            </p>
+          </div>
+
+          <!-- September -->
+          <div class="coming-card">
+            <div style="font-size:0.68rem; font-weight:800; text-transform:uppercase; letter-spacing:0.1em; color:var(--ls-navy); margin-bottom:6px;">
+              SEPTEMBER
+            </div>
+            <p style="font-size:0.85rem; color:var(--ls-ink); line-height:1.55; margin:0; font-weight:500;">
+              10 to 15 September in the UK for the ESCRS congress. 15 to 17 September in the office with the team.
+            </p>
+          </div>
+
+          <!-- On Hold -->
+          <div class="coming-card on-hold">
+            <div style="font-size:0.68rem; font-weight:800; text-transform:uppercase; letter-spacing:0.1em; color:#b91c1c; margin-bottom:6px;">
+              ⚠ ON HOLD
+            </div>
+            <p style="font-size:0.85rem; color:var(--ls-ink); line-height:1.55; margin:0; font-weight:500;">
+              The Uncomfortable Truths workshop with Ahmad, Steve and Alicia. Postponed, they do not have time for it now.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Detail Drawer ── -->
+  <div class="ls-drawer-backdrop" id="drawerBackdrop" onclick="closeDrawer(event)">
+    <div class="ls-detail-drawer" onclick="event.stopPropagation()">
+      <!-- Header -->
+      <div class="ls-drawer-header">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">
+          <span class="ls-stream-tag" id="drawerStreamTag">STREAM</span>
+          <button onclick="closeDrawer()" aria-label="Close drawer" style="background:none;border:none;color:var(--ls-subtle);font-size:1.5rem;line-height:1;cursor:pointer;padding:0 4px;">&times;</button>
+        </div>
+        <h3 style="font-family:var(--font-display); font-size:1.35rem; font-weight:700; letter-spacing:-0.02em; color:var(--ls-ink); margin:0 0 8px;" id="drawerTitle">Milestone Title</h3>
+        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+          <span style="font-size:0.75rem; color:var(--ls-subtle); font-family:var(--font-display); font-weight:500;" id="drawerDates">DATES · WEEK</span>
+          <span id="drawerStatusBadge" class="ls-status-badge done">Completed</span>
+        </div>
+      </div>
+
+      <!-- Body -->
+      <div class="ls-drawer-body">
+        <div>
+          <div class="ls-drawer-section-label"><i class="fa fa-file-text-o" style="color:var(--ls-navy);"></i> Item Description (From Roadmap)</div>
+          <div class="ls-drawer-box highlight">
+            <p style="font-size:0.92rem; font-weight:600; color:var(--ls-ink); line-height:1.55; margin:0;" id="drawerSummary">Summary text</p>
+          </div>
+        </div>
+
+        <div id="drawerActivitiesWrap">
+          <div class="ls-drawer-section-label"><i class="fa fa-check-square-o" style="color:var(--ls-navy);"></i> Details &amp; Activities</div>
+          <ul style="font-size:var(--text-sm); color:var(--ls-muted); padding-left:20px; margin:0; display:flex; flex-direction:column; gap:6px; line-height:1.5;" id="drawerActivitiesList"></ul>
+        </div>
+
+        <div>
+          <div class="ls-drawer-section-label"><i class="fa fa-tag" style="color:var(--ls-navy);"></i> Stream &amp; Classification</div>
+          <p style="font-size:var(--text-sm); color:var(--ls-muted); margin:0;" id="drawerStreamDetail">School · Hyper Island</p>
+        </div>
+
+        <!-- ── Personal notes (editable, auto-saved to localStorage) ── -->
+        <div style="border-top:1px solid var(--ls-border); padding-top:18px;">
+          <div class="ls-drawer-section-label" style="justify-content:space-between;">
+            <span style="display:flex;align-items:center;gap:6px;">
+              <i class="fa fa-pencil" style="color:var(--ls-gold-hover);"></i>
+              Your Personal Notes
+            </span>
+            <span id="drawerNotesSaved" style="font-size:0.65rem;font-weight:600;color:#15803d;opacity:0;transition:opacity 0.3s;letter-spacing:0.05em;">Saved ✓</span>
+          </div>
+          <div style="position:relative;">
+            <textarea id="drawerPersonalNotes"
+              placeholder="Write your reflections, observations, next steps, or specific details for this milestone… This is your personal workspace. Everything saves automatically in your browser."
+              style="
+                width: 100%;
+                min-height: 130px;
+                padding: 14px 16px;
+                font-family: var(--font-body);
+                font-size: 0.82rem;
+                line-height: 1.6;
+                color: var(--ls-ink);
+                background: var(--ls-white);
+                border: 1.5px solid var(--ls-border);
+                border-radius: var(--radius-md);
+                resize: vertical;
+                outline: none;
+                box-sizing: border-box;
+                transition: border-color 0.15s;
+              "
+              onfocus="this.style.borderColor='var(--ls-navy)'"
+              onblur="this.style.borderColor='var(--ls-border)'"
+            ></textarea>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px;">
+              <span style="font-size:0.68rem;color:var(--ls-subtle);line-height:1.4;">
+                <i class="fa fa-lock" style="margin-right:3px;"></i>Saved in your browser — persists across sessions
+              </span>
+              <button id="drawerClearNoteBtn"
+                style="font-family:var(--font-body);font-size:0.7rem;color:var(--ls-muted);background:none;border:none;cursor:pointer;padding:2px 6px;"
+                onmouseover="this.style.color='#b91c1c'" onmouseout="this.style.color='var(--ls-muted)'">
+                Clear note
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer nav -->
+      <div class="ls-drawer-footer">
+        <button class="ls-btn ls-btn-ghost ls-btn-sm" id="drawerPrevBtn" onclick="navigateMilestone(-1)">
+          ← Previous
+        </button>
+        <span style="font-size:0.75rem; color:var(--ls-subtle); font-family:var(--font-display); font-weight:500;" id="drawerIndexIndicator">1 of 28</span>
+        <button class="ls-btn ls-btn-ghost ls-btn-sm" id="drawerNextBtn" onclick="navigateMilestone(1)">
+          Next →
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Footer -->
+  <footer class="ls-footer">
+    <div class="ls-container">
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:20px; padding-bottom:32px; border-bottom:1px solid rgba(255,255,255,0.1);">
+        <img src="images/longsighted-logo-horizontal-white.png" alt="Longsighted" style="height:44px; width:auto;" onerror="this.src='images/longsighted-logo.png';">
+        <nav style="display:flex; flex-wrap:wrap; gap:20px;">
+          <a href="index.html" style="color:rgba(255,255,255,0.5); font-size:var(--text-sm);">Home</a>
+          <a href="patient-pathways.html" style="color:rgba(255,255,255,0.5); font-size:var(--text-sm);">Patient Pathways</a>
+          <a href="market-numbers.html" style="color:rgba(255,255,255,0.5); font-size:var(--text-sm);">Market &amp; Numbers</a>
+          <a href="business-plan.html" style="color:rgba(255,255,255,0.5); font-size:var(--text-sm);">Business Plan Eyepros</a>
+        </nav>
+      </div>
+      <div class="ls-footer-bottom">
+        <span>&copy; 2026 EyePros Strategic Intelligence · Longsighted by Takoua · Hyper Island Internship</span>
+        <span>Mr Ahmad Elsahn · Sherwood Forest Hospitals NHS FT</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/ls-nav.js"></script>
+  <script>
+    /* ══ The 23-Week Authoritative Internship Dataset (Verbatim from Board) ══ */
+    const PHASES_DATA = [
+      {
+        id: 'phase-1',
+        name: 'Phase 1: Discover',
+        weeks: 'Weeks 1–4 · 13 July – 9 August 2026',
+        diamond: 'DIAMOND 1: Finding the right problem',
+        status: 'completed',
+        desc: 'Understanding the business and the market. Framing project scope, initial check-ins with Ahmad and Steve, creative direction, personas, and foundation research.',
+        milestones: [
+          /* School */
+          {
+            id: 'm-sch-1',
+            week: 'Weeks 1–2 · 13–24 Jul',
+            title: 'Learning Agreement Signed',
+            stream: 'school',
+            streamLabel: 'School',
+            streamFull: 'School · Hyper Island',
+            status: 'completed',
+            summary: 'Learning agreement signed.',
+            activities: [
+              'Hyper Island learning contract establishment and onboarding',
+              'Alignment on academic deliverables and weekly rhythms'
+            ]
+          },
+          {
+            id: 'm-sch-2',
+            week: 'Weeks 2–3 · 20 Jul – 2 Aug',
+            title: 'Personal SWOT & Pod Lead Work',
+            stream: 'school',
+            streamLabel: 'School',
+            streamFull: 'School · Hyper Island',
+            status: 'completed',
+            summary: 'Personal SWOT and pod lead work.',
+            activities: [
+              'Self-assessment SWOT analysis for the internship journey',
+              'Pod leadership and team collaboration rituals'
+            ]
+          },
+          {
+            id: 'm-sch-3',
+            week: 'Week 4 · Friday 7 August',
+            title: 'Mentorship with Beatriz',
+            stream: 'school',
+            streamLabel: 'School',
+            streamFull: 'School · Hyper Island',
+            status: 'completed',
+            summary: 'Mentorship with Beatriz · Friday 7 August.',
+            activities: [
+              '1-on-1 strategic mentorship session',
+              'Reviewing project trajectory ahead of the UK field visit'
+            ]
+          },
+
+          /* People */
+          {
+            id: 'm-peo-1',
+            week: 'Week 1 · 13–19 Jul',
+            title: 'Regular Check-ins with Ahmad & Steve',
+            stream: 'people',
+            streamLabel: 'People',
+            streamFull: 'People · Meetings & Visits',
+            status: 'completed',
+            summary: 'Regular check-ins with Ahmad and Steve.',
+            activities: [
+              'Setting up weekly governance with Clinical Director Mr Ahmad Elsahn',
+              'Aligning with Steve on optometrist liaison and field strategy'
+            ]
+          },
+          {
+            id: 'm-peo-2',
+            week: 'Week 1 · 13–19 Jul',
+            title: 'POD Session & Team Introduction',
+            stream: 'people',
+            streamLabel: 'People',
+            streamFull: 'People · Meetings & Visits',
+            status: 'completed',
+            summary: 'POD session · met the team and introduced myself.',
+            activities: [
+              'Team introduction and role definition within the EyePros pod'
+            ]
+          },
+          {
+            id: 'm-peo-3',
+            week: 'Week 2 · 20–26 Jul',
+            title: 'Düsseldorf Clinic Visit',
+            stream: 'people',
+            streamLabel: 'People',
+            streamFull: 'People · Meetings & Visits',
+            status: 'completed',
+            summary: 'Düsseldorf · clinic visit, and the moodboard and brand story with Colette.',
+            activities: [
+              'On-site clinic immersion in Düsseldorf',
+              'Moodboard development and brand story alignment with Colette'
+            ]
+          },
+
+          /* Research */
+          {
+            id: 'm-res-1',
+            week: 'Weeks 1–2 · 13–24 Jul',
+            title: 'Stakeholder Map',
+            stream: 'research',
+            streamLabel: 'Research',
+            streamFull: 'Research · Understanding Patients & Partners',
+            status: 'completed',
+            summary: 'Stakeholder map.',
+            activities: [
+              'Mapping key actors across NHS trusts, private hospitals, optometrists, and patients',
+              'Structuring relationship dependencies around EyePros'
+            ]
+          },
+          {
+            id: 'm-res-2',
+            week: 'Week 2 · 20–26 Jul',
+            title: 'Positioning Brief Workshop',
+            stream: 'research',
+            streamLabel: 'Research',
+            streamFull: 'Research · Understanding Patients & Partners',
+            status: 'completed',
+            summary: 'Positioning brief (Workshop with ahmad).',
+            activities: [
+              'Strategic positioning workshop with Mr Ahmad Elsahn',
+              'Defining the consultant-led value proposition vs high-volume chains'
+            ]
+          },
+          {
+            id: 'm-res-3',
+            week: 'Weeks 2–4 · 20 Jul – 9 Aug',
+            title: 'Personas: 19 Audience Profiles',
+            stream: 'research',
+            streamLabel: 'Research',
+            streamFull: 'Research · Understanding Patients & Partners',
+            status: 'completed',
+            summary: 'personas 19 audience profiles.',
+            activities: [
+              'Drafting 19 distinct personas across patients and optometrist referrers',
+              'Structuring motivations, clinical anxieties, and conversion triggers'
+            ]
+          },
+          {
+            id: 'm-res-4',
+            week: 'Weeks 3–4 · 27 Jul – 9 Aug',
+            title: 'Patient Journey Map (Desk Research)',
+            stream: 'research',
+            streamLabel: 'Research',
+            streamFull: 'Research · Understanding Patients & Partners',
+            status: 'completed',
+            summary: 'Patient journey map (desk research).',
+            activities: [
+              'Desk research mapping end-to-end patient experience from diagnosis to recovery',
+              'Highlighting friction points at referral handoff'
+            ]
+          },
+          {
+            id: 'm-res-5',
+            week: 'Weeks 3–4 · 27 Jul – 9 Aug',
+            title: 'Referral Partner Map',
+            stream: 'research',
+            streamLabel: 'Research',
+            streamFull: 'Research · Understanding Patients & Partners',
+            status: 'completed',
+            summary: 'Referral partner map : started working on it using deep research tools (No real data provided yet).',
+            activities: [
+              'Initiated mapping of regional optometry practices using research tools',
+              'Flagged data gap to be validated during the UK field trip'
+            ]
+          },
+
+          /* Social Media & Content */
+          {
+            id: 'm-soc-1',
+            week: 'Weeks 1–2 · 13–24 Jul',
+            title: 'Podcast Scripts (6 Episodes)',
+            stream: 'social',
+            streamLabel: 'Social Media',
+            streamFull: 'Social Media & Content · The Visible Work',
+            status: 'completed',
+            summary: 'Podcast scripts · six episodes with Mr Ahmad and Ms Yasmine.',
+            activities: [
+              'Scripting 6 educational podcast episodes focused on eye health and clinical pathways'
+            ]
+          },
+          {
+            id: 'm-soc-2',
+            week: 'Weeks 1–3 · 13 Jul – 2 Aug',
+            title: 'Nine Film Scripts for Mr Ahmad',
+            stream: 'social',
+            streamLabel: 'Social Media',
+            streamFull: 'Social Media & Content · The Visible Work',
+            status: 'completed',
+            summary: 'Nine film scripts for Mr Ahmad.',
+            activities: [
+              'Scripting short-form clinical explainer videos for digital channels'
+            ]
+          },
+          {
+            id: 'm-soc-3',
+            week: 'Weeks 2–4 · 20 Jul – 9 Aug',
+            title: 'Content Calendar Setup',
+            stream: 'social',
+            streamLabel: 'Social Media',
+            streamFull: 'Social Media & Content · The Visible Work',
+            status: 'completed',
+            summary: 'Content calendar · run weekly by the marketing team.',
+            activities: [
+              'Establishing a structured weekly social content rhythm for EyePros'
+            ]
+          },
+          {
+            id: 'm-soc-4',
+            week: 'Weeks 3–4 · 27 Jul – 9 Aug',
+            title: 'Social Media Checker & Resizer',
+            stream: 'social',
+            streamLabel: 'Social Media',
+            streamFull: 'Social Media & Content · The Visible Work',
+            status: 'completed',
+            summary: 'Social media checker and resizer built.',
+            activities: [
+              'Built digital asset sizing utility to streamline marketing production'
+            ]
+          },
+          {
+            id: 'm-soc-5',
+            week: 'Week 4 · 3–9 Aug',
+            title: 'Slide Deck: Social Media Action Plan',
+            stream: 'social',
+            streamLabel: 'Social Media',
+            streamFull: 'Social Media & Content · The Visible Work',
+            status: 'completed',
+            summary: 'Slide deck · social media analysis and action plan for the coming months.',
+            activities: [
+              'Comprehensive social performance audit and strategic roadmap presentation'
+            ]
+          },
+          {
+            id: 'm-soc-6',
+            week: 'Week 4 · 3–9 Aug',
+            title: 'Design Direction Trials with Soha',
+            stream: 'social',
+            streamLabel: 'Social Media',
+            streamFull: 'Social Media & Content · The Visible Work',
+            status: 'completed',
+            summary: 'Design direction trials with Soha · stopped, she designs now.',
+            activities: [
+              'Explored visual branding trials; transitioned direct graphic execution to Soha'
+            ]
+          },
+
+          /* Brand Strategies */
+          {
+            id: 'm-bra-1',
+            week: 'Week 2 · 20–26 Jul',
+            title: 'New Creative Direction',
+            stream: 'brand',
+            streamLabel: 'Brand',
+            streamFull: 'Brand Strategies',
+            status: 'completed',
+            summary: 'New creative direction.',
+            activities: [
+              'Re-framing EyePros aesthetic and visual brand identity'
+            ]
+          },
+          {
+            id: 'm-bra-2',
+            week: 'Weeks 3–4 · 27 Jul – 9 Aug',
+            title: 'Business Model Canvas: EyePros DNA',
+            stream: 'brand',
+            streamLabel: 'Brand',
+            streamFull: 'Brand Strategies',
+            status: 'completed',
+            summary: 'Business model Canvas : Eyepros DNA.',
+            activities: [
+              'Structuring core value propositions, revenue streams, cost drivers, and channels'
+            ]
+          },
+          {
+            id: 'm-bra-3',
+            week: 'Week 3 · 27 Jul – 2 Aug',
+            title: 'Synergy Introduction & Strategy Request',
+            stream: 'brand',
+            streamLabel: 'Brand',
+            streamFull: 'Brand Strategies',
+            status: 'completed',
+            summary: 'Steve introduced Synergy and asked for a LinkedIn branding strategy.',
+            activities: [
+              'Initial briefing on Synergy partnership and B2B engagement needs'
+            ]
+          },
+          {
+            id: 'm-bra-4',
+            week: 'Week 4 · 3–9 Aug',
+            title: 'First Schedule Given to Soha',
+            stream: 'brand',
+            streamLabel: 'Brand',
+            streamFull: 'Brand Strategies',
+            status: 'completed',
+            summary: 'First schedule given to Soha.',
+            activities: [
+              'Handover of initial publishing calendar to marketing execution'
+            ]
+          },
+          {
+            id: 'm-bra-5',
+            week: 'Week 4 · 3–9 Aug',
+            title: 'Canvas Built',
+            stream: 'brand',
+            streamLabel: 'Brand',
+            streamFull: 'Brand Strategies',
+            status: 'completed',
+            summary: 'Canvas built.',
+            activities: [
+              'Finalized the baseline business model canvas'
+            ]
+          }
+        ]
+      },
+      {
+        id: 'phase-2',
+        name: 'Phase 2: Define (CURRENT)',
+        weeks: 'Weeks 5–8 · 10 August – 4 September 2026',
+        diamond: 'DIAMOND 1: Finding the right problem',
+        status: 'active',
+        desc: 'Talking to patients and partners. The 6-day UK clinical field visit, hospital shadowing, optometrist visits, survey launch, commercial operations delivery, and website Playbook drafting.',
+        milestones: [
+          /* School */
+          {
+            id: 'm-sch-4',
+            week: 'Week 5 · 10–16 Aug',
+            title: 'Video & Case Study',
+            stream: 'school',
+            streamLabel: 'School',
+            streamFull: 'School · Hyper Island',
+            status: 'completed',
+            summary: 'Video and case study · Passed.',
+            activities: [
+              'Submission of academic case study and video artifact to Hyper Island',
+              'Formal pass confirmation'
+            ]
+          },
+
+          /* People - The UK Visit */
+          {
+            id: 'm-peo-4',
+            week: 'Week 5 · 10–15 August',
+            title: 'The UK Visit: 6 Days on Site',
+            stream: 'people',
+            streamLabel: 'People',
+            streamFull: 'People · Meetings & Visits',
+            status: 'completed',
+            summary: 'UK visit · Monday to Saturday · what happened is below in the UK Visit section.',
+            activities: [
+              'Mon 10 Aug: NHS clinic shadowing & referral pathway mapping',
+              'Tue 11 Aug: NHS second day & speaking with patients on waiting lists',
+              'Wed 12 Aug: Morning at The Park Hospital, afternoon at EyePros',
+              'Thu 13 Aug: Optometrist visit with Steve (origin of commercial operations workflow)',
+              'Fri 14 Aug: Patient survey written & filming site preparation',
+              'Sat 15 Aug: FAQ films and patient reels filming with Mr Ahmad'
+            ]
+          },
+
+          /* Research */
+          {
+            id: 'm-res-6',
+            week: 'Weeks 5–7 · 10–28 Aug',
+            title: 'Patient Survey Distribution',
+            stream: 'research',
+            streamLabel: 'Research',
+            streamFull: 'Research · Understanding Patients & Partners',
+            status: 'active',
+            summary: 'Patient survey written and shared · the interviews did not happen. Patient survey · the team needs to start using it.',
+            activities: [
+              'Drafted and shared comprehensive patient feedback questionnaire',
+              'Pushing for live clinic rollout to collect empirical satisfaction data'
+            ]
+          },
+          {
+            id: 'm-res-7',
+            week: 'Week 7 · 24–28 Aug (TODAY)',
+            title: 'Commercial Operations Workflow Delivered',
+            stream: 'research',
+            streamLabel: 'Research',
+            streamFull: 'Research · Understanding Patients & Partners',
+            status: 'active',
+            summary: 'Commercial operations workflow delivered to Ahmad Elsahn: the deck, the tracker and a note splitting the tasks between the team. PracticePartners proposal starts this week.',
+            activities: [
+              'Delivered complete 18 visits/week optometry field conversion strategy',
+              'Delivered KPI scorecard (30% work / 70% results) and HubSpot CRM roadmap',
+              'Initiated PracticePartners proposal drafting'
+            ]
+          },
+          {
+            id: 'm-res-8',
+            week: 'Weeks 7–8 · On Hold',
+            title: 'Uncomfortable Truths Workshop',
+            stream: 'research',
+            streamLabel: 'Research',
+            streamFull: 'Research · Understanding Patients & Partners',
+            status: 'hold',
+            summary: 'Uncomfortable Truths workshop · postponed. Team does do not have time for it now.',
+            activities: [
+              'Strategic session with Ahmad, Steve, and Alicia placed on temporary hold'
+            ]
+          },
+
+          /* Social Media & Content */
+          {
+            id: 'm-soc-7',
+            week: 'Week 5 · Saturday 15 Aug',
+            title: 'FAQ Films & Patient Reels Filmed',
+            stream: 'social',
+            streamLabel: 'Social Media',
+            streamFull: 'Social Media & Content · The Visible Work',
+            status: 'completed',
+            summary: 'FAQ films with Mr Ahmad · filmed Saturday, footage sent to the agency. Patient reels · filmed Saturday.',
+            activities: [
+              'Wrote questions and filmed clinical FAQs and patient reels on site',
+              'Delivered raw footage to post-production agency'
+            ]
+          },
+          {
+            id: 'm-soc-8',
+            week: 'Weeks 5–7 · 10–28 Aug',
+            title: 'Weekly Schedule Refining',
+            stream: 'social',
+            streamLabel: 'Social Media',
+            streamFull: 'Social Media & Content · The Visible Work',
+            status: 'completed',
+            summary: 'Refining the schedule with Soha every week.',
+            activities: [
+              'Continuous review and optimization of social publishing schedule'
+            ]
+          },
+          {
+            id: 'm-soc-9',
+            week: 'Week 7 · 24–28 Aug (TODAY)',
+            title: 'Soha Scheduling & Claude Skill Handover',
+            stream: 'social',
+            streamLabel: 'Social Media',
+            streamFull: 'Social Media & Content · The Visible Work',
+            status: 'active',
+            summary: 'Soha runs the scheduling herself now · I gave her the Claude skill that builds it. I check what she shares and give her input each day.',
+            activities: [
+              'Built and deployed custom Claude AI tool for automated content planning',
+              'Daily input and creative review on drafted social posts'
+            ]
+          },
+
+          /* Brand Strategies */
+          {
+            id: 'm-bra-6',
+            week: 'Weeks 4–7 · 3–28 Aug',
+            title: 'Synergy: LinkedIn Strategy & BMC',
+            stream: 'brand',
+            streamLabel: 'Brand',
+            streamFull: 'Brand Strategies',
+            status: 'active',
+            summary: 'Synergy · LinkedIn branding strategy. I am building the business model canvas myself.',
+            activities: [
+              'Drafting B2B positioning for Synergy partnership',
+              'Independent construction of the Synergy Business Model Canvas'
+            ]
+          },
+          {
+            id: 'm-bra-7',
+            week: 'Weeks 7–8 · 24 Aug – 4 Sep',
+            title: 'EyeSpa Business Model Canvas',
+            stream: 'brand',
+            streamLabel: 'Brand',
+            streamFull: 'Brand Strategies',
+            status: 'active',
+            summary: 'EyeSpa · not started. I am building the business model canvas myself.',
+            activities: [
+              'Structuring dedicated business model for the EyeSpa dry eye service offering'
+            ]
+          },
+          {
+            id: 'm-bra-8',
+            week: 'Weeks 8–17 · 31 Aug – 6 Nov',
+            title: '8 Business Strategies Exploration',
+            stream: 'brand',
+            streamLabel: 'Brand',
+            streamFull: 'Brand Strategies',
+            status: 'upcoming',
+            summary: 'Business strategies to look at before 15 December · EyeSpa, Synergy, SightPlan, LenzClub, PracticePartners, VisioNow, Valeda.',
+            activities: [
+              'Iterative strategic and financial evaluations across the 8 growth vectors'
+            ]
+          },
+
+          /* The Playbook */
+          {
+            id: 'm-pla-1',
+            week: 'Weeks 4–8 · 3 Aug – 4 Sep',
+            title: 'Business Plan & Market Sizing for EyePros Hospital',
+            stream: 'playbook',
+            streamLabel: 'The Playbook',
+            streamFull: 'The Playbook · The Main Handover',
+            status: 'active',
+            summary: 'Business plan and market sizing for EyePros Hospital · with Ahmad Elsahn and Ahmad Ismail. Shared, numbers still being checked. PracticePartners proposal starts this week.',
+            activities: [
+              'Financial projections and regional capacity modeling with clinic leadership',
+              'Review and validation of hospital volume assumptions'
+            ]
+          },
+          {
+            id: 'm-pla-2',
+            week: 'Weeks 4–23 · Continuous',
+            title: 'Website Playbook Build (7 Sections)',
+            stream: 'playbook',
+            streamLabel: 'The Playbook',
+            streamFull: 'The Playbook · The Main Handover',
+            status: 'active',
+            summary: 'Website playbook · built up section by section as each piece of work is finished · contents listed below.',
+            activities: [
+              'Continuous agile construction of the Longsighted interactive web platform'
+            ]
+          }
+        ]
+      },
+      {
+        id: 'phase-3',
+        name: 'Phase 3: Develop',
+        weeks: 'Weeks 9–20 · 7 September – 27 November 2026',
+        diamond: 'DIAMOND 2: Building the right answer',
+        status: 'upcoming',
+        desc: 'Building the strategies. UK return for ESCRS congress, on-site office sprint, monthly FAQ filming cycles, LenzClub market sizing, and brand strategy formulation.',
+        milestones: [
+          /* People */
+          {
+            id: 'm-peo-5',
+            week: 'Weeks 9–10 · 10–17 Sep',
+            title: 'UK Return: ESCRS Congress & Office with Team',
+            stream: 'people',
+            streamLabel: 'People',
+            streamFull: 'People · Meetings & Visits',
+            status: 'upcoming',
+            summary: 'UK again · ESCRS congress 10 to 15 September, then in the office with the team 15 to 17 September.',
+            activities: [
+              'Attending ESCRS European ophthalmic congress with Ahmad',
+              'Co-located office sprint with the EyePros core team (15–17 Sep)'
+            ]
+          },
+
+          /* Research */
+          {
+            id: 'm-res-9',
+            week: 'Weeks 11–12 · 21 Sep – 4 Oct',
+            title: 'LenzClub Market Sizing',
+            stream: 'research',
+            streamLabel: 'Research',
+            streamFull: 'Research · Understanding Patients & Partners',
+            status: 'upcoming',
+            summary: 'LenzClub market sizing · wanted, date not set yet.',
+            activities: [
+              'Target market estimation and pricing strategy for LenzClub offering'
+            ]
+          },
+
+          /* Social Media & Content */
+          {
+            id: 'm-soc-10',
+            week: 'Weeks 9–10 · September',
+            title: 'FAQ List & Filming (September)',
+            stream: 'social',
+            streamLabel: 'Social Media',
+            streamFull: 'Social Media & Content · The Visible Work',
+            status: 'upcoming',
+            summary: 'FAQ list and filming · September.',
+            activities: [
+              'Monthly scriptwriting and video production cycle'
+            ]
+          },
+          {
+            id: 'm-soc-11',
+            week: 'Weeks 13–14 · October',
+            title: 'FAQ List & Filming (October)',
+            stream: 'social',
+            streamLabel: 'Social Media',
+            streamFull: 'Social Media & Content · The Visible Work',
+            status: 'upcoming',
+            summary: 'FAQ list and filming · October.',
+            activities: [
+              'Monthly scriptwriting and video production cycle'
+            ]
+          },
+          {
+            id: 'm-soc-12',
+            week: 'Weeks 17–18 · November',
+            title: 'FAQ List & Filming (November)',
+            stream: 'social',
+            streamLabel: 'Social Media',
+            streamFull: 'Social Media & Content · The Visible Work',
+            status: 'upcoming',
+            summary: 'FAQ list and filming · November.',
+            activities: [
+              'Monthly scriptwriting and video production cycle'
+            ]
+          }
+        ]
+      },
+      {
+        id: 'phase-4',
+        name: 'Phase 4: Deliver',
+        weeks: 'Weeks 21–23 · 30 November – 15 December 2026',
+        diamond: 'DIAMOND 2: Building the right answer',
+        status: 'upcoming',
+        desc: 'Finishing and handing over. Final December FAQ production, master handover of all 8 brand strategies, complete Playbook delivery, and Hyper Island graduation presentation.',
+        milestones: [
+          /* Social Media */
+          {
+            id: 'm-soc-13',
+            week: 'Weeks 21–22 · December',
+            title: 'FAQ List & Filming (December)',
+            stream: 'social',
+            streamLabel: 'Social Media',
+            streamFull: 'Social Media & Content · The Visible Work',
+            status: 'upcoming',
+            summary: 'FAQ list and filming · December.',
+            activities: [
+              'Final video content batch completion and handover'
+            ]
+          },
+
+          /* School */
+          {
+            id: 'm-sch-5',
+            week: 'Week 23 · 15 December',
+            title: 'Final Presentation · 15 December',
+            stream: 'school',
+            streamLabel: 'School',
+            streamFull: 'School · Hyper Island',
+            status: 'upcoming',
+            summary: 'Final presentation · 15 December.',
+            activities: [
+              'Formal master graduation defense to Hyper Island faculty and industry panel'
+            ]
+          },
+
+          /* Brand Strategies */
+          {
+            id: 'm-bra-9',
+            week: 'Week 23 · 15 December',
+            title: 'All Eight Brand Strategies Handed Over',
+            stream: 'brand',
+            streamLabel: 'Brand',
+            streamFull: 'Brand Strategies',
+            status: 'upcoming',
+            summary: 'All eight handed over.',
+            activities: [
+              'Final strategic deliverable handover across EyeSpa, Synergy, SightPlan, LenzClub, PracticePartners, VisioNow, Valeda, and EyePros DNA'
+            ]
+          },
+
+          /* The Playbook */
+          {
+            id: 'm-pla-3',
+            week: 'Week 23 · 15 December',
+            title: 'Playbook Master Handover · 15 December',
+            stream: 'playbook',
+            streamLabel: 'The Playbook',
+            streamFull: 'The Playbook · The Main Handover',
+            status: 'upcoming',
+            summary: 'Handed over · 15 December.',
+            activities: [
+              'Final delivery and transition of the complete Longsighted / EyePros Strategic Playbook web platform'
+            ]
+          }
+        ]
+      }
+    ];
+
+    /* Flat milestone list for sequential navigation */
+    let ALL_MILESTONES = [];
+    PHASES_DATA.forEach(phase => {
+      phase.milestones.forEach(m => {
+        ALL_MILESTONES.push({ ...m, phaseName: phase.name, phaseId: phase.id, phaseDiamond: phase.diamond });
+      });
+    });
+
+    let currentSelectedId = 'm-res-7';
+
+    /* Render vertical timeline spine */
+    function renderVerticalTimeline(filter = 'all') {
+      const container = document.getElementById('verticalTimelineContainer');
+      container.innerHTML = '';
+
+      PHASES_DATA.forEach(phase => {
+        const visibleMilestones = phase.milestones.filter(m => filter === 'all' || m.stream === filter);
+        if (visibleMilestones.length === 0) return;
+
+        // Phase gate header
+        const phaseHeader = document.createElement('div');
+        phaseHeader.className = 'ls-phase-gate';
+        phaseHeader.id = phase.id;
+
+        const statusLabel = phase.status === 'completed' ? 'Completed' : phase.status === 'active' ? 'Current Phase' : 'Upcoming';
+        const statusClass = phase.status === 'completed' ? 'done' : phase.status === 'active' ? 'active' : 'upcoming';
+        const nameColor = phase.status === 'active' ? 'var(--ls-navy)' : 'var(--ls-subtle)';
+
+        phaseHeader.innerHTML = `
+          <div class="ls-phase-banner ${phase.status === 'active' ? 'active-phase' : ''}">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+              <span style="font-family:var(--font-display); font-size:0.65rem; font-weight:800; text-transform:uppercase; letter-spacing:0.1em; color:${nameColor};">${phase.name} · ${phase.diamond}</span>
+              <span class="ls-status-badge ${statusClass}">${statusLabel}</span>
+            </div>
+            <div style="font-family:var(--font-display); font-size:0.95rem; font-weight:700; color:var(--ls-ink); margin-bottom:4px;">${phase.weeks}</div>
+            <p style="font-size:var(--text-sm); color:var(--ls-muted); margin:0; line-height:1.5;">${phase.desc}</p>
+          </div>
+        `;
+        container.appendChild(phaseHeader);
+
+        // Milestones
+        visibleMilestones.forEach(m => {
+          const isSelected = m.id === currentSelectedId;
+          const nodeEl = document.createElement('div');
+          nodeEl.className = `ls-milestone-node ${isSelected ? 'selected' : ''}`;
+          nodeEl.id = `node-${m.id}`;
+          nodeEl.onclick = () => selectMilestone(m.id);
+
+          const dotStatus = m.status === 'completed' ? 'completed' : m.status === 'active' ? 'active' : '';
+
+          const tagClass = {
+            school: 'tag-school',
+            people: 'tag-people',
+            research: 'tag-research',
+            social: 'tag-social',
+            brand: 'tag-brand',
+            playbook: 'tag-playbook'
+          }[m.stream] || 'tag-people';
+
+          const statusText = m.status === 'completed' ? '✓ Done' : m.status === 'active' ? '● Active' : m.status === 'hold' ? '⚠ On Hold' : 'Planned';
+          const statusBadgeClass = m.status === 'completed' ? 'done' : m.status === 'active' ? 'active' : m.status === 'hold' ? 'hold' : 'upcoming';
+
+          nodeEl.innerHTML = `
+            <div class="ls-dot ${dotStatus}"></div>
+            <div class="ls-milestone-card">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
+                <span class="ls-stream-tag ${tagClass}">${m.streamLabel}</span>
+                <span style="font-family:var(--font-display); font-size:0.72rem; font-weight:600; color:var(--ls-subtle);">${m.week}</span>
+              </div>
+              <div style="font-family:var(--font-display); font-size:0.95rem; font-weight:700; color:var(--ls-ink); letter-spacing:-0.01em; margin-bottom:5px;">${m.title}</div>
+              <p style="font-size:var(--text-sm); color:var(--ls-muted); line-height:1.5; margin:0 0 10px;">${m.summary}</p>
+              <div style="display:flex; justify-content:space-between; align-items:center; padding-top:10px; border-top:1px solid var(--ls-border-soft);">
+                <span style="font-size:0.72rem; font-weight:600; color:var(--ls-navy);">Inspect Details &amp; Notes →</span>
+                <span class="ls-status-badge ${statusBadgeClass}" style="font-size:0.62rem;">${statusText}</span>
+              </div>
+            </div>
+          `;
+          container.appendChild(nodeEl);
+        });
+      });
+    }
+
+    /* Open detail drawer */
+    function selectMilestone(id) {
+      currentSelectedId = id;
+      const m = ALL_MILESTONES.find(item => item.id === id);
+      if (!m) return;
+
+      document.querySelectorAll('.ls-milestone-node').forEach(el => el.classList.remove('selected'));
+      const activeNode = document.getElementById(`node-${id}`);
+      if (activeNode) activeNode.classList.add('selected');
+
+      document.getElementById('drawerTitle').textContent = m.title;
+      document.getElementById('drawerDates').textContent = `${m.week} · ${m.phaseName}`;
+
+      const streamTag = document.getElementById('drawerStreamTag');
+      streamTag.textContent = m.streamLabel;
+      streamTag.className = `ls-stream-tag tag-${m.stream}`;
+
+      const statusBadge = document.getElementById('drawerStatusBadge');
+      statusBadge.textContent = m.status === 'completed' ? '✓ Completed' : m.status === 'active' ? '● Current Active Work' : m.status === 'hold' ? '⚠ On Hold' : 'Planned Milestone';
+      statusBadge.className = `ls-status-badge ${m.status === 'completed' ? 'done' : m.status === 'active' ? 'active' : m.status === 'hold' ? 'hold' : 'upcoming'}`;
+
+      document.getElementById('drawerSummary').textContent = m.summary;
+      document.getElementById('drawerStreamDetail').textContent = m.streamFull || m.streamLabel;
+
+      const actList = document.getElementById('drawerActivitiesList');
+      const actWrap = document.getElementById('drawerActivitiesWrap');
+      if (m.activities && m.activities.length > 0) {
+        actWrap.style.display = 'block';
+        actList.innerHTML = m.activities.map(a => `<li>${a}</li>`).join('');
+      } else {
+        actWrap.style.display = 'none';
+      }
+
+      const idx = ALL_MILESTONES.findIndex(item => item.id === id);
+      document.getElementById('drawerIndexIndicator').textContent = `${idx + 1} of ${ALL_MILESTONES.length}`;
+
+      document.getElementById('drawerBackdrop').classList.add('active');
+
+      /* ── Load personal note for this milestone ── */
+      const noteKey   = 'tlNote_' + id;
+      const noteArea  = document.getElementById('drawerPersonalNotes');
+      const savedSpan = document.getElementById('drawerNotesSaved');
+      const clearBtn  = document.getElementById('drawerClearNoteBtn');
+
+      if (noteArea) {
+        noteArea.value = localStorage.getItem(noteKey) || '';
+
+        /* Debounced auto-save */
+        clearTimeout(noteArea._saveTimer);
+        noteArea.oninput = () => {
+          clearTimeout(noteArea._saveTimer);
+          noteArea._saveTimer = setTimeout(() => {
+            localStorage.setItem(noteKey, noteArea.value);
+            if (savedSpan) {
+              savedSpan.style.opacity = '1';
+              setTimeout(() => { savedSpan.style.opacity = '0'; }, 1800);
+            }
+          }, 600);
+        };
+      }
+
+      if (clearBtn) {
+        clearBtn.onclick = () => {
+          if (noteArea) noteArea.value = '';
+          localStorage.removeItem(noteKey);
+          if (savedSpan) {
+            savedSpan.textContent = 'Cleared';
+            savedSpan.style.color = '#b91c1c';
+            savedSpan.style.opacity = '1';
+            setTimeout(() => {
+              savedSpan.style.opacity = '0';
+              savedSpan.textContent = 'Saved ✓';
+              savedSpan.style.color = '#15803d';
+            }, 1600);
+          }
+        };
+      }
+    }
+
+    function closeDrawer(e) {
+      if (!e || e.target === document.getElementById('drawerBackdrop')) {
+        document.getElementById('drawerBackdrop').classList.remove('active');
+      }
+    }
+
+    function navigateMilestone(direction) {
+      const currentIdx = ALL_MILESTONES.findIndex(item => item.id === currentSelectedId);
+      const nextIdx = currentIdx + direction;
+      if (nextIdx >= 0 && nextIdx < ALL_MILESTONES.length) {
+        selectMilestone(ALL_MILESTONES[nextIdx].id);
+      }
+    }
+
+    function scrollToPhase(phaseId) {
+      const target = document.getElementById(phaseId);
+      if (target) {
+        const top = target.getBoundingClientRect().top + window.scrollY - 150;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    }
+
+    function filterStream(streamKey) {
+      document.querySelectorAll('.ls-stream-btn').forEach(btn => btn.classList.remove('active'));
+      const btn = document.getElementById(`filter-${streamKey}`);
+      if (btn) btn.classList.add('active');
+      renderVerticalTimeline(streamKey);
+    }
+
+    function exportMonthlyReport() {
+      let txt = 'EYEPROS × TAKOUA — 15 JULY TO 15 DECEMBER TIMELINE REPORT\n';
+      txt += 'Curator: Takoua Selmi · 15 July – 15 December 2026\n';
+      txt += 'Rule: "Only work that is real: things I have already done, things that are booked, and things I am waiting on."\n';
+      txt += '=========================================================================\n\n';
+      PHASES_DATA.forEach(p => {
+        txt += `[${p.name.toUpperCase()}] (${p.weeks})\n`;
+        txt += `Framework: ${p.diamond}\n`;
+        txt += `Summary: ${p.desc}\n\n`;
+        p.milestones.forEach(m => {
+          txt += `* ${m.week} [${m.status.toUpperCase()} | ${m.streamLabel}]: ${m.title}\n`;
+          txt += `  - Description: ${m.summary}\n`;
+          if (m.activities && m.activities.length) {
+            txt += `  - Details:\n` + m.activities.map(a => `    • ${a}`).join('\n') + '\n';
+          }
+          const personalNote = localStorage.getItem('tlNote_' + m.id);
+          if (personalNote && personalNote.trim()) {
+            txt += `  - My Personal Notes: ${personalNote.trim()}\n`;
+          }
+          txt += '\n';
+        });
+        txt += '-------------------------------------------------------------------------\n\n';
+      });
+
+      txt += '=========================================================================\n';
+      txt += 'THE UK VISIT · 10 to 15 August (Summary Log)\n';
+      txt += '=========================================================================\n';
+      txt += '• Mon 10 Aug | NHS: Mapped referral route & private switch\n';
+      txt += '• Tue 11 Aug | NHS 2nd Day: Rest of pathway & patient conversations on queues\n';
+      txt += '• Wed 12 Aug | The Park Hospital & EyePros\n';
+      txt += '• Thu 13 Aug | Optometrist visit with Steve (commercial ops origin)\n';
+      txt += '• Fri 14 Aug | Patient survey written & filming preparation\n';
+      txt += '• Sat 15 Aug | Filming with Mr Ahmad (FAQs & reels)\n\n';
+
+      txt += '=========================================================================\n';
+      txt += 'WHAT IS COMING UP\n';
+      txt += '=========================================================================\n';
+      txt += '• THIS WEEK (24-28 Aug): Commercial ops workflow delivered, PracticePartners proposal, patient survey rollout.\n';
+      txt += '• NEXT TWO WEEKS: Business plan & market sizing check, reading PracticePartners proposal, BMCs for Synergy & EyeSpa.\n';
+      txt += '• SEPTEMBER: 10-15 Sep in UK for ESCRS congress, 15-17 Sep in office with team.\n';
+      txt += '• ON HOLD: Uncomfortable Truths workshop postponed.\n';
+
+      const blob = new Blob([txt], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'EyePros_Takoua_Authoritative_Timeline.txt';
+      a.click();
+    }
+
+    /* Keyboard navigation */
+    document.addEventListener('keydown', e => {
+      const backdrop = document.getElementById('drawerBackdrop');
+      if (backdrop.classList.contains('active')) {
+        if (e.key === 'Escape') closeDrawer();
+        else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigateMilestone(1);
+        else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') navigateMilestone(-1);
+      }
+    });
+
+    /* Initial render */
+    renderVerticalTimeline('all');
+  </script>
+</body>
+</html>

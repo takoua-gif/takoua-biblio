@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Takoua Vs EyePros · Market &amp; Landscape</title>
+  <meta name="description" content="Comprehensive East Midlands ophthalmology market analysis.">
+  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/longsighted.css">
+
+  <style>
+    .ls-page-hero {
+      background: var(--ls-ink);
+      color: var(--ls-white);
+      padding: 100px 0 72px;
+    }
+    
+    .ls-chapter-nav {
+      position: sticky;
+      top: var(--nav-h);
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--ls-border);
+      z-index: 500;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .ls-chapter-nav::-webkit-scrollbar { display: none; }
+    .ls-chapter-nav-inner {
+      display: flex;
+      gap: 0;
+      padding: 0 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .ls-chapter-link {
+      flex-shrink: 0;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--ls-muted);
+      padding: 14px 18px;
+      border-bottom: 2px solid transparent;
+      transition: all var(--dur-fast);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .ls-chapter-link:hover, .ls-chapter-link.active {
+      color: var(--ls-ink);
+      border-bottom-color: var(--ls-gold);
+      text-decoration: none;
+    }
+    
+    .ls-section {
+      padding: var(--space-section) 0;
+      scroll-margin-top: calc(var(--nav-h) + 60px);
+    }
+    .ls-section:nth-child(even) {
+      background: var(--ls-cream);
+    }
+    .section-title {
+      font-family: var(--font-display);
+      color: var(--ls-navy);
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 48px;
+    }
+
+    .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 20px; }
+
+    .stat-card {
+      background: var(--ls-white);
+      border: 1.5px solid var(--ls-border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      transition: all var(--dur-fast);
+      display: flex;
+      flex-direction: column;
+    }
+    .stat-card:hover {
+      border-color: rgba(0,0,0,0.14);
+      box-shadow: var(--shadow-sm);
+    }
+    .stat-card > i {
+      color: var(--ls-gold);
+      font-size: 1.6rem;
+      margin-bottom: 16px;
+    }
+    .stat-value {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--ls-navy);
+      margin-bottom: 6px;
+      letter-spacing: -0.03em;
+    }
+    .stat-label {
+      font-size: 0.92rem;
+      color: var(--ls-muted);
+      line-height: 1.6;
+    }
+    
+    .table-container {
+      overflow-x: auto;
+      background: var(--ls-white);
+      border: 1.5px solid var(--ls-border);
+      border-radius: var(--radius-lg);
+      margin-bottom: 24px;
+    }
+    table { width: 100%; border-collapse: collapse; text-align: left; }
+    th, td { padding: 14px 20px; border-bottom: 1px solid var(--ls-border); font-size: 0.92rem; }
+    th { font-family: var(--font-display); color: var(--ls-navy); background: var(--ls-cream); font-weight: 600; font-size: 0.85rem; letter-spacing: -0.01em; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(0,0,0,0.015); }
+
+    .source-citation {
+      color: var(--ls-subtle);
+      font-size: 0.75rem;
+      margin-top: 24px;
+      font-style: italic;
+    }
+
+    .competitor-card h3 {
+      font-family: var(--font-display);
+      color: var(--ls-navy);
+      font-size: 1.15rem;
+      margin-bottom: 4px;
+      letter-spacing: -0.02em;
+    }
+    .competitor-meta {
+      font-size: 0.78rem;
+      color: var(--ls-gold);
+      margin-bottom: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    @media (max-width: 768px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .grid-4 { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .grid-4 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <!-- NAV injected by js/ls-nav.js -->
+
+  <!-- Page Hero -->
+  <section class="ls-page-hero" style="position:relative; overflow:hidden;">
+    <div style="position:absolute;inset:0;z-index:0;">
+      <img src="images/hero-clinic.jpg" alt="" style="width:100%;height:100%;object-fit:cover;opacity:0.12;filter:saturate(0.3);">
+      <div style="position:absolute;inset:0;background:var(--ls-ink);opacity:0.75;"></div>
+    </div>
+    <div class="ls-container" style="position:relative;z-index:1;">
+      <div class="ls-reveal">
+        <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;font-size:0.8rem;color:rgba(255,255,255,0.5);margin-bottom:24px;text-decoration:none;"><i class="fa fa-arrow-left"></i> Home</a>
+        <div class="ls-eyebrow" style="color:var(--ls-gold); margin-bottom:12px;">Deep-Dive Intelligence</div>
+        <h1 class="ls-hero-title">Market &amp; Landscape</h1>
+        <p style="color:rgba(255,255,255,0.6); font-size:1.1rem; line-height:1.65; max-width:700px; margin-top:20px;">
+          A comprehensive analysis of East Midlands demographics, competitor positioning,
+          NHS waiting lists, disease burden, pricing, technology trends, and referral ecosystem.
+        </p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Chapter Navigation (sticky) -->
+  <div class="ls-chapter-nav">
+    <div class="ls-chapter-nav-inner">
+      <a href="#snapshot" class="ls-chapter-link active">Market Snapshot</a>
+      <a href="#demographics" class="ls-chapter-link">Demographics</a>
+      <a href="#waitlists" class="ls-chapter-link">Wait Lists</a>
+      <a href="#prevalence" class="ls-chapter-link">Disease Demand</a>
+      <a href="#cataract-economics" class="ls-chapter-link">Cataract Economics</a>
+      <a href="#competitors" class="ls-chapter-link">Competitors</a>
+      <a href="#technology" class="ls-chapter-link">Technology</a>
+      <a href="#referrals" class="ls-chapter-link">Referrals</a>
+      <a href="#opportunities" class="ls-chapter-link">Private Opportunities</a>
+    </div>
+  </div>
+
+  <!-- CHAPTER 1: Market Snapshot -->
+  <section id="snapshot" class="ls-section">
+    <div class="ls-container ls-reveal">
+      <h2 class="section-title">1. Market Snapshot</h2>
+      <div class="grid-4">
+        <div class="stat-card">
+          <i class="fa fa-gbp"></i>
+          <div class="stat-value">£13.79B</div>
+          <div class="stat-label">UK Private Acute Healthcare Market Value</div>
+        </div>
+        <div class="stat-card">
+          <i class="fa fa-line-chart"></i>
+          <div class="stat-value">£618.9M</div>
+          <div class="stat-label">Top 5 Ophthalmology Providers Revenue (+191% since 2021)</div>
+        </div>
+        <div class="stat-card">
+          <i class="fa fa-pie-chart"></i>
+          <div class="stat-value">£1.4B</div>
+          <div class="stat-label">Total Independent Ophthalmology Sector Size</div>
+        </div>
+        <div class="stat-card">
+          <i class="fa fa-rocket"></i>
+          <div class="stat-value">8.8%</div>
+          <div class="stat-label">Market CAGR 2024-2030 (High Estimate)</div>
+        </div>
+      </div>
+      <p style="margin-top: 2rem; color: var(--ls-muted); line-height: 1.8; text-align: center; max-width: 800px; margin-inline: auto;">
+        The independent ophthalmology sector in the UK has experienced unprecedented growth, driven by an aging population, rising clinical thresholds for NHS care, and a surge in self-pay patients prioritizing quality of life. The landscape is shifting rapidly from fragmented individual practices to consolidated, high-volume corporate providers.
+      </p>
+      <div class="source-citation">Source: LaingBuisson Healthcare Market Review 2025</div>
+    </div>
+  </section>
+
+  <!-- CHAPTER 2: Regional Demographics -->
+  <section id="demographics" class="ls-section">
+    <div class="ls-container ls-reveal">
+      <h2 class="section-title">2. Regional Demographics (East Midlands)</h2>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>County</th>
+              <th>Total Population</th>
+              <th>% Aged 65+</th>
+              <th>Est. 65+ Population</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Nottinghamshire</td>
+              <td>1,148,454</td>
+              <td>18.7%</td>
+              <td>~215,100</td>
+            </tr>
+            <tr>
+              <td>Leicestershire</td>
+              <td>1,080,938</td>
+              <td>17.6%</td>
+              <td>~190,700</td>
+            </tr>
+            <tr>
+              <td>Derbyshire</td>
+              <td>1,056,000</td>
+              <td>20.4%</td>
+              <td>~215,300</td>
+            </tr>
+            <tr>
+              <td>Lincolnshire</td>
+              <td>768,364</td>
+              <td>23.4%</td>
+              <td>~179,800</td>
+            </tr>
+            <tr>
+              <td>Northamptonshire</td>
+              <td>785,247</td>
+              <td>17.8%</td>
+              <td>~140,100</td>
+            </tr>
+            <tr>
+              <td>Rutland</td>
+              <td>41,049</td>
+              <td>25.1%</td>
+              <td>~10,300</td>
+            </tr>
+            <tr style="background: var(--ls-cream); font-weight: 600;">
+              <td>TOTAL</td>
+              <td>4,880,054</td>
+              <td>19.5%</td>
+              <td>~951,300</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="stat-card" style="text-align: center; margin-top: 2rem;">
+        <i class="fa fa-users" style="margin-bottom: 0.5rem;"></i>
+        <div class="stat-value">1,135,000+</div>
+        <div class="stat-label">Projected 65+ Population in East Midlands by 2030 (+18.5% to 21.2% growth)</div>
+      </div>
+      <div class="source-citation">Source: ONS Census 2021 & Subnational Population Projections (SNPP)</div>
+    </div>
+  </section>
+
+  <!-- CHAPTER 3: Wait Lists -->
+  <section id="waitlists" class="ls-section">
+    <div class="ls-container ls-reveal">
+      <h2 class="section-title">3. NHS Waiting List Crisis</h2>
+      <p style="text-align: center; margin-bottom: 3rem; color: var(--ls-muted); max-width: 800px; margin-inline: auto;">
+        Nationally, between 620,000 and 650,000 patients are waiting for ophthalmic care. Ophthalmology remains the 1st or 2nd largest specialty backlog in the NHS.
+      </p>
+      <div class="grid-3">
+        <div class="stat-card">
+          <i class="fa fa-hospital-o"></i>
+          <div class="stat-value" style="font-size: 1.5rem;">NUH (Nottingham)</div>
+          <div class="stat-label">
+            <strong>6,800+</strong> waiting<br>
+            <strong>13-14 weeks</strong> average wait<br>
+            <strong>61.5-64%</strong> seen within 18 weeks
+          </div>
+        </div>
+        <div class="stat-card">
+          <i class="fa fa-hospital-o"></i>
+          <div class="stat-value" style="font-size: 1.5rem;">UHL (Leicester)</div>
+          <div class="stat-label">
+            <strong>22-25 weeks</strong> average wait<br>
+            Up to <strong>51 weeks</strong> for 8/10 patients
+          </div>
+        </div>
+        <div class="stat-card">
+          <i class="fa fa-hospital-o"></i>
+          <div class="stat-value" style="font-size: 1.5rem;">UHDB (Derby)</div>
+          <div class="stat-label">
+            <strong>11 weeks</strong> average wait<br>
+            Up to <strong>17 weeks</strong> for 8/10 patients
+          </div>
+        </div>
+        <div class="stat-card">
+          <i class="fa fa-hospital-o"></i>
+          <div class="stat-value" style="font-size: 1.5rem;">ULHT (Lincoln)</div>
+          <div class="stat-label">
+            <strong>4-8 weeks</strong> diagnostics<br>
+            <strong>18-26 weeks</strong> surgery wait
+          </div>
+        </div>
+        <div class="stat-card">
+          <i class="fa fa-hospital-o"></i>
+          <div class="stat-value" style="font-size: 1.5rem;">NGH/KGH (Northampton)</div>
+          <div class="stat-label">
+            <strong>14 weeks</strong> average wait<br>
+            Up to <strong>19 weeks</strong> for 8/10 patients
+          </div>
+        </div>
+      </div>
+      <div class="source-citation">Source: NHS England RTT Data 2024-2026</div>
+    </div>
+  </section>
+
+  <!-- CHAPTER 4: Disease Prevalence -->
+  <section id="prevalence" class="ls-section">
+    <div class="ls-container ls-reveal">
+      <h2 class="section-title">4. Disease Prevalence & Demand</h2>
+      <div class="grid-3">
+        <div class="stat-card">
+          <i class="fa fa-eye"></i>
+          <div class="stat-value" style="font-size: 1.5rem;">Cataracts</div>
+          <div class="stat-label">
+            ~4.5M UK / <strong>~285,000 East Midlands</strong><br>
+            Impacts 30% of the 65+ population.
+          </div>
+        </div>
+        <div class="stat-card">
+          <i class="fa fa-crosshairs"></i>
+          <div class="stat-value" style="font-size: 1.5rem;">Glaucoma</div>
+          <div class="stat-label">
+            ~708,000 UK / <strong>~52,000 East Midlands</strong><br>
+            Estimated 50% remain undiagnosed.
+          </div>
+        </div>
+        <div class="stat-card">
+          <i class="fa fa-low-vision"></i>
+          <div class="stat-value" style="font-size: 1.5rem;">AMD</div>
+          <div class="stat-label">
+            ~700,000 late-stage UK / <strong>~50,000 EM</strong><br>
+            Leading cause of irreversible blindness.
+          </div>
+        </div>
+        <div class="stat-card">
+          <i class="fa fa-medkit"></i>
+          <div class="stat-value" style="font-size: 1.5rem;">Diabetic Retinopathy</div>
+          <div class="stat-label">
+            ~1.2M UK / <strong>~90,000 East Midlands</strong>
+          </div>
+        </div>
+        <div class="stat-card">
+          <i class="fa fa-tint"></i>
+          <div class="stat-value" style="font-size: 1.5rem;">Dry Eye Disease</div>
+          <div class="stat-label">
+            20-33% adult UK / <strong>~800K-1.2M EM</strong>
+          </div>
+        </div>
+        <div class="stat-card">
+          <i class="fa fa-blind"></i>
+          <div class="stat-value" style="font-size: 1.5rem;">Total Sight Loss</div>
+          <div class="stat-label">
+            >2.05M UK currently<br>
+            Projected to hit <strong>2.7M by 2030</strong>
+          </div>
+        </div>
+      </div>
+      <div class="source-citation">Source: RNIB, Royal College of Ophthalmologists (RCOphth), NICE</div>
+    </div>
+  </section>
+
+  <!-- CHAPTER 5: Cataract Economics -->
+  <section id="cataract-economics" class="ls-section">
+    <div class="ls-container ls-reveal">
+      <h2 class="section-title">5. Cataract Surgery Economics</h2>
+      
+      <div class="grid-2" style="margin-bottom: 2rem;">
+        <div class="stat-card">
+          <i class="fa fa-heartbeat"></i>
+          <div class="stat-value">55-60%</div>
+          <div class="stat-label">Procedures handled by Independent Sector (up from 11% in 2016).<br>Total UK volume: ~725,000 procedures/year.</div>
+        </div>
+        <div class="stat-card">
+          <i class="fa fa-credit-card"></i>
+          <div class="stat-label" style="margin-top: auto; margin-bottom: auto;">
+            <strong>Funding Breakdown:</strong><br><br>
+            <span style="font-size: 1.5rem; color: var(--ls-navy); font-weight: 700;">65-72%</span> Self-Pay<br>
+            <span style="font-size: 1.5rem; color: var(--ls-navy); font-weight: 700;">28-35%</span> Insured (PMI)
+          </div>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Procedure Type</th>
+              <th>Pricing per Eye</th>
+              <th>Uptake Context</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Standard Monofocal</strong></td>
+              <td>£2,000 - £3,500</td>
+              <td>Baseline private offering.</td>
+            </tr>
+            <tr>
+              <td><strong>Premium Toric</strong></td>
+              <td>£3,500 - £4,500</td>
+              <td>High conversion rate for astigmatism.</td>
+            </tr>
+            <tr>
+              <td><strong>Trifocal / Multifocal / EDOF</strong></td>
+              <td>£4,000 - £5,500+</td>
+              <td>Growing rapidly among younger, active demographics.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="grid-2">
+        <div class="stat-card" style="padding: 1.5rem;">
+          <h4 style="color: var(--ls-navy); margin-bottom: 0.5rem; font-family: var(--font-display);">Premium IOL Uptake</h4>
+          <p style="color: var(--ls-muted); font-size: 0.875rem;">NHS funding excludes premium lenses (0% uptake). Within the private sector, premium IOL penetration has reached <strong>25-38%</strong>.</p>
+        </div>
+        <div class="stat-card" style="padding: 1.5rem;">
+          <h4 style="color: var(--ls-navy); margin-bottom: 0.5rem; font-family: var(--font-display);">Consumer Finance</h4>
+          <p style="color: var(--ls-muted); font-size: 0.875rem;">A massive driver for self-pay growth: <strong>35-45%</strong> of self-pay patients utilize 0% APR financing options to fund their surgeries.</p>
+        </div>
+      </div>
+
+      <div class="source-citation">Source: PHIN, NHS England HES, ESCRS</div>
+    </div>
+  </section>
+
+  <!-- CHAPTER 6: Competitors -->
+  <section id="competitors" class="ls-section">
+    <div class="ls-container ls-reveal">
+      <h2 class="section-title">6. Competitive Landscape</h2>
+      <div class="grid-3">
+        <div class="stat-card competitor-card">
+          <div class="competitor-meta">Derby · Leicester · Mansfield</div>
+          <h3>SpaMedica</h3>
+          <div class="stat-label">
+            NHS cataract specialist (99%+ NHS). High volume, highly efficient model. Free patient transport is a key differentiator for elderly NHS patients.
+          </div>
+        </div>
+        
+        <div class="stat-card competitor-card">
+          <div class="competitor-meta">Nottingham · Leicester · Derby · Lincoln</div>
+          <h3>Newmedica</h3>
+          <div class="stat-label">
+            JV with Specsavers. Strong NHS presence with selective, highly integrated self-pay pathways tapping into Specsavers' retail pipeline.
+          </div>
+        </div>
+
+        <div class="stat-card competitor-card">
+          <div class="competitor-meta">Leicester · Nottingham</div>
+          <h3>Optegra</h3>
+          <div class="stat-label">
+            Hybrid NHS and premium self-pay model. Strong footprint in refractive surgery including SMILE, LASIK, and Refractive Lens Exchange (RLE).
+          </div>
+        </div>
+
+        <div class="stat-card competitor-card">
+          <div class="competitor-meta">Leicester</div>
+          <h3>Stoneygate Eye Hospital</h3>
+          <div class="stat-label">
+            Premium, consultant-led independent hospital. Offers FLACS, multifocal IOLs, and Vitreoretinal (VR) surgery. Balanced Self-pay and PMI.
+          </div>
+        </div>
+
+        <div class="stat-card competitor-card">
+          <div class="competitor-meta">Nottingham</div>
+          <h3>Ramsay Woodthorpe</h3>
+          <div class="stat-label">
+            Traditional private acute hospital. Tends to handle more complex ophthalmic cases alongside orthopaedics/general surgery. PMI + self-pay.
+          </div>
+        </div>
+
+        <div class="stat-card competitor-card">
+          <div class="competitor-meta">Nottingham · Leicester · Derby</div>
+          <h3>Optical Express</h3>
+          <div class="stat-label">
+            High-street retail refractive chain. 100% self-pay. Massive D2C marketing budget driving laser eye surgery and RLE.
+          </div>
+        </div>
+
+        <div class="stat-card competitor-card">
+          <div class="competitor-meta">Nottingham · Leicester · Derby</div>
+          <h3>Spire & Nuffield</h3>
+          <div class="stat-label">
+            Full-service traditional private acute hospitals. Highly reliant on insured demographics and established consultant referral practices.
+          </div>
+        </div>
+      </div>
+      <div class="source-citation">Source: CQC, PHIN, Provider Websites</div>
+    </div>
+  </section>
+
+  <!-- CHAPTER 7: Technology -->
+  <section id="technology" class="ls-section">
+    <div class="ls-container ls-reveal">
+      <h2 class="section-title">7. Technology & Innovation Trends</h2>
+      <div class="grid-2">
+        <div class="stat-card">
+          <i class="fa fa-laptop"></i>
+          <h3 style="font-family: var(--font-display); color: var(--ls-navy); margin-bottom: 0.5rem;">FLACS (Femtosecond Laser)</h3>
+          <div class="stat-label">
+            <1% NHS penetration, but 5-10% in private settings. The FACT Trial showed no superior clinical outcomes over manual phaco, positioning FLACS primarily as a premium marketing add-on.
+          </div>
+        </div>
+        <div class="stat-card">
+          <i class="fa fa-microchip"></i>
+          <h3 style="font-family: var(--font-display); color: var(--ls-navy); margin-bottom: 0.5rem;">MIGS (Micro-Invasive Glaucoma Surgery)</h3>
+          <div class="stat-label">
+            Growing at >15% CAGR. Supported by NICE (IPG590, IPG626). Increasingly combined with routine cataract surgery to reduce patient drop burden.
+          </div>
+        </div>
+        <div class="stat-card">
+          <i class="fa fa-eye"></i>
+          <h3 style="font-family: var(--font-display); color: var(--ls-navy); margin-bottom: 0.5rem;">Premium IOLs</h3>
+          <div class="stat-label">
+            Market shifting heavily toward EDOF (Extended Depth of Focus) and Enhanced Monofocal lenses. Toric lenses now represent 30-40% of all private implants.
+          </div>
+        </div>
+        <div class="stat-card">
+          <i class="fa fa-cogs"></i>
+          <h3 style="font-family: var(--font-display); color: var(--ls-navy); margin-bottom: 0.5rem;">AI Diagnostics & Telemedicine</h3>
+          <div class="stat-label">
+            AI-driven OCT analysis and DR grading are automating triage. Virtual review clinics are successfully managing up to 35% of stable glaucoma/medical retina cases.
+          </div>
+        </div>
+      </div>
+      <div class="source-citation">Source: NICE, NIHR, The Lancet, RCOphth</div>
+    </div>
+  </section>
+
+  <!-- CHAPTER 8: Referrals -->
+  <section id="referrals" class="ls-section" style="padding-bottom: 8rem;">
+    <div class="ls-container ls-reveal">
+      <h2 class="section-title">8. Referral Network & Optometrist Ecosystem</h2>
+      
+      <div class="grid-3" style="margin-bottom: 2rem;">
+        <div class="stat-card">
+          <i class="fa fa-building-o"></i>
+          <div class="stat-value">~714</div>
+          <div class="stat-label">Optical practices located across the East Midlands.</div>
+        </div>
+        <div class="stat-card">
+          <i class="fa fa-exchange"></i>
+          <div class="stat-value">>65,000</div>
+          <div class="stat-label">Presentations/year diverted from A&E via MECS & CUES schemes.</div>
+        </div>
+        <div class="stat-card">
+          <i class="fa fa-money"></i>
+          <div class="stat-value">£45-£60</div>
+          <div class="stat-label">Post-op co-management fee paid to optometrists per patient.</div>
+        </div>
+      </div>
+
+      <div class="stat-card" style="margin-bottom: 2rem;">
+        <h3 style="font-family: var(--font-display); color: var(--ls-navy); margin-bottom: 1rem;">The EyePros Opportunity</h3>
+        <p style="color: var(--ls-muted); line-height: 1.6;">
+          Primary Eyecare Services (PES) federation and the Opera platform dominate local pathways. MECS (Minor Eye Conditions Service) and CUES are active across all 5 regional ICBs. Within the immediate target territory, EyePros has a direct B2B marketing opportunity to capture referrals from:
+        </p>
+        <ul style="color: var(--ls-muted); line-height: 1.6; margin-top: 1rem; margin-left: 1.5rem;">
+          <li><strong>234</strong> independent individual practices</li>
+          <li><strong>28</strong> regional groups/mini-chains</li>
+          <li><strong>11</strong> national retail chains</li>
+        </ul>
+      </div>
+
+      <div class="source-citation">Source: Local Optical Committees (LOCs), LOCSU, College of Optometrists</div>
+    </div>
+  </section>
+
+
+  <!-- CHAPTER 9: Private Subspecialty Market Opportunities -->
+  <section id="opportunities" class="ls-section" style="background: var(--ls-white); padding-bottom: 8rem;">
+    <div class="ls-container ls-reveal">
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+        <span style="display: inline-block; padding: 4px 12px; border-radius: 9999px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; background: rgba(184, 151, 90, 0.12); color: var(--ls-gold); border: 1px solid rgba(184, 151, 90, 0.3);">Commercial Expansion</span>
+        <span style="font-size: 0.8rem; color: var(--ls-subtle); font-weight: 500;">Private Sector Portfolio Strategy</span>
+      </div>
+      <h2 class="section-title" style="margin-bottom: 16px; text-align: left;">9. Private Ophthalmology Subspecialty Opportunities</h2>
+      <p style="color: var(--ls-muted); max-width: 860px; font-size: 1.05rem; line-height: 1.65; margin-bottom: 40px;">
+        While high-volume NHS cataract tenders drive operational volume, the highest operating margins and brand equity reside in <strong>specialized private subspecialties</strong>. NHS rationing, strict commissioning thresholds, and severe outpatient wait lists have unlocked unprecedented consumer and private insurer demand across the East Midlands.
+      </p>
+
+      <!-- Key Commercial Signals Grid -->
+      <div class="grid-4" style="margin-bottom: 40px;">
+        <div class="stat-card" style="border-top: 4px solid var(--ls-gold);">
+          <i class="fa fa-line-chart"></i>
+          <div class="stat-value">61.4%</div>
+          <div class="stat-label"><strong>Self-Pay Majority</strong> in private cataract & lens admissions (PHIN 2025)</div>
+        </div>
+        <div class="stat-card" style="border-top: 4px solid var(--ls-navy);">
+          <i class="fa fa-clock-o"></i>
+          <div class="stat-value">22–51 Wks</div>
+          <div class="stat-label"><strong>NHS Outpatient Delays</strong> driving early private conversion across Midlands</div>
+        </div>
+        <div class="stat-card" style="border-top: 4px solid #0d9488;">
+          <i class="fa fa-percent"></i>
+          <div class="stat-value">25%–38%</div>
+          <div class="stat-label"><strong>Premium IOL Uptake</strong> in private clinics vs. 0% in standard NHS pathways</div>
+        </div>
+        <div class="stat-card" style="border-top: 4px solid #7c3aed;">
+          <i class="fa fa-refresh"></i>
+          <div class="stat-value">£450–£900</div>
+          <div class="stat-label"><strong>Annual Recurring Value</strong> per patient for chronic dry eye & glaucoma plans</div>
+        </div>
+      </div>
+
+      <!-- Subspecialty Cards Grid -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 24px; margin-bottom: 48px;">
+
+        <!-- 1. Cataract & RLE -->
+        <div class="stat-card" style="position: relative; border-left: 4px solid var(--ls-gold);">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px;">
+            <div>
+              <span style="font-size: 0.72rem; font-weight: 700; color: var(--ls-gold); text-transform: uppercase; letter-spacing: 0.05em;">Subspecialty 01</span>
+              <h3 style="font-family: var(--font-display); color: var(--ls-navy); font-size: 1.25rem; margin: 4px 0 0 0;">Premium Cataract & Refractive Lens Exchange (RLE)</h3>
+            </div>
+            <span style="padding: 4px 10px; border-radius: 9999px; background: rgba(184, 151, 90, 0.12); color: var(--ls-gold); font-size: 0.72rem; font-weight: 700;">TOP REVENUE DRIVER</span>
+          </div>
+          <p style="color: var(--ls-muted); font-size: 0.9rem; line-height: 1.55; margin-bottom: 16px;">
+            The cornerstone of private ophthalmic revenue. Unlike the NHS (which exclusively implants monofocal lenses with zero co-payment options), private patients demand spectacle independence via Toric, Extended Depth of Focus (EDOF), Trifocal, and Light Adjustable Lenses (LAL).
+          </p>
+          <div style="background: var(--ls-cream); border-radius: var(--radius-sm); padding: 14px; margin-bottom: 14px; font-size: 0.85rem;">
+            <div style="margin-bottom: 6px;"><strong>Core Procedures:</strong> Phacoemulsification with Premium IOL, Bilateral Immediate Sequential Cataract Surgery (ISBCS), Presbyopic RLE (age 45-65).</div>
+            <div style="margin-bottom: 6px;"><strong>Private Pricing:</strong> £2,400 – £4,500 per eye (Bilateral: £4,800 – £8,500+).</div>
+            <div><strong>Market Lever:</strong> 35%–45% of self-pay patients use 0% APR finance packages (£99–£160/mo).</div>
+          </div>
+          <div style="margin-top: auto; font-size: 0.8rem; color: #0d9488; font-weight: 600;">
+            <i class="fa fa-bullseye"></i> Target: Active retirees, drivers, and pre-cataract presbyopes avoiding glasses.
+          </div>
+        </div>
+
+        <!-- 2. Glaucoma & MIGS -->
+        <div class="stat-card" style="position: relative; border-left: 4px solid var(--ls-navy);">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px;">
+            <div>
+              <span style="font-size: 0.72rem; font-weight: 700; color: var(--ls-navy); text-transform: uppercase; letter-spacing: 0.05em;">Subspecialty 02</span>
+              <h3 style="font-family: var(--font-display); color: var(--ls-navy); font-size: 1.25rem; margin: 4px 0 0 0;">Glaucoma & Micro-Invasive Surgery (MIGS)</h3>
+            </div>
+            <span style="padding: 4px 10px; border-radius: 9999px; background: rgba(27, 43, 92, 0.08); color: var(--ls-navy); font-size: 0.72rem; font-weight: 700;">FASTEST GROWTH (+15% CAGR)</span>
+          </div>
+          <p style="color: var(--ls-muted); font-size: 0.9rem; line-height: 1.55; margin-bottom: 16px;">
+            Glaucoma represents 52,000 diagnosed cases in the East Midlands (with 50% undiagnosed). NHS glaucoma monitoring faces severe backlogs. Private MIGS combined with phaco or as standalone intervention eliminates chronic drop dependency and preserves vision.
+          </p>
+          <div style="background: var(--ls-cream); border-radius: var(--radius-sm); padding: 14px; margin-bottom: 14px; font-size: 0.85rem;">
+            <div style="margin-bottom: 6px;"><strong>Core Procedures:</strong> iStent Inject W, Hydrus Microstent, PreserFlo MicroShunt, OMNI Surgical System, Selective Laser Trabeculoplasty (SLT).</div>
+            <div style="margin-bottom: 6px;"><strong>Private Pricing:</strong> SLT: £650 – £1,200/eye | Standalone / Combined MIGS: £3,200 – £4,800/eye.</div>
+            <div><strong>Recurring Model:</strong> Annual Glaucoma Monitoring Membership (OCT, visual fields, Goldman applanation): £320 – £550/yr.</div>
+          </div>
+          <div style="margin-top: auto; font-size: 0.8rem; color: #0d9488; font-weight: 600;">
+            <i class="fa fa-bullseye"></i> Target: Cataract patients on ocular hypotensive drops & mild-to-moderate OAG patients.
+          </div>
+        </div>
+
+        <!-- 3. Dry Eye & Ocular Surface Disease -->
+        <div class="stat-card" style="position: relative; border-left: 4px solid #0d9488;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px;">
+            <div>
+              <span style="font-size: 0.72rem; font-weight: 700; color: #0d9488; text-transform: uppercase; letter-spacing: 0.05em;">Subspecialty 03</span>
+              <h3 style="font-family: var(--font-display); color: var(--ls-navy); font-size: 1.25rem; margin: 4px 0 0 0;">Dry Eye Disease & Ocular Surface Clinic (OSD)</h3>
+            </div>
+            <span style="padding: 4px 10px; border-radius: 9999px; background: rgba(13, 148, 136, 0.1); color: #0d9488; font-size: 0.72rem; font-weight: 700;">HIGH VOLUME CASH FLOW</span>
+          </div>
+          <p style="color: var(--ls-muted); font-size: 0.9rem; line-height: 1.55; margin-bottom: 16px;">
+            Affects 20%–33% of the UK adult population (~800k–1.2M adults in the East Midlands). The NHS offers virtually no advanced in-clinic device therapy, prescribing only basic lubricating drops. Patients willingly pay out-of-pocket for sustained symptomatic relief.
+          </p>
+          <div style="background: var(--ls-cream); border-radius: var(--radius-sm); padding: 14px; margin-bottom: 14px; font-size: 0.85rem;">
+            <div style="margin-bottom: 6px;"><strong>Core Procedures:</strong> Intense Pulsed Light (IPL), LipiFlow Thermal Pulsation, Meibomian Gland Probing, punctal plugs, autologous serum tears, Rexon-Eye QMR.</div>
+            <div style="margin-bottom: 6px;"><strong>Private Pricing:</strong> Full OSD Diagnostic Workup: £180 – £250 | 3-Session IPL/LipiFlow Package: £850 – £1,500.</div>
+            <div><strong>Clinical Synergy:</strong> Essential pre-operative biometry optimization before premium cataract/LASIK.</div>
+          </div>
+          <div style="margin-top: auto; font-size: 0.8rem; color: #0d9488; font-weight: 600;">
+            <i class="fa fa-bullseye"></i> Target: Screen workers, post-menopausal women, contact lens dropouts, refractive candidates.
+          </div>
+        </div>
+
+        <!-- 4. Medical Retina & Macular Care -->
+        <div class="stat-card" style="position: relative; border-left: 4px solid #e11d48;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px;">
+            <div>
+              <span style="font-size: 0.72rem; font-weight: 700; color: #e11d48; text-transform: uppercase; letter-spacing: 0.05em;">Subspecialty 04</span>
+              <h3 style="font-family: var(--font-display); color: var(--ls-navy); font-size: 1.25rem; margin: 4px 0 0 0;">Medical Retina & Macular Therapies</h3>
+            </div>
+            <span style="padding: 4px 10px; border-radius: 9999px; background: rgba(225, 29, 72, 0.08); color: #e11d48; font-size: 0.72rem; font-weight: 700;">CRITICAL TIME-SENSITIVE</span>
+          </div>
+          <p style="color: var(--ls-muted); font-size: 0.9rem; line-height: 1.55; margin-bottom: 16px;">
+            Age-related Macular Degeneration (AMD) is the #1 cause of registered blindness in the UK (~50,000 late AMD cases in East Midlands). NHS injection units are chronically overwhelmed, resulting in delayed appointments and permanent vision loss. Private speed saves sight.
+          </p>
+          <div style="background: var(--ls-cream); border-radius: var(--radius-sm); padding: 14px; margin-bottom: 14px; font-size: 0.85rem;">
+            <div style="margin-bottom: 6px;"><strong>Core Procedures:</strong> Intravitreal Anti-VEGF injections (Eylea 8mg, Vabysmo / Faricimab), Ozurdex implants, Valeda Photobiomodulation (PBM for Dry AMD), high-res multimodal OCT.</div>
+            <div style="margin-bottom: 6px;"><strong>Private Pricing:</strong> Anti-VEGF injection: £1,100 – £1,650 per treatment | Valeda PBM Protocol (9 sessions): £1,800 – £2,400.</div>
+            <div><strong>Insurer Coverage:</strong> 85%+ covered by PMI (Bupa, AXA, Aviva, WPA) for wet AMD, DMO, and RVO.</div>
+          </div>
+          <div style="margin-top: auto; font-size: 0.8rem; color: #0d9488; font-weight: 600;">
+            <i class="fa fa-bullseye"></i> Target: Wet AMD patients needing immediate injection, diabetic retinopathy, dry AMD early cohorts.
+          </div>
+        </div>
+
+        <!-- 5. Oculoplastics & Aesthetics -->
+        <div class="stat-card" style="position: relative; border-left: 4px solid #7c3aed;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px;">
+            <div>
+              <span style="font-size: 0.72rem; font-weight: 700; color: #7c3aed; text-transform: uppercase; letter-spacing: 0.05em;">Subspecialty 05</span>
+              <h3 style="font-family: var(--font-display); color: var(--ls-navy); font-size: 1.25rem; margin: 4px 0 0 0;">Oculoplastics, Orbit & Periocular Aesthetics</h3>
+            </div>
+            <span style="padding: 4px 10px; border-radius: 9999px; background: rgba(124, 58, 237, 0.08); color: #7c3aed; font-size: 0.72rem; font-weight: 700;">HIGH SELF-PAY WILLINGNESS</span>
+          </div>
+          <p style="color: var(--ls-muted); font-size: 0.9rem; line-height: 1.55; margin-bottom: 16px;">
+            NHS Integrated Care Boards (ICBs) across the Midlands have strictly blacklisted or de-prioritized eyelid and cosmetic periocular procedures under "Procedures of Limited Clinical Value" (PoLCV) guidelines. Patients are forced into the private sector.
+          </p>
+          <div style="background: var(--ls-cream); border-radius: var(--radius-sm); padding: 14px; margin-bottom: 14px; font-size: 0.85rem;">
+            <div style="margin-bottom: 6px;"><strong>Core Procedures:</strong> Upper & Lower Blepharoplasty, Ptosis correction (levator advancement), Entropion/Ectropion repair, Chalazion excision, Xanthelasma removal, periocular Botox.</div>
+            <div style="margin-bottom: 6px;"><strong>Private Pricing:</strong> Chalazion excision: £380 – £600 | Upper Blepharoplasty: £2,200 – £3,600 | Ptosis repair: £2,800 – £4,200.</div>
+            <div><strong>Market Dynamic:</strong> 90%+ pure self-pay. Patients value ophthalmic surgeon precision over general plastic surgeons.</div>
+          </div>
+          <div style="margin-top: auto; font-size: 0.8rem; color: #0d9488; font-weight: 600;">
+            <i class="fa fa-bullseye"></i> Target: Adults with hooded lids, visual field obscuration, benign lid lumps, and cosmetic rejuvenation goals.
+          </div>
+        </div>
+
+        <!-- 6. Cornea & Refractive -->
+        <div class="stat-card" style="position: relative; border-left: 4px solid #2563eb;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px;">
+            <div>
+              <span style="font-size: 0.72rem; font-weight: 700; color: #2563eb; text-transform: uppercase; letter-spacing: 0.05em;">Subspecialty 06</span>
+              <h3 style="font-family: var(--font-display); color: var(--ls-navy); font-size: 1.25rem; margin: 4px 0 0 0;">Cornea, Refractive Surgery & Keratoconus</h3>
+            </div>
+            <span style="padding: 4px 10px; border-radius: 9999px; background: rgba(37, 99, 235, 0.08); color: #2563eb; font-size: 0.72rem; font-weight: 700;">YOUNG PROFESSIONAL BASE</span>
+          </div>
+          <p style="color: var(--ls-muted); font-size: 0.9rem; line-height: 1.55; margin-bottom: 16px;">
+            Captures the 21–45 demographic wanting complete spectacle and contact lens freedom, as well as therapeutic corneal disease management. Implantable Collamer Lenses (ICL) are growing at >20% YoY for patients unsuitable for laser vision correction.
+          </p>
+          <div style="background: var(--ls-cream); border-radius: var(--radius-sm); padding: 14px; margin-bottom: 14px; font-size: 0.85rem;">
+            <div style="margin-bottom: 6px;"><strong>Core Procedures:</strong> Femtosecond LASIK, Trans-PRK / SmartPulse, SMILE, EVO+ ICL (phakic IOLs), Corneal Cross-Linking (CXL) for progressive keratoconus, Phototherapeutic Keratectomy (PTK).</div>
+            <div style="margin-bottom: 6px;"><strong>Private Pricing:</strong> Laser Eye Surgery: £1,800 – £2,800/eye | EVO+ ICL: £3,400 – £4,600/eye | Corneal Cross-Linking: £1,600 – £2,400/eye.</div>
+            <div><strong>Channel Strategy:</strong> Direct-to-consumer digital channels (Instagram, Google Search) + independent optometry partnerships.</div>
+          </div>
+          <div style="margin-top: auto; font-size: 0.8rem; color: #0d9488; font-weight: 600;">
+            <i class="fa fa-bullseye"></i> Target: Working professionals, athletes, high myopes, thin corneas, and keratoconic teens/young adults.
+          </div>
+        </div>
+
+        <!-- 7. Paediatric & Strabismus -->
+        <div class="stat-card" style="position: relative; border-left: 4px solid #ea580c;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px;">
+            <div>
+              <span style="font-size: 0.72rem; font-weight: 700; color: #ea580c; text-transform: uppercase; letter-spacing: 0.05em;">Subspecialty 07</span>
+              <h3 style="font-family: var(--font-display); color: var(--ls-navy); font-size: 1.25rem; margin: 4px 0 0 0;">Paediatric Ophthalmology & Adult Strabismus</h3>
+            </div>
+            <span style="padding: 4px 10px; border-radius: 9999px; background: rgba(234, 88, 12, 0.08); color: #ea580c; font-size: 0.72rem; font-weight: 700;">ACUTE PATIENT ADVOCACY</span>
+          </div>
+          <p style="color: var(--ls-muted); font-size: 0.9rem; line-height: 1.55; margin-bottom: 16px;">
+            Paediatric eye services in East Midlands NHS trusts suffer some of the longest routine wait times (often exceeding 40–52 weeks). Anxious parents refuse to wait a year for a child with suspected squint, refractive amblyopia, or blocked tear ducts.
+          </p>
+          <div style="background: var(--ls-cream); border-radius: var(--radius-sm); padding: 14px; margin-bottom: 14px; font-size: 0.85rem;">
+            <div style="margin-bottom: 6px;"><strong>Core Procedures:</strong> Comprehensive Paediatric Orthoptic Workup, Strabismus (Squint) surgical realignment, Amblyopia therapy, Nasolacrimal duct probing, adult diplopia/prism management.</div>
+            <div style="margin-bottom: 6px;"><strong>Private Pricing:</strong> Paediatric Consultant Initial Consultation: £220 – £350 | Squint Surgical Repair: £2,800 – £4,400.</div>
+            <div><strong>High Retention:</strong> Strong parent advocacy generates immense word-of-mouth referral across schools and family networks.</div>
+          </div>
+          <div style="margin-top: auto; font-size: 0.8rem; color: #0d9488; font-weight: 600;">
+            <i class="fa fa-bullseye"></i> Target: Children with visual development concerns, parents seeking fast diagnostic certainty, adults with double vision.
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Comprehensive Subspecialty Matrix Table -->
+      <h3 style="font-family: var(--font-display); color: var(--ls-navy); font-size: 1.5rem; margin-bottom: 16px;">
+        Subspecialty Commercial Matrix & Regional Opportunity Sizing
+      </h3>
+      <p style="color: var(--ls-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 24px;">
+        Comparative operational breakdown of all seven private ophthalmic subspecialties, detailing NHS restrictions, price realization, and local East Midlands market readiness:
+      </p>
+
+      <div class="table-container" style="margin-bottom: 40px;">
+        <table>
+          <thead>
+            <tr>
+              <th>Subspecialty</th>
+              <th>Key Private Interventions</th>
+              <th>NHS Restriction / Bottleneck</th>
+              <th>Private Fee Range</th>
+              <th>Funding Mix</th>
+              <th>Regional Potential</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1. Cataract & RLE</strong></td>
+              <td>Toric, EDOF, Trifocal, ISBCS, RLE</td>
+              <td>Strict Monofocal limit; zero upgrades allowed</td>
+              <td>£2,400 – £4,500 / eye</td>
+              <td>70% Self-Pay / 30% PMI</td>
+              <td><span style="color:#0d9488; font-weight:700;">Very High</span> (Mass Market)</td>
+            </tr>
+            <tr>
+              <td><strong>2. Glaucoma & MIGS</strong></td>
+              <td>iStent, Hydrus, PreserFlo, SLT, OMNI</td>
+              <td>12–26 wk wait; drops first line; limited stent access</td>
+              <td>SLT: £850 | MIGS: £3,600</td>
+              <td>50% Self-Pay / 50% PMI</td>
+              <td><span style="color:#0d9488; font-weight:700;">Very High</span> (High Growth)</td>
+            </tr>
+            <tr>
+              <td><strong>3. Dry Eye (OSD)</strong></td>
+              <td>IPL, LipiFlow, Punctal Plugs, Serum Drops</td>
+              <td>Excluded from NHS (drops only); no device care</td>
+              <td>£180 exam | £850–£1,500 course</td>
+              <td>95% Self-Pay / 5% PMI</td>
+              <td><span style="color:#0d9488; font-weight:700;">High</span> (Cash Margin)</td>
+            </tr>
+            <tr>
+              <td><strong>4. Medical Retina</strong></td>
+              <td>Eylea, Vabysmo, Valeda PBM, OCT follow-up</td>
+              <td>Clinic overcapacity; delayed injections risk vision</td>
+              <td>£1,100 – £1,650 / injection</td>
+              <td>25% Self-Pay / 75% PMI</td>
+              <td><span style="color:#0d9488; font-weight:700;">High</span> (Insured Base)</td>
+            </tr>
+            <tr>
+              <td><strong>5. Oculoplastics</strong></td>
+              <td>Blepharoplasty, Ptosis, Chalazion, Lids</td>
+              <td>Classed as PoLCV (blacklisted / rationed by ICBs)</td>
+              <td>£400 (cyst) to £3,800 (bleph)</td>
+              <td>85% Self-Pay / 15% PMI</td>
+              <td><span style="color:#0d9488; font-weight:700;">High</span> (Aesthetic Cross)</td>
+            </tr>
+            <tr>
+              <td><strong>6. Cornea & Refractive</strong></td>
+              <td>LASIK, PRK, SMILE, ICL, Cross-Linking</td>
+              <td>100% excluded from NHS commissioning</td>
+              <td>£1,800–£2,800 / eye (ICL: £3.8k)</td>
+              <td>90% Self-Pay / 10% PMI</td>
+              <td><span style="color:var(--ls-gold); font-weight:700;">Moderate-High</span></td>
+            </tr>
+            <tr>
+              <td><strong>7. Paediatrics & Squint</strong></td>
+              <td>Squint Surgery, Amblyopia, Prism, Orthoptics</td>
+              <td>Severe paediatric backlog (>40 wks at UHL/NUH)</td>
+              <td>£250 consult | £3,200 surgery</td>
+              <td>40% Self-Pay / 60% PMI</td>
+              <td><span style="color:var(--ls-gold); font-weight:700;">Moderate</span> (High Trust)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Strategic Takeaways for Marketing & Commercial Team -->
+      <div style="background: var(--ls-cream); border: 1.5px solid var(--ls-border); border-radius: var(--radius-lg); padding: 32px;">
+        <h3 style="font-family: var(--font-display); color: var(--ls-navy); font-size: 1.35rem; margin-bottom: 12px;">
+          <i class="fa fa-briefcase" style="color: var(--ls-gold); margin-right: 8px;"></i>
+          Actionable Recommendations for the EyePros Marketing Team
+        </h3>
+        <p style="color: var(--ls-muted); line-height: 1.6; margin-bottom: 20px;">
+          How to systematically capture and convert these private opportunities across the 470 target optometry practices and direct-to-consumer digital channels:
+        </p>
+
+        <div class="grid-3" style="gap: 16px;">
+          <div style="background: white; padding: 20px; border-radius: var(--radius-sm); border: 1px solid var(--ls-border);">
+            <div style="font-weight: 700; color: var(--ls-navy); margin-bottom: 8px;">
+              <span style="color: var(--ls-gold); margin-right: 4px;">1.</span> Optometrist CPD & Shared Care
+            </div>
+            <p style="font-size: 0.85rem; color: var(--ls-muted); line-height: 1.55; margin: 0;">
+              High-street opticians frequently see dry eye, early glaucoma, and chalazions they cannot treat. Educate independent optoms through accredited CPD evenings on when to refer for <strong>MIGS, IPL, and private blepharoplasty</strong> with prompt post-op co-management payments (£50/check).
+            </p>
+          </div>
+
+          <div style="background: white; padding: 20px; border-radius: var(--radius-sm); border: 1px solid var(--ls-border);">
+            <div style="font-weight: 700; color: var(--ls-navy); margin-bottom: 8px;">
+              <span style="color: var(--ls-gold); margin-right: 4px;">2.</span> 0% Finance & Price Transparency
+            </div>
+            <p style="font-size: 0.85rem; color: var(--ls-muted); line-height: 1.55; margin: 0;">
+              Self-pay conversion leaps from 12% to over 38% when marketing quotes <strong>monthly financing</strong> (e.g., "EDOF Premium Lenses from £110/month" or "Dry Eye IPL Relief from £65/month") rather than lump-sum figures. Complete fee clarity on the website builds instant clinical trust.
+            </p>
+          </div>
+
+          <div style="background: white; padding: 20px; border-radius: var(--radius-sm); border: 1px solid var(--ls-border);">
+            <div style="font-weight: 700; color: var(--ls-navy); margin-bottom: 8px;">
+              <span style="color: var(--ls-gold); margin-right: 4px;">3.</span> Lifetime Patient Care Pathways
+            </div>
+            <p style="font-size: 0.85rem; color: var(--ls-muted); line-height: 1.55; margin: 0;">
+              Ophthalmology is not a one-and-done transaction. A dry eye patient becomes an ICL or premium cataract candidate 5 years later; a cataract patient needs long-term glaucoma or macular monitoring. Establish <strong>annual membership plans</strong> to lock in lifetime private recurring revenue.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="source-citation">Source: PHIN Private Healthcare Performance Data (2025/2026), RCOphth Clinical Guidelines, NICE IPG590/IPG626, ESCRS Clinical Survey</div>
+    </div>
+  </section>
+
+  <!-- SCRIPTS -->
+  <script src="js/ls-nav.js"></script>
+  <script>
+    // Chapter nav scroll spy
+    const chapters = document.querySelectorAll('section[id]');
+    const chapterLinks = document.querySelectorAll('.ls-chapter-link');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          chapterLinks.forEach(l => {
+            l.classList.toggle('active', l.getAttribute('href') === '#' + entry.target.id);
+          });
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    chapters.forEach(s => observer.observe(s));
+  </script>
+</body>
+</html>

@@ -1,0 +1,3404 @@
+
+    // --- Data ---
+    // ─── Types ──────────────────────────────────────────────────────────────────
+
+
+
+
+
+
+
+
+
+
+
+// ─── Shared Competitor Pool ──────────────────────────────────────────────────
+
+const SHARED_COMPETITORS = {
+  newmedica: (why, wins) => ({
+    name: 'Newmedica', whyConsider: why, whyEyeProsWins: wins,
+  }),
+  optegra: (why, wins) => ({
+    name: 'Optegra', whyConsider: why, whyEyeProsWins: wins,
+  }),
+  opticalExpress: (why, wins) => ({
+    name: 'Optical Express', whyConsider: why, whyEyeProsWins: wins,
+  }),
+  uVision: (why, wins) => ({
+    name: 'Ü Vision', whyConsider: why, whyEyeProsWins: wins,
+  }),
+  optimax: (why, wins) => ({
+    name: 'Optimax', whyConsider: why, whyEyeProsWins: wins,
+  }),
+  centreForSight: (why, wins) => ({
+    name: 'Centre for Sight', whyConsider: why, whyEyeProsWins: wins,
+  }),
+};
+
+// ─── Personas ────────────────────────────────────────────────────────────────
+
+const ELEANOR = {
+  id: 'eleanor', initials: 'ED',
+  name: 'Eleanor Davies', age: 72,
+  role: 'Retired GP', company: 'NHS (Retired)',
+  location: 'Solihull, West Midlands',
+  type: 'patient', category: 'SELF-PAY CATARACT',
+  subcategory: 'NHS Wait Avoider',
+  photo: 'https://images.unsplash.com/photo-1566616213894-2d4e1baee5d8?w=600&h=720&fit=crop&auto=format',
+  insurance: 'Self-Pay', lifestyle: 'Active, drives, weekly swimming, U3A book group, frequent theatre visits',
+  family: 'Widowed seven years. Three adult children, six grandchildren across the Midlands.',
+  biography: 'Eleanor spent 35 years as a GP before retiring to Solihull. She remains deeply engaged in her local community and values her independence fiercely. She drives herself to all her commitments and has quietly noticed, over eighteen months, that evening driving has become harder. She knows cataracts when she sees them — she has referred hundreds of patients for surgery — but being on the other side of the consultation table is unfamiliar territory.',
+  oneSentenceSummary: 'A retired GP who knows exactly what she needs clinically but finds the transition to patient deeply uncomfortable.',
+  quote: '"I\'ve been the one writing referral letters for forty years. I didn\'t expect it to feel this complicated from this side."',
+  clinicalGoals: ['Bilateral cataract removal with premium IOL to eliminate glasses', 'Maintain driving standard — especially night vision', 'Single consultation with a named ophthalmologist she can trust clinically'],
+  lifestyleGoals: ['Continue driving independently to see all six grandchildren', 'Return to theatre and reading without magnification', 'Maintain her active social calendar without visual limitation'],
+  emotionalGoals: ['Keep this a private, managed decision — not a family event', 'Feel treated as an intelligent adult, not a vulnerable patient', 'Resolve this quickly and move on without drama'],
+  emotionalDrivers: ['Independence — driving is freedom, not just transport', 'Professional identity — she refuses to be diminished by age', 'Family — she wants to be fully present, not squinting at menus'],
+  decisionTriggers: ['Nearly missed a speed camera on the M42 in October', 'Optometrist confirmed bilateral progression at latest check', 'NHS wait quoted at eleven months — unacceptable given her clinical knowledge'],
+  personalMotivations: ['Having guided hundreds of patients through this, she wants to experience best-in-class care herself', 'She will not book through a national chain — consultant-led matters to her profoundly'],
+  frustrations: ['GPs referring patients into systems they have no visibility on', 'Clinic websites that show stock photos instead of real consultants', 'Being asked form questions she already knows the answers to'],
+  nhsFrustrations: ['Eleven-month wait for a straightforward bilateral procedure', 'No choice of consultant under NHS pathway', 'Impersonal process — her own patients described it, and she believes them'],
+  fears: ['Posterior capsule opacification or unexpected complication given no rapid follow-up available', 'Being patronised by a younger clinician who does not know her background', 'Her daughter finding out and insisting on coming with her'],
+  financialConcerns: ['£8,500–£11,000 for bilateral premium IOL surgery depending on lens choice — significant but within her means', 'Wants complete clarity on what is and is not included — no hidden fees'],
+  informationGaps: ['Premium IOL options and how to assess which suits her lifestyle best', 'EyePros\' specific complication rates and Mr. [consultant] credentials', 'Aftercare protocol and what symptoms require urgent contact'],
+  functionalNeeds: ['Book via phone with a knowledgeable human, not a web form', 'Receive a written patient information summary before any decision', 'Named consultant confirmed at time of booking'],
+  clinicalNeeds: ['Bilateral cataract removal — premium IOL assessment', 'A to B consultation clarity — diagnosis to treatment plan in one visit if possible', 'Post-operative protocol communicated clearly, in writing'],
+  emotionalNeeds: ['Treated as an informed medical professional', 'Unhurried consultation time', 'Private and discreet — no marketing follow-up emails'],
+  communicationNeeds: ['Phone preferred', 'Letter or PDF confirmation — not app notifications', 'No family liaison unless she requests it'],
+  researchHabits: 'Deep and methodical. Reads RCOphth guidance, reviews surgeon credentials on GMC register, asks retired colleagues who they trust. Does not read consumer review sites — she finds them unreliable.',
+  techUsage: 'Comfortable with iPad and email. Uses Google but distrusts heavily SEO-optimised pages. Prefers official sources and professional networks.',
+  infoSources: ['Royal College of Ophthalmologists website', 'GMC register', 'Retired colleagues and former patients', 'EyePros direct website'],
+  channels: ['Phone', 'Email', 'Direct website'],
+  decisionStyle: 'Clinical and deliberate. She researches independently, forms a strong view, then books decisively. She does not want to be sold to. She wants to feel she chose, not that she was converted.',
+  typicalQuestions: [
+    '"Who specifically will perform my surgery — I need their credentials and experience."',
+    '"What is your complication rate for bilateral cataract removal?"',
+    '"Can I attend the same consultant at both consultations?"',
+    '"What is included in the quoted price — follow-up, YAG if required?"',
+    '"What is your waiting time from booking to surgery?"',
+  ],
+  trustFactors: ['Named consultant with verifiable credentials', 'Published clinical outcomes data', 'CQC registration and rating', 'Clear aftercare protocol in writing', 'Professional peer recommendation'],
+  traits: ['Analytical', 'Independent', 'Decisive', 'Private', 'High standards'],
+  values: ['Clinical excellence', 'Transparency', 'Personal autonomy', 'Privacy', 'Professionalism'],
+  journey: [
+    { stage: 'Awareness', icon: '👁', goal: 'Recognise that symptoms are progressing', action: 'Notices evening driving difficulty; recalls advising patients on the same symptoms', thoughts: 'I know what this is. I just need to decide when it becomes the right time.', emotion: 5, emotionLabel: 'Measured', painPoints: ['Internal resistance to becoming a patient', 'No obvious trigger yet — still managing'], opportunities: ['Content: "When is the right time for cataract surgery"', 'Trusted professional tone in all EyePros materials'], channel: 'Internal awareness', touchpoint: 'None yet', uxRec: 'Ensure website tone speaks to educated, self-aware patients' },
+    { stage: 'Symptom Recognition', icon: '⚠️', goal: 'Confirm clinical picture and understand urgency', action: 'Books optometrist appointment; confirms bilateral progression; asks about private options', thoughts: 'Right. Bilateral, progressive. I would have referred this at this stage.', emotion: 3, emotionLabel: 'Unsettled', painPoints: ['Discomfort in patient role', 'NHS wait is clinically unacceptable to her'], opportunities: ['Optometrist referral partnership critical here', 'EyePros referral card in optometrist practice'], channel: 'Optometrist', touchpoint: 'Optometrist referral', uxRec: 'Equip referring optometrists with EyePros clinical credentials and outcome data' },
+    { stage: 'Research', icon: '🔍', goal: 'Identify a consultant she can respect and trust', action: 'Reviews GMC register, checks RCOphth guidance, searches consultant credentials on EyePros site', thoughts: 'I need a name, a face, and a career history — not a brand.', emotion: 5, emotionLabel: 'Searching', painPoints: ['Clinic websites with no named consultants', 'Marketing language rather than clinical substance'], opportunities: ['Consultant bios with credentials, publications, surgical volume', 'Case studies pitched at clinical literacy level'], channel: 'Website, GMC register', touchpoint: 'EyePros.co.uk consultant pages', uxRec: 'Publish detailed consultant profiles — credentials, training, surgical volume', isOpportunity: true },
+    { stage: 'Comparison', icon: '⚖️', goal: 'Shortlist EyePros vs. one alternative', action: 'Compares EyePros to one other Midlands private ophthalmology provider; asks retired GP colleague for opinion', thoughts: 'The question is not price. The question is who I would trust with my own eyes.', emotion: 6, emotionLabel: 'Evaluating', painPoints: ['Other providers have no named consultants visible on website', 'Competitor sites feel more sales-led'], opportunities: ['Clearly superior consultant transparency wins at this stage', 'Peer recommendation from clinical network is decisive'], channel: 'Website, word of mouth', touchpoint: 'Comparison research', uxRec: 'Ensure EyePros consultant profiles are more clinically detailed than any competitor' },
+    { stage: 'Referral / Self-Refer', icon: '📋', goal: 'Make a formal enquiry and confirm the right pathway', action: 'Calls EyePros directly; asks specific clinical questions; confirms consultant availability', thoughts: 'The person who answers the phone will tell me everything I need to know about this clinic.', emotion: 7, emotionLabel: 'Cautiously positive', painPoints: ['If answered poorly, she will not call back', 'A sales-oriented response will end the conversation'], opportunities: ['First phone call is the most important brand touchpoint', 'Knowledgeable, clinical, unhurried response wins her immediately'], channel: 'Phone', touchpoint: 'First phone call', uxRec: 'Train reception to respond clinically and without upselling — Eleanor will notice', isOpportunity: true },
+    { stage: 'Payment Decision', icon: '💳', goal: 'Confirm all-inclusive cost and what is covered', action: 'Asks for full written price breakdown; confirms aftercare is included; requests IOL options summary', thoughts: 'I need this in writing before I proceed. No surprises.', emotion: 6, emotionLabel: 'Practical', painPoints: ['Hidden fees or ambiguous inclusions will stop her', 'Any suggestion of upsell packages creates distrust'], opportunities: ['Transparent written price guide converts her', 'Clear IOL comparison guide supports her decision'], channel: 'Email', touchpoint: 'Price guide / written summary', uxRec: 'Send a complete written breakdown via email — no ambiguity' },
+    { stage: 'Booking', icon: '📅', goal: 'Confirm named consultant and dates', action: 'Books initial consultation with named consultant; receives confirmation letter', thoughts: 'Good. I have a name, a date, and a plan.', emotion: 8, emotionLabel: 'Resolved', painPoints: ['Any change of consultant would restart her trust-building process'], opportunities: ['Confirmation letter sets the tone for the entire experience'], channel: 'Phone / Email', touchpoint: 'Booking confirmation letter', uxRec: 'Confirmation letter should be clinical in tone, comprehensive, and name the consultant', isOpportunity: true },
+    { stage: 'Consultation', icon: '🩺', goal: 'Receive a thorough, expert clinical assessment', action: 'Attends initial consultation; discusses IOL options; asks detailed questions; feels respected', thoughts: 'He treated me as a colleague, not a patient. That was the right call.', emotion: 9, emotionLabel: 'Confident', painPoints: ['Any rushed consultation would have ended the relationship'], opportunities: ['Exceptional consultation experience becomes an advocacy driver'], channel: 'In clinic', touchpoint: 'Consultation with named consultant', uxRec: 'Ensure consultation time is protected — never double-booked or cut short' },
+    { stage: 'Diagnosis & IOL Selection', icon: '📊', goal: 'Understand her IOL options fully and make a considered choice', action: 'Reviews IOL options summary provided by consultant; makes choice based on clinical logic', thoughts: 'Extended depth-of-focus makes clinical sense for my lifestyle. I can justify this decision.', emotion: 7, emotionLabel: 'Methodical', painPoints: ['Conflicting marketing claims about premium IOLs can cause confusion', 'She will ask the questions most patients never think of'], opportunities: ['Provide a clinical IOL comparison — not a sales comparison', 'Let her reach her own conclusion — she will'], channel: 'In clinic / Written summary', touchpoint: 'IOL options guide', uxRec: 'Create a clinically-pitched IOL comparison document — not a sales brochure' },
+    { stage: 'Treatment Planning', icon: '🗓', goal: 'Confirm surgical plan and understand every step', action: 'Receives written surgical plan; pre-op instructions; date confirmed for first eye', thoughts: 'Clear. Logical. I know exactly what happens and in what order.', emotion: 8, emotionLabel: 'Ready', painPoints: ['Any gaps in pre-op communication create anxiety'], opportunities: ['Pre-op preparation content builds confidence'], channel: 'Email / Letter', touchpoint: 'Pre-operative summary', uxRec: 'Send comprehensive pre-op guide — she will read every word' },
+    { stage: 'Treatment', icon: '🔬', goal: 'Undergo surgery with confidence and clarity', action: 'First eye surgery — arrives independently; is welcomed by name; procedure goes smoothly', thoughts: 'The clinical team know what they are doing. That\'s all I needed to know.', emotion: 6, emotionLabel: 'Focused', painPoints: ['Pre-operative nerves despite her clinical knowledge', 'Any disorganisation in clinic on the day would undermine trust'], opportunities: ['Day-of experience cements loyalty and advocacy'], channel: 'In clinic', touchpoint: 'Surgical day experience', uxRec: 'Ensure day-of experience is calm, organised, and clinically confident' },
+    { stage: 'Recovery', icon: '🌅', goal: 'Experience rapid vision improvement and clear guidance', action: 'Immediate vision improvement in first eye; follows post-op instructions precisely; notes improvement in reading', thoughts: 'Oh. That\'s remarkable. I should have done this sooner.', emotion: 8, emotionLabel: 'Pleased', painPoints: ['Uncertainty about what is normal in the first 48 hours', 'No one to call if she has a question at 11pm'], opportunities: ['Post-op reassurance line is highly valued by this persona', 'Recovery experience is shareable — she will tell colleagues'], channel: 'Post-op support line', touchpoint: 'Post-operative guidance', uxRec: 'Provide a direct clinical contact for the first 72 hours post-op', isOpportunity: true },
+    { stage: 'Aftercare', icon: '✅', goal: 'Confirm successful outcome and plan second eye', action: 'Post-op review confirms excellent result; second eye booked; drives herself to the clinic', thoughts: 'Back in the car. Properly. The grandchildren\'s school play is next month.', emotion: 9, emotionLabel: 'Delighted', painPoints: ['Any delay in second-eye booking would frustrate her', 'She expects the same consultant — change would unsettle her'], opportunities: ['Second eye booking is a seamless extension of trust — not a new sale'], channel: 'In clinic', touchpoint: 'Post-op review', uxRec: 'Second-eye booking should be offered at the first post-op review without prompting' },
+    { stage: 'Monitoring', icon: '📆', goal: 'Maintain long-term eye health with annual review', action: 'Attends annual eye health review; remains connected to EyePros for ongoing care', thoughts: 'This is my ophthalmology practice now. I know who to call if anything changes.', emotion: 9, emotionLabel: 'Secure', painPoints: ['Losing the personal connection over time', 'Forgetting to book review year on year without a prompt'], opportunities: ['Annual review programme is a retention and referral mechanism', 'EyePros becomes her trusted ophthalmology home'], channel: 'Letter / email reminder', touchpoint: 'Annual review reminder', uxRec: 'Implement a proactive annual review recall programme' },
+    { stage: 'Advocacy', icon: '💬', goal: 'Recommend EyePros to people in her network', action: 'Recommends EyePros to two former GP colleagues; mentions to her optometrist; leaves a Google review', thoughts: 'When colleagues ask me who to send their patients to, I now have a clear answer.', emotion: 9, emotionLabel: 'Ambassador', painPoints: ['No one asked her for a review or testimonial', 'No formal mechanism to refer clinical colleagues'], opportunities: ['Clinical peer advocacy is the most powerful acquisition channel in this sector', 'Ask her — she will say yes'], channel: 'Word of mouth, Google', touchpoint: 'Review request / referral programme', uxRec: 'Create a clinical referral programme for retired and active GPs', isOpportunity: true },
+  ],
+  decision: {
+    whySeeksCare: 'Bilateral cataract progression is affecting night driving and reading — both central to her independent lifestyle.',
+    whyDelays: 'She is comfortable managing the condition and has a high tolerance for inconvenience. The decision to become a patient is psychologically difficult.',
+    whyPrivate: 'NHS wait of eleven months is clinically inappropriate given bilateral progression. She also requires consultant continuity that the NHS pathway cannot guarantee.',
+    whyEyePros: 'Named consultant with verifiable credentials, consultant-led care model, and the recommendation of a respected clinical colleague.',
+    whyCompetitor: 'Newmedica or Optegra if a retired GP colleague recommends them, or if EyePros cannot provide credible consultant credentials upfront.',
+    infoThatConverts: 'Consultant biography with GMC number, surgical volume, and published outcomes. A phone call that is answered clinically, not commercially.',
+    ultimateConverter: 'A peer recommendation from someone she respects clinically, followed by a phone consultation with a knowledgeable EyePros team member.',
+  },
+  competitors: [
+    SHARED_COMPETITORS.newmedica('Established NHS-contracted provider with strong clinical reputation in the Midlands.', 'EyePros offers genuine consultant continuity and a more personalised, less production-line experience.'),
+    SHARED_COMPETITORS.optegra('National brand with high awareness and multiple locations.', 'EyePros is locally led, consultant-driven, and offers whole-eye care beyond cataract — important for her long-term relationship.'),
+    SHARED_COMPETITORS.opticalExpress('High-street presence and heavy digital marketing for cataract surgery. Eleanor will encounter them during research.', 'Eleanor is a retired GP — she will see through commercial positioning immediately. EyePros wins on clinical credibility, named consultant, and transparent aftercare.'),
+    SHARED_COMPETITORS.uVision('Well-regarded independent practice, known locally.', 'EyePros offers broader clinical expertise including glaucoma and medical retina should she need them in future.'),
+  ],
+  keyMessages: [
+    'Consultant-led, personalised cataract surgery — the same surgeon from consultation to aftercare',
+    'Premium IOL options assessed individually — not a menu to choose from unaided',
+    'Complete pricing transparency before any commitment',
+    'Comprehensive whole-eye care — not just cataract',
+  ],
+  contentRecommendations: ['Detailed consultant biography pages', 'Clinical IOL comparison guide (not a sales brochure)', 'Published outcomes data', 'Patient information letter template worthy of NHS Trust quality'],
+  marketing: {
+    acquisitionPriority: 5,
+    conversionDifficulty: 'Medium',
+    lifetimeValue: 'High',
+    bestChannels: ['Optometrist Referral', 'Word of Mouth (retired clinical network)', 'Google Search', 'SEO', 'GP Referral'],
+    searchIntent: ['"private cataract surgery Birmingham"', '"cataract consultant Midlands"', '"premium IOL surgery UK"', '"bilateral cataract removal self-pay"'],
+    socialBehaviour: {
+      platforms: ['Email', 'iPad / Google', 'No social media'],
+      contentConsumed: ['RCOphth guidance', 'GMC register listings', 'Consultant credential pages'],
+      postingHabits: 'Does not use social media. Evaluates silently via professional and trusted peer channels.',
+      trustSources: ['Retired GP and consultant colleagues', 'GMC register', 'Royal College of Ophthalmologists', 'EyePros consultant biography pages'],
+    },
+    contentThatConverts: ['Consultant biographies with GMC number and surgical volume', 'Clinical IOL comparison guide (not a sales brochure)', 'Patient information letter of NHS Trust quality', 'Published outcomes data'],
+    emotionalTriggers: ['Fear of losing driving independence — grandchildren, theatre, freedom', 'Desire to be treated as an intelligent clinician, not a consumer patient', 'Resolution without drama — she wants this handled efficiently and privately'],
+    mainObjections: ['Can I trust a consultant I have never heard of?', 'Are there hidden fees beyond the quoted price?', 'Will I be patronised by a clinician who does not know my background?'],
+    messagingAngles: ['"The same surgeon from assessment to aftercare — named and verifiable"', '"Complete cost transparency before any commitment"', '"Consultant-led care without the production-line model"'],
+    bestCTA: 'Speak to a Consultant',
+    leadMagnet: 'Premium Lens Guide',
+    campaignType: ['SEO', 'Referral Network', 'Google Search'],
+    funnelStage: 'MOFU–BOFU',
+    retentionOpportunities: ['Annual Reviews', 'AMD Monitoring', 'Glaucoma Monitoring'],
+    referralOpportunities: ['Optometrist', 'GP', 'Family Referral'],
+    kpis: ['Consultation-to-surgery conversion rate', 'Source attribution (clinical referral vs. search)', 'CAC via optometrist network'],
+  },
+  conversionAction: 'Phone call → named consultant confirmed → consultation booked',
+  conversionMetric: 'Consultation-to-surgery conversion rate for self-pay bilateral cataract',
+  reviewDate: '31 Oct 2026',
+};
+
+const RICHARD = {
+  id: 'richard', initials: 'RA',
+  name: 'Richard Ashford', age: 57,
+  role: 'Finance Director', company: 'Mid-sized manufacturing group',
+  location: 'Edgbaston, Birmingham',
+  type: 'patient', category: 'PMI — GLAUCOMA SUSPECT',
+  subcategory: 'Executive Private Medical Insurance',
+  photo: 'https://images.unsplash.com/photo-1777390329674-09285b035781?w=600&h=720&fit=crop&auto=format',
+  insurance: 'Private Medical Insurance (AXA Health)', lifestyle: 'High-travel, long hours, gym three times a week, keen golfer, drives a 2023 BMW 5 Series',
+  family: 'Married 28 years. Two children at university. Wife manages all household administration.',
+  biography: 'Richard leads finance for a £120m manufacturing group and lives on his calendar. He has always been the person who delegates health administration to his PA or wife — his annual PMI subscription has sat unused for four years. An elevated intraocular pressure reading at a routine optometrist appointment and a suspected early field defect has snapped him to attention. He is time-poor, outcome-focused, and needs someone to navigate the clinical complexity he does not have the bandwidth to research himself.',
+  oneSentenceSummary: 'A PMI-holding executive who needs expert clinical navigation and fast access — he will not invest time in the process, only in the outcome.',
+  quote: '"I pay £380 a month for PMI and I\'ve never used it. Someone just tell me what I need and make it happen."',
+  clinicalGoals: ['Definitive diagnosis of glaucoma suspect vs. confirmed glaucoma', 'Access to best-available treatment if required', 'Understand how to preserve vision long-term without disrupting work schedule'],
+  lifestyleGoals: ['Continue driving and maintaining DVLA standard', 'Maintain golf game — any peripheral vision concern is a career and lifestyle threat', 'Manage this efficiently without it dominating his diary'],
+  emotionalGoals: ['Understand the real risk clearly — not minimised, not catastrophised', 'Know that someone with genuine expertise is managing his eye health', 'Keep this private from colleagues'],
+  emotionalDrivers: ['Control — he manages risk for a living and wants this treated the same way', 'Time — every hour spent on administration is an hour not working', 'Fear, suppressed — he has read about glaucoma and is more worried than he appears'],
+  decisionTriggers: ['Optometrist letter describing "elevated IOP and suspicious disc appearance"', 'PA confirmed PMI covers specialist ophthalmology', 'GP suggested referral but gave no timeline'],
+  personalMotivations: ['Used PMI for 12 years — this is the first time it has felt relevant', 'He does not want to be in the NHS system for something this important'],
+  frustrations: ['GP referral described as "routine" — he wants it treated as urgent', 'Difficulty navigating PMI pre-authorisation without help', 'Clinic websites that require him to do extensive research himself'],
+  nhsFrustrations: ['NHS pathway described by GP as 4–6 months for initial glaucoma assessment', 'No single consultant — would see whoever is available'],
+  fears: ['Glaucoma diagnosis and the word "irreversible"', 'Missing a narrow-angle condition that could cause an acute episode while travelling', 'Having to disclose a visual condition to his employer'],
+  financialConcerns: ['PMI should cover this — he expects EyePros to handle pre-authorisation', 'Would self-pay if PMI declines rather than wait for NHS'],
+  informationGaps: ['What "glaucoma suspect" actually means and what happens next', 'How to use his PMI — he has never done it before', 'Whether he needs to disclose his condition to DVLA'],
+  functionalNeeds: ['Rapid appointment — within 10 days if possible', 'Pre-authorisation handled by EyePros on his behalf', 'Clear written summary after consultation for his own records'],
+  clinicalNeeds: ['Comprehensive glaucoma assessment including gonioscopy and VF', 'Clear diagnostic conclusion — not "watch and wait" without explanation', 'Angle assessment — he may be an angle-closure suspect given his demographics'],
+  emotionalNeeds: ['Feel that the situation is under expert control', 'Honest, direct communication — no hedging', 'Efficient use of his time'],
+  communicationNeeds: ['Email for administrative matters', 'Phone call for anything clinical and urgent', 'No mass-market communications — he wants to feel this is personal'],
+  researchHabits: 'Minimal self-research — he uses trusted intermediaries. Relies on his GP and optometrist to point him in the right direction, then his PA to handle logistics. May briefly check GMC register but will not read lengthy clinic content.',
+  techUsage: 'Heavy user of email, calendar, and LinkedIn. Uses his phone for everything. Expects frictionless digital experience if he needs to interact online.',
+  infoSources: ['GP and optometrist recommendation', 'PA research via phone and website', 'PMI insurer recommended list'],
+  channels: ['Phone (PA books)', 'Email', 'Direct referral'],
+  decisionStyle: 'Delegated efficiency. His PA does the initial vetting. If the PA reports back positively, he trusts the recommendation. He shows up prepared but expects the clinical team to lead.',
+  typicalQuestions: [
+    '"Is this actually glaucoma or am I fine — give me a straight answer."',
+    '"Can your team handle the AXA Health pre-authorisation?"',
+    '"How quickly can you see me — I\'m travelling next week."',
+    '"Will this affect my driving licence?"',
+    '"What happens if the pressure doesn\'t respond to drops?"',
+  ],
+  trustFactors: ['PMI acceptance and pre-authorisation support', 'Fast access — days not weeks', 'Clear clinical diagnosis not "further monitoring suggested"', 'Private, senior-level experience', 'GP endorsement'],
+  traits: ['Decisive', 'Efficient', 'Results-oriented', 'Risk-aware', 'Privately anxious'],
+  values: ['Expertise', 'Speed', 'Reliability', 'Privacy', 'Value for money'],
+  journey: [
+    { stage: 'Awareness', icon: '📋', goal: 'Attend routine optometrist — not expecting news', action: 'Attends annual eye test; optometrist identifies elevated IOP and disc concerns', thoughts: 'That\'s not what I expected to hear at a routine check.', emotion: 4, emotionLabel: 'Surprised', painPoints: ['No context given — just "you need to see a specialist"', 'Optometrist does not provide a clear referral pathway'], opportunities: ['Optometrist referral partnership with clear EyePros pathway is decisive here'], channel: 'Optometrist', touchpoint: 'Optometrist letter', uxRec: 'Provide referring optometrists with a clear, branded EyePros referral pathway' },
+    { stage: 'Symptom Recognition', icon: '⚠️', goal: 'Understand what the findings actually mean', action: 'Googles "glaucoma suspect" late at night; reads first three results; feels worse', thoughts: 'Irreversible. That word is everywhere. Why didn\'t they explain this better.', emotion: 3, emotionLabel: 'Anxious', painPoints: ['Online information is alarming and context-free', 'No immediate human to call and clarify'], opportunities: ['EyePros content: "What does glaucoma suspect mean" — calm, clinical, helpful'], channel: 'Google search', touchpoint: 'Search content', uxRec: 'Create SEO-optimised, clinically reassuring content around "glaucoma suspect"', isOpportunity: true },
+    { stage: 'Research', icon: '📱', goal: 'Find the fastest route to expert assessment', action: 'PA contacts GP; GP suggests NHS referral; PA calls PMI; PA shortlists EyePros from insurer panel', thoughts: 'I need someone to sort this out fast. I\'m travelling on Thursday.', emotion: 5, emotionLabel: 'Impatient', painPoints: ['GP referral suggests 4–6 month wait', 'PMI pre-auth process is unclear'], opportunities: ['EyePros PMI support makes this step frictionless', 'Fast appointment availability converts decisively'], channel: 'PA research, PMI panel', touchpoint: 'PMI approved provider list', uxRec: 'Feature on all major PMI panels with a prominently fast-access proposition' },
+    { stage: 'Comparison', icon: '⚖️', goal: 'Confirm EyePros is the right choice quickly', action: 'PA calls two providers; EyePros answers knowledgeably and offers appointment within 5 days', thoughts: 'Right. EyePros handled the PMI question properly and have availability. Done.', emotion: 6, emotionLabel: 'Focused', painPoints: ['Competitor quoted 3-week wait', 'Competitor could not confirm PMI acceptance without calling back'], opportunities: ['Speed of response and PMI competence close this at comparison stage', 'PA experience is the brand experience for Richard'], channel: 'Phone', touchpoint: 'Initial phone call', uxRec: 'Train reception to handle PMI queries instantly and offer fast appointments confidently' },
+    { stage: 'PMI Decision', icon: '💳', goal: 'Confirm PMI pre-authorisation without personal effort', action: 'PA provides AXA reference number; EyePros handles pre-auth confirmation; Richard receives email confirmation', thoughts: 'Good. It\'s sorted.', emotion: 7, emotionLabel: 'Relieved', painPoints: ['Any manual process falls on Richard to chase'], opportunities: ['Seamless PMI handling is a core differentiator for this segment'], channel: 'Email', touchpoint: 'PMI pre-auth confirmation', uxRec: 'Implement a dedicated PMI concierge workflow — proactive, not reactive', isOpportunity: true },
+    { stage: 'Booking', icon: '📅', goal: 'Confirm appointment in the least disruptive slot', action: 'Appointment booked for 7:30am Thursday before his Birmingham office day', thoughts: 'Early morning works. I can be in the office by 10.', emotion: 8, emotionLabel: 'In control', painPoints: ['Limited early morning or evening availability would be a barrier'], opportunities: ['Early/late clinic slots are a genuine competitive advantage for executives'], channel: 'Phone / Calendar', touchpoint: 'Appointment confirmation', uxRec: 'Offer early morning and Saturday clinic slots for executive patients' },
+    { stage: 'Consultation', icon: '🩺', goal: 'Receive a comprehensive, honest assessment', action: 'Attends consultation; full glaucoma workup; consultant explains findings clearly; no angle closure — elevated pressure managed', thoughts: 'No angle-closure risk. Elevated pressure, suspect optic disc — but manageable. I can deal with this.', emotion: 8, emotionLabel: 'Reassured', painPoints: ['Would have been devastated by a "watch and wait" with no clear plan'], opportunities: ['Excellent consultation = loyalty, referral, private ongoing care'], channel: 'In clinic', touchpoint: 'Consultation', uxRec: 'Ensure glaucoma consultations include a written summary with clear next steps' },
+    { stage: 'Diagnosis', icon: '📊', goal: 'Understand his exact status and what it means for his life', action: 'Receives written summary; IOP management plan initiated; DVLA guidance included proactively', thoughts: 'Manageable. Not ideal but manageable. And they told me about DVLA before I asked.', emotion: 7, emotionLabel: 'Settled', painPoints: ['DVLA question unanswered would have left a gap', 'Ambiguous "monitoring" plan without specific intervals creates anxiety'], opportunities: ['Proactively addressing DVLA concern creates outsized trust'], channel: 'Written summary', touchpoint: 'Post-consultation letter', uxRec: 'Include DVLA guidance in all glaucoma consultation summaries proactively', isOpportunity: true },
+    { stage: 'Treatment Planning', icon: '🗓', goal: 'Understand the management plan and commit to follow-up', action: 'IOP-lowering drops prescribed; six-month review scheduled; given direct contact number', thoughts: 'Six months. Fine. I\'ll put it in my calendar.', emotion: 7, emotionLabel: 'Compliant', painPoints: ['Drops regime requires daily discipline — can conflict with travel'], opportunities: ['Travel-friendly medication guidance and compliance support differentiates'], channel: 'In clinic / Email', touchpoint: 'Management plan letter', uxRec: 'Provide travel and compliance guidance for IOP medication alongside the prescription' },
+    { stage: 'Treatment', icon: '💊', goal: 'Manage IOP effectively without lifestyle disruption', action: 'Completes drops regime; adjusts to routine; attends six-month review on schedule', thoughts: 'It\'s a minute a day. I can manage that.', emotion: 7, emotionLabel: 'Adapting', painPoints: ['Remembering drops during busy travel schedule', 'Side effects not anticipated in advance'], opportunities: ['Digital reminder support and proactive side-effect communication'], channel: 'Phone (if query)', touchpoint: 'Follow-up review', uxRec: 'Offer a brief phone check-in at one month to confirm drops tolerability' },
+    { stage: 'Recovery', icon: '🔄', goal: 'Confirm IOP is being controlled', action: 'Six-month IOP recheck — good response; disc monitoring unchanged', thoughts: 'Numbers are better. Let\'s keep going.', emotion: 8, emotionLabel: 'Positive', painPoints: ['No news between reviews creates background anxiety'], opportunities: ['Brief digital health update at three months would be valued'], channel: 'In clinic', touchpoint: 'Six-month review', uxRec: 'Implement a three-month digital IOP check-in option for glaucoma management patients' },
+    { stage: 'Aftercare', icon: '✅', goal: 'Confirm stable condition and ongoing plan', action: 'Annual review confirms stable; consultant discusses long-term outlook; continues annual monitoring', thoughts: 'Stable. That\'s all I need.', emotion: 8, emotionLabel: 'Confident', painPoints: ['Annual review reminder not received — he would simply not attend'], opportunities: ['Recall programme is essential for this persona — he will not self-initiate'], channel: 'Email / Letter', touchpoint: 'Annual recall', uxRec: 'Implement a named-consultant annual recall for all glaucoma management patients' },
+    { stage: 'Monitoring', icon: '📆', goal: 'Maintain lifelong glaucoma monitoring with trusted provider', action: 'Attends annual review consistently; has recommended EyePros to two colleagues via PA', thoughts: 'I know where to go for my eyes. That question is answered.', emotion: 9, emotionLabel: 'Loyal', painPoints: ['Competing demands on his diary mean reviews are at risk of slipping'], opportunities: ['Proactive diary management for ongoing review patients'], channel: 'Email / Calendar', touchpoint: 'Annual review system', uxRec: 'Offer annual review calendar invitations directly bookable without phone contact' },
+    { stage: 'Advocacy', icon: '💬', goal: 'Recommend EyePros within his professional network', action: 'Mentions EyePros to two board-level colleagues following casual conversation about eye health', thoughts: 'I\'ve been well looked after. That\'s worth mentioning.', emotion: 9, emotionLabel: 'Advocate', painPoints: ['No formal mechanism to refer colleagues', 'EyePros has not asked him for any referral or review'], opportunities: ['Executive referral network is a premium acquisition channel', 'PMI and corporate partnership opportunities at his organisation'], channel: 'Word of mouth', touchpoint: 'Peer referral', uxRec: 'Develop a discreet executive referral programme and approach PMI HR contacts at corporate clients', isOpportunity: true },
+    { stage: 'Long-term', icon: '🌟', goal: 'Receive comprehensive whole-eye care for life', action: 'Returns for additional concerns — early cataract development noted; trusts EyePros for the full journey', thoughts: 'I\'ve got glaucoma, likely cataracts in five years, and I know where to go for both. Good.', emotion: 9, emotionLabel: 'Secured', painPoints: ['If EyePros does not proactively flag the cataract trajectory, he may go elsewhere'], opportunities: ['Whole-eye care model means he never needs to go anywhere else'], channel: 'In clinic', touchpoint: 'Annual comprehensive review', uxRec: 'Use annual reviews to comprehensively assess the whole eye — flag emerging conditions proactively' },
+  ],
+  decision: {
+    whySeeksCare: 'An optometrist finding of elevated IOP and suspicious disc appearance requires specialist assessment — he knows enough to understand this is not trivial.',
+    whyDelays: 'He is not delaying — he wants this resolved faster than the system will allow. The risk is the system slowing him down, not his own reluctance.',
+    whyPrivate: 'NHS wait, lack of consultant continuity, and the fact that he has PMI he has never used.',
+    whyEyePros: 'Fast access, PMI acceptance with handled pre-authorisation, and an appointment available within his schedule.',
+    whyCompetitor: 'If Optegra or another PMI-panel provider could offer a faster or equally fast appointment.',
+    infoThatConverts: 'Speed of appointment, confirmation that EyePros handles AXA Health pre-auth, and one clinical credential the PA can validate.',
+    ultimateConverter: 'EyePros answers the phone efficiently, confirms PMI acceptance, and offers an early-morning appointment within five working days.',
+  },
+  competitors: [
+    SHARED_COMPETITORS.newmedica('NHS-contracted, well-known in the Midlands — could appear on PMI panel.', 'EyePros is more agile, offers faster appointments, and provides a more personalised, executive-grade experience.'),
+    SHARED_COMPETITORS.optegra('National brand, multiple locations, strong PMI presence.', 'EyePros offers whole-eye care and named consultant continuity — Optegra is higher-volume and less personal.'),
+  ],
+  keyMessages: [
+    'Fast access: specialist appointment within days, not months',
+    'Complete PMI support — we handle AXA, BUPA, Vitality, and all major insurers',
+    'Comprehensive whole-eye care — one trusted provider for all conditions',
+    'Consultant-led, every time — the same specialist, consistently',
+  ],
+  contentRecommendations: ['PMI landing page with insurer logos and pre-auth process explained', 'Glaucoma suspect: what happens next (reassuring, clinical content)', '"What does elevated eye pressure mean" — SEO-optimised educational content', 'Fast-access booking page with visible availability'],
+  marketing: {
+    acquisitionPriority: 5,
+    conversionDifficulty: 'Easy',
+    lifetimeValue: 'Very High',
+    bestChannels: ['Private Medical Insurance (AXA / BUPA / Vitality)', 'Optometrist Referral', 'GP Referral', 'Google Search (urgent terms)'],
+    searchIntent: ['"glaucoma specialist Birmingham"', '"private glaucoma assessment"', '"AXA health ophthalmologist Birmingham"', '"elevated eye pressure specialist private"'],
+    socialBehaviour: {
+      platforms: ['LinkedIn', 'Email (PA-managed)'],
+      contentConsumed: ['Business and finance news', 'LinkedIn professional content — not health topics'],
+      postingHabits: 'Does not post about personal health. LinkedIn is professional-only.',
+      trustSources: ['PMI insurer approved panel list', 'GP and optometrist recommendation', 'PA research and validation', 'Executive peer referral'],
+    },
+    contentThatConverts: ['PMI landing page with insurer logos and pre-auth process explained', '"What does glaucoma suspect mean" — clinical reassurance content', 'Fast-access booking page with visible availability', 'DVLA guidance proactively addressed in all glaucoma content'],
+    emotionalTriggers: ['Fear of irreversible damage — "glaucoma" is a frightening word', 'Need for speed and control — he manages risk professionally', 'Privacy — he does not want colleagues to know'],
+    mainObjections: ['Can you see me this week, not in a month?', 'Do you handle AXA Health pre-authorisation or do I have to?', '"Is this actually serious or am I overreacting?"'],
+    messagingAngles: ['"Fast access: specialist appointment within days, not months"', '"We handle all major PMI pre-authorisations — including AXA Health and BUPA"', '"One consultant, consistent care across every appointment"'],
+    bestCTA: 'Verify Insurance',
+    leadMagnet: 'Glaucoma Checklist',
+    campaignType: ['Google Search', 'PMI Panel Listings', 'Remarketing'],
+    funnelStage: 'BOFU',
+    retentionOpportunities: ['Glaucoma Monitoring', 'Annual Reviews', 'PMI Renewal'],
+    referralOpportunities: ['GP Referral', 'Optometrist', 'Corporate (executive colleague referral)'],
+    kpis: ['PMI pre-authorisation rate', 'Time-to-appointment from first contact', 'CPL via Google Search', 'Consultation-to-monitoring conversion'],
+  },
+  conversionAction: 'PA phone call → PMI pre-auth confirmed → appointment within 5 days',
+  conversionMetric: 'PMI appointment booking rate and time from initial contact to confirmed appointment',
+  reviewDate: '31 Oct 2026',
+};
+
+const PATRICIA = {
+  id: 'patricia', initials: 'PW',
+  name: 'Patricia Walsh', age: 67,
+  role: 'Retired Community Nurse', company: 'NHS (Retired)',
+  location: 'Warwick, Warwickshire',
+  type: 'patient', category: 'DRY AMD — MONITORING',
+  subcategory: 'Reassurance-Seeking, Anxiety-High',
+  photo: 'https://images.unsplash.com/photo-1525599428495-0441bd5c67de?w=600&h=720&fit=crop&auto=format',
+  insurance: 'Self-Pay', lifestyle: 'Avid reader, quilter, regular volunteer at a local foodbank, weekly cinema',
+  family: 'Married, husband Derek who is partially sighted and uses a guide dog. Two adult children, one local.',
+  biography: 'Patricia spent 30 years as a community nurse and is acutely aware of what can go wrong when health conditions are not monitored properly. She was diagnosed with early bilateral dry AMD two years ago by her optometrist. She knows that it can progress to wet AMD — she has seen it in Derek — and the thought of losing her vision, given his, is the context for everything. She monitors her own symptoms with an Amsler grid daily and attends every review. She wants reassurance more than treatment — but wants it from someone who genuinely knows what they are looking at.',
+  oneSentenceSummary: 'A retired nurse with dry AMD who needs expert monitoring and honest, regular reassurance — her husband\'s sight loss makes her fear her own deeply.',
+  quote: '"Derek lost most of his sight waiting. I won\'t make the same mistake."',
+  clinicalGoals: ['Regular specialist monitoring of both eyes', 'Early detection of any conversion to wet AMD', 'Access to rapid treatment if wet AMD is confirmed — not a six-month referral process'],
+  lifestyleGoals: ['Preserve reading vision for as long as possible', 'Maintain independence through the decade ahead', 'Continue attending Derek at hospital appointments — she needs to remain the one who can see'],
+  emotionalGoals: ['Feel that someone expert is watching for the changes she cannot detect herself', 'Not wake at 3am wondering whether the distortion she noticed was significant', 'Be told honestly when the picture changes, without delay'],
+  emotionalDrivers: ['Terror of sight loss — her husband\'s experience makes this viscerally real, not abstract', 'Control — daily Amsler grid use reflects her clinical background and her need to be active in her own care', 'Duty — she needs to remain the sighted person in her household'],
+  decisionTriggers: ['AMD diagnosed two years ago at optometrist review', 'Husband\'s progression to wet AMD has made monitoring feel urgent', 'Optometrist suggested specialist monitoring would be more thorough than high-street reviews'],
+  personalMotivations: ['Her nursing background means she understands the disease trajectory better than most patients', 'She has seen patients wait too long — she will not be one of them'],
+  frustrations: ['High-street optometrist monitoring feels insufficient given the stakes', 'NHS wet AMD pathway requires confirmation of conversion before urgent referral — she knows what "waiting for conversion" means', 'Online AMD information is either too alarming or dismissively reassuring'],
+  nhsFrustrations: ['Dry AMD monitoring is not commissioned on NHS in her area beyond annual optometrist review', 'Wet AMD treatment pathway requires two clinical confirmations before first injection — she understands this and finds it distressing given her husband\'s experience'],
+  fears: ['Missing a conversion to wet AMD', 'A wet AMD diagnosis following a period without specialist monitoring', 'Becoming dependent on Derek at a time when he needs her'],
+  financialConcerns: ['Self-funding specialist monitoring on a fixed income requires confidence it is genuinely worthwhile', 'Annual monitoring programme pricing must be transparent and fair'],
+  informationGaps: ['Whether OCT monitoring at EyePros is genuinely more sensitive than her current optometrist\'s technology', 'What the exact conversion symptoms are and when she should call rather than wait for her review', 'Dry AMD supplements — which brand and dosage is clinically appropriate for her stage'],
+  functionalNeeds: ['Regular, defined monitoring appointments — every 6–12 months', 'OCT and fundus photography at every review', 'A direct line to call if she notices Amsler grid changes between appointments'],
+  clinicalNeeds: ['Specialist AMD assessment — retinal consultant', 'AREDS2-based supplement guidance specific to her disease stage', 'Clear protocol for rapid wet AMD referral if conversion is detected'],
+  emotionalNeeds: ['Honest communication — she will know if she is being managed rather than told the truth', 'Reassurance that must be earned, not just offered', 'Continuity — the same consultant who knows her history'],
+  communicationNeeds: ['Phone preferred for anything urgent', 'Written summary after each review — she will file it', 'No email marketing'],
+  researchHabits: 'Deep and continuous. Reads RNIB guidance, AMD Alliance resources, and Macular Society newsletters. Looks up clinical trials. Discusses findings with her husband\'s ophthalmologist when possible.',
+  techUsage: 'Comfortable with technology. Uses an iPad daily, reads extensively online. Relies on font size increase and high-contrast settings. Email comfortable.',
+  infoSources: ['Macular Society', 'RNIB', 'Optometrist', 'Her husband\'s ophthalmologist (informally)', 'EyePros website'],
+  channels: ['Phone', 'Email', 'Written letter'],
+  decisionStyle: 'Informed, cautious, and evidence-driven. She has already researched this extensively. What she needs is a specialist to confirm that EyePros\' monitoring is clinically superior to her current care.',
+  typicalQuestions: [
+    '"What imaging do you use for AMD monitoring — do you have the latest OCT technology?"',
+    '"My optometrist does annual reviews. What does a specialist review add?"',
+    '"If you detect conversion to wet AMD, how quickly can you start treatment?"',
+    '"Can I have the same consultant at every review?"',
+    '"What symptoms should make me call you between appointments?"',
+  ],
+  trustFactors: ['Specialist retinal expertise — medical retina consultant, not general ophthalmologist', 'Advanced imaging technology (OCT-A where appropriate)', 'Same-day assessment pathway if Amsler grid changes reported', 'Continuity of consultant', 'Macular Society partnership or endorsement'],
+  traits: ['Vigilant', 'Informed', 'Anxious but contained', 'Organised', 'Caring'],
+  values: ['Clinical rigour', 'Continuity', 'Honesty', 'Preparedness', 'Family duty'],
+  journey: [
+    { stage: 'Awareness', icon: '👁', goal: 'Monitor her own AMD following diagnosis', action: 'Two years post-diagnosis; optometrist reviews every six to twelve months; uses Amsler grid daily', thoughts: 'The grid is stable today. But I know that can change without warning.', emotion: 4, emotionLabel: 'Vigilant', painPoints: ['Six-to-twelve-month optometrist review feels insufficient given her clinical knowledge of AMD trajectory and family history', 'No pathway if she detects a change between scheduled reviews'], opportunities: ['Content: "Dry AMD monitoring: what the specialist can see that your optometrist cannot"', 'Enhanced monitoring frequency as a differentiator vs. standard optometrist intervals'], channel: 'Optometrist', touchpoint: 'Optometrist review', uxRec: 'Create educational content comparing optometrist and specialist AMD monitoring capabilities' },
+    { stage: 'Symptom Recognition', icon: '🔍', goal: 'Process a new optometrist finding and understand implications', action: 'Optometrist notes mild drusen progression; suggests specialist referral may be beneficial', thoughts: 'She said "mild". But I know what mild can become.', emotion: 3, emotionLabel: 'Worried', painPoints: ['Optometrist cannot give her the clinical depth she needs', '"Mild" is not reassuring when she knows the trajectory'], opportunities: ['Optometrist referral partnership — clear EyePros AMD pathway critical here'], channel: 'Optometrist', touchpoint: 'Optometrist referral letter', uxRec: 'Equip optometrist referral partners with EyePros AMD pathway information cards' },
+    { stage: 'Research', icon: '📖', goal: 'Understand what specialist AMD monitoring actually provides', action: 'Reads Macular Society guidance; looks up OCT imaging; searches EyePros website for retinal expertise', thoughts: 'I need someone with an OCT who understands what they are looking for.', emotion: 4, emotionLabel: 'Researching', painPoints: ['Hard to distinguish clinical quality of different providers from websites', 'Marketing language where she wants clinical detail'], opportunities: ['EyePros retinal expertise and imaging technology clearly communicated', 'Macular Society-aligned content builds credibility'], channel: 'Website, Macular Society', touchpoint: 'EyePros website', uxRec: 'Create a detailed AMD monitoring service page with imaging technology specifications', isOpportunity: true },
+    { stage: 'Comparison', icon: '⚖️', goal: 'Confirm EyePros has the clinical depth she needs', action: 'Calls EyePros and asks specifically about medical retina expertise and OCT capability', thoughts: 'If they can answer this properly, I am satisfied. If not, I need to look elsewhere.', emotion: 5, emotionLabel: 'Evaluating', painPoints: ['A generic or sales-oriented response will end the enquiry immediately'], opportunities: ['Clinical phone response from a knowledgeable team member converts her at this stage'], channel: 'Phone', touchpoint: 'Initial phone call', uxRec: 'Ensure clinical reception can speak to AMD monitoring capability and imaging technology' },
+    { stage: 'Referral', icon: '📋', goal: 'Receive a formal referral into specialist care', action: 'Optometrist writes referral; Patricia books initial AMD assessment at EyePros', thoughts: 'Right. Let\'s get a proper baseline.', emotion: 6, emotionLabel: 'Committed', painPoints: ['Referral process bureaucracy delays reassurance she needs now'], opportunities: ['Fast-track booking from optometrist referral', 'AMD monitoring programme clearly described at booking'], channel: 'Phone', touchpoint: 'Appointment booking', uxRec: 'Offer rapid AMD assessment from optometrist referral within two weeks' },
+    { stage: 'Payment Decision', icon: '💳', goal: 'Understand AMD monitoring costs and confirm they are worth it', action: 'Reviews annual monitoring programme pricing; confirms what is included at each review', thoughts: 'If it means early detection and rapid treatment, it is worth every pound.', emotion: 5, emotionLabel: 'Practical', painPoints: ['Fixed income makes unexpected additional costs difficult', 'Unclear what is included at each review creates budget anxiety'], opportunities: ['Clear annual monitoring package pricing with everything listed converts her'], channel: 'Phone / Email', touchpoint: 'Service pricing guide', uxRec: 'Publish a clear AMD monitoring programme price list with detailed inclusions' },
+    { stage: 'Booking', icon: '📅', goal: 'Confirm first specialist AMD assessment', action: 'Books appointment; receives written confirmation with a description of what the appointment will involve', thoughts: 'Good. I know what to expect. I just need to get through the first one.', emotion: 6, emotionLabel: 'Prepared', painPoints: ['Uncertainty about what to expect at first appointment creates anxiety'], opportunities: ['Pre-appointment information letter reduces anxiety significantly for this persona'], channel: 'Letter', touchpoint: 'Pre-appointment letter', uxRec: 'Send a detailed pre-appointment guide for AMD assessments — what to expect, how long, what imaging' },
+    { stage: 'Consultation', icon: '🩺', goal: 'Receive a comprehensive AMD assessment with clinical honesty', action: 'OCT, fundus photography, and macular function assessment; consultant explains findings clearly; stable confirmed', thoughts: 'He was honest and specific. That\'s all I needed.', emotion: 8, emotionLabel: 'Reassured', painPoints: ['Any vagueness or false reassurance would reduce her trust permanently'], opportunities: ['An excellent consultation here creates a lifelong monitoring patient and word-of-mouth advocate'], channel: 'In clinic', touchpoint: 'AMD specialist consultation', uxRec: 'AMD consultations must be led by a medical retina specialist with full imaging capability', isOpportunity: true },
+    { stage: 'Diagnosis', icon: '📊', goal: 'Understand her current status and what it means', action: 'Diagnosis confirmed as intermediate dry AMD bilateral; AREDS2 supplementation recommended; review in six months', thoughts: 'Intermediate, not advanced. Six months. AREDS2 — I already knew about that.', emotion: 6, emotionLabel: 'Processing', painPoints: ['The word "intermediate" is more alarming than the consultant intended', 'Needs supplement guidance to be specific — brand and dose'], opportunities: ['AREDS2 guidance handout as part of consultation increases confidence in care quality'], channel: 'Written summary', touchpoint: 'Post-consultation written summary', uxRec: 'Include specific AREDS2 supplement guidance with brand recommendations in AMD consultation letters' },
+    { stage: 'Treatment Planning', icon: '🗓', goal: 'Begin supplement regime and confirm monitoring schedule', action: 'Starts AREDS2 supplements; six-month review booked; given direct number to call if Amsler grid changes', thoughts: 'I know what I\'m doing, I know who to call, and I know when to come back. That is enough.', emotion: 7, emotionLabel: 'Settled', painPoints: ['Without a direct clinical contact, she would call 111 at the first sign of change'], opportunities: ['A direct urgency line for AMD monitoring patients is an extremely high-value feature'], channel: 'Direct phone number', touchpoint: 'Urgency contact provision', uxRec: 'Provide all AMD monitoring patients with a direct line for urgent Amsler grid change queries', isOpportunity: true },
+    { stage: 'Monitoring', icon: '🔬', goal: 'Maintain six-monthly specialist review consistently', action: 'Attends six-monthly review; imaging repeated; stable confirmed; continues programme', thoughts: 'Stable again. Six more months of certainty.', emotion: 8, emotionLabel: 'Secure', painPoints: ['Review appointment reminder not received — she would attend anyway, but anxiety fills the gap'], opportunities: ['Proactive six-month recall is essential for AMD programme retention'], channel: 'Letter / Phone', touchpoint: 'Six-monthly recall', uxRec: 'Implement a proactive AMD recall programme with letters and phone backup' },
+    { stage: 'Treatment', icon: '💊', goal: 'Maintain supplement regime and lifestyle adjustments', action: 'Continues AREDS2 supplements; monitors daily; attends all reviews; no conversion detected', thoughts: 'Every stable review is a victory. Derek understands that more than anyone.', emotion: 8, emotionLabel: 'Disciplined', painPoints: ['Supplements are a daily reminder of her condition'], opportunities: ['AMD patient community connection (Macular Society events) can be facilitated by EyePros'], channel: 'Home', touchpoint: 'Supplement regime', uxRec: 'Facilitate connection to AMD patient support networks for long-term monitoring patients' },
+    { stage: 'Recovery', icon: '✅', goal: 'Maintain stable dry AMD long-term', action: 'Five-year monitoring programme; no conversion; has recommended EyePros to her husband\'s retinal consultant', thoughts: 'Five years stable. Derek lost his central vision in the second year of his. I will not accept that.', emotion: 9, emotionLabel: 'Grateful', painPoints: ['Complacency risk over time if reviews always show stability'], opportunities: ['Long-term stable patients are the most powerful AMD advocacy voice available'], channel: 'In clinic', touchpoint: 'Long-term monitoring programme', uxRec: 'Acknowledge and celebrate milestones with long-term monitoring patients' },
+    { stage: 'Aftercare', icon: '🌟', goal: 'Remain securely connected to specialist care for life', action: 'Annual comprehensive eye health review; whole-eye assessment; proactively engaged', thoughts: 'I know where I am, who is watching, and what will happen if anything changes.', emotion: 9, emotionLabel: 'At peace', painPoints: ['Transition in clinical team without communication would cause significant anxiety'], opportunities: ['Whole-eye annual review at year 5+ builds a lifetime relationship', 'Testimonial request at year 2 anniversary — she will say yes'], channel: 'In clinic', touchpoint: 'Annual comprehensive review', uxRec: 'Conduct a whole-eye review annually alongside AMD monitoring for long-term patients' },
+    { stage: 'Advocacy', icon: '💬', goal: 'Recommend EyePros to others facing AMD diagnosis', action: 'Recommends EyePros to three members of her optometrist\'s waiting room; contributes to Macular Society forum', thoughts: 'If I can stop one person going through what Derek went through, that is worth something.', emotion: 9, emotionLabel: 'Ambassador', painPoints: ['EyePros has not provided any mechanism for her to formally refer others', 'No testimonial has been requested in five years'], opportunities: ['Patricia is an exceptional testimonial voice — her story is powerful and clinical', 'AMD patient referral network for monitoring programme enrolment'], channel: 'Word of mouth, online forum', touchpoint: 'Testimonial request / referral programme', uxRec: 'Build a formal AMD patient advocacy programme — request testimonials at annual review', isOpportunity: true },
+  ],
+  decision: {
+    whySeeksCare: 'Dry AMD diagnosed two years ago is progressing. Optometrist monitoring feels insufficient given her clinical knowledge of disease trajectory and her husband\'s experience of wet AMD.',
+    whyDelays: 'She has not delayed — she is actively seeking more specialist care. The risk is that she chooses a competitor with better AMD credentials visible on their website.',
+    whyPrivate: 'NHS dry AMD monitoring is not commissioned in her area beyond annual optometrist review. The urgency of specialist oversight requires private access.',
+    whyEyePros: 'Medical retina specialist with OCT capability, a rapid wet AMD conversion pathway, and clinical communication that treats her as the informed professional she is.',
+    whyCompetitor: 'Any medical retina specialist practice with visible clinical credentials and OCT capability — credibility signalling is the conversion lever, not price.',
+    infoThatConverts: 'A clear description of EyePros\' OCT technology, medical retina specialist credentials, and the rapid wet AMD conversion pathway.',
+    ultimateConverter: 'A phone call from a knowledgeable clinical team member who can explain the difference between what her optometrist offers and what a specialist review provides.',
+  },
+  competitors: [
+    SHARED_COMPETITORS.newmedica('Midlands presence and NHS association gives credibility to cautious patients.', 'EyePros offers genuinely faster conversion pathway and more specialist monitoring intensity.'),
+    { name: 'OCL Vision', whyConsider: 'Medical retina reputation and national profile.', whyEyeProsWins: 'EyePros is local (Midlands), offers same-day Amsler urgency line, and provides whole-eye care within one practice.' },
+  ],
+  keyMessages: [
+    'Specialist AMD monitoring — not high-street optometry',
+    'Same consultant at every review — someone who knows your baseline',
+    'If anything changes, we can act the same week — not in six months',
+    'Dry AMD to wet AMD: we are watching for it so you do not have to worry alone',
+  ],
+  contentRecommendations: ['AMD monitoring service page with OCT imaging details', 'Content: "Dry AMD and what specialist monitoring adds"', 'Macular Society-aligned information and supplement guidance', 'Patient story: AMD patient testimonial — reassurance focus'],
+  marketing: {
+    acquisitionPriority: 4,
+    conversionDifficulty: 'Medium',
+    lifetimeValue: 'High',
+    bestChannels: ['Optometrist Referral', 'SEO', 'Facebook (65+ audience)', 'Macular Society partnership', 'Email'],
+    searchIntent: ['"dry AMD specialist Midlands"', '"AMD monitoring programme private"', '"macular degeneration specialist near me"', '"OCT scan macular degeneration"'],
+    socialBehaviour: {
+      platforms: ['Facebook (passive, does not post)', 'iPad / Email', 'Macular Society forum'],
+      contentConsumed: ['Patient community discussions (Macular Society)', 'RNIB health news', 'NHS and charity-sector health articles'],
+      postingHabits: 'Reads extensively, does not comment or share publicly. Highly private about her own condition.',
+      trustSources: ['Macular Society', 'RNIB', 'Optometrist recommendation', 'Clinical charity organisations'],
+    },
+    contentThatConverts: ['"What specialist AMD monitoring adds beyond your optometrist" — educational article', 'AMD patient testimonials with monitoring focus', 'OCT imaging technology explained in plain language', 'AREDS2 supplement guidance content'],
+    emotionalTriggers: ['Fear of following her husband\'s path to wet AMD and vision loss', 'Need for expert reassurance that is earned, not performed', 'Duty to remain the capable, sighted person in her household'],
+    mainObjections: ['Is specialist monitoring genuinely better than my optometrist?', 'Can I afford it on a fixed income?', 'Will it be the same consultant at every review?'],
+    messagingAngles: ['"Specialist AMD monitoring — not high-street optometry"', '"The same consultant at every review — someone who knows your personal baseline"', '"If anything changes, we can act the same week — not in six months"'],
+    bestCTA: 'Book Assessment',
+    leadMagnet: 'Dry Eye Guide',
+    campaignType: ['SEO', 'Facebook', 'Referral Network', 'Email'],
+    funnelStage: 'MOFU',
+    retentionOpportunities: ['AMD Monitoring', 'Annual Reviews'],
+    referralOpportunities: ['Optometrist', 'Family Referral'],
+    kpis: ['AMD programme enrolment rate', 'Monitoring appointment attendance rate', 'Optometrist referral volume', 'CPL from Facebook (65+ audience)'],
+  },
+  conversionAction: 'Phone enquiry → clinical explanation of monitoring capability → appointment booked',
+  conversionMetric: 'AMD monitoring programme enrolment rate from optometrist referral',
+  reviewDate: '30 Sep 2026',
+};
+
+const GEORGE = {
+  id: 'george', initials: 'GO',
+  name: 'George Okafor', age: 63,
+  role: 'Self-Employed Accountant', company: 'Okafor & Associates',
+  location: 'Clarendon Park, Leicester',
+  type: 'patient', category: 'WET AMD — URGENT REFERRAL',
+  subcategory: 'Time-Sensitive, High Anxiety',
+  photo: 'https://images.unsplash.com/photo-1617244147299-5ef406921c35?w=600&h=720&fit=crop&auto=format',
+  insurance: 'Self-Pay (no PMI)', lifestyle: 'Drives a Volvo XC60, keen on cricket, weekend allotment, church elder',
+  family: 'Married 35 years. Wife Grace is retired and manages the household. Three grown children, two in Leicester.',
+  biography: 'George runs a small accountancy firm from his home office and lives a full, structured life. He noticed a distortion in the centre of his vision last Tuesday while reviewing client spreadsheets — described it as "a bent line where there should be a straight one." His optometrist saw him within two hours and referred him urgently, using the word "possible wet AMD." He does not fully understand what that means but Grace has already researched it and is frightened. George needs rapid specialist assessment more than he needs anything else right now.',
+  oneSentenceSummary: 'An urgent wet AMD referral who is calm externally but frightened internally — speed of specialist access is everything.',
+  quote: '"Grace found out what wet AMD can do. I need someone to tell me I got here in time."',
+  clinicalGoals: ['Urgent specialist assessment to confirm or exclude wet AMD', 'Rapid initiation of anti-VEGF treatment if confirmed', 'Clear explanation of prognosis and what treatment can achieve'],
+  lifestyleGoals: ['Preserve central vision sufficient for spreadsheet work — his business depends on it', 'Continue driving, attending cricket, reading church documents', 'Protect the left eye — the right is already affected'],
+  emotionalGoals: ['Be seen quickly enough that treatment can be effective', 'Have Grace\'s fear addressed honestly and directly', 'Understand what the best outcome looks like so he can aim for it'],
+  emotionalDrivers: ['Fear of permanent central vision loss — he depends on his eyes for his livelihood', 'Love — Grace\'s distress is its own burden', 'Urgency — he knows from what the optometrist said that speed matters here'],
+  decisionTriggers: ['Sudden visual distortion in the right eye while working', 'Optometrist urgent referral with the phrase "possible wet AMD"', 'Grace\'s online research has confirmed the urgency'],
+  personalMotivations: ['He has worked too hard for thirty years to lose the ability to run his practice', 'He will pay for rapid access — this is the first time in his life he has needed private healthcare urgently'],
+  frustrations: ['NHS urgent wet AMD pathway described by optometrist as "a few weeks for a first appointment"', 'Cannot get clarity on timeline without ringing multiple numbers', 'Grace is managing his anxiety and her own simultaneously — both of them need clarity fast'],
+  nhsFrustrations: ['NHS fast-track wet AMD referral can take several weeks from GP referral to treatment initiation', 'Given wet AMD can cause irreversible central vision loss within weeks, this timeline is clinically dangerous', 'No named consultant — would see whoever is available'],
+  fears: ['Irreversible central vision loss before treatment begins', 'Being told it is too late for optimal outcomes', 'Losing the ability to work as an accountant — financial security depends on his vision'],
+  financialConcerns: ['Cost is secondary to speed — he will spend what is required', 'But wants transparency on injection costs and likely number of treatments before committing'],
+  informationGaps: ['What anti-VEGF treatment involves and whether it restores or only preserves vision', 'Whether his NHS entitlement changes if he starts privately', 'How many injections are typically required and at what frequency'],
+  functionalNeeds: ['Same-day or next-day urgent appointment', 'Clear explanation of what will happen at the assessment', 'Reassurance for Grace as well as himself'],
+  clinicalNeeds: ['Urgent OCT and fluorescein angiography or OCT-A', 'Same-day initiation of anti-VEGF if wet AMD confirmed — faricimab (Vabysmo) preferred for extended treatment intervals where clinically appropriate', 'Clear prognosis communication based on imaging'],
+  emotionalNeeds: ['Honest, direct communication from the first phone call', 'Speed that matches the urgency — waiting a week is not acceptable', 'Grace included in the consultation if she wishes to attend'],
+  communicationNeeds: ['Phone — urgent, today', 'Email confirmation immediately following any booking', 'Include Grace in communications if requested'],
+  researchHabits: 'Not a researcher — Grace is doing this. She has read NHS Choices, Macular Society, and multiple private clinic websites in the last 24 hours.',
+  techUsage: 'Uses email and spreadsheets professionally. Comfortable online but does not browse health content independently.',
+  infoSources: ['Grace\'s research (primary)', 'Optometrist referral letter', 'EyePros website (Grace will have read it)'],
+  channels: ['Phone — urgent today', 'Email'],
+  decisionStyle: 'Urgency overrides deliberation. He will book with whoever can see him fastest and answer his questions clearly. The decision is made in minutes, not days.',
+  typicalQuestions: [
+    '"Can you see me today or tomorrow — the optometrist said this was urgent."',
+    '"Is there any chance this is not wet AMD?"',
+    '"If it is wet AMD, can you start treatment at the same appointment?"',
+    '"What is the best outcome I can hope for at this stage?"',
+    '"How many injections will I need and what does each one cost?"',
+  ],
+  trustFactors: ['Same-day or next-day appointment availability', 'Medical retina specialist with wet AMD treatment capability', 'Clear urgent access pathway — not a routine booking process', 'Honest communication about prognosis', 'Ability to initiate treatment at first appointment'],
+  traits: ['Calm exterior', 'Deeply concerned', 'Family-first', 'Decisive under pressure', 'Trusting'],
+  values: ['Speed', 'Honesty', 'Family security', 'Clinical expertise', 'Dignity'],
+  journey: [
+    { stage: 'Awareness', icon: '⚠️', goal: 'Understand an alarming visual change', action: 'Notices central distortion on Tuesday morning; calls optometrist immediately', thoughts: 'Something is wrong. This is not normal.', emotion: 3, emotionLabel: 'Alarmed', painPoints: ['No context for the symptom', 'Fear arrives before information'], opportunities: ['Optometrist is the critical referral partner for urgent wet AMD cases'], channel: 'Own observation', touchpoint: 'None yet', uxRec: 'Educate referring optometrists on EyePros\' same-day urgent AMD pathway' },
+    { stage: 'Symptom Recognition', icon: '🚨', goal: 'Get clinical context for the distortion', action: 'Optometrist appointment same day; OCT imaging suggests choroidal neovascularisation; urgent referral written', thoughts: '"Possible wet AMD." Grace looked at me and I knew she already knew what that meant.', emotion: 2, emotionLabel: 'Frightened', painPoints: ['Optometrist confirms urgency but cannot treat', 'NHS fast-track described as "a few weeks" — feels unacceptable'], opportunities: ['EyePros urgent AMD referral pathway is the critical value proposition here', 'If optometrist has EyePros on speed dial, George is seen by tomorrow'], channel: 'Optometrist', touchpoint: 'Urgent optometrist referral', uxRec: 'Establish a same-day urgent AMD clinical pathway with referring optometrists — a direct phone number they can call', isOpportunity: true },
+    { stage: 'Research', icon: '📱', goal: 'Find the fastest route to specialist treatment', action: 'Grace searches "private wet AMD treatment Birmingham Leicester" and finds EyePros; reads urgency pathway page', thoughts: '"EyePros says same-day assessment for urgent cases. That\'s what we need."', emotion: 4, emotionLabel: 'Searching urgently', painPoints: ['If EyePros website does not clearly advertise urgent AMD access, they will call elsewhere'], opportunities: ['A specific "Urgent AMD Assessment" page with same-day pathway is a critical conversion page'], channel: 'Website (Grace)', touchpoint: 'EyePros urgent AMD page', uxRec: 'Create a dedicated urgent AMD page with a direct clinical phone number and same-day pathway description', isOpportunity: true },
+    { stage: 'Comparison', icon: '⚖️', goal: 'Confirm EyePros can see him fast and treat immediately if confirmed', action: 'Grace calls two providers; EyePros answers and offers same-day assessment; competitor offers "earliest routine appointment next week"', thoughts: '"They can see you today." That was the sentence. That was the decision.', emotion: 5, emotionLabel: 'Focused', painPoints: ['Any "call you back" or "earliest available is..." loses this patient immediately'], opportunities: ['Same-day urgent access is not just a feature — for this persona, it is the entire brand'], channel: 'Phone', touchpoint: 'Initial urgent call', uxRec: 'Ensure urgent AMD calls are handled with immediate clinical assessment booking, not standard booking process' },
+    { stage: 'Payment Decision', icon: '💳', goal: 'Understand the cost structure quickly and commit', action: 'Grace asks for cost of assessment and treatment; EyePros provides clear same-day pricing transparency', thoughts: '"We can afford this. We cannot afford not to."', emotion: 5, emotionLabel: 'Resolute', painPoints: ['Complex pricing conversation would slow the booking when speed is everything', 'Hidden costs discovered later would damage trust severely'], opportunities: ['Transparent, simple pricing at booking converts this persona instantly'], channel: 'Phone', touchpoint: 'Cost confirmation call', uxRec: 'Develop a transparent urgent AMD pricing guide that can be communicated on the initial call' },
+    { stage: 'Booking', icon: '📅', goal: 'Confirm same-day assessment', action: 'Same-day appointment confirmed; Grace and George drive to EyePros together', thoughts: '"We\'re going. Right now."', emotion: 6, emotionLabel: 'Purposeful', painPoints: ['Any delay beyond same-day creates significant anxiety escalation'], opportunities: ['Same-day booking experience is the single most powerful EyePros differentiator for this case'], channel: 'Phone', touchpoint: 'Same-day appointment confirmation', uxRec: 'Maintain a genuinely available same-day pathway for urgent AMD referrals — protect this capacity' },
+    { stage: 'Consultation', icon: '🩺', goal: 'Receive definitive diagnosis and understand prognosis', action: 'OCT-A and imaging confirm active wet AMD; consultant explains clearly what this means; anti-VEGF initiated same visit', thoughts: '"It\'s confirmed. But we caught it early. He said \'early\'. I held Grace\'s hand."', emotion: 7, emotionLabel: 'Relieved but processing', painPoints: ['Diagnosis is frightening even when caught early', 'Grace needs to be included fully — she arrived with detailed questions'], opportunities: ['Including Grace in the consultation is a simple, powerful care quality differentiator'], channel: 'In clinic', touchpoint: 'Specialist consultation', uxRec: 'Actively invite accompanying family members into AMD consultations — their anxiety must be addressed too', isOpportunity: true },
+    { stage: 'Diagnosis', icon: '📊', goal: 'Understand staging and what treatment can achieve', action: 'Active wet AMD confirmed; good central vision preserved at presentation; prognosis with treatment described as positive', thoughts: '"Early enough that treatment should work well. Those were the words I needed."', emotion: 6, emotionLabel: 'Cautiously hopeful', painPoints: ['The gap between "can work" and "will work" is where anxiety lives', 'Needs specific, grounded prognosis — not false reassurance'], opportunities: ['Evidence-based prognosis communication builds lasting trust'], channel: 'Consultation + written summary', touchpoint: 'Diagnosis letter', uxRec: 'Provide a written post-diagnosis summary with prognosis expressed in plain, evidence-based language' },
+    { stage: 'Treatment Planning', icon: '🗓', goal: 'Understand the injection regime and plan around it', action: 'Loading dose of 3 monthly injections explained; diary arranged around clinic appointments; cost per injection confirmed', thoughts: '"Monthly for three months, then we review. I can plan around that."', emotion: 7, emotionLabel: 'Committed', painPoints: ['Monthly injections are a significant logistical and emotional commitment', 'Business disruption from monthly clinic visits is a real concern'], opportunities: ['Flexible scheduling and early-morning injection slots are a genuine practical differentiator'], channel: 'In clinic / Email', touchpoint: 'Treatment planning appointment', uxRec: 'Offer early-morning or lunchtime injection slots for working and self-employed patients' },
+    { stage: 'Treatment', icon: '💉', goal: 'Complete loading dose and begin monitoring', action: 'Three monthly anti-VEGF injections; vision stable; imaging showing treatment response', thoughts: '"Each injection is buying me more time. More work. More cricket."', emotion: 7, emotionLabel: 'Trusting', painPoints: ['Injection anxiety — manageable but present', 'Uncertainty about response between appointments'], opportunities: ['Brief post-injection phone check-in at 24 hours is a high-value care quality touch'], channel: 'In clinic', touchpoint: 'Injection series', uxRec: 'Implement a 24-hour post-injection follow-up call to confirm tolerability and symptom stability' },
+    { stage: 'Recovery', icon: '🌅', goal: 'Experience vision stabilisation and understand ongoing regime', action: 'Three-month OCT review confirms treatment response; ongoing injections on treat-and-extend protocol', thoughts: '"Response confirmed. This is going to be a long-term commitment. Fine. I can do long-term."', emotion: 8, emotionLabel: 'Settling', painPoints: ['Ongoing injection regime is a significant long-term commitment', 'Worry about what happens when he cannot afford to continue'], opportunities: ['Cost certainty and treatment planning support builds loyalty in long-term injection patients'], channel: 'In clinic', touchpoint: 'Three-month review', uxRec: 'Provide annual cost projection for treat-and-extend patients to support financial planning' },
+    { stage: 'Aftercare', icon: '✅', goal: 'Maintain treatment response and protect both eyes', action: 'Bimonthly injection on treat-and-extend; left eye monitored at every visit; Grace attends most appointments', thoughts: '"Central vision preserved. I can still read the ledgers. I can still drive."', emotion: 8, emotionLabel: 'Grateful', painPoints: ['Left eye monitoring — the anxiety never fully goes away', 'Grace\'s continued worry is managed but present'], opportunities: ['Proactive left eye monitoring within every visit is a care quality differentiator that Grace particularly values'], channel: 'In clinic', touchpoint: 'Ongoing injection programme', uxRec: 'Provide a brief written update on the contralateral eye at every injection appointment' },
+    { stage: 'Monitoring', icon: '📆', goal: 'Maintain long-term treatment engagement and eye health', action: 'Annual comprehensive eye health review; ongoing treat-and-extend; no further conversion in left eye', thoughts: '"Three years stable. Three years still running the firm."', emotion: 9, emotionLabel: 'Secure', painPoints: ['Change of consultant would require careful transition management', 'Any suggestion of discontinuing monitoring would cause significant anxiety'], opportunities: ['Long-term injection patients are extremely high lifetime value', 'George\'s story (urgent referral, early treatment, preserved vision) is a powerful case study'], channel: 'In clinic', touchpoint: 'Annual comprehensive review', uxRec: 'Maintain consistent named-consultant care for long-term injection patients across the lifetime of the relationship' },
+    { stage: 'Advocacy', icon: '💬', goal: 'Share his experience with others who face the same urgency', action: 'Recommends EyePros to two church members with visual concerns; Google review left; asked at optometrist waiting room', thoughts: '"If one person reads what I wrote and calls them instead of waiting, it was worth the ten minutes."', emotion: 9, emotionLabel: 'Ambassador', painPoints: ['No one has asked him for a review in three years of treatment'], opportunities: ['George\'s story — urgent referral, preserved vision — is among the most powerful AMD testimonials available'], channel: 'Word of mouth, Google', touchpoint: 'Testimonial request', uxRec: 'At the two-year anniversary of successful treatment, request a written testimonial — his story saves other eyes', isOpportunity: true },
+    { stage: 'Long-term', icon: '🌟', goal: 'Maintain long-term eye health with a trusted provider', action: 'Annual review; discusses any new symptoms proactively; refers two additional wet AMD cases from his network', thoughts: '"EyePros is where I go for my eyes. That\'s settled."', emotion: 9, emotionLabel: 'Anchored', painPoints: ['Change in clinical team without proactive communication would unsettle him'], opportunities: ['George is both a clinical case and a referral source — manage both aspects of the relationship intentionally'], channel: 'In clinic', touchpoint: 'Long-term review', uxRec: 'Develop a patient network awareness programme — encourage long-term patients to share urgent AMD information' },
+  ],
+  decision: {
+    whySeeksCare: 'Sudden central vision distortion — optometrist confirmed urgency and referred same day.',
+    whyDelays: 'He is not delaying. The risk is systemic delay — NHS fast-track or EyePros slow access could cost him irreversible vision loss.',
+    whyPrivate: 'NHS wet AMD fast-track described as "a few weeks" — clinically unacceptable for active choroidal neovascularisation.',
+    whyEyePros: 'Same-day urgent assessment, medical retina specialist, and ability to initiate treatment at first appointment.',
+    whyCompetitor: 'Any specialist who can see him today. Speed, not brand, is the decision driver.',
+    infoThatConverts: 'A phone call confirming same-day assessment capability and an honest prognosis conversation once imaging is available.',
+    ultimateConverter: '"We can see you today at 2pm." Nothing else comes close.',
+  },
+  competitors: [
+    SHARED_COMPETITORS.newmedica('NHS-contracted, known for eye care in the Midlands.', 'EyePros offers faster access and same-day urgent pathway — Newmedica is not structured for this level of urgency.'),
+    { name: 'Any local ophthalmologist with same-day capacity', whyConsider: 'Speed is the only criterion at this stage.', whyEyeProsWins: 'EyePros must win on speed — if they cannot offer same-day, they will lose this patient to anyone who can.' },
+  ],
+  keyMessages: [
+    'Wet AMD requires rapid assessment — we can see you today',
+    'Treatment at the same appointment as diagnosis where clinically appropriate',
+    'Medical retina specialist — this is what we do',
+    'Comprehensive eye care: we will protect both eyes, not just the one affected',
+  ],
+  contentRecommendations: ['Dedicated urgent AMD page with same-day pathway prominently featured', 'Content: "Sudden vision distortion — what to do now"', '"Wet AMD and time to treatment — why private access matters"', 'Optometrist urgent referral card with direct clinical phone number'],
+  marketing: {
+    acquisitionPriority: 5,
+    conversionDifficulty: 'Easy',
+    lifetimeValue: 'Very High',
+    bestChannels: ['Google Search (urgent AMD terms)', 'Optometrist Urgent Referral (direct line)', 'Phone (Grace calls)', 'SEO'],
+    searchIntent: ['"private wet AMD treatment Birmingham"', '"urgent AMD specialist near me"', '"anti-VEGF injection private UK"', '"same day eye emergency"', '"wet AMD treatment time"'],
+    socialBehaviour: {
+      platforms: ['None personally — Grace uses Google and NHS Choices'],
+      contentConsumed: ['N/A — George does not research; Grace does'],
+      postingHabits: 'Not active on social media for health topics.',
+      trustSources: ['Optometrist urgent referral', 'EyePros website urgency pathway clarity', 'Phone response speed and quality'],
+    },
+    contentThatConverts: ['Dedicated "Urgent AMD Assessment" page with same-day pathway prominently featured', 'Direct clinical phone number at every touchpoint', 'Anti-VEGF treatment explainer in plain language', '"Wet AMD — why time to treatment matters" content'],
+    emotionalTriggers: ['Terror of permanent central vision loss before treatment begins', 'Acute urgency — the optometrist said speed matters', 'Family — Grace\'s distress and his responsibility to his business'],
+    mainObjections: ['Can you see me today or tomorrow?', 'How much will the full course of injections cost?'],
+    messagingAngles: ['"Same-day urgent assessment for suspected wet AMD"', '"Anti-VEGF treatment initiated at first appointment where confirmed"', '"Transparent cost per injection — no surprises across the full treatment course"'],
+    bestCTA: 'Call Today',
+    leadMagnet: 'N/A — urgency-driven, not content-led',
+    campaignType: ['Google Search (urgent terms)', 'Optometrist Partnership', 'Remarketing'],
+    funnelStage: 'BOFU',
+    retentionOpportunities: ['AMD Monitoring', 'Annual Reviews'],
+    referralOpportunities: ['Optometrist', 'Family Referral (first-degree relatives at higher AMD risk)'],
+    kpis: ['Time-to-assessment from initial call', 'Same-day assessment rate', 'Treatment initiation rate at first appointment', 'Optometrist urgent referral volume per month'],
+  },
+  conversionAction: 'Same-day phone call → urgent appointment confirmed → treatment initiated at first visit',
+  conversionMetric: 'Time from initial contact to first treatment for wet AMD urgent cases',
+  reviewDate: '30 Sep 2026',
+};
+
+const VIVIENNE = {
+  id: 'vivienne', initials: 'VC',
+  name: 'Vivienne Clarke', age: 51,
+  role: 'HR Director', company: 'Regional Housing Association',
+  location: 'Earlsdon, Coventry',
+  type: 'patient', category: 'DRY EYE + PREMIUM LENS',
+  subcategory: 'Lifestyle-Driven, Research-Led',
+  photo: 'assets/vivienne.png',
+  insurance: 'Self-Pay', lifestyle: 'Yoga three times a week, screens all day, theatre subscriber, regular traveller, reading glasses everywhere',
+  family: 'Divorced, two teenagers at home. Mother nearby. Close friend group.',
+  biography: 'Vivienne manages HR for a 700-person organisation and spends most of her working day on screens. She has dry eye symptoms that have worsened significantly over the past two years — "gritty, tired, burning by 3pm" — and has tried three brands of lubricant drops without meaningful relief. She also wears reading glasses for everything — her handbag, desk, car, and theatre bag all contain a pair. She is fifty-one, her mother had lens replacement surgery last year, and she has started looking into whether there is a single procedure that could address both problems. She is an exceptional researcher and will read everything EyePros publishes.',
+  oneSentenceSummary: 'A high-screen HR director with dry eye and presbyopia who is researching lens replacement and wants honest, complete information before making any decision.',
+  quote: '"I want to understand every option fully before I pick up the phone. Don\'t give me a brochure. Give me clinical information."',
+  clinicalGoals: ['Understand whether lens replacement is appropriate for her at 51', 'Get a proper dry eye diagnosis and treatment plan — not another drop recommendation', 'Assess premium IOL options that reduce or eliminate reading glasses'],
+  lifestyleGoals: ['Theatre without reaching for her glasses bag mid-programme', 'Screen work without 3pm burning and blurring', 'Travel without worrying about packing three pairs of readers'],
+  emotionalGoals: ['Feel intelligent and respected in the consultation — not sold to', 'Understand the real risks and trade-offs clearly before deciding', 'Know that this is genuinely the right time — not too early, not too late'],
+  emotionalDrivers: ['Independence and competence — dry eye and reading glasses make her feel less capable than she is', 'Her mother\'s positive lens replacement outcome has normalised the decision', 'She has researched this for a year — she is ready but needs clinical confirmation'],
+  decisionTriggers: ['Mother\'s lens replacement outcome exceeded expectations', 'Dry eye symptoms worsening despite drops — she knows simple lubrication is not the answer', 'A colleague who had similar work described the entire procedure to her over lunch'],
+  personalMotivations: ['She is the kind of person who researches decisions thoroughly and acts on evidence', 'She will not pay £7,500 for something unless she is completely confident — and she is almost completely confident'],
+  frustrations: ['Clinics that present options as a menu without explaining suitability criteria', 'Websites that describe procedures without clinical depth', 'Dry eye "managed" by optometrists offering only lubricant drops — she suspects she needs meibomian gland treatment'],
+  nhsFrustrations: ['NHS does not fund lens replacement for presbyopia — she knows this', 'NHS dry eye management is not sufficiently advanced for her level of symptoms'],
+  fears: ['Getting the IOL choice wrong — the decision is permanent', 'Dry eye worsening after lens replacement surgery', 'Being told she is too young or not a suitable candidate after all this research'],
+  financialConcerns: ['£7,500+ is significant and must represent real value', 'Complete pricing transparency required — she will not pay hidden facility or follow-up fees', 'Wants to understand the total cost including all visits, not just the surgery fee'],
+  informationGaps: ['Which premium IOL is clinically optimal for a person with dry eye and desk work', 'Whether her dry eye needs treating before lens replacement surgery', 'What the procedure involves day by day — she wants the detail, not the headline'],
+  functionalNeeds: ['Comprehensive dry eye investigation before any lens replacement discussion', 'Written IOL comparison guide suitable for a research-oriented patient', 'A consultation that explores her lifestyle comprehensively before making a recommendation'],
+  clinicalNeeds: ['Staged approach — dry eye stabilisation (IPL/MGD treatment) prior to biometry and RLE; minimum 3-month stable tear film before proceeding', 'Dry eye investigation — meibomian gland assessment and tear film analysis', 'Lens replacement assessment — biometry and IOL power calculation', 'IOL recommendation based on her specific visual profile and lifestyle'],
+  emotionalNeeds: ['Treated as an intelligent adult who has done her research', 'Honesty about the limitations and risks of premium IOLs', 'Sufficient consultation time — she will have questions'],
+  communicationNeeds: ['Email preferred for information-rich content', 'Can use online booking for non-urgent enquiries', 'Detailed written confirmation and pre-consultation information'],
+  researchHabits: 'Exceptional. Has read NICE guidance, College of Optometrists dry eye publications, multiple IOL manufacturer websites, and three years of EyePros social media. Saves articles, creates comparison documents.',
+  techUsage: 'Heavy, professional user. Lives on Teams and Outlook. Active Instagram and LinkedIn. Saves content extensively. Will read every word of EyePros\' website before contacting them.',
+  infoSources: ['EyePros website (extensively)', 'Instagram (saves)', 'College of Optometrists guidance', 'NICE guidance', 'Mother\'s experience'],
+  channels: ['Instagram (saves)', 'Google', 'Email', 'Online booking'],
+  decisionStyle: 'Research-complete before first contact. By the time she calls, she has already decided — she just needs clinical confirmation and a consultation she feels respected within.',
+  typicalQuestions: [
+    '"Should dry eye be treated before lens replacement — and does EyePros manage that within the same care pathway?"',
+    '"Which premium IOL works best for someone who spends 9 hours a day on screens?"',
+    '"What are the real risks of premium IOLs — halos, glare — and how common are they in practice?"',
+    '"Is 51 the right age for lens replacement or should I wait?"',
+    '"What is the complete all-in cost, including aftercare?"',
+  ],
+  trustFactors: ['Clinical depth of website content — she has already read it and she will know if it is shallow', 'Named consultant with visible credentials', 'Honest discussion of IOL limitations, not just benefits', 'Dry eye and lens replacement offered within a single care pathway', 'No time pressure, no upsell attempt'],
+  traits: ['Analytical', 'Independent', 'Thorough', 'Confident', 'Discerning'],
+  values: ['Evidence', 'Honesty', 'Quality', 'Independence', 'Value'],
+  journey: [
+    { stage: 'Awareness', icon: '💡', goal: 'Explore whether there is a solution beyond drops and readers', action: 'Mother\'s lens replacement conversation; starts researching "lens replacement UK"', thoughts: 'Mum says she wishes she had done it earlier. I wonder if I am at the point.', emotion: 6, emotionLabel: 'Curious', painPoints: ['Most content is SEO filler rather than clinical information', 'Hard to find information on dry eye + lens replacement combination'], opportunities: ['Content: "Is 50 the right time for lens replacement?" — directly targets her consideration stage'], channel: 'Google, Instagram', touchpoint: 'Content discovery', uxRec: 'Create authoritative content targeting the "is lens replacement right for me at 50?" question', isOpportunity: true },
+    { stage: 'Symptom Recognition', icon: '🔍', goal: 'Connect daily frustrations to clinical conditions she can address', action: 'Recognises dry eye is beyond lubrication; connects presbyopia symptoms to lens replacement candidacy', thoughts: 'Three drops brands and none of them actually work. This is not a lubrication problem.', emotion: 5, emotionLabel: 'Frustrated', painPoints: ['Optometrist management of dry eye feels inadequate', 'Reading glasses are manageable but the trajectory is clear'], opportunities: ['Content: "Dry eye that does not respond to drops — what comes next"', 'Dry eye and premium lens combination messaging is a differentiator'], channel: 'Google, Instagram', touchpoint: 'Educational content', uxRec: 'Create content targeting "dry eye not responding to drops" — she will find it and recognise herself' },
+    { stage: 'Research', icon: '📚', goal: 'Build a complete picture before contacting any clinic', action: 'Reads EyePros website comprehensively; saves three articles; compares IOL manufacturers; creates her own comparison document', thoughts: 'EyePros seems to have clinical depth. The dry eye pathway alongside lens replacement is what I need.', emotion: 6, emotionLabel: 'Building confidence', painPoints: ['Most clinic websites lack the depth she needs', 'IOL comparison is overwhelmingly complex'], opportunities: ['A clinical IOL comparison guide pitched at her level converts her from researcher to enquirer', 'Dry eye pathway clearly explained alongside lens replacement is a differentiator'], channel: 'Website, Instagram', touchpoint: 'EyePros website, published content', uxRec: 'Create a clinically-rigorous IOL comparison guide and a dedicated dry eye + lens replacement pathway page', isOpportunity: true },
+    { stage: 'Comparison', icon: '⚖️', goal: 'Determine whether EyePros is the right provider', action: 'Compares EyePros to two competitors; EyePros website is more clinically detailed; consultant credentials are verifiable', thoughts: 'The others look more like commercial operations. EyePros feels more clinical.', emotion: 7, emotionLabel: 'Leaning in', painPoints: ['Competitors\' websites are more polished but less clinically trustworthy', 'No provider explicitly addresses the dry eye + lens replacement combination well'], opportunities: ['EyePros wins the comparison stage through clinical content depth, not through marketing polish'], channel: 'Website comparison', touchpoint: 'Competitor research', uxRec: 'Ensure EyePros website addresses the dry eye + lens replacement combination pathway explicitly' },
+    { stage: 'Self-Refer', icon: '📧', goal: 'Make initial contact and confirm clinical alignment', action: 'Completes online enquiry form (optional phone number — did not provide); receives prompt, clinically detailed email response', thoughts: '"They actually answered my questions. That is not what I expected."', emotion: 7, emotionLabel: 'Impressed', painPoints: ['A templated response would have set her back to research mode', 'Any upsell attempt would have ended the enquiry'], opportunities: ['A clinically responsive email reply to her specific questions converts her from enquirer to patient'], channel: 'Online enquiry form', touchpoint: 'Online enquiry + email response', uxRec: 'Ensure online enquiry responses are personalised and clinically responsive — never templated', isOpportunity: true },
+    { stage: 'Payment Decision', icon: '💳', goal: 'Confirm the complete cost and what it includes', action: 'Requests full cost breakdown including dry eye assessment, lens replacement, and all follow-up', thoughts: '"£7,800 including everything. That is what I needed to see."', emotion: 7, emotionLabel: 'Deliberating', painPoints: ['Any hidden fees discovered at booking would cause her to withdraw', 'Cost for dry eye assessment vs. lens replacement needs to be clear'], opportunities: ['Complete all-inclusive pricing with itemised guide converts a research-complete patient'], channel: 'Email', touchpoint: 'Pricing guide', uxRec: 'Provide an all-inclusive itemised cost breakdown for the combined dry eye + lens replacement pathway' },
+    { stage: 'Booking', icon: '📅', goal: 'Book a comprehensive consultation that addresses both conditions', action: 'Books combined dry eye and lens replacement assessment; requests morning appointment to suit her schedule', thoughts: 'Right. I am finally doing this.', emotion: 8, emotionLabel: 'Decided', painPoints: ['Any suggestion that dry eye and lens replacement are separate pathways requiring separate referrals would frustrate her'], opportunities: ['Integrated dry eye + lens replacement consultation is a genuine care quality differentiator'], channel: 'Online / Phone', touchpoint: 'Booking confirmation', uxRec: 'Offer a combined dry eye and lens replacement assessment as a single integrated consultation' },
+    { stage: 'Consultation', icon: '🩺', goal: 'Receive a comprehensive, honest clinical assessment', action: 'Meibomian gland imaging; tear film analysis; biometry; IOL discussion; consultant recommends treating dry eye first, then reassessing for lens replacement', thoughts: '"He said treating the dry eye first is the right protocol. That is exactly what I would have expected a thorough clinician to say."', emotion: 9, emotionLabel: 'Validated', painPoints: ['Any attempt to proceed to lens replacement without addressing dry eye would have destroyed her trust'], opportunities: ['Recommending dry eye treatment before surgery is the trust-building move that locks in her loyalty'], channel: 'In clinic', touchpoint: 'Specialist consultation', uxRec: 'Establish a protocol of dry eye assessment before lens replacement for all candidates with dry eye symptoms', isOpportunity: true },
+    { stage: 'Diagnosis', icon: '📊', goal: 'Understand her dry eye diagnosis and the pathway to lens replacement', action: 'Moderate meibomian gland dysfunction confirmed; treatment plan initiated; lens replacement deferred pending dry eye stabilisation', thoughts: '"Three months of dry eye treatment and then reassess. Good. I have a plan."', emotion: 7, emotionLabel: 'Informed', painPoints: ['Deferred lens replacement was expected — but needs clear timeline and reassessment criteria'], opportunities: ['A clear written dry eye treatment + lens replacement roadmap converts a research-oriented patient completely'], channel: 'Written summary', touchpoint: 'Consultation summary and roadmap', uxRec: 'Provide a written "your pathway" document outlining all stages of the combined treatment plan' },
+    { stage: 'Treatment Planning', icon: '🗓', goal: 'Begin dry eye treatment with confidence', action: 'Heated eye masks and omega-3 supplementation initiated; follow-up in 6 weeks; lens replacement assessment scheduled', thoughts: '"Six weeks and then we reassess. I can do that."', emotion: 8, emotionLabel: 'Committed', painPoints: ['Home treatment compliance requires motivation and clear instruction', 'Any suggestion that dry eye treatment is inadequate may delay lens replacement'], opportunities: ['Clear dry eye treatment guide with expected outcomes converts home compliance'], channel: 'In clinic / Written', touchpoint: 'Dry eye treatment guide', uxRec: 'Create a detailed dry eye self-management guide with expected response timelines' },
+    { stage: 'Treatment', icon: '💊', goal: 'Achieve dry eye stabilisation to enable lens replacement', action: 'Six-week dry eye review confirms improvement; lens replacement assessment proceeds; IOL selected', thoughts: '"Marked improvement. He said \'excellent candidate for lens replacement now.\' I felt like I had earned it."', emotion: 9, emotionLabel: 'Ready', painPoints: ['Any suggestion of further delay would have tested her patience significantly'], opportunities: ['The progress from dry eye to lens replacement candidacy is a powerful patient journey story'], channel: 'In clinic', touchpoint: 'Six-week review', uxRec: 'Celebrate the dry eye improvement milestone proactively — it validates the clinical pathway and her compliance' },
+    { stage: 'Recovery', icon: '🌅', goal: 'Experience the full visual freedom the procedure promises', action: 'Bilateral lens replacement over two weeks; first eye results exceed her expectations; reads theatre programme on the drive home', thoughts: '"I forgot what clear distance vision at night felt like. And I haven\'t reached for my glasses once this morning."', emotion: 9, emotionLabel: 'Transformed', painPoints: ['Neuroadaptation period with premium IOL requires preparation', 'Any unexpected visual phenomenon without prior briefing would damage trust'], opportunities: ['Outcome experience at two weeks post-second eye is a testimonial moment'], channel: 'In clinic', touchpoint: 'Post-operative review', uxRec: 'Prepare patients thoroughly for premium IOL neuroadaptation period and manage expectations proactively' },
+    { stage: 'Aftercare', icon: '✅', goal: 'Confirm successful outcome and establish ongoing care', action: 'Six-week post-op review; excellent visual outcome; dry eye stable; annual review scheduled', thoughts: '"I should have done this two years ago. But I needed to be sure. And I am sure."', emotion: 9, emotionLabel: 'Vindicated', painPoints: ['Annual review requires a proactive reminder — her life is too busy to self-initiate'], opportunities: ['Vivienne\'s outcome story is exceptional — dry eye + lens replacement, methodical approach, excellent result'], channel: 'In clinic', touchpoint: 'Six-week post-op review', uxRec: 'Request testimonial at six-week post-op review — her story is the most effective content for the lens replacement audience', isOpportunity: true },
+    { stage: 'Monitoring', icon: '📆', goal: 'Maintain long-term eye health with annual review', action: 'Annual eye health review; ongoing dry eye maintenance; refers two colleagues', thoughts: '"My eyes are looked after. I know where to go. That is one fewer thing to manage."', emotion: 9, emotionLabel: 'Settled', painPoints: ['Annual review requires a proactive prompt', 'Dry eye needs ongoing maintenance — not a problem, just a fact'], opportunities: ['Annual review letter positioned as "your eye health review" not a routine recall'], channel: 'Letter', touchpoint: 'Annual review recall', uxRec: 'Position annual reviews as comprehensive eye health assessments, not just post-procedure follow-up' },
+    { stage: 'Advocacy', icon: '💬', goal: 'Become a trusted source of recommendation for colleagues', action: 'Recommends EyePros to four colleagues and her mother\'s book group; Instagram post; detailed Google review', thoughts: '"I know enough to explain this properly to people who ask. And several of them have asked."', emotion: 9, emotionLabel: 'Vocal advocate', painPoints: ['No referral mechanism or incentive from EyePros', 'Instagram content from EyePros is not as rich as what she would share — she wants clinical depth'], opportunities: ['Vivienne is a credible, research-led advocate who can influence highly educated, discerning patients', 'Her Instagram post to professional network is a targeted acquisition channel'], channel: 'Instagram, word of mouth, Google', touchpoint: 'Social content / testimonial', uxRec: 'Create shareable, clinically-rich content that patients like Vivienne are proud to share with their professional network', isOpportunity: true },
+  ],
+  decision: {
+    whySeeksCare: 'Dry eye symptoms that have not responded to lubricant drops, combined with progressive presbyopia and her mother\'s positive lens replacement experience.',
+    whyDelays: 'She is not delaying — she is completing her research before acting. The risk is that a competitor with better content wins her at the research stage.',
+    whyPrivate: 'NHS does not fund lens replacement for presbyopia. Dry eye management at NHS level is insufficient for her symptoms.',
+    whyEyePros: 'Clinical depth of website content, the integration of dry eye and lens replacement within a single pathway, and consultant credentials that are verifiable.',
+    whyCompetitor: 'Optegra, if they produce clinical content that matches hers. OCL Vision for their premium IOL profile.',
+    infoThatConverts: 'A clinical IOL comparison guide, a published dry eye + lens replacement pathway, and an enquiry response that addresses her specific questions rather than sending a brochure.',
+    ultimateConverter: 'A consultation recommendation to treat dry eye before lens replacement — clinical integrity that confirms EyePros is not just trying to sell her surgery.',
+  },
+  competitors: [
+    SHARED_COMPETITORS.optegra('National brand with high premium IOL profile.', 'EyePros integrates dry eye and lens replacement within one pathway — Optegra treats them as separate services.'),
+    { name: 'OCL Vision', whyConsider: 'Premium IOL reputation and slick digital presence.', whyEyeProsWins: 'EyePros is more local, offers clinical depth that resonates with her, and has the dry eye expertise she needs pre-operatively.' },
+    SHARED_COMPETITORS.opticalExpress('High visibility and accessible online booking.', 'Vivienne has dismissed Optical Express — too commercial, insufficiently clinical. EyePros wins on substance, not brand.'),
+  ],
+  keyMessages: [
+    'Dry eye managed before lens replacement surgery — not ignored',
+    'Premium IOL selected for your specific visual needs and lifestyle, not from a menu',
+    'We explain the trade-offs honestly — EDF, trifocal, EDOF, and what each means for screen workers',
+    'One care pathway: dry eye, presbyopia, and long-term eye health under one consultant',
+  ],
+  contentRecommendations: ['IOL comparison guide (clinical, not commercial)', '"Dry eye and lens replacement: the case for treating before you operate" article', '"Is 50 the right age for lens replacement?" content series', 'Vivienne-type testimonial: research-led, methodical, excellent outcome'],
+  marketing: {
+    acquisitionPriority: 4,
+    conversionDifficulty: 'Hard',
+    lifetimeValue: 'High',
+    bestChannels: ['Google Search', 'SEO', 'Instagram', 'Facebook', 'Email', 'Remarketing'],
+    searchIntent: ['"dry eye specialist"', '"dry eye treatment not drops"', '"evaporative dry eye specialist Midlands"', '"lens replacement reading glasses"', '"presbyopia treatment UK"'],
+    socialBehaviour: {
+      platforms: ['Instagram (passive consumer)', 'Facebook (private)', 'LinkedIn (professional)'],
+      contentConsumed: ['Wellness and lifestyle content on Instagram', 'Health articles on Facebook', 'Professional HR content on LinkedIn'],
+      postingHabits: 'Consumes health and wellness content but does not post about personal health publicly. Researches for months in private.',
+      trustSources: ['Critically evaluated Google results', 'Before/after patient stories', 'Consultant video content', 'Her mother\'s direct experience of lens surgery'],
+    },
+    contentThatConverts: ['Educational Reels: "Why eye drops stop working for dry eye"', 'Patient journey: screen-heavy professional with dry eye and reading glasses — the Vivienne story', 'Consultant explainer: "What is evaporative dry eye and how do we treat it"', 'Long-form: "Am I a good candidate for refractive lens exchange?"'],
+    emotionalTriggers: ['Freedom from gritty, burning eyes by 3pm', 'Freedom from reading glasses in every bag and room', 'Quality of life — she wants her eyes back, not just managed'],
+    mainObjections: ['Will this actually work, or will I get partial results?', 'Can I have lens replacement with active dry eye?', 'The cost — £3-5k is significant even on a good salary'],
+    messagingAngles: ['"Dry eye and presbyopia: assess both together, treat the whole picture"', '"Premium lens replacement — freedom from reading glasses for the rest of your active life"', '"Understand every option fully before any decision — this is a consultation, not a sales appointment"'],
+    bestCTA: 'Book Assessment',
+    leadMagnet: 'Dry Eye Guide',
+    campaignType: ['Google Search', 'SEO', 'Facebook', 'Instagram', 'Remarketing', 'Email'],
+    funnelStage: 'TOFU–MOFU',
+    retentionOpportunities: ['Dry Eye Programme', 'Premium Lens Follow-up', 'Annual Reviews'],
+    referralOpportunities: ['Corporate Wellbeing (HR network)', 'Optometrist', 'Family Referral'],
+    kpis: ['Website session depth (pages per visit)', 'Email enquiry rate', 'CPL from Facebook / Instagram', 'Consultation-to-dry-eye-programme conversion'],
+  },
+  conversionAction: 'Website engagement → email enquiry (optional phone) → comprehensive consultation',
+  conversionMetric: 'Lens replacement enquiry to consultation conversion rate; time from first content engagement to booking',
+  reviewDate: '31 Oct 2026',
+};
+
+const ANJALI = {
+  id: 'anjali', initials: 'AP',
+  name: 'Dr. Anjali Patel', age: 37,
+  role: 'Independent Optometrist', company: 'Patel Optometrists (own practice)',
+  location: 'Harborne, Birmingham',
+  type: 'referrer', category: 'OPTOMETRIST REFERRER — CLINICAL LEAD',
+  subcategory: 'Clinical Lead / Senior Optometrist',
+  photo: 'https://images.unsplash.com/photo-1565019011521-b0575cbb57c8?w=600&h=720&fit=crop&auto=format',
+  insurance: 'N/A', lifestyle: 'Owns her practice, sees 35 patients a week, CPD-committed, active in optical network',
+  family: 'Married with one young child. Manages practice admin on evenings.',
+  biography: 'Anjali owns a single-site independent practice she took over from her mentor four years ago. She has built a clinical reputation that patients value: she is thorough, honest, and refers when it is right rather than when it is convenient. She has been referring to EyePros for two years, since meeting the clinical director at a local optical CPD evening. She refers cataract, glaucoma suspects, wet AMD urgencies, and complex dry eye cases. What she values is that the referral letter she writes is read, that the patient comes back with a thorough outcome summary, and that the feedback supports her own clinical decisions.',
+  oneSentenceSummary: 'A committed referral partner who values clinical quality, patient return, and a feedback loop that supports her own clinical work.',
+  quote: '"I can always refer to the nationals. I refer to EyePros because I know the patient will come back to me — and I know what happened."',
+  clinicalGoals: ['Refer complex cases to a specialist who can handle cataract, glaucoma, AMD, and dry eye comprehensively', 'Receive detailed, timely outcome reports for every referred patient', 'Build clinical knowledge through CPD partnership'],
+  lifestyleGoals: ['Maintain the strongest referral pathway available for her patients', 'Grow her professional network and clinical reputation', 'Manage the practice sustainably alongside family commitments'],
+  emotionalGoals: ['Feel proud of the referral network she has built', 'Be treated as a genuine clinical partner — not just a referral source', 'Trust that EyePros cares for her patients as she would'],
+  emotionalDrivers: ['Clinical reputation — a poorly handled referral reflects on her as much as on EyePros', 'Patient loyalty — if patients do not return, her practice suffers', 'Professional pride — she wants to be known as the optometrist who gets things right'],
+  decisionTriggers: ['Met EyePros clinical director at CPD — personal connection formed the relationship', 'First referred patient had an excellent outcome and returned with a detailed summary letter'],
+  personalMotivations: ['She refers because she wants the best for each individual patient', 'The relationship with EyePros makes her practice better — clinically and in patient trust'],
+  frustrations: ['Referral letters that disappear without acknowledgement', 'Patients who return from a specialist visit without an outcome summary', 'Clinics that oversell elective procedures to patients she has sent for an assessment'],
+  nhsFrustrations: ['N/A — she refers outside the NHS system for most complex private cases', 'NHS pathway for glaucoma and AMD monitoring is insufficient for her patients who can access private care'],
+  fears: ['A patient she referred having a negative experience that comes back to her', 'EyePros changing their care model or consultant team without communication', 'Being bypassed — EyePros marketing directly to her patient list'],
+  financialConcerns: ['N/A — she does not receive referral fees and does not expect them', 'Her practice financial health depends on patients returning after specialist treatment'],
+  informationGaps: ['Which new clinical services EyePros has added that are relevant to her referrals', 'EyePros\' current waiting times for different conditions', 'How to refer new AMD monitoring or complex dry eye cases'],
+  functionalNeeds: ['A reliable, named clinical contact she can call if a referral is urgent', 'Regular outcome letters — without having to chase', 'Invitation to relevant CPD events'],
+  clinicalNeeds: ['Comprehensive services covering cataract, glaucoma, AMD, and dry eye in one practice', 'Rapid wet AMD urgent pathway', 'Clear diagnostic feedback for complex glaucoma suspects'],
+  emotionalNeeds: ['Treated as a valued clinical partner — not as a funnel', 'Personal relationship with a named person at EyePros', 'Recognition that her referrals matter'],
+  communicationNeeds: ['Email for outcome summaries', 'Phone for urgent clinical queries', 'CPD invitation by email with named contact'],
+  researchHabits: 'Reads Optometry Today and Optician regularly. Attends two CPD events per quarter. LinkedIn active professionally.',
+  techUsage: 'Comfortable with email and clinical systems. LinkedIn active. No Instagram professionally.',
+  infoSources: ['Optometry Today', 'Optician magazine', 'CPD events', 'Professional WhatsApp group', 'EyePros clinical director'],
+  channels: ['Email', 'Phone', 'Professional WhatsApp', 'CPD events'],
+  decisionStyle: 'Relationship-driven, clinically grounded. She refers where she trusts. Trust is built through clinical quality, outcome transparency, and personal connection.',
+  typicalQuestions: [
+    '"My patient has a suspect glaucoma disc — what is your typical waiting time for an urgent new patient?"',
+    '"Can you give me a named contact to call when I have an urgent AMD referral?"',
+    '"What dry eye services do you offer — I have a patient with MGD that is beyond my equipment?"',
+    '"Can you send the outcome letter to my practice email directly, not to the patient?"',
+    '"Is there a CPD event coming up — I\'d like to bring my associate optometrist."',
+  ],
+  trustFactors: ['Named clinical contact she can call', 'Consistent outcome letters without chasing', 'Clinical quality that patients report back on', 'CPD partnership — learning together', 'No direct patient marketing from EyePros'],
+  traits: ['Professional', 'Patient-first', 'Relationship-oriented', 'Thorough', 'Protective'],
+  values: ['Clinical quality', 'Continuity', 'Trust', 'Professionalism', 'Loyalty'],
+  journey: [
+    { stage: 'Awareness', icon: '🤝', goal: 'Meet a new specialist practice at CPD', action: 'Attends local optical CPD evening; meets EyePros clinical director; exchange contact details', thoughts: 'He knows his field. That was a genuinely interesting clinical conversation.', emotion: 6, emotionLabel: 'Interested', painPoints: ['Previous specialist contacts have not maintained the relationship', 'Too many sales-oriented clinic introductions at CPD'], opportunities: ['Personal CPD presence by named EyePros consultant is the highest-value acquisition activity for this persona'], channel: 'CPD event', touchpoint: 'In-person CPD introduction', uxRec: 'EyePros clinical director should attend local optical CPD events consistently', isOpportunity: true },
+    { stage: 'Initial Contact', icon: '📧', goal: 'Establish whether EyePros is an appropriate referral destination', action: 'Emails EyePros following CPD; asks about waiting times and services; receives clinical response quickly', thoughts: 'They answered within a day. With useful information. That is a good start.', emotion: 7, emotionLabel: 'Encouraged', painPoints: ['Templated marketing email response would have been a red flag'], opportunities: ['A fast, personal, clinically detailed email response converts an initial contact into a first referral'], channel: 'Email', touchpoint: 'Post-CPD email follow-up', uxRec: 'Respond to optometrist post-CPD emails personally and within 24 hours with clinical detail' },
+    { stage: 'First Referral', icon: '📋', goal: 'Refer a complex case and see what happens', action: 'Refers a 68-year-old patient with glaucoma suspect disc; sends detailed referral letter; patient seen within two weeks', thoughts: 'She came back with a four-page letter explaining exactly what was found and what the plan is. I was impressed.', emotion: 8, emotionLabel: 'Validated', painPoints: ['Any delay beyond two weeks would have tested her patience', 'Absence of a detailed outcome letter would have ended the relationship'], opportunities: ['An exceptional first referral outcome creates a referring partner for years', 'The outcome letter quality is the single most important trust signal for this persona'], channel: 'Letter', touchpoint: 'Outcome summary letter', uxRec: 'Make every first-referral outcome letter exceptional — it determines whether there is a second referral', isOpportunity: true },
+    { stage: 'Feedback', icon: '✅', goal: 'Receive consistent outcome feedback for referred patients', action: 'Three referrals in; all returned with detailed letters; one urgent AMD referral fast-tracked successfully', thoughts: 'They fast-tracked my AMD patient within 24 hours. That is what I need when it matters.', emotion: 8, emotionLabel: 'Trusting', painPoints: ['Any letter missing or delayed would reduce confidence', 'Urgent pathway not working would have damaged trust significantly'], opportunities: ['The urgent AMD fast-track experience creates a loyal and vocal referral partner'], channel: 'Email / Phone', touchpoint: 'Outcome letters, urgent pathway', uxRec: 'Protect outcome letter consistency as volume grows — never let a letter be missed' },
+    { stage: 'Ongoing Relationship', icon: '🌐', goal: 'Maintain a reliable, high-quality referral partnership', action: 'Refers 3–5 patients per month consistently; uses EyePros as her default specialist pathway for cataract, glaucoma, AMD, and dry eye', thoughts: 'I know what to expect. The patient comes back looked after and I know what happened. That is the standard.', emotion: 9, emotionLabel: 'Confident', painPoints: ['Volume growth could compromise letter consistency', 'Staff turnover at EyePros could interrupt personal relationship'], opportunities: ['Consistent quality at growing referral volume is the retention lever for established referral partners'], channel: 'Email, Phone', touchpoint: 'Regular referral pathway', uxRec: 'Assign Anjali a named patient coordinator who knows her practice and monitors letter dispatch quality' },
+    { stage: 'Partnership Development', icon: '🎓', goal: 'Develop the relationship beyond referrals into clinical partnership', action: 'Invited to contribute to CPD event; presents a case study; two colleagues from her network attend', thoughts: 'Contributing to CPD with EyePros positions me well in the local optical community. And I learned something.', emotion: 9, emotionLabel: 'Partnership', painPoints: ['Being asked to participate rather than just attend requires mutual respect', 'Sales-flavoured CPD events would feel inappropriate'], opportunities: ['Making her a contributor rather than an attendee is the deepest possible partnership development action'], channel: 'CPD event', touchpoint: 'CPD co-presentation', uxRec: 'Invite established referral partners to contribute clinically to CPD events — not just attend them', isOpportunity: true },
+    { stage: 'Advocacy', icon: '💬', goal: 'Recommend EyePros within her professional network', action: 'Recommends EyePros to two new optometrists at her professional WhatsApp group; mentioned at regional optical committee meeting', thoughts: 'When colleagues ask me who I refer to, I have a clear answer and a reason for it.', emotion: 9, emotionLabel: 'Champion', painPoints: ['EyePros has not formally asked her to refer colleagues', 'No mechanism for her to share outcome data with the professional network'], opportunities: ['Anjali is a professional advocate — her endorsement in the optical network has a multiplier effect on referral volume'], channel: 'Professional WhatsApp, network events', touchpoint: 'Peer referral endorsement', uxRec: 'Develop a referral partner advocacy programme — encourage established partners to introduce new practices', isOpportunity: true },
+  ],
+  decision: {
+    whySeeksCare: 'N/A — she is a referral partner, not a patient.',
+    whyDelays: 'She does not delay referrals. The risk is EyePros failing to maintain clinical quality or letter consistency, which would silently end referrals without complaint.',
+    whyPrivate: 'N/A.',
+    whyEyePros: 'Personal relationship established at CPD, consistently excellent outcome letters, reliable urgent AMD pathway, and clinical director who treats her as a partner not a funnel.',
+    whyCompetitor: 'If EyePros\' letter quality drops, waiting times increase, or a patient returns with a negative experience, she will quietly switch to another provider.',
+    infoThatConverts: 'For new partner onboarding: a clinical introduction, service brochure, and a named clinical contact. For retention: consistent letter quality and CPD engagement.',
+    ultimateConverter: 'An exceptional outcome letter on the first referral and a named contact who answers the phone when she has an urgent AMD case.',
+  },
+  competitors: [
+    SHARED_COMPETITORS.newmedica('Established NHS-contracted presence means many of her colleagues already refer there.', 'EyePros offers a more personal relationship, better letter quality, and a faster urgent AMD pathway.'),
+    { name: 'Local hospital ophthalmology (private lists)', whyConsider: 'Hospital reputation and established relationship.', whyEyeProsWins: 'EyePros offers faster access, more comprehensive service, and actively maintains the referral relationship.' },
+  ],
+  keyMessages: [
+    'We return every patient with a detailed outcome letter — without you having to chase',
+    'Our urgent AMD pathway means you can call us on a Tuesday and your patient is seen Wednesday',
+    'We treat referral partners as clinical colleagues, not as acquisition targets',
+    'Same consultant, every referral from this practice — we know your patients',
+  ],
+  contentRecommendations: ['Optometrist referral partner landing page with outcome letter samples', 'Clinical case study content for CPD presentations', 'Urgent AMD pathway one-pager for practice waiting rooms', 'Referral partner CPD programme invitation'],
+  marketing: {
+    acquisitionPriority: 5,
+    conversionDifficulty: 'Hard',
+    lifetimeValue: 'Very High',
+    bestChannels: ['Referral Network (optometrist peer network)', 'LinkedIn', 'CPD Events', 'Direct Outreach (phone / email)', 'Optometrist professional body communications'],
+    searchIntent: ['Not search-driven — discovered via professional network and direct clinical outreach'],
+    socialBehaviour: {
+      platforms: ['LinkedIn (active professionally)', 'GOC and professional body communications'],
+      contentConsumed: ['Clinical research and CPD content', 'Optometry press (Optometry Today, Optician)', 'LinkedIn professional peer content'],
+      postingHabits: 'Posts professionally on optometry topics. Not relevant on consumer health channels.',
+      trustSources: ['Clinical outcome letters from EyePros consultants', 'Trusted colleague optometrist recommendations', 'CPD event quality and consultant credibility', 'Patient feedback from referred cases'],
+    },
+    contentThatConverts: ['Clinical outcome letters — prompt, detailed, named to her personally', 'Consultant credentials and surgical volumes published on website', 'Co-management referral protocol document', 'CPD event content demonstrating clinical leadership'],
+    emotionalTriggers: ['Patient safety — she must know referred patients receive excellent care', 'Professional reputation — her referral reflects on her own practice', 'Clinical partnership quality — collaborative relationship, not a referral black hole'],
+    mainObjections: ['Will EyePros send outcome letters promptly and in detail?', 'Is the care genuinely consultant-led every time?', 'Will my patients feel treated as individuals?'],
+    messagingAngles: ['"Co-managed care — your patient, our specialist expertise, shared outcomes"', '"Outcome letter within 5 working days, named to you personally"', '"Consultant-led every time — your patients see the consultant, not the registrar"'],
+    bestCTA: 'Request Referral',
+    leadMagnet: 'Co-management protocol guide',
+    campaignType: ['LinkedIn', 'Referral Network', 'Direct B2B Outreach', 'CPD Events'],
+    funnelStage: 'MOFU',
+    retentionOpportunities: ['Annual Referral Relationship Review', 'CPD Partnership', 'Shared Clinical Education Events'],
+    referralOpportunities: ['Anjali is the referral source — she IS the channel'],
+    kpis: ['Referrals per month per optometrist partner', 'Outcome letter turnaround time', 'Referral partner satisfaction (survey)', 'Patient conversion rate from optometrist referral'],
+  },
+  conversionAction: 'CPD meeting → first referral → exceptional outcome letter → ongoing partnership',
+  conversionMetric: 'Referrals per month per partner practice, and outcome letter dispatch rate within 5 working days',
+  reviewDate: '31 Oct 2026',
+};
+
+const SIMON = {
+  id: 'simon', initials: 'SM',
+  name: 'Dr. Simon Marsh', age: 45,
+  role: 'GP Partner', company: 'Riverside Medical Centre',
+  location: 'Loughborough, Leicestershire',
+  type: 'referrer', category: 'GP REFERRAL PARTNER',
+  subcategory: 'GP Partner — Pathway Seeking',
+  photo: 'https://images.unsplash.com/photo-1612531385446-f7e6d131e1d0?w=600&h=720&fit=crop&auto=format',
+  insurance: 'N/A', lifestyle: 'GP partner, managing 2,300 patients, two PA days per week, tight referral governance',
+  family: 'Married, three school-age children. Very limited personal time outside practice.',
+  biography: 'Simon is a GP partner managing a patient list of 2,300. He refers around forty patients per month to various specialties and operates within strict ICB commissioning pathways. He is not aware of EyePros specifically but refers several patients each month with eye conditions — cataracts, possible AMD, glaucoma concerns — and finds that patients frequently ask whether they can access a private pathway faster than the NHS can offer. He needs a clear, credible specialist pathway he can confidently recommend without needing to understand the detailed clinical management himself.',
+  oneSentenceSummary: 'A time-poor GP who refers eye conditions weekly but needs a simple, credible, and fast private pathway he can confidently recommend without extensive research.',
+  quote: '"I refer two or three eye patients a week. I just need to know there is somewhere I can send them where they will be looked after properly and quickly."',
+  clinicalGoals: ['Have a reliable specialist pathway for cataract, glaucoma, AMD, and complex eye conditions', 'Receive clinical outcome summaries that support his own patient records', 'Refer with confidence that patients will be well cared for'],
+  lifestyleGoals: ['Reduce the friction of private specialist referrals', 'Spend less time researching who to refer to and more time on patient care', 'Maintain good patient satisfaction scores'],
+  emotionalGoals: ['Feel confident in his referral recommendations', 'Not receive complaints from patients about poor specialist experiences', 'Be seen as a GP who knows how to navigate the system for his patients'],
+  emotionalDrivers: ['Professional duty — his patients deserve the best pathway available to them', 'Efficiency — he cannot invest time in researching specialists for every condition', 'Trust — he needs to trust that EyePros will not embarrass him with a patient'],
+  decisionTriggers: ['Patients increasingly asking about private eye care pathways', 'NHS waiting times for cataract and glaucoma specialist assessment described as unacceptable by patients', 'A colleague recommended EyePros at a PCN meeting'],
+  personalMotivations: ['He wants a specialist he can call on behalf of a patient — not a provider he has to vet from scratch each time'],
+  frustrations: ['Private specialists who do not send outcome letters', 'Patients who return without any clinical documentation', 'No clear mechanism to make an urgent eye referral that will be acted on quickly'],
+  nhsFrustrations: ['NHS cataract and glaucoma waits are frustrating his patients', 'He cannot guarantee his patients will see the same consultant twice in the NHS'],
+  fears: ['Recommending a provider who provides substandard care — it reflects on him', 'A patient complaint following a private referral he made', 'Being seen to "go private" against NHS guidance by partners'],
+  financialConcerns: ['N/A — he does not receive referral fees', 'Medico-legal risk concern: recommending a private provider requires clinical confidence'],
+  informationGaps: ['What services EyePros provides and which GP-initiated referrals are appropriate', 'Who to call for an urgent AMD or acute glaucoma case', 'How to generate a referral letter that EyePros can act on quickly'],
+  functionalNeeds: ['Simple one-page referral pathway guide for his practice', 'A direct phone number for urgent eye referrals', 'Outcome letters sent to his practice address, not just the patient'],
+  clinicalNeeds: ['Cataract, glaucoma, AMD, and complex dry eye', 'Urgent assessment pathway for acute presentations', 'Medical retina capability for urgent DMO and CRVO referrals'],
+  emotionalNeeds: ['Confidence that EyePros will handle his referral professionally', 'Not to be contacted with marketing — he is not interested in being sold to', 'Simple, professional communication'],
+  communicationNeeds: ['Post-consultation letter to practice address within 5 working days', 'One clinical phone number for urgent enquiries', 'No unsolicited contact'],
+  researchHabits: 'Minimal time for research — relies on peer recommendation and PCN network.',
+  techUsage: 'EMIS and Docman user. Email. LinkedIn passive. No time for content consumption.',
+  infoSources: ['PCN colleague recommendation', 'ICB commissioning framework', 'Patient feedback'],
+  channels: ['Phone (urgent)', 'Email (routine)', 'PCN meeting (awareness)'],
+  decisionStyle: 'Peer recommendation, then quick validation. He will call once to confirm the basics, then refer if the conversation is credible.',
+  typicalQuestions: [
+    '"What conditions do you see — is it just cataract or can I refer glaucoma suspects and AMD as well?"',
+    '"If I have an urgent wet AMD or CRVO case, what is your same-day pathway?"',
+    '"Do you send outcome letters directly to the GP?"',
+    '"Do you accept self-pay and PMI, or just one?"',
+    '"Is there a named clinical contact I can call for urgent cases?"',
+  ],
+  trustFactors: ['PCN colleague recommendation', 'CQC registration confirmed', 'Clear service scope — he can match condition to service', 'Direct urgent clinical phone number', 'Outcome letters to GP practice'],
+  traits: ['Efficient', 'Risk-conscious', 'Patient-first', 'Peer-influenced', 'Time-constrained'],
+  values: ['Clinical credibility', 'Simplicity', 'Patient safety', 'Efficiency', 'Trust'],
+  journey: [
+    { stage: 'Awareness', icon: '🤝', goal: 'Learn about EyePros from a trusted source', action: 'Colleague at PCN meeting mentions using EyePros for a complex wet AMD case with good outcome', thoughts: 'Mark said they fast-tracked an AMD case last month. That is useful.', emotion: 5, emotionLabel: 'Interested', painPoints: ['Second-hand information is enough to prompt enquiry but not enough to begin referring'], opportunities: ['PCN peer recommendation is the most powerful awareness channel for GP referrers'], channel: 'PCN meeting', touchpoint: 'Peer recommendation', uxRec: 'Develop EyePros presence at Loughborough and Leicestershire PCN meetings — send a named clinical contact', isOpportunity: true },
+    { stage: 'Initial Contact', icon: '📞', goal: 'Confirm EyePros service scope quickly', action: 'Calls EyePros; asks about conditions treated, urgent pathway, outcome letters, and PMI acceptance', thoughts: '"They covered everything I needed to know in four minutes. That is what I need."', emotion: 6, emotionLabel: 'Satisfied', painPoints: ['A sales-oriented response would have ended the call', 'Inability to confirm urgent pathway on the call would mean he calls someone else next time'], opportunities: ['A well-briefed clinical reception handles this call brilliantly and converts him immediately'], channel: 'Phone', touchpoint: 'Initial GP enquiry call', uxRec: 'Train reception to handle GP calls specifically: service scope, urgent pathway, outcome letters, PMI — in under five minutes' },
+    { stage: 'First Referral', icon: '📋', goal: 'Refer a patient and see what happens', action: 'Refers a 73-year-old cataract patient; she is seen within three weeks; outcome letter arrives at practice within five days', thoughts: 'Good. Mrs Patel came back happy and I got the letter before her next appointment with me.', emotion: 7, emotionLabel: 'Pleased', painPoints: ['Any delay in outcome letter would flag immediately in his system', 'Patient not satisfied = GP not satisfied'], opportunities: ['An excellent first experience establishes EyePros as his default eye care pathway'], channel: 'Letter', touchpoint: 'Outcome letter', uxRec: 'Dispatch outcome letters within five working days of every consultation — this is the GP retention lever', isOpportunity: true },
+    { stage: 'Feedback', icon: '✅', goal: 'Confirm EyePros can be trusted for a range of conditions', action: 'Refers three more patients — cataract, glaucoma suspect, and dry eye; all receive outcome letters; urgent AMD fast-track used once', thoughts: '"Wet AMD case fast-tracked same day. Mark was right about this practice."', emotion: 8, emotionLabel: 'Confident', painPoints: ['Volume creates risk of outcome letter slipping', 'Urgent pathway must remain fast as volume grows'], opportunities: ['GP confidence in urgent pathway is a powerful word-of-mouth driver within PCN network'], channel: 'Letter / Phone', touchpoint: 'Outcome letters and urgent pathway use', uxRec: 'Monitor outcome letter dispatch times for GP referrals specifically — never let a letter to a GP practice be late' },
+    { stage: 'Ongoing Relationship', icon: '📬', goal: 'Maintain EyePros as default eye specialist referral pathway', action: 'Refers 3–5 patients per month; uses both self-pay and PMI pathways; mentions EyePros at two PCN meetings', thoughts: '"For eye referrals, I know where to send them. That is one less thing to manage."', emotion: 8, emotionLabel: 'Settled', painPoints: ['If waiting times increase, he will silently redirect elsewhere', 'Change of clinical team without notification would unsettle him'], opportunities: ['A steady GP referral partnership generates consistent patient volume with zero marketing cost'], channel: 'Letter / Phone', touchpoint: 'Ongoing referral pathway', uxRec: 'Schedule a brief annual update call with established GP referrers — 10 minutes to confirm services and current wait times' },
+    { stage: 'Partnership Development', icon: '🎓', goal: 'Deepen clinical knowledge and relationship', action: 'Invited to a half-day clinical update at EyePros; attends with two partners; gains CPD points', thoughts: '"A half-day on glaucoma screening and AMD monitoring. Actually useful. The kids can wait one Saturday."', emotion: 8, emotionLabel: 'Invested', painPoints: ['GP time is extremely limited — event must deliver CPD value to justify attendance'], opportunities: ['A half-day GP clinical update is a referral volume multiplier — two partners now referring alongside Simon'], channel: 'In clinic / CPD event', touchpoint: 'GP CPD event', uxRec: 'Host an annual half-day GP CPD event covering EyePros\' key conditions — target the PCN network', isOpportunity: true },
+    { stage: 'Advocacy', icon: '💬', goal: 'Recommend EyePros to GP colleagues in the PCN network', action: 'Mentions EyePros as preferred eye care pathway at monthly PCN meeting; introduces two new GP practices', thoughts: '"I tell my colleagues what works. EyePros works for eye referrals."', emotion: 9, emotionLabel: 'Recommending', painPoints: ['No formal mechanism to connect new GP practices to EyePros'], opportunities: ['Simon\'s PCN network recommendation is worth multiple paid marketing campaigns', 'EyePros PCN presence compounds over time as one GP converts several colleagues'], channel: 'PCN meeting', touchpoint: 'Peer referral endorsement', uxRec: 'Attend local PCN meetings once per quarter with a named clinical representative', isOpportunity: true },
+  ],
+  decision: {
+    whySeeksCare: 'N/A — he is a referral partner seeking a reliable specialist pathway for his patients.',
+    whyDelays: 'He has no active relationship with EyePros yet — awareness has not been created. PCN presence is the acquisition channel.',
+    whyPrivate: 'N/A.',
+    whyEyePros: 'Peer recommendation from a trusted GP colleague, fast access, comprehensive service scope, and outcome letters to GP practice.',
+    whyCompetitor: 'Any specialist practice recommended by a PCN colleague with equivalent credibility. The first to reach him with a credible introduction wins.',
+    infoThatConverts: 'A one-page GP referral pathway guide with conditions treated, urgent phone number, outcome letter policy, and PMI acceptance. Delivered by a PCN colleague or directly at a PCN meeting.',
+    ultimateConverter: 'A colleague he trusts saying "I use EyePros for eye referrals and the letters always arrive on time."',
+  },
+  competitors: [
+    SHARED_COMPETITORS.newmedica('NHS-contracted and known name in the Midlands — many GPs already refer there.', 'EyePros offers a more personal relationship, faster urgent access, and a single practice covering all ophthalmic conditions.'),
+    { name: 'University Hospitals private ophthalmology', whyConsider: 'Hospital brand association gives credibility for complex cases.', whyEyeProsWins: 'EyePros offers faster access, equivalent clinical expertise, and a more responsive GP communication pathway.' },
+  ],
+  keyMessages: [
+    'Comprehensive ophthalmic care for GP referrals — cataract, glaucoma, AMD, dry eye, medical retina',
+    'Urgent AMD and CRVO: same-day assessment pathway',
+    'Outcome letter to your practice within five working days — always',
+    'Self-pay and all major PMI accepted — no barriers for your patients',
+  ],
+  contentRecommendations: ['GP referral pathway one-pager (print and PDF)', 'Urgent eye conditions: when to call EyePros today (reference card)', 'PCN presentation slide deck for clinical director', 'GP CPD event invitation flyer'],
+  marketing: {
+    acquisitionPriority: 4,
+    conversionDifficulty: 'Hard',
+    lifetimeValue: 'High',
+    bestChannels: ['PCN Meetings (Primary Care Network)', 'Direct Clinical Outreach (phone / email)', 'GP Clinical Email Lists', 'RCGP local network', 'Colleague recommendation'],
+    searchIntent: ['Not search-driven — GP referral relationships built through direct contact and clinical reputation'],
+    socialBehaviour: {
+      platforms: ['LinkedIn (minimal, occasional)', 'Professional clinical email systems'],
+      contentConsumed: ['BMJ, RCGP guidance, local ICB communications', 'GP clinical newsletters'],
+      postingHabits: 'Not active on consumer social platforms for professional purposes.',
+      trustSources: ['Colleague GP recommendation', 'Quality of clinical outcome letters received', 'PCN meeting direct relationship', 'Patient feedback from referred cases'],
+    },
+    contentThatConverts: ['Clear GP referral pathway card — one page, condition-specific', 'A sample outcome letter that demonstrates communication quality', 'PCN presentation: EyePros urgent access pathway for glaucoma and AMD', '"When to refer urgently" clinical guidance card for GPs'],
+    emotionalTriggers: ['Patient safety — especially for urgent glaucoma and AMD referrals', 'Reducing re-consultation burden — patients who return unresolved', 'Simple pathway — he does not have capacity for a complex referral process'],
+    mainObjections: ['Another private clinic reaching out — what makes EyePros different?', 'Will they respond promptly to urgent referrals?', 'Is the pathway simple enough that my admin team can process it?'],
+    messagingAngles: ['"Urgent access within 48 hours for acute angle closure, wet AMD, and high-IOP suspect"', '"Outcome letter to you within 5 working days of every consultation"', '"One clear pathway — phone or digital referral — your choice"'],
+    bestCTA: 'Request Referral',
+    leadMagnet: 'GP Referral Pathway Guide',
+    campaignType: ['PCN Partnership', 'Direct B2B Outreach', 'Email'],
+    funnelStage: 'TOFU–MOFU',
+    retentionOpportunities: ['Monthly outcome letter quality', 'Annual PCN relationship event', 'Glaucoma and AMD clinical update sessions for GPs'],
+    referralOpportunities: ['Simon is the referral source himself — measure referral volume, not downstream'],
+    kpis: ['GP referral volume per month', 'Response time to urgent GP referrals', 'Post-consultation summary quality (GP feedback)', 'GP partner satisfaction score'],
+  },
+  conversionAction: 'PCN meeting introduction → phone validation call → first referral → outcome letter received',
+  conversionMetric: 'GP practices in the local PCN network actively referring; outcome letter dispatch rate within 5 working days',
+  reviewDate: '31 Jan 2027',
+};
+
+const KATHERINE = {
+  id: 'katherine', initials: 'KR',
+  name: 'Katherine Roberts', age: 41,
+  role: 'Corporate Wellbeing Manager', company: 'National financial services firm',
+  location: 'Brindleyplace, Birmingham',
+  type: 'referrer', category: 'CORPORATE WELLBEING REFERRER',
+  subcategory: 'Occupational Health / Executive Health Provider',
+  photo: 'https://images.unsplash.com/photo-1758518727592-706e80ebc354?w=600&h=720&fit=crop&auto=format',
+  insurance: 'N/A (arranges PMI and occupational health for 3,200 employees)', lifestyle: 'Full corporate travel schedule, gym before work, strong professional network in wellbeing and HR',
+  family: 'Single, lives in central Birmingham. Large professional and personal social network.',
+  biography: 'Katherine manages employee wellbeing programmes for a 3,200-person financial services firm. She sources and manages occupational health providers, PMI schemes, and executive health packages. She is not a clinician but is highly commercially astute and has deep experience of healthcare commissioning. She recently identified that eye health is under-served in the organisation\'s wellbeing offer — the company\'s PMI does not cover routine optometry, screen-related eye strain costs the business in lost productivity, and several senior executives have asked about access to private ophthalmology faster than their PMI pathway allows. She is looking for a provider with executive-grade positioning she can add to the corporate wellbeing suite.',
+  oneSentenceSummary: 'A corporate wellbeing commissioner who is looking for an executive-grade eye care provider to fill a gap in her company\'s health offering.',
+  quote: '"My senior executives don\'t want to wait months for a glaucoma appointment. They want someone who can see them this week and communicate professionally."',
+  clinicalGoals: ['Source a private ophthalmology provider for executive health packages', 'Ensure the provider covers cataract, glaucoma, AMD, and complex dry eye comprehensively', 'Provide employees with rapid specialist access outside NHS waiting times'],
+  lifestyleGoals: ['Deliver a wellbeing programme that reduces absence and supports productivity', 'Build a reputation as an innovative wellbeing lead within her organisation and sector', 'Establish long-term supply relationships with premium healthcare providers'],
+  emotionalGoals: ['Be seen as someone who sources only the best for the organisation', 'Feel confident that EyePros will represent the firm\'s values when serving executives', 'Avoid complaints from the senior leadership team about the wellbeing provision'],
+  emotionalDrivers: ['Professional reputation — her wellbeing programme is a direct reflection of her competence', 'Executive expectations are high — she must match them', 'Commercial acumen — she wants value as well as quality'],
+  decisionTriggers: ['CFO asked about private ophthalmology access after being quoted 8-month NHS wait for glaucoma', 'Screen-related eye strain is flagging in employee health data', 'Competitor firm announced executive eye health as part of their wellbeing package'],
+  personalMotivations: ['She wants to close the gap in the wellbeing programme before someone above her notices it', 'A well-positioned eye care partnership would be a genuine differentiator in talent attraction'],
+  frustrations: ['Healthcare providers who cannot communicate at executive level', 'Providers without clear PMI acceptance and billing processes', 'Wellness providers who treat corporate accounts like consumer clients'],
+  nhsFrustrations: ['N/A from her perspective — she is replacing NHS waits with private access for those who can use it'],
+  fears: ['An executive having a poor experience that creates a complaint', 'A provider billing executives incorrectly or inconsistently', 'Being unable to measure ROI on the eye health programme to justify spend to the board'],
+  financialConcerns: ['Needs transparent, competitive pricing for both individual PMI claims and direct corporate billing', 'ROI data: productivity cost of untreated eye conditions, benchmark absence reduction data'],
+  informationGaps: ['EyePros\' capacity to serve multiple employees simultaneously', 'Whether EyePros can invoice the organisation directly or only via PMI', 'Case for investment: what data exists on productivity impact of untreated eye conditions'],
+  functionalNeeds: ['A corporate account manager or relationship contact at EyePros', 'Ability to arrange appointments for named executives directly', 'Regular data reporting on utilisation and outcomes (anonymised)'],
+  clinicalNeeds: ['Comprehensive ophthalmic services across all relevant conditions', 'Priority access pathway for senior executives', 'Premium clinic environment consistent with executive expectations'],
+  emotionalNeeds: ['Treated as a corporate client, not a consumer', 'Prompt, professional communication', 'Confidence that her executives will receive premium-grade care'],
+  communicationNeeds: ['Named corporate relationship manager', 'Monthly utilisation summary', 'Invoice to finance department, not to individual employees'],
+  researchHabits: 'Commercially driven research. Reads CIPD Wellbeing reports, Vitality Workplace Health Index. LinkedIn active. Network-driven purchasing.',
+  techUsage: 'Power user of LinkedIn, Teams, and professional wellbeing networks.',
+  infoSources: ['CIPD network', 'LinkedIn professional peers', 'PMI broker recommendation', 'Direct provider research'],
+  channels: ['LinkedIn', 'Email', 'Direct sales / referral from PMI broker'],
+  decisionStyle: 'Evaluation-led, commercially disciplined. She will assess three providers, request a proposal, and make a recommendation to the finance director. Quality of proposal matters.',
+  typicalQuestions: [
+    '"Do you have experience working with corporate clients — and do you have a named account manager?"',
+    '"Can you invoice the company directly, or only via PMI?"',
+    '"What is your standard appointment waiting time for a priority corporate client?"',
+    '"Do you have data on the productivity impact of treating common eye conditions?"',
+    '"What does a corporate eye health package with EyePros look like — pricing, capacity, reporting?"',
+  ],
+  trustFactors: ['Named corporate relationship manager', 'Professional proposal and commercial documentation', 'Corporate client references (ideally financial services)', 'PMI compatibility and direct billing capability', 'Premium clinical environment consistent with executive expectations'],
+  traits: ['Commercially astute', 'Quality-focused', 'Network-driven', 'Measured', 'Ambitious'],
+  values: ['Quality', 'Professionalism', 'Commercial clarity', 'Reputation', 'Innovation'],
+  journey: [
+    { stage: 'Awareness', icon: '💼', goal: 'Identify eye health as a gap in the wellbeing programme', action: 'CFO raises glaucoma access issue; employee health data shows screen fatigue; competitor firm launches eye health offering', thoughts: '"Three signals in one quarter. This is a programme gap I need to close."', emotion: 5, emotionLabel: 'Identifying gap', painPoints: ['No obvious premium provider she is aware of', 'Eye health is under-resourced in most corporate wellbeing discussions'], opportunities: ['LinkedIn content positioning EyePros as the corporate eye health partner targets this persona at awareness stage'], channel: 'Internal data, LinkedIn, competitor benchmarking', touchpoint: 'LinkedIn content / peer awareness', uxRec: 'Publish corporate wellbeing content on LinkedIn targeting HR and wellbeing professionals — this is where Katherine is', isOpportunity: true },
+    { stage: 'Research', icon: '🔍', goal: 'Identify potential providers and assess quality', action: 'Searches LinkedIn and Google for private ophthalmology providers; shortlists three; reviews websites for corporate credentials', thoughts: '"EyePros has clinical depth but I need to see if they work with corporate clients."', emotion: 5, emotionLabel: 'Evaluating', painPoints: ['Most private eye clinics do not present themselves as corporate health providers', 'Absence of a corporate page on EyePros website means she may not shortlist them'], opportunities: ['A dedicated corporate wellbeing / executive health page on EyePros website is essential for this acquisition channel'], channel: 'LinkedIn, Google', touchpoint: 'EyePros corporate page', uxRec: 'Create a dedicated "Corporate Eye Health" section on the EyePros website with B2B positioning', isOpportunity: true },
+    { stage: 'Comparison', icon: '⚖️', goal: 'Compare providers on clinical quality, commercial capability, and fit', action: 'Requests information from three providers; EyePros responds with a tailored corporate health proposal', thoughts: '"The other two sent consumer brochures. EyePros sent a proposal."', emotion: 6, emotionLabel: 'Differentiating', painPoints: ['Consumer-focused responses feel inappropriate for a corporate procurement context', 'Inability to provide direct billing or named account manager disqualifies a provider immediately'], opportunities: ['A professionally structured corporate health proposal instantly differentiates EyePros from consumer-positioned competitors'], channel: 'Email', touchpoint: 'Corporate health proposal', uxRec: 'Develop a corporate health proposal template that addresses: capacity, pricing, PMI compatibility, direct billing, account management, reporting' },
+    { stage: 'Decision', icon: '💳', goal: 'Select and recommend a corporate eye health provider to the board', action: 'Presents EyePros proposal to CFO and HR Director; approved for 12-month pilot', thoughts: '"Consultant-led, comprehensive, premium — it fits the talent proposition we are building."', emotion: 7, emotionLabel: 'Confident', painPoints: ['Board approval requires ROI narrative — she needs productivity and absence data from EyePros'], opportunities: ['Providing Katherine with ROI data enables her to make the internal business case — this converts the decision'], channel: 'Internal boardroom', touchpoint: 'Corporate health ROI summary', uxRec: 'Develop a corporate ROI case study pack covering productivity impact of treated eye conditions — give Katherine what she needs to sell internally', isOpportunity: true },
+    { stage: 'Onboarding', icon: '📋', goal: 'Launch the corporate eye health programme with minimum friction', action: 'Named account manager established; appointment booking portal or direct line set up; employees introduced to the service', thoughts: '"Account manager is responsive and professional. That is what I need."', emotion: 7, emotionLabel: 'Operational', painPoints: ['Any friction in the employee booking process reflects on Katherine', 'Inconsistent experience across executives would cause complaints to land on her desk'], opportunities: ['A smooth onboarding process with a dedicated account manager creates a long-term corporate client'], channel: 'Email, phone', touchpoint: 'Account manager introduction and onboarding', uxRec: 'Assign a named account manager with a direct number to every corporate client — they are the brand for Katherine' },
+    { stage: 'Ongoing Relationship', icon: '📊', goal: 'Manage the programme and demonstrate its value to the organisation', action: 'Quarterly utilisation reports reviewed; programme extended to second year; two senior executives treated for significant conditions', thoughts: '"Two glaucoma cases picked up, both managed successfully. I am glad we have this in place."', emotion: 8, emotionLabel: 'Vindicated', painPoints: ['Reporting must be consistent — late or absent reports damage her confidence in the relationship', 'Any executive complaint creates a disproportionate internal reaction'], opportunities: ['Quarterly reports that include health outcome highlights (anonymised) make Katherine\'s programme visible to board-level'], channel: 'Email reports', touchpoint: 'Quarterly utilisation report', uxRec: 'Provide quarterly utilisation and health outcome reports in a board-ready format — give Katherine something she can present' },
+    { stage: 'Advocacy', icon: '💬', goal: 'Recommend EyePros to peers in the corporate wellbeing network', action: 'Presents the eye health programme at a CIPD wellbeing event; recommends EyePros to three wellbeing directors at other firms', thoughts: '"This is genuinely differentiated. I am happy to put my name to this referral."', emotion: 9, emotionLabel: 'Advocate', painPoints: ['EyePros has not provided Katherine with shareable content for her professional network presentations', 'No mechanism to formally introduce other wellbeing directors to EyePros'], opportunities: ['Katherine\'s CIPD network is a B2B acquisition channel worth multiple direct sales efforts', 'Provide Katherine with a co-branded corporate case study she can share at professional events'], channel: 'CIPD events, LinkedIn, professional network', touchpoint: 'Corporate case study / CIPD presentation support', uxRec: 'Create a co-brandable corporate eye health case study that Katherine can present at CIPD and wellbeing events', isOpportunity: true },
+  ],
+  decision: {
+    whySeeksCare: 'Corporate wellbeing programme gap identified — senior executives cannot access private ophthalmology quickly, and screen-related eye health is flagging in employee health data.',
+    whyDelays: 'Budget approval cycles and board sign-off slow the procurement process. ROI data accelerates the decision.',
+    whyPrivate: 'N/A — she is sourcing a private provider by definition.',
+    whyEyePros: 'Clinical depth, consultant-led care model, professional corporate proposal, and named account management capability.',
+    whyCompetitor: 'Any provider with equivalent clinical quality and stronger corporate commercial infrastructure (direct billing, account management, reporting).',
+    infoThatConverts: 'A professional corporate health proposal with pricing, PMI compatibility, direct billing options, and a ROI data pack.',
+    ultimateConverter: 'A proposal that enables Katherine to present a business case to the CFO with numbers — productivity data, cost of untreated eye conditions, and a clear pricing structure.',
+  },
+  competitors: [
+    SHARED_COMPETITORS.optegra('National brand with corporate health experience and established PMI relationships.', 'EyePros offers consultant-led, personalised care with a smaller, more responsive account management structure.'),
+    { name: 'Bupa Healthcare partnerships', whyConsider: 'Integrated PMI and clinical care through a single provider.', whyEyeProsWins: 'EyePros provides genuinely specialist ophthalmic care rather than general private healthcare — and can work alongside existing PMI arrangements.' },
+  ],
+  keyMessages: [
+    'Consultant-led private ophthalmology for your senior team — not a high-street chain',
+    'Named account manager, direct billing, and quarterly health outcome reporting',
+    'Comprehensive care: cataract, glaucoma, AMD, dry eye, medical retina — one provider',
+    'Priority access for your executives: specialist appointment within a week',
+  ],
+  contentRecommendations: ['Corporate eye health landing page (B2B positioned)', 'Corporate ROI data pack: productivity impact of untreated eye conditions', 'Corporate eye health proposal template for account managers', 'CIPD-targeted LinkedIn content positioning EyePros in the wellbeing discourse'],
+  marketing: {
+    acquisitionPriority: 4,
+    conversionDifficulty: 'Hard',
+    lifetimeValue: 'Very High',
+    bestChannels: ['LinkedIn', 'CIPD Events', 'PMI Broker Network', 'Direct B2B Outreach', 'Corporate Wellbeing Peer Referral'],
+    searchIntent: ['"corporate eye health programme"', '"executive eye care Birmingham"', '"occupational eye health provider"', '"employee eye health benefits UK"'],
+    socialBehaviour: {
+      platforms: ['LinkedIn (very active professionally)', 'CIPD and HR Director professional networks'],
+      contentConsumed: ['CIPD Wellbeing reports', 'Vitality Workplace Health Index', 'LinkedIn HR and wellbeing thought leadership'],
+      postingHabits: 'Active professional poster on LinkedIn — wellbeing strategy, HR innovation, people analytics. EyePros content must be LinkedIn-shareable.',
+      trustSources: ['CIPD peer recommendation', 'PMI broker endorsement', 'Quality of EyePros corporate proposal', 'Corporate client references (financial services sector preferred)'],
+    },
+    contentThatConverts: ['CIPD-aligned LinkedIn content positioning EyePros in corporate wellbeing', 'Corporate eye health ROI data pack (productivity impact, absence reduction)', 'Professional corporate health proposal — not a consumer brochure', 'Co-brandable case study Katherine can present at CIPD events'],
+    emotionalTriggers: ['Board-level credibility — her wellbeing programme reflects on her professionally', 'Executive expectations — leadership team judges providers by quality', 'Innovation advantage — she wants to lead peers, not follow them'],
+    mainObjections: ['Can EyePros handle direct corporate billing and monthly invoicing?', 'Do you have a named account manager I can contact directly?', 'Can you provide quarterly utilisation reporting for the finance director?'],
+    messagingAngles: ['"Consultant-led private ophthalmology for your senior team — not a high-street chain"', '"Named account manager, direct billing, and quarterly outcome reporting"', '"Priority access for your executives: specialist appointment within a week"'],
+    bestCTA: 'Request Proposal',
+    leadMagnet: 'Corporate Eye Health ROI Guide',
+    campaignType: ['LinkedIn', 'Direct B2B', 'PMI Broker Referral', 'CIPD Events'],
+    funnelStage: 'TOFU–MOFU',
+    retentionOpportunities: ['Annual Corporate Contract Renewal', 'PMI Renewal', 'Wellbeing Programme Expansion'],
+    referralOpportunities: ['Corporate (CIPD peer network referral)', 'Insurance Provider', 'PMI Broker'],
+    kpis: ['Corporate accounts established per quarter', 'Employees seen per corporate account annually', 'Corporate account renewal rate', 'LinkedIn content engagement from HR / wellbeing audience'],
+  },
+  conversionAction: 'LinkedIn awareness → website corporate page → proposal request → board presentation → pilot programme launch',
+  conversionMetric: 'Corporate accounts established; employees seen annually per corporate account; corporate renewal rate',
+  reviewDate: '31 Jan 2027',
+};
+
+const MARCUS = {
+  id: 'marcus', initials: 'MW',
+  name: 'Marcus Webb', age: 34,
+  role: 'IT Project Manager', company: 'SaaS platform startup',
+  location: 'Stourbridge, West Midlands',
+  type: 'patient', category: 'REFRACTIVE — FREEDOM SEEKER',
+  subcategory: 'Sport-Driven Lifestyle, High Myopia',
+  photo: 'https://images.unsplash.com/photo-1599242460737-5174dba06145?w=600&h=720&fit=crop&auto=format',
+  insurance: 'Self-Pay', lifestyle: 'Recreational competitive skier (Alps twice a year), PADI Open Water diver, road cyclist, gym four times a week',
+  family: 'In a long-term relationship with Priya, who also skis. No children. Dog — a Labrador called Fenwick.',
+  biography: 'Marcus has worn glasses since he was nine and contacts since sixteen. His prescription is -5.50/-5.25 with mild astigmatism. For desk work and daily life, contacts are fine. For the sports that define his weekends and annual leave, they are a constant, expensive problem. On the ski slope, his contacts dry out in cold alpine air — twice last season he sat out afternoon runs because the discomfort was unmanageable. Prescription goggles fog, are heavy, and have cost him over £1,200 across two pairs. Diving is worse: contact lenses are clinically incompatible with diving, so he either dives blurred beyond two metres or squints through an expensive prescription dive mask that distorts his peripheral vision. He has researched LASIK for three years. He has read every Reddit thread, watched consultant explainer videos, and knows the risks. His prescription has been stable for five years. He is ready — he just wants a consultant-led assessment that treats him as the informed adult he is, not a sale to be closed.',
+  oneSentenceSummary: 'A high-myopia skier and diver who has spent three years researching refractive surgery and is ready to book — if the consultation earns his clinical trust.',
+  quote: '"I\'ve spent £2,400 on prescription ski goggles and dive masks in three years. I just want to open my eyes underwater and actually see."',
+  clinicalGoals: ['Full refractive assessment to determine LASIK vs. ICL candidacy for -5.50 myopia with astigmatism — pachymetry must confirm adequate corneal thickness (>520μm) for LASIK', 'Wavefront-guided corneal mapping and dry eye pre-assessment', 'Clinical recommendation from a consultant — not a sales package'],
+  lifestyleGoals: ['Ski in the Alps without prescription goggles or drying contacts', 'Dive with a standard flat mask and see the reef clearly', 'Cycle and run without the daily contact lens ritual and drying-out episodes'],
+  emotionalGoals: ['Stop feeling defined by a corrective device — at 34, with a sport-first identity, this matters', 'Wake up and see without reaching for a lens case', 'Have an answer to "are you a good LASIK candidate?" that is specific and honest, not commercial'],
+  emotionalDrivers: ['Freedom and identity — he wants to be the person who grabs their kit and goes, without a contacts regime', 'Frustration with cost and compromise — prescription eyewear for sport is expensive and still inferior', 'Trust — he has read enough to know that the assessment quality matters as much as the procedure'],
+  decisionTriggers: ['Dive instructor mentioned ICL as a contact-lens alternative used by professional dive guides', 'Prescription stable at -5.50 for five years — his optometrist confirmed he is in the stable window', 'Alps trip booked for February — wants to ski clearly or know why he cannot'],
+  personalMotivations: ['Has been saving for refractive surgery for three years — this is a planned investment, not an impulse', 'Priya has encouraged him; she dislikes the morning routine as much as he does'],
+  frustrations: ['LASIK chain providers use high-pressure sales tactics — one quoted a "today-only" discount that killed his interest immediately', 'Clinic websites that show happy stock photos rather than clinical detail about the procedure and outcomes', 'Online content that either oversells LASIK as risk-free or catastrophises complications without context'],
+  nhsFrustrations: ['N/A — refractive surgery for lifestyle indications is not available on the NHS and he has never expected it to be'],
+  fears: ['Post-LASIK dry eye — if his eyes are drier after surgery, skiing and diving become worse, not better', 'Halos and glare at night — his commute involves motorway driving in the dark half the year', 'Corneal ectasia — he has read about this and wants explicit corneal thickness data before any decision'],
+  financialConcerns: ['LASIK at £1,800–2,500 per eye is a significant spend — he wants all-inclusive pricing with no post-op surprises', 'ICL at £3,500–5,000 total is at the top of his budget — the clinical case for ICL over LASIK needs to be compelling', 'He has been saving for this — money is not a blocker if the clinical case is made clearly'],
+  informationGaps: ['LASIK vs. ICL for -5.50 myopia with mild astigmatism — what is the consultant recommendation?', 'Post-op sport timeline: when can he ski, dive, and cycle after LASIK vs. ICL?', 'Dry eye risk assessment — how does EyePros evaluate pre-op dry eye and what does it mean for his candidacy?'],
+  functionalNeeds: ['An independent, unhurried consultation with a refractive surgeon — not a screening technician', 'Wavefront corneal mapping data shared and explained in plain language', 'Written post-op sports timeline with specific return-to-activity dates'],
+  clinicalNeeds: ['Corneal topography, pachymetry, and wavefront aberrometry', 'Pre-operative dry eye Schirmer assessment', 'Honest candidacy assessment — LASIK, ICL, or LASEK — with clinical reasoning for the recommendation'],
+  emotionalNeeds: ['Treated as a research-aware adult who has done his homework', 'Clinical honesty over reassurance — he will detect optimism that is not earned', 'No sales pressure whatsoever — one hint of it ends the relationship'],
+  communicationNeeds: ['Email for information and written summaries', 'Phone for booking only', 'Post-consultation written summary with corneal data and recommendation rationale'],
+  researchHabits: 'Extensive and technically literate. Has read RCOphth patient guidance, NICE IPG164 (LASIK), multiple peer-reviewed summaries via Google Scholar, and spent significant time on r/lasik. He has a shortlist of questions and will know if the consultant is giving scripted answers.',
+  techUsage: 'Power digital user — multiple screens, home office, comfortable with video content, comparison tools, and detailed written guides. Googles everything, evaluates sources critically.',
+  infoSources: ['r/lasik subreddit', 'YouTube consultant explainer videos (UK-based preferred)', 'RCOphth patient information', 'Google Scholar (skims abstracts)', 'Optometrist informal advice'],
+  channels: ['Google Search', 'YouTube', 'Email', 'Instagram (occasionally)'],
+  decisionStyle: 'Analytical and confident. He has done the research, formed a view, and wants a consultant to validate or challenge it with specifics. He will ask questions that most patients never think of and will push back if answers feel commercial rather than clinical. Once convinced, he books immediately.',
+  typicalQuestions: [
+    '"Given my prescription of -5.50 with mild astigmatism, is LASIK or ICL the better clinical recommendation — and why?"',
+    '"What is your dry eye assessment protocol pre-LASIK — and if I have borderline dry eye, what does that mean for skiing and diving post-op?"',
+    '"What does your corneal ectasia risk profile look like at this prescription level — can you show me the pachymetry benchmarks you use?"',
+    '"When can I ski after LASIK? When can I dive? I want specific dates, not approximations."',
+    '"What is your complication rate for wavefront-guided LASIK at -5.00 to -6.00 myopia?"',
+  ],
+  trustFactors: ['Named refractive surgeon with verifiable credentials and surgical volume', 'Honest candidacy assessment before any commitment — not a "yes, you qualify" within the first five minutes', 'Pre-op dry eye assessment included as standard', 'Clear, specific post-op sport timeline in writing', 'CQC registration and published outcomes data'],
+  traits: ['Analytical', 'Sporty', 'Self-aware', 'Research-led', 'Intolerant of sales pressure'],
+  values: ['Clinical honesty', 'Expertise', 'Independence', 'Adventure', 'Quality over cost'],
+  journey: [
+    { stage: 'Awareness', icon: '⛷', goal: 'Experience the ski problem acutely enough to act', action: 'Contacts dry out on third day of Alps trip; sits out two afternoon runs; calculates this is the fourth season the same thing has happened', thoughts: '"Four years of this. There has to be a solution that isn\'t £600 goggles that still fog."', emotion: 4, emotionLabel: 'Frustrated', painPoints: ['Contact lens drying in alpine cold is predictable and managed — but no longer acceptable', 'Prescription goggles have become a symbol of the problem, not a solution'], opportunities: ['Sport-specific LASIK content: "Refractive surgery for skiers and divers" would intercept this moment', 'Targeted Google content around contact lens problems in alpine environments'], channel: 'Personal experience', touchpoint: 'None yet — research begins on the flight home', uxRec: 'Create content specifically addressing vision correction for winter sports and diving — this is a high-intent, underserved search segment' },
+    { stage: 'Symptom Recognition', icon: '🤿', goal: 'Understand whether LASIK is realistic for his prescription', action: 'Dive instructor mentions ICL as what several dive guides use; Marcus starts researching LASIK vs. ICL that evening', thoughts: '"ICL — I hadn\'t considered that. Better research both properly."', emotion: 5, emotionLabel: 'Curious and cautious', painPoints: ['Information overload — Reddit is full of both evangelists and horror stories', 'His prescription (-5.50) falls in a range where LASIK is possible but not guaranteed — he cannot tell from online research alone'], opportunities: ['"LASIK vs. ICL for high myopia" content that is clinically honest is highly valuable at this stage', 'Reddit presence via genuinely helpful content would reach Marcus here'], channel: 'Internet research — Reddit, YouTube', touchpoint: 'r/lasik, YouTube', uxRec: 'Publish "LASIK vs. ICL at -5.00 to -6.00: the clinical decision explained" — this is the exact search he is running', isOpportunity: true },
+    { stage: 'Research', icon: '🔍', goal: 'Build a complete picture before shortlisting providers', action: 'Reads RCOphth guidance, watches three consultant explainer videos, compiles a list of questions about corneal thickness, dry eye, and sport restrictions', thoughts: '"I know more about LASIK than most people who\'ve had it. Now I need someone to tell me whether I\'m actually a candidate."', emotion: 6, emotionLabel: 'Informed', painPoints: ['Hard to distinguish genuinely clinical content from well-produced marketing', 'No single source addresses the sport-specific question — diving, skiing, cycling — in clinical detail'], opportunities: ['EyePros sport-specific refractive content and consultant credentials would capture him here', 'A "Is LASIK right for me" self-assessment tool would engage him strongly'], channel: 'Google, YouTube, Reddit', touchpoint: 'EyePros website (first visit)', uxRec: 'Ensure EyePros refractive pages include sport-specific guidance and link to a clinical candidacy self-assessment flow' },
+    { stage: 'Comparison', icon: '⚖️', goal: 'Shortlist providers based on clinical credibility, not price', action: 'Shortlists EyePros, Optical Express, and one independent. Rules out Optical Express after "today-only discount" call. Evaluates EyePros consultant profile.', thoughts: '"Optical Express phoned me immediately and offered me 20% off this week. That\'s the opposite of what I want. EyePros has an actual consultant bio with a GMC number."', emotion: 7, emotionLabel: 'Differentiating', painPoints: ['High-volume chain sales tactics are an instant disqualifier for this persona', 'EyePros must visibly differentiate on clinical quality — not price — at this stage'], opportunities: ['Consultant biography with GMC number, surgical volume, and refractive specialism wins against chain providers immediately', 'Case study: skier/diver patient journey on EyePros website would directly address his scenario'], channel: 'Website comparison', touchpoint: 'EyePros consultant profile vs. competitor pages', uxRec: 'Ensure EyePros refractive surgeon biography is richer and more clinically credible than any competitor — this is the key differentiator at comparison', isOpportunity: true },
+    { stage: 'Initial Enquiry', icon: '📧', goal: 'Confirm EyePros can offer the clinical consultation he is looking for', action: 'Emails EyePros with three specific clinical questions about ICL vs. LASIK, dry eye protocol, and sport restrictions', thoughts: '"If they email back with a brochure, I\'ll cross them off. If they answer the questions properly, I\'m booking."', emotion: 7, emotionLabel: 'Testing', painPoints: ['A generic "thank you for your enquiry" response would end his interest', 'A callback from a sales team rather than a clinical team would lose him'], opportunities: ['A clinically detailed email response from the team signals quality before any face-to-face contact', 'This is a make-or-break communication touchpoint for research-led patients'], channel: 'Email', touchpoint: 'Initial email response', uxRec: 'Ensure first-contact email responses to refractive enquiries are written by or reviewed by the clinical team — not templated marketing copy', isOpportunity: true },
+    { stage: 'Payment Decision', icon: '💳', goal: 'Understand all-inclusive pricing and what is and is not included', action: 'Receives pricing guide; confirms pre-op assessment, procedure, and all follow-ups are included; compares with Optimax all-inclusive package', thoughts: '"EyePros is £400 more than Optimax for LASIK. But the consultation is a consultant, not a technician. Worth it."', emotion: 7, emotionLabel: 'Evaluating', painPoints: ['Any ambiguity about what is included post-op creates distrust', 'He will compare prices — EyePros needs to justify the premium clearly'], opportunities: ['Transparent all-inclusive pricing with clear justification of the premium (consultant-led, not technician-screened) converts this persona'], channel: 'Email / Website', touchpoint: 'Pricing guide', uxRec: 'Create a "what is included" pricing page that explicitly contrasts the consultant-led model with chain alternatives — justify the premium clinically' },
+    { stage: 'Booking', icon: '📅', goal: 'Confirm pre-assessment appointment with a refractive surgeon', action: 'Books pre-assessment consultation; confirms it will be with the named consultant; blocks a day before the Alps trip deadline', thoughts: '"Pre-assessment booked. If the corneas are good, I could have surgery and be healed before February."', emotion: 8, emotionLabel: 'Committed', painPoints: ['Any bait-and-switch (consultant → technician) at the appointment would destroy trust permanently'], opportunities: ['Booking confirmation should name the consultant and set clear expectations for what the pre-assessment involves'], channel: 'Email', touchpoint: 'Booking confirmation', uxRec: 'Booking confirmation should confirm the named consultant, appointment duration, and exactly what the pre-assessment includes' },
+    { stage: 'Pre-Assessment', icon: '🔬', goal: 'Receive a comprehensive corneal assessment and honest candidacy verdict', action: 'Corneal topography, pachymetry, wavefront mapping, and dry eye Schirmer test; corneal thickness confirmed suitable; dry eye borderline — consultant recommends pre-op lubricant regime', thoughts: '"Corneas good. Borderline dry eye — he was upfront about that. LASIK still recommended but with a pre-op treatment course first. That\'s honest."', emotion: 8, emotionLabel: 'Trusting', painPoints: ['A clean "yes, you qualify" with no nuance would have made him suspicious', 'The borderline dry eye issue needs clinical management, not dismissal'], opportunities: ['Clinical transparency about the dry eye issue builds more trust than a clean bill of health', 'Pre-op lubricant regime is a clinical touchpoint that demonstrates care quality before surgery'], channel: 'In clinic', touchpoint: 'Pre-assessment consultation', uxRec: 'Pre-assessment must include dry eye evaluation as standard — this is clinically essential for skiing and diving patients', isOpportunity: true },
+    { stage: 'LASIK vs. ICL Decision', icon: '📊', goal: 'Understand the recommendation and the clinical reasoning behind it', action: 'Consultant recommends LASIK (wavefront-guided, PRK as fallback if dry eye worsens pre-op); explains corneal thickness data and why ICL is not clinically necessary at this prescription', thoughts: '"He showed me the pachymetry numbers and explained the margin. I can verify this. This is how I needed this conversation to go."', emotion: 9, emotionLabel: 'Convinced', painPoints: ['If the consultant had simply said "LASIK is fine" without showing the data, Marcus would have asked for it', 'Any suggestion that ICL was better primarily for commercial reasons would have ended things'], opportunities: ['Showing the corneal data and explaining the margin converts a sceptical researcher into an advocate', 'This is the moment Marcus becomes an enthusiastic patient'], channel: 'In clinic', touchpoint: 'Candidacy explanation with data', uxRec: 'Refractive consultants should be prepared to show corneal data and explain clinical margins to research-aware patients — it builds disproportionate trust' },
+    { stage: 'Treatment Planning', icon: '🗓', goal: 'Confirm surgery date and understand every step of the process', action: 'Pre-op lubricant regime completed over four weeks; surgery date confirmed; written sport restriction timeline provided', thoughts: '"Stop contacts two weeks before. Surgery on the 12th. Cleared for cycling at week two, swimming at week four, diving at week eight. Alps trip in February is on."', emotion: 9, emotionLabel: 'Focused', painPoints: ['Vague sport guidance ("avoid strenuous activity") is useless to someone with specific sports booked', 'The contacts-off period needs managing — he will want a short-term glasses option'], opportunities: ['Specific, written sport timeline is a powerful differentiator — no competitor provides this level of detail'], channel: 'Email', touchpoint: 'Pre-op instruction letter with sport timeline', uxRec: 'Provide a sport-specific post-op activity timeline as a standard document — this is a powerful differentiator for active patients', isOpportunity: true },
+    { stage: 'Treatment', icon: '💡', goal: 'Undergo wavefront-guided LASIK with confidence', action: 'Surgery completed; both eyes treated bilaterally; 6/6 vision confirmed at one-hour post-check; mild photophobia managed with provided drops', thoughts: '"I can see the clock on the wall. I\'ve never been able to do that without lenses."', emotion: 8, emotionLabel: 'Elated', painPoints: ['Halos in the first 24 hours expected but alarming for a first-timer', 'Photophobia makes the first day uncomfortable — managing expectations matters'], opportunities: ['The first 24-hour experience defines his advocacy potential — it needs proactive management'], channel: 'In clinic + phone', touchpoint: 'Surgery day experience', uxRec: 'Ensure same-day post-op care includes a brief phone check-in at six hours to confirm normal photophobia and reassure about halos' },
+    { stage: 'Recovery Week 1', icon: '🌅', goal: 'Confirm visual recovery and manage activity restrictions', action: 'Vision stabilises at 6/5; halos reduced by day three; back at desk on day two; cycling cleared at day ten', thoughts: '"I can see the road further ahead than I ever have on a bike. This is not what I expected."', emotion: 9, emotionLabel: 'Amazed', painPoints: ['Screen work on day two causes some eye strain — pre-warned but still uncomfortable', 'No cycling for ten days is frustrating — he is used to training six days a week'], opportunities: ['The wow moment on the first bike ride post-op is Marcus\'s conversion to advocate — capture it'], channel: 'Follow-up call / Portal', touchpoint: 'One-week post-op review', uxRec: 'Prompt for a patient experience post at the one-week review — Marcus will write something authentic and compelling' },
+    { stage: 'Recovery Week 4–8', icon: '🏊', goal: 'Return to all sports progressively and confirm stable vision', action: 'Swimming cleared at week four; diving cleared at week eight; vision stable at 6/5 bilaterally; first dive completed — Tenerife, November', thoughts: '"I dove to 18 metres and read the dive computer without squinting. I cannot describe what that is like after twenty years."', emotion: 10, emotionLabel: 'Transformed', painPoints: ['No issues — the progression has gone exactly as planned', 'He has already told six people on the dive boat about the surgery'], opportunities: ['This is the advocacy moment — he is in the water, without masks, with perfect vision. Ask for the review now.'], channel: 'In clinic / Email', touchpoint: 'Eight-week review + review request', uxRec: 'Send a review request at the eight-week mark with a direct Google review link — this is the peak emotion moment', isOpportunity: true },
+    { stage: 'First Alps Trip', icon: '⛰', goal: 'Ski for a full week without goggles or contacts', action: 'February Alps trip — skis five days, no goggles, no contacts. Vision unchanged from surgery. Tells every person who asks about his clear eyes.', thoughts: '"Day three, afternoon run down Valloire, last light. I could see everything. Priya was ahead and I could read her jacket text from forty metres. That\'s when I knew."', emotion: 10, emotionLabel: 'Life-changing', painPoints: ['No clinical issues — his concern now is telling everyone he knows'], opportunities: ['Marcus\'s ski trip story is a case study that converts every skier and diver who reads it', 'A patient story content format (blog + Instagram reel) featuring his journey would be high-performing'], channel: 'Word of mouth, Instagram', touchpoint: 'Patient story content request', uxRec: 'Invite Marcus to share his story — a professional case study with his consent, featuring the ski and diving moments, is among the most valuable marketing content EyePros could create', isOpportunity: true },
+    { stage: 'Advocacy', icon: '💬', goal: 'Become the person his sporting network goes to for LASIK advice', action: 'Recommends EyePros to four friends from his cycling club; leaves a detailed Google review; shares post on Instagram at 8-week review milestone', thoughts: '"I spent three years researching this and went to the right place. If any of you are thinking about it, I\'ll send you the links."', emotion: 10, emotionLabel: 'Ambassador', painPoints: ['EyePros has not provided him any shareable content to use when recommending', 'No formal referral mechanism exists for sport-community advocacy'], opportunities: ['Marcus\'s cycling and skiing network is a highly targetable, high-value acquisition channel', 'A referral programme for active patients with sport-community networks would unlock significant volume'], channel: 'Instagram, word of mouth, Google', touchpoint: 'Review request / sport community referral programme', uxRec: 'Develop a sport-community referral programme — active patients with large sporting networks are among the highest-value acquisition channels available', isOpportunity: true },
+  ],
+  decision: {
+    whySeeksCare: 'High myopia makes skiing and diving increasingly impractical and expensive. Contacts dry out on alpine slopes; contact lenses are incompatible with diving. The lifestyle cost has exceeded the threshold for action.',
+    whyDelays: 'He has been in a three-year research phase, gathering information and building confidence. The delay is not reluctance — it is thoroughness. The stable prescription window has now been confirmed, removing the last clinical reason to wait.',
+    whyPrivate: 'Refractive surgery for lifestyle reasons is not available on the NHS. There is no NHS pathway for this.',
+    whyEyePros: 'Consultant-led assessment with a named refractive surgeon, published outcomes, and no sales pressure — the antithesis of the chain model that put him off once already.',
+    whyCompetitor: 'Optical Express or Optimax if EyePros cannot clearly differentiate on clinical quality. Ü Vision if a peer recommendation points there.',
+    infoThatConverts: 'A consultant who shows him the corneal topography data and explains the margin honestly. Specific post-op sport timelines. A GMC number on the consultant biography page.',
+    ultimateConverter: 'A consultant who says "here is your pachymetry data, here is the margin, here is why LASIK is the right answer for your prescription and lifestyle" — specificity and transparency win.',
+  },
+  competitors: [
+    SHARED_COMPETITORS.opticalExpress('High brand awareness for LASIK; aggressive digital marketing; competitive pricing.', 'EyePros offers consultant-led care vs. technician-screened chain model. Marcus has already ruled out Optical Express based on high-pressure sales contact.'),
+    { name: 'Optimax', whyConsider: 'Well-known LASIK provider, all-inclusive pricing, strong online presence.', whyEyeProsWins: 'EyePros provides a named consultant refractive surgeon — not a chain technician — and can offer the clinical honesty Marcus requires at assessment stage.' },
+    SHARED_COMPETITORS.uVision('Premium independent with refractive surgery credentials; known for quality.', 'EyePros matches quality positioning and adds comprehensive whole-eye care — if Marcus develops dry eye post-op or needs future cataract care, he stays within the same practice.'),
+  ],
+  keyMessages: [
+    'Consultant-led LASIK and ICL — a clinical recommendation, not a sales package',
+    'High myopia, complex prescriptions — assessed by a refractive specialist, not a screening technician',
+    'From ski slope to dive site: a post-op sport timeline designed around your life',
+    'Honest candidacy assessment before any commitment — we will tell you if you are not a good candidate',
+  ],
+  contentRecommendations: ['"LASIK vs. ICL for high myopia: the clinical decision guide" — detailed written content', '"Refractive surgery and sport: skiing, diving, cycling — when can you return?" — practical activity guide', 'Refractive consultant biography with GMC number, surgical volume, and specialism detail', '"Am I a good LASIK candidate?" — honest FAQ on corneal thickness, dry eye, and prescription limits'],
+  marketing: {
+    acquisitionPriority: 4,
+    conversionDifficulty: 'Medium',
+    lifetimeValue: 'High',
+    bestChannels: ['Google Search', 'SEO', 'YouTube', 'Instagram', 'Remarketing', 'Optometrist Referral'],
+    searchIntent: ['"LASIK Birmingham consultant"', '"ICL vs LASIK high myopia"', '"refractive surgery skiing diving"', '"LASIK -5.50 safe"', '"private LASIK Midlands"'],
+    socialBehaviour: {
+      platforms: ['YouTube (primary research channel)', 'Instagram (sport and lifestyle content)', 'Reddit r/lasik (peer research)', 'Google (critical evaluation of every claim)'],
+      contentConsumed: ['Consultant explainer videos on LASIK and ICL', 'Patient journey reels and before/after accounts', 'Clinical FAQ content and Reddit discussions', 'Sport and outdoor lifestyle content on Instagram'],
+      postingHabits: 'Does not post about personal health before the procedure. Post-procedure: likely to post authentically about the experience on Instagram and leave a detailed written review. Cycling club WhatsApp group is his referral channel.',
+      trustSources: ['GMC register and consultant credentials', 'r/lasik community — real patient experiences', 'RCOphth and NHS patient guidance', 'Consultant YouTube content (UK-based)', 'Optometrist informal recommendation'],
+    },
+    contentThatConverts: ['"LASIK vs. ICL for -5 to -6 myopia: the clinical decision" — detailed, honest article', '"Refractive surgery and winter sports / diving — a sport timeline" — specific activity return dates', 'Consultant explainer video: corneal assessment and what makes a good candidate', 'Patient story: skier/diver post-LASIK case study (Marcus archetype)'],
+    emotionalTriggers: ['Freedom — waking up and seeing without reaching for a lens case', 'The ski moment — seeing clearly on the slope in cold air, no goggles', 'The dive moment — reading the dive computer at depth with perfect clarity', 'The identity shift — no longer defined by corrective lenses at 34'],
+    mainObjections: ['"Is LASIK safe at -5.50 or am I too high-myopia for it?"', '"What if I get post-LASIK dry eye — skiing and diving would be worse, not better"', '"Are you going to pressure-sell me like the last clinic I enquired with?"'],
+    messagingAngles: ['"Consultant-led refractive assessment — not a screening-to-sale production line"', '"LASIK or ICL: a clinical recommendation based on your corneas, your prescription, your lifestyle"', '"From the slopes to the reef: clear vision, without compromise"'],
+    bestCTA: 'Book Assessment',
+    leadMagnet: 'LASIK vs ICL Guide',
+    campaignType: ['Google Search', 'YouTube', 'SEO', 'Instagram', 'Remarketing'],
+    funnelStage: 'MOFU',
+    retentionOpportunities: ['Annual Reviews', 'Premium Lens Follow-up (in 20+ years)', 'Dry Eye Programme (if post-op dry eye emerges)'],
+    referralOpportunities: ['Sport Community (cycling club, ski group, dive club)', 'Optometrist', 'Family Referral'],
+    kpis: ['Consultation booking rate from refractive enquiries', 'LASIK/ICL conversion from consultation', 'CPL from Google Search and YouTube', 'Sport-community referral volume'],
+  },
+  conversionAction: 'Google research → EyePros website → email enquiry → independent consultant assessment → surgery booked',
+  conversionMetric: 'Consultation-to-procedure conversion rate for refractive surgery (LASIK / ICL)',
+  reviewDate: '31 Jan 2027',
+};
+
+const DANIEL = {
+  id: 'daniel', initials: 'DS',
+  name: 'Daniel Shaw', age: 44,
+  role: 'Owner-Optometrist', company: 'Shaw Opticians (Leamington Spa & Kenilworth)',
+  location: 'Leamington Spa, Warwickshire',
+  type: 'referrer', category: 'OPTOMETRIST REFERRER — PRACTICE OWNER',
+  subcategory: 'Owner-Optometrist (Commercially Focused)',
+  photo: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&h=720&fit=crop&auto=format',
+  insurance: 'N/A (refers patients across PMI and self-pay pathways)',
+  lifestyle: 'Two-practice owner, five-a-side football, family skiing annually, school governor',
+  family: 'Married, two primary-school children. Mortgage on both practice premises. Commercially clear-eyed about every business relationship.',
+  biography: 'Daniel has owned Shaw Opticians for eight years, growing from a single site in Leamington to a second in Kenilworth. He is simultaneously the clinical lead, the business owner, the main referrer, and — on a busy Tuesday — the person who unblocks the clinical workflow when a locum cancels. He cares deeply about his clinical reputation and has strong views about who he works with. When a patient has a poor experience at a provider he recommended, they tell him. He has ended two referral partnerships in the past three years because outcome letters were slow and patient feedback was mixed. He is not looking for a corporate relationship. He is looking for a partner who treats patients with the same level of personal care he does.',
+  oneSentenceSummary: 'An independent practice owner who treats every referral as a trust transfer — and ends relationships quickly when that trust is not honoured.',
+  quote: '"When I send a patient to you, they are still my patient. I need to know they\'ll come back with a clear explanation of what happened and confidence in the advice they received."',
+  clinicalGoals: ['A private ophthalmology partner covering cataracts, glaucoma, AMD, and complex dry eye — the full clinical spectrum he encounters', 'Outcome letters that add clinical value — not generic summaries', 'Rapid access for urgent glaucoma and AMD referrals without navigating a booking queue'],
+  lifestyleGoals: ['A referral relationship that does not add administrative burden to an already stretched practice team', 'A partner who helps his practice look excellent to patients — not one who creates confusion and callbacks'],
+  emotionalGoals: ['Confidence that the patients he refers will return reflecting well on him personally', 'Feel respected as a clinical partner, not managed as a patient source', 'Know there is a named person at EyePros he can call if something goes wrong'],
+  emotionalDrivers: ['Practice reputation — his business is his identity, and every referral is a trust transfer to EyePros', 'Clinical partnership quality — he has been let down before and is protective as a result', 'Peer validation — a respected colleague recommendation carries more weight than any marketing contact'],
+  decisionTriggers: ['Existing referral partner has missed outcome letter deadlines three times in a month', 'A colleague at the local independent optometrists network mentions EyePros by name', 'Patient complains about communication from current provider — Daniel logs it'],
+  personalMotivations: ['He wants a referral relationship he does not have to manage — one that runs without his intervention', 'He is at the stage in practice ownership where reputation management matters more than new volume'],
+  frustrations: ['Corporate referral partners who treat his patients like NHS throughput — impersonal letters, generic content, no named consultant', 'Being contacted by account managers who clearly have not read anything about his practice', 'Providers who acknowledge his referral but never confirm the appointment was made'],
+  nhsFrustrations: ['N/A — he actively manages patients into private pathways and expects private-quality service in return'],
+  fears: ['A patient returning from EyePros with a poor experience or confusing letter that they attribute to his recommendation', 'A referral that goes missing and results in a delayed diagnosis — he would be professionally compromised', 'Losing patient trust because a provider he endorsed let them down'],
+  financialConcerns: ['The referral relationship must be commercially equitable — he refers clinical value; he expects premium care in return', 'Patients should never be surprised by costs — he wants EyePros to communicate fees clearly before any appointment'],
+  informationGaps: ['EyePros\' named consultant credentials before he commits to referring', 'Actual waiting times per condition type (cataract, glaucoma, AMD)', 'What a standard outcome letter looks like — he will ask for an example'],
+  functionalNeeds: ['Direct clinical contact at EyePros — not a call centre', 'Referral template that takes under three minutes', 'Outcome letter within 5 working days addressed to him by name'],
+  clinicalNeeds: ['Consultant-led care for every referral — no registrar-only consultations for his patients', 'Urgent access pathway for glaucoma suspects and wet AMD referrals', 'Complex case co-management capability — he wants to be able to call and discuss'],
+  emotionalNeeds: ['Treated as a peer clinical partner, not a referral source to be managed', 'Honest communication when capacity or quality is under pressure', 'Acknowledged when a referral goes particularly well — not just when there is a problem'],
+  communicationNeeds: ['Outcome letter within 5 working days — addressed to him personally, not "Dear Optometrist"', 'Direct number for clinical queries', 'No mass-email marketing — he wants communications to be personal and relevant'],
+  researchHabits: 'Peer-network driven. Asks other independent practice owners who they use. Reads GOC updates, attends local LOC meetings, and is active in the West Midlands independent optometrists network. Does not respond to cold outreach.',
+  techUsage: 'Comfortable with email and digital referral systems if they are simple. Reluctant to learn new platforms for a single referral relationship. Prefers phone for anything clinical.',
+  infoSources: ['Peer recommendation (independent optometrist network)', 'LOC meetings', 'GOC professional communications', 'Direct clinical conversation with EyePros team'],
+  channels: ['Word of mouth / peer network', 'Direct phone', 'Email', 'Local CPD events'],
+  decisionStyle: 'Relationship-driven and sequential. Makes a quick initial assessment based on peer reputation, confirms through a personal conversation, then tests with a single referral. If the first referral generates an excellent outcome letter and positive patient feedback, he becomes a consistent referral source. If not, he moves on without discussion.',
+  typicalQuestions: [
+    '"Who specifically will see my patients — I need a name, not a rota."',
+    '"What is your standard turnaround for outcome letters — and what does a typical letter look like?"',
+    '"If I refer an urgent glaucoma suspect, what is your fastest access pathway?"',
+    '"Do you communicate fees to patients directly, or will they be calling me asking about costs?"',
+    '"Can I have a direct clinical number — not a booking line — for when I have a query?"',
+  ],
+  trustFactors: ['Peer recommendation from a respected independent optometrist colleague', 'Named consultant with verifiable credentials', 'Outcome letter within 5 days — first one he receives will determine everything', 'Direct clinical contact line', 'CQC registration visible and current'],
+  traits: ['Commercially astute', 'Protective', 'Quality-driven', 'Relationship-oriented', 'Decisive'],
+  values: ['Clinical reputation', 'Partnership', 'Efficiency', 'Patient-first', 'Accountability'],
+  journey: [
+    { stage: 'Awareness', icon: '🤝', goal: 'Identify a more reliable private ophthalmology referral partner', action: 'Colleague at local independent optometrists network mentions EyePros after Daniel expresses frustration with current provider', thoughts: '"Jamie hasn\'t steered me wrong before. Worth a look."', emotion: 5, emotionLabel: 'Cautiously interested', painPoints: ['Third outcome letter this month is late', 'Existing relationship no longer meets his standard'], opportunities: ['Peer recommendation is the only channel that reaches Daniel — EyePros must be present in independent optometrist networks'], channel: 'Peer network', touchpoint: 'Colleague recommendation', uxRec: 'Build a named optometrist referral advocate programme — one peer recommendation outweighs ten marketing emails for this archetype', isOpportunity: true },
+    { stage: 'Research', icon: '🔍', goal: 'Verify EyePros\' clinical credentials before making contact', action: 'Looks up EyePros website; reads consultant biographies; checks CQC registration', thoughts: '"Named consultant, GMC number, published. That\'s the minimum I need to see."', emotion: 6, emotionLabel: 'Evaluating', painPoints: ['Any website without named consultants goes on the "no" list immediately'], opportunities: ['Consultant biographies with GMC numbers, credentials, and surgical volumes are the conversion page for Daniel', 'CQC registration and rating prominently visible builds credibility'], channel: 'Website', touchpoint: 'EyePros consultant profiles', uxRec: 'Ensure consultant pages are richer and more clinically detailed than any competitor — this is the primary conversion asset for the Owner-Optometrist archetype' },
+    { stage: 'Initial Contact', icon: '📞', goal: 'Speak to a clinical person at EyePros — not a sales person', action: 'Calls EyePros directly; asks three specific clinical questions about pathway, outcome letters, and urgent access', thoughts: '"The person who answers this call will tell me everything I need to know about how this clinic runs."', emotion: 7, emotionLabel: 'Testing', painPoints: ['A sales-oriented response would end the conversation immediately', 'Being transferred to a "referral coordinator" without clinical knowledge would lose him'], opportunities: ['First phone call is the single most important brand touchpoint for this archetype — clinical, knowledgeable, unhurried wins'], channel: 'Phone', touchpoint: 'First call', uxRec: 'Train reception to respond to optometrist enquiries clinically — have access to outcome letter examples and waiting time data during the call', isOpportunity: true },
+    { stage: 'First Referral', icon: '📋', goal: 'Test EyePros with a single referral before committing', action: 'Refers one cataract patient — a patient he knows well, so the feedback will be reliable', thoughts: '"I\'ll know within six weeks whether this works. Patient knows to tell me honestly what it was like."', emotion: 7, emotionLabel: 'Measured', painPoints: ['Any friction in the referral process (no acknowledgement, wrong information given to patient) would register', 'He is watching the outcome letter date closely'], opportunities: ['The first referral is a formal test — every touchpoint is scored against his expectations'], channel: 'Email / Referral form', touchpoint: 'First referral submission', uxRec: 'Treat the first referral from any new optometrist partner as a VIP experience — acknowledge within 2 hours, update him on the outcome letter date' },
+    { stage: 'Outcome Assessment', icon: '📊', goal: 'Confirm quality of first referral outcome', action: 'Outcome letter arrives on day four; patient returns saying "the consultant was excellent and explained everything"; Daniel reads the letter carefully', thoughts: '"Addressed to me personally. Four days. Clinical substance, not a template. And she said he took his time with her. That\'s my standard met."', emotion: 9, emotionLabel: 'Satisfied', painPoints: ['Any generic letter or delayed letter here would end the trial immediately'], opportunities: ['One excellent outcome letter and one patient endorsement converts Daniel permanently', 'This is the highest-leverage moment in the entire relationship'], channel: 'Email', touchpoint: 'First outcome letter', uxRec: 'First outcome letters to new referring partners should be reviewed for quality — they are the final conversion touchpoint and the foundation of the relationship', isOpportunity: true },
+    { stage: 'Ongoing Partnership', icon: '🔄', goal: 'Establish a consistent referral relationship with minimal friction', action: 'Begins referring cataract, glaucoma, and AMD patients consistently; uses the direct clinical number twice in six months for case queries', thoughts: '"This works. The letters arrive, the patients are happy, and when I call, someone who knows what they\'re talking about answers."', emotion: 9, emotionLabel: 'Trusting', painPoints: ['Any dip in outcome letter quality or waiting time would be noticed immediately', 'A change of named consultant without communication would require a reset of trust'], opportunities: ['Regular referrers should receive a brief quarterly clinical update from EyePros — keeps the relationship active and valued'], channel: 'Direct clinical contact, referral form', touchpoint: 'Quarterly clinical update', uxRec: 'Send quarterly clinical updates to regular referring partners — brief, relevant, clinically useful — it maintains the relationship between referrals' },
+    { stage: 'Advocacy', icon: '💬', goal: 'Recommend EyePros to peers in the independent optometrists network', action: 'Mentions EyePros at LOC meeting and independent optometrists network gathering; two colleagues contact EyePros the same week', thoughts: '"I\'ve had three providers in eight years. EyePros is the first one I\'m comfortable recommending by name."', emotion: 10, emotionLabel: 'Advocate', painPoints: ['EyePros has not provided any shareable content or case study he could use at professional events'], opportunities: ['Daniel\'s peer advocacy is the single most efficient acquisition channel for new independent practice partners in the Midlands', 'Provide him with a co-branded clinical outcome summary he can share at LOC and network events'], channel: 'LOC meetings, peer network', touchpoint: 'Peer referral / co-branded content', uxRec: 'Develop a formal optometrist advocacy programme — referral partners who consistently recommend EyePros should be supported with shareable clinical content and recognised', isOpportunity: true },
+  ],
+  decision: {
+    whySeeksCare: 'Current private ophthalmology referral partner is underperforming on outcome letter quality and patient communication. Daniel\'s practice reputation depends on the quality of every provider he recommends.',
+    whyDelays: 'Switching referral partners involves risk — workflow disruption, a test period, and the possibility that the new provider is no better. He delays until the current relationship becomes untenable.',
+    whyPrivate: 'N/A — he actively routes patients into private pathways and expects private-quality standards in return.',
+    whyEyePros: 'Named consultant, outcome letter quality, direct clinical contact, and a peer recommendation from a trusted colleague.',
+    whyCompetitor: 'Newmedica or Ü Vision if a stronger peer recommendation points there, or if EyePros cannot demonstrate outcome letter quality in the first test referral.',
+    infoThatConverts: 'A phone call from someone who knows the clinical answers, plus the first outcome letter — which must arrive within 5 days and be addressed to him personally.',
+    ultimateConverter: 'A colleague he respects saying "I have been sending complex cases to EyePros for two years and they have not let a patient down yet."',
+  },
+  competitors: [
+    SHARED_COMPETITORS.newmedica('NHS-associated credibility, known name in the Midlands, some existing referral relationships.', 'EyePros offers genuine named-consultant continuity and outcome letters with clinical substance — Newmedica feels more NHS-style in communication.'),
+    SHARED_COMPETITORS.uVision('Well-regarded independent, positive local reputation.', 'EyePros provides broader clinical scope including medical retina — Daniel\'s complex AMD and glaucoma patients have one comprehensive home.'),
+    { name: 'Independent consultant ophthalmologists', whyConsider: 'Some practice owners prefer to refer directly to a named NHS/private consultant they know personally.', whyEyeProsWins: 'EyePros offers the same named-consultant quality with the operational infrastructure (outcome letters, booking, referral pathway) that a sole consultant cannot.' },
+  ],
+  keyMessages: [
+    'Your patient, our specialist expertise — shared responsibility for the clinical outcome',
+    'Named consultant, every referral — your patients see the same specialist, not whoever is available',
+    'Outcome letter within 5 working days, addressed to you personally — clinical content, not a template',
+    'Direct clinical contact line — call us when you have a complex case, not a query line',
+  ],
+  contentRecommendations: ['Sample outcome letter (ask permission to share a redacted example)', 'Consultant biography with GMC number and surgical volume', 'Referral pathway guide: one page, condition-specific, under 3 minutes to complete', 'Optometrist partner case study: independent practice owner, 18-month partnership review'],
+  marketing: {
+    acquisitionPriority: 5,
+    conversionDifficulty: 'Hard',
+    lifetimeValue: 'Very High',
+    bestChannels: ['Referral Network (independent optometrist peer network)', 'LOC Events', 'Direct Outreach (personal, not templated)', 'LinkedIn (professional)'],
+    searchIntent: ['Not search-driven — peer recommendation is the acquisition channel for this archetype'],
+    socialBehaviour: {
+      platforms: ['LinkedIn (professional posts, reads peer content)', 'GOC and professional body communications', 'Local optometrist WhatsApp groups'],
+      contentConsumed: ['Clinical guidelines and CET updates', 'Independent optometry business content', 'GOC regulatory communications'],
+      postingHabits: 'Occasional professional posts on LinkedIn. Active in local independent optometrist networks. Not active on consumer social platforms.',
+      trustSources: ['Trusted peer recommendation from another practice owner', 'CQC registration and rating', 'Named consultant credentials on EyePros website', 'Quality of outcome letters received'],
+    },
+    contentThatConverts: ['Redacted sample outcome letter demonstrating clinical content and personal address', 'Consultant biography with GMC number and surgical volume', 'One-page referral pathway guide per condition type', 'Independent optometrist partner case study (peer-to-peer format)'],
+    emotionalTriggers: ['Practice reputation protection — every referral reflects on him personally', 'Peer validation — a trusted colleague\'s recommendation is the trigger, not marketing', 'Clinical partnership quality — he wants to co-manage, not just refer and lose sight of the patient'],
+    mainObjections: ['"Will outcome letters actually arrive within 5 days consistently — not just the first time?"', '"Who specifically will see my patients — is it always the same consultant?"', '"What happens if something goes wrong — who do I call?"'],
+    messagingAngles: ['"Your patient, our specialist expertise — shared responsibility for the outcome"', '"Named consultant, every referral — not whoever is on the rota that day"', '"Outcome letter in five days, addressed to you — clinical substance, not a template"'],
+    bestCTA: 'Request Referral',
+    leadMagnet: 'Co-management protocol guide',
+    campaignType: ['Referral Network', 'LOC Events', 'Direct B2B Outreach'],
+    funnelStage: 'MOFU',
+    retentionOpportunities: ['Quarterly Clinical Update (brief, relevant, sent by email)', 'Annual Referral Relationship Review', 'CPD Partnership Events', 'LOC Presence'],
+    referralOpportunities: ['Daniel IS the referral source — measure monthly referral volume and peer recommendations generated'],
+    kpis: ['Monthly referral volume per partner practice', 'Outcome letter turnaround (target: 5 days)', 'Patient satisfaction from Daniel\'s referrals', 'Peer recommendations generated (advocacy multiplier)'],
+  },
+  conversionAction: 'Peer recommendation → direct phone call → first referral → outcome letter quality → ongoing partnership',
+  conversionMetric: 'Referrals per month per owner-optometrist partner; outcome letter turnaround time',
+  reviewDate: '31 Oct 2026',
+};
+
+const DEBORAH = {
+  id: 'deborah', initials: 'DF',
+  name: 'Deborah Fox', age: 37,
+  role: 'Practice Manager', company: 'Midland Vision Group (3 branches, South Birmingham)',
+  location: 'Harborne, Birmingham',
+  type: 'referrer', category: 'OPTOMETRIST REFERRER — PRACTICE MANAGER',
+  subcategory: 'Operations Lead (Workflow-Driven)',
+  photo: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&h=720&fit=crop&auto=format',
+  insurance: 'N/A (manages operational referral infrastructure for 3 practices)',
+  lifestyle: 'School runs, part-time CIPD Level 5 study, manages three branch rotas and a supplier review every quarter',
+  family: 'Two children (8 and 11). Partner works in accountancy. Reliable, structured household — mirrors her professional style.',
+  biography: 'Deborah is not a clinician. She manages three optometry practices for Midland Vision Group — a busy regional independent covering Harborne, Selly Oak, and Stirchley. She handles HR, supplier contracts, diary management, patient communication systems, staff training, and everything else the three practice owners have not had time for. The clinical team decides who to refer to; Deborah owns the relationship infrastructure — she ensures the referral form is correct, the right contact goes to the right address, and patients are told what to expect before they arrive. She is also the person who fields calls from confused patients who were not told about costs or given the wrong appointment time. When a referral relationship creates more admin work than it saves, Deborah tells the practice owners. They listen.',
+  oneSentenceSummary: 'The operational gatekeeper for three optometry practices — she does not choose the clinical partners, but she decides whether the day-to-day relationship works.',
+  quote: '"I don\'t care how impressive your consultants are. What I care about is: when I send a referral, does it get acknowledged promptly, does the patient know what to expect, and does the letter come back within a week?"',
+  clinicalGoals: ['N/A directly — she supports the clinical referral decision but does not make it herself'],
+  lifestyleGoals: ['A referral pathway that her admin team can process in under three minutes, without specialist training', 'No patient callbacks to the practice asking what happened at EyePros or what they need to bring'],
+  emotionalGoals: ['Feel that the referral relationship is under operational control — not a source of surprises', 'Present a clean referral audit at the quarterly practice review', 'Be the person who solved the referral problem — not who created it'],
+  emotionalDrivers: ['Operational control — she needs processes to be reliable, not a source of exceptions and phone calls', 'Professional credibility — when the referral system works, her credibility with the practice owners goes up', 'Protection from patient complaints — a confused patient is a potential complaint, and complaints land on her desk'],
+  decisionTriggers: ['Current provider generates three patient callbacks per week asking about costs and appointments — she has tracked this for four weeks', 'Practice owner asks her to review the referral partner after a patient complaint', 'She has read a testimonial from another practice manager about EyePros\' account contact model'],
+  personalMotivations: ['She wants one supplier who makes her job easier, not harder', 'She is studying for CIPD Level 5 and is building a portfolio of supplier management improvements — this is one of them'],
+  frustrations: ['Referrals that disappear into a system with no acknowledgement — she then chases, the practice owner then chases, time is lost', 'Patients calling back to ask "what do I need to bring?" because EyePros did not send a pre-appointment letter', 'Being invoiced incorrectly by providers — 30 minutes per query to resolve, and there are three this month'],
+  nhsFrustrations: ['N/A from her perspective — she manages private referral pathways and expects private administrative standards'],
+  fears: ['A patient safety issue arising from a referral that was not acknowledged or followed up — this falls on her professionally', 'A CQC inspection highlighting inconsistent referral documentation', 'An outcome letter arriving after a patient has already booked a second opinion somewhere else'],
+  financialConcerns: ['Invoice queries from patients who were not told about costs before attending — time-consuming and relationship-damaging', 'Provider billing inconsistency — different amounts for similar procedures without explanation'],
+  informationGaps: ['Exactly what communication patients receive from EyePros before their appointment, and when', 'How EyePros handles PMI billing — directly to insurer, or to patient, or both', 'Who the named account contact is and what their response time commitment is'],
+  functionalNeeds: ['Referral form under three minutes, digital preferred, paper accepted', 'Acknowledgement of each referral within 24 hours', 'Named account contact with a direct email and phone number — not a general enquiry line'],
+  clinicalNeeds: ['N/A — she defers all clinical questions to the practice owners and senior optometrists'],
+  emotionalNeeds: ['A provider who understands that her time matters', 'An account contact who is consistent, responsive, and does not make her repeat herself', 'Operational transparency — she wants to know what is happening with each referral, not have to ask'],
+  communicationNeeds: ['24-hour referral acknowledgement by email', 'Monthly utilisation summary (volume, outcomes, turnaround times)', 'Named account contact email and direct phone number', 'No bulk marketing emails to the practice general inbox'],
+  researchHabits: 'Practical and peer-network driven. Reads NHS England practice manager updates and attends Optical practice management events. Active in a LinkedIn group for optical practice managers. Will ask peers which providers are "easy to work with."',
+  techUsage: 'Power user of practice management software (Optix, Soehnle), email, and scheduling tools. Comfortable with digital referral portals if they are simple, well-documented, and do not require separate login training.',
+  infoSources: ['Optical practice manager LinkedIn group', 'Peer recommendation from other practice managers', 'Practice management events', 'Direct assessment of EyePros\' onboarding documentation'],
+  channels: ['Email', 'Phone', 'Practice management networks', 'Direct outreach from EyePros account manager'],
+  decisionStyle: 'Process-oriented and pragmatic. She evaluates based on operational fit, not clinical prestige. Three test referrals will tell her everything she needs to know — if they all go through cleanly (acknowledged, patient pre-informed, letter back on time), she tells the practice owners "this one works." If not, she documents the failures and escalates.',
+  typicalQuestions: [
+    '"What exactly happens when I submit a referral — what acknowledgement do I receive, and when?"',
+    '"What communication does the patient receive from EyePros before their appointment — and who sends it?"',
+    '"If a patient\'s PMI does not cover the consultation, who informs them — EyePros or us?"',
+    '"Who is my named account contact, and what is their response time commitment for operational queries?"',
+    '"Can I get a monthly summary of referrals sent, outcomes, and turnaround times?"',
+  ],
+  trustFactors: ['Named account manager who responds within 4 hours to operational queries', 'Written referral acknowledgement within 24 hours', 'Clear patient pre-appointment communication (what to bring, cost expectations)', 'Outcome letter consistency — every letter, not most letters', 'Monthly utilisation report available on request'],
+  traits: ['Organised', 'Pragmatic', 'Process-focused', 'Relationship-protective', 'Professionally ambitious'],
+  values: ['Reliability', 'Clarity', 'Efficiency', 'Accountability', 'Professional care'],
+  journey: [
+    { stage: 'Problem Recognition', icon: '⚠️', goal: 'Identify and quantify the operational cost of the current referral problem', action: 'Tracks patient callback volume for four weeks; logs 14 callbacks about costs and appointments from a single provider; presents data to practice owners at monthly meeting', thoughts: '"Fourteen callbacks. That\'s two and a half hours of admin time. Someone needs to fix this."', emotion: 3, emotionLabel: 'Frustrated', painPoints: ['No way to monitor referral quality without manual tracking', 'Practice owners are not yet prioritising this — she has to make the data compelling'], opportunities: ['EyePros referral acknowledgement and patient communication systems directly resolve Deborah\'s documented pain point'], channel: 'Internal tracking', touchpoint: 'None yet', uxRec: 'Develop a referral acknowledgement SLA that can be presented as a formal commitment during the onboarding conversation with practice managers' },
+    { stage: 'Internal Escalation', icon: '📊', goal: 'Get practice owner buy-in to review and change referral partner', action: 'Presents the callback log and time cost to the practice owners; wins agreement to evaluate alternatives', thoughts: '"Two and a half hours a month. Agreed — let\'s look at options."', emotion: 5, emotionLabel: 'Focused', painPoints: ['Practice owners are busy — she must make the case in under five minutes', 'Risk of status quo inertia — "it\'s not that bad" is the path of least resistance'], opportunities: ['Her internal business case for switching is built on time and operational cost — EyePros needs to speak the same language when contacted'], channel: 'Internal meeting', touchpoint: 'Practice owner agreement', uxRec: 'Develop an ROI-of-switching calculator for practice managers: time saved per month on callbacks, admin, and invoice queries' },
+    { stage: 'Provider Research', icon: '🔍', goal: 'Identify EyePros as the operational alternative', action: 'Asks in a LinkedIn practice manager group; searches for private ophthalmology providers with account management; a peer recommends EyePros specifically', thoughts: '"Three people said EyePros has an account manager who actually responds. That\'s what I need to verify."', emotion: 6, emotionLabel: 'Evaluating', painPoints: ['Most clinic websites talk about clinical quality — she cannot find operational information'], opportunities: ['A dedicated "for practice managers" section on the EyePros website showing the referral workflow and account contact model would directly convert Deborah', 'LinkedIn presence in optical practice management communities is a direct acquisition channel'], channel: 'LinkedIn, peer recommendation', touchpoint: 'EyePros practice manager content', uxRec: 'Create a "for practice managers" landing page that addresses: referral workflow, acknowledgement times, patient communication process, and account management model', isOpportunity: true },
+    { stage: 'Initial Contact', icon: '📞', goal: 'Speak to the EyePros account manager and assess operational fit', action: 'Calls EyePros; asks five operational questions about referral acknowledgement, patient communication, and account management', thoughts: '"The account manager knew the answers without putting me on hold. That\'s promising."', emotion: 7, emotionLabel: 'Cautiously positive', painPoints: ['Being passed between departments or receiving vague answers would end the conversation', 'Any "we\'ll get back to you on that" without a follow-up time commits nothing'], opportunities: ['A well-briefed account manager who can answer operational questions instantly converts Deborah at first contact'], channel: 'Phone', touchpoint: 'Account manager call', uxRec: 'Ensure account managers have instant access to operational SLA commitments and patient communication protocols — Deborah will ask detailed questions', isOpportunity: true },
+    { stage: 'Trial', icon: '📋', goal: 'Test the referral pathway with three real referrals', action: 'Agrees a three-referral trial; submits first referral; receives acknowledgement within two hours; patient pre-informed by EyePros the same day', thoughts: '"Acknowledged in two hours. Patient called to say they know what to bring and what it will cost. First one passed."', emotion: 8, emotionLabel: 'Monitoring', painPoints: ['Any variance across the three test referrals — one good, one bad — would raise concerns about consistency'], opportunities: ['The three-referral trial is Deborah\'s formal scoring process — treat all three referrals as VIP'], channel: 'Email / Referral form', touchpoint: 'Three-referral trial', uxRec: 'Internally flag first referrals from new practice manager contacts — consistency across the first three referrals determines whether the relationship continues' },
+    { stage: 'Confirmation', icon: '✅', goal: 'Confirm operational reliability and recommend EyePros to practice owners', action: 'All three outcome letters arrive within five days; zero patient callbacks; Deborah tells practice owners "this one works" at the monthly meeting', thoughts: '"Three referrals, three letters on time, zero callbacks. This is what I needed."', emotion: 9, emotionLabel: 'Satisfied', painPoints: ['Any letter arriving late — even on day six — would register as a data point', 'Practice owners will ask "are you sure?" — she needs clean data to answer that confidently'], opportunities: ['Deborah\'s confirmation to the practice owners is worth more than any marketing asset', 'Ask her: what could EyePros do better? She will tell you with specific precision'], channel: 'Internal meeting', touchpoint: 'Practice owner recommendation', uxRec: 'At the end of the trial period, proactively request a brief operational review with Deborah — her feedback is actionable and her endorsement is converting', isOpportunity: true },
+    { stage: 'Ongoing Management', icon: '📆', goal: 'Maintain an operationally reliable referral relationship long-term', action: 'Manages monthly referral volume across three practices; reviews monthly summary; contacts account manager twice with operational queries — both resolved same day', thoughts: '"This is what a professional supplier relationship looks like. I wish all of them were like this."', emotion: 9, emotionLabel: 'Confident', painPoints: ['Any change in account manager without introduction would reset her operational confidence', 'Monthly summary being late or incomplete would surface as an issue at the quarterly practice review'], opportunities: ['Deborah is a retention asset and a peer referral channel — she talks to other practice managers constantly', 'Include her in any service improvement conversations — she will have data and suggestions'], channel: 'Email, monthly summary', touchpoint: 'Monthly utilisation report + account manager relationship', uxRec: 'Make the monthly utilisation summary automatic and consistent — it is Deborah\'s proof point when presenting the referral relationship to the practice owners', isOpportunity: true },
+  ],
+  decision: {
+    whySeeksCare: 'The current referral provider generates a measurable administrative burden — callbacks, invoice queries, outcome letter delays. Deborah has quantified this and presented it as a business case for change.',
+    whyDelays: 'Change management risk — switching referral partners involves retraining staff, updating templates, and a trial period. She delays until the cost of switching is clearly less than the cost of staying.',
+    whyPrivate: 'N/A — she manages private referral pathways as a matter of course.',
+    whyEyePros: 'Peer recommendation from another practice manager citing responsive account management and consistent outcome letter quality.',
+    whyCompetitor: 'Any provider with an equivalent or stronger peer reputation for operational reliability and account management responsiveness.',
+    infoThatConverts: 'A named account manager who answers operational questions immediately and a clear written statement of the referral acknowledgement and outcome letter SLA.',
+    ultimateConverter: 'Three test referrals that all go through cleanly — acknowledged within 24 hours, patients pre-informed, outcome letters back within 5 days, zero callbacks.',
+  },
+  competitors: [
+    SHARED_COMPETITORS.optegra('National brand with referral infrastructure, known to larger practices.', 'EyePros offers a more responsive, named account management model than a national chain — Deborah values personal responsiveness over brand recognition.'),
+    { name: 'Current provider (status quo)', whyConsider: 'No switching cost — the workflow already exists even if it is imperfect.', whyEyeProsWins: 'EyePros must demonstrate measurably lower admin burden — specifically: fewer callbacks, consistent outcome letters, and a named contact who responds.' },
+  ],
+  keyMessages: [
+    'One referral form, acknowledged within 24 hours — no chasing required from your team',
+    'Named account manager with a direct number — one call, one answer',
+    'Outcome letter within 5 working days, every referral — consistent, not just for the trial period',
+    'Patients pre-informed by EyePros before their appointment — costs, preparation, and what to expect',
+  ],
+  contentRecommendations: ['"For practice managers" landing page: referral workflow, SLAs, account management model', 'Referral pathway one-pager: form → acknowledgement → appointment → letter (visual timeline)', 'Account management commitment document: response times, escalation process, monthly reporting', 'Practice manager testimonial: peer-to-peer endorsement from an independent practice manager'],
+  marketing: {
+    acquisitionPriority: 4,
+    conversionDifficulty: 'Medium',
+    lifetimeValue: 'High',
+    bestChannels: ['LinkedIn (optical practice manager groups)', 'Direct Outreach (account manager to practice manager)', 'Practice Management Events', 'Peer Recommendation (PM-to-PM)'],
+    searchIntent: ['"optometry referral pathway provider"', '"private ophthalmology account management"', '"optical practice referral management"'],
+    socialBehaviour: {
+      platforms: ['LinkedIn (professional, reads and occasionally posts)', 'Optical practice manager LinkedIn groups', 'Professional operations networks'],
+      contentConsumed: ['Practice management best practice', 'NHS England practice updates', 'Supplier management content', 'Optometry operational efficiency content'],
+      postingHabits: 'Occasional professional posts on LinkedIn about practice management topics. Active in LinkedIn and WhatsApp groups for optical practice managers.',
+      trustSources: ['Peer recommendation from a trusted practice manager colleague', 'Named account manager who demonstrates responsiveness at first contact', 'Written operational SLAs (she wants them in writing)', 'Monthly utilisation data (evidence the system works)'],
+    },
+    contentThatConverts: ['"For practice managers" landing page showing referral workflow and SLAs', 'Referral process timeline infographic: form → 24hr acknowledgement → appointment → 5-day letter', 'Account management commitment document with named contact and response times', 'Practice manager case study: time saved per month by switching referral partner'],
+    emotionalTriggers: ['Operational control — a reliable process she can document and defend', 'Professional credibility — being the person who fixed the referral problem', 'No callbacks — every callback costs her 20 minutes and represents a failure she cannot prevent'],
+    mainObjections: ['"Will this actually work consistently — or just for the first three referrals?"', '"What happens when my account manager is on holiday — is there a backup?"', '"If an outcome letter is late, what is the escalation process?"'],
+    messagingAngles: ['"One referral, acknowledged in 24 hours, letter back in 5 days — every time, not just the first time"', '"Named account manager, one call, one answer — not a call centre queue"', '"Your patients are pre-informed by EyePros before they arrive — zero callbacks about costs or preparation"'],
+    bestCTA: 'Request Referral',
+    leadMagnet: 'GP Referral Pathway Guide',
+    campaignType: ['Direct B2B Outreach', 'LinkedIn', 'Practice Management Networks'],
+    funnelStage: 'MOFU–BOFU',
+    retentionOpportunities: ['Monthly Utilisation Summary (automatic)', 'Annual Operational Review', 'SLA Adherence Reporting', 'Account Manager Consistency'],
+    referralOpportunities: ['Deborah manages the referral pathway — her endorsement to the practice owners IS the referral relationship decision', 'Her peer network recommendation to other practice managers is a secondary acquisition channel'],
+    kpis: ['Referral acknowledgement rate within 24 hours', 'Outcome letter turnaround (5-day target)', 'Patient callback rate from EyePros referrals', 'Practice manager satisfaction score (quarterly check-in)'],
+  },
+  conversionAction: 'Peer recommendation → account manager call → three-referral trial → clean outcomes → practice owner endorsement',
+  conversionMetric: 'Referral acknowledgement rate; outcome letter turnaround; patient callback rate from practice',
+  reviewDate: '31 Jan 2027',
+};
+
+const NEIL = {
+  id: 'neil', initials: 'NP',
+  name: 'Neil Patel', age: 49,
+  role: 'Regional Clinical Director', company: 'Clarity Vision Group (12 practices, West & East Midlands)',
+  location: 'Solihull, West Midlands',
+  type: 'referrer', category: 'OPTOMETRIST REFERRER — GROUP DIRECTOR',
+  subcategory: 'Multi-site Regional Decision-Maker (Strategic Partnership)',
+  photo: 'https://images.unsplash.com/photo-1644794942416-e983db6eea8a?w=600&h=720&fit=crop&auto=format',
+  insurance: 'N/A (sets referral standards and provider agreements for 12 practices)',
+  lifestyle: 'Board-facing executive schedule, regular travel across Midlands sites, ABDO conference annual attendee, golf at weekends',
+  family: 'Married, three grown children. Solihull home. Comfortable managing complexity — at work and at home.',
+  biography: 'Neil is the Regional Clinical Director for Clarity Vision Group, a 12-practice independent group across the West and East Midlands. His role sits above individual practice management — he sets clinical standards, manages supplier and referral partnerships, and reports to the board on quality outcomes. He has 20 years of clinical optometry experience and spent five years in NHS commissioning before moving into group management. He is data-driven, board-facing, and acutely aware that one poor referral outcome at any of his 12 practices becomes his reputational problem. A recent internal audit revealed that his 12 practices are using four different private ophthalmology providers — some refer to Newmedica, some to independent consultants, two to nobody. He has been tasked by the board with standardising the group\'s ophthalmology referral pathway before the next annual review.',
+  oneSentenceSummary: 'A data-driven group clinical director who needs a single, consistent private ophthalmology partner across 12 practices — with board-ready reporting to prove it is working.',
+  quote: '"I need a provider I can standardise across twelve practices. That means consistent quality, a single account manager, and data I can take to the board — not a different conversation with each clinic."',
+  clinicalGoals: ['Consistent referral quality across all 12 practices — same standard regardless of which site originates the referral', 'A provider covering the full clinical spectrum: cataracts, glaucoma, AMD, complex dry eye, medical retina', 'Rapid access pathway for urgent cases that can be guaranteed across the group, not negotiated site by site'],
+  lifestyleGoals: ['A group referral agreement that simplifies his management burden — one contract, one contact, one reporting structure', 'Quarterly board reporting on referral outcomes that he can present without editing', 'A pilot model that lets him prove quality before committing the whole group'],
+  emotionalGoals: ['Close the referral inconsistency gap before the next board meeting — it reflects on his clinical governance oversight', 'Have confidence that any adverse event at any practice is covered by a robust referral pathway', 'Be known as the director who professionalised the group\'s ophthalmology referral programme'],
+  emotionalDrivers: ['Board accountability — the board expects clinical consistency across the group and will ask him to evidence it', 'Clinical governance — one missed urgent referral at any of 12 sites is his responsibility', 'Professional legacy — he is building a model he can present at conferences and use as a benchmark for the sector'],
+  decisionTriggers: ['Internal audit identified four different ophthalmology referral providers across the group with no consistent standard', 'Board has tasked him with resolving inconsistency before Q3 annual review', 'Two practices have been referring to nobody — a governance gap that needs immediate resolution'],
+  personalMotivations: ['He wants to build something replicable and scalable — a group referral programme that other regional directors can use as a template', 'The standardisation project is the most visible item on his clinical governance agenda this year'],
+  frustrations: ['Providers who cannot handle group volumes or who treat each practice as a separate referral relationship', 'Marketing contacts who do not understand group commissioning — they talk to him like he is an individual practice owner', 'Reporting that requires manual extraction — he needs data delivered in board-ready format, not raw numbers he has to format himself'],
+  nhsFrustrations: ['N/A — he operates in private referral pathways and understands the commissioning context from his NHS background'],
+  fears: ['A serious adverse outcome at one practice because a referral pathway was inconsistent — CQC implications and board fallout', 'A pilot that performs well but cannot be replicated across all 12 sites at the same quality level', 'Being sold a group partnership by a provider that cannot actually deliver at group scale'],
+  financialConcerns: ['He expects a group commercial arrangement — not individual retail pricing × 12', 'Pilot cost structure must be scalable to full group without renegotiation', 'ROI framing for the board — the standardisation programme needs to demonstrate value, not just clinical quality'],
+  informationGaps: ['Can EyePros genuinely guarantee consistent quality across 12 referral relationships simultaneously?', 'What does the group account management structure look like — who is his senior contact?', 'Does EyePros have the capacity and clinical staffing to absorb a group contract of this volume?'],
+  functionalNeeds: ['Group referral agreement with standardised service level commitments across all 12 practices', 'Named senior account manager (not a coordinator — he needs someone who can make decisions)', 'Monthly group data dashboard: referral volumes by practice, outcome letter turnaround, urgent case access times'],
+  clinicalNeeds: ['Consultant-led care guarantee across all group referrals', 'Consistent urgent access pathway: defined timelines for acute angle closure, wet AMD, and high-IOP suspects', 'Complex case escalation protocol — who does a practice call if a patient presents with an unexpected finding at the referral appointment'],
+  emotionalNeeds: ['Treated as a strategic partner, not a large individual client', 'Honest conversation about EyePros\' capacity constraints before he commits — he needs to know the ceiling', 'Quarterly business review with senior EyePros leadership — not an account coordinator'],
+  communicationNeeds: ['Monthly group data summary: volumes, turnaround times, outcomes (anonymised)', 'Quarterly business review with EyePros senior contact', 'Named escalation route for clinical governance queries', 'Board-ready annual report on the referral partnership'],
+  researchHabits: 'Data and evidence-driven. Reads NHS England optometry contract updates, GOC strategic publications, and Optometry Today. Attends Optician conference and ABDO event annually. Makes purchasing decisions through network peer referral among regional directors at comparable organisations.',
+  techUsage: 'Advanced user of practice management and reporting platforms, board pack production tools. Comfortable with data dashboards and complex digital systems. Will expect EyePros to integrate with his existing systems or provide a simple standalone data feed.',
+  infoSources: ['Peer recommendation among regional group clinical directors', 'ABDO and Optician conference contacts', 'NHS commissioning network (legacy relationships from his NHS years)', 'Internal audit data and board requirements'],
+  channels: ['LinkedIn (professional, posts occasionally on clinical leadership topics)', 'Conference networking', 'Direct B2B outreach (relationship-initiated)', 'NHS-aligned peer network'],
+  decisionStyle: 'Strategic, data-driven, and procurement-process-oriented. He will evaluate EyePros on three criteria: clinical quality evidence, group account management capability, and data reporting infrastructure. Pilot-first is his model — two practices for three months, data review, then board recommendation for full rollout. Timescale: 6–12 months from first contact to group agreement.',
+  typicalQuestions: [
+    '"Can you give me a group referral agreement with consistent service standards across all 12 practices — in writing?"',
+    '"What does your group account management structure look like — who is my senior relationship contact and what authority do they have?"',
+    '"Can you provide monthly referral data by practice — volumes, turnaround times, outcomes — in a board-ready format?"',
+    '"What is the group commercial arrangement — are you pricing this as 12 individual practices or as a group contract?"',
+    '"Tell me about your clinical governance process — what happens if a referral at one of my practices results in a patient complaint?"',
+  ],
+  trustFactors: ['Senior account management — a named director-level contact who can make decisions', 'Written group service level agreement with defined commitments', 'Pilot data from 2 practices demonstrating consistency before full rollout', 'Board-ready reporting infrastructure', 'Clinical governance documentation (CQC, GMC registrations, complication rates)'],
+  traits: ['Strategic', 'Data-driven', 'Board-focused', 'Systems-oriented', 'Exacting'],
+  values: ['Consistency', 'Clinical governance', 'Accountability', 'Evidence', 'Strategic partnership'],
+  journey: [
+    { stage: 'Problem Recognition', icon: '📋', goal: 'Identify and formalise the referral inconsistency problem', action: 'Conducts internal audit; documents four different providers across 12 practices; two practices with no pathway; presents findings to board', thoughts: '"Twelve practices, four providers, no consistency, two gaps. This is a governance risk. I need to resolve this before the annual review."', emotion: 4, emotionLabel: 'Concerned', painPoints: ['The board will want evidence of resolution, not just acknowledgement of the gap', 'Two practices referring to nobody is a clinical risk he cannot defend in a CQC inspection'], opportunities: ['EyePros must have a group service proposition — a standard clinic-by-clinic conversation will not reach Neil'], channel: 'Internal audit', touchpoint: 'None yet — board mandate initiates the search', uxRec: 'Develop a group referral programme proposition that Neil can find when he searches for "private ophthalmology group referral partner Midlands"' },
+    { stage: 'Provider Research', icon: '🔍', goal: 'Identify private ophthalmology providers with genuine group capability', action: 'Researches Midlands private ophthalmology providers; eliminates those without group infrastructure; contacts two for initial conversations including EyePros', thoughts: '"Most of them are set up for individual practices. I need someone who understands group commissioning."', emotion: 5, emotionLabel: 'Evaluating', painPoints: ['No provider has a visible "group referral" proposition on their website — he is having to deduce capability from general content', 'Marketing teams at large chains cannot engage at his level of procurement sophistication'], opportunities: ['A group referral page and a downloadable group partnership proposal on the EyePros website would intercept Neil at research stage', 'LinkedIn content on clinical governance and group optometry partnerships reaches him professionally'], channel: 'LinkedIn, website, peer recommendation', touchpoint: 'EyePros group referral content', uxRec: 'Create a "Group Referral Partnership" section on the EyePros website with a downloadable group service overview — this is the missing landing page for the Neil archetype', isOpportunity: true },
+    { stage: 'Initial Proposal', icon: '📊', goal: 'Receive a group service proposal that addresses his specific requirements', action: 'Contacts EyePros; speaks to senior account manager; requests a group service proposal including SLAs, account management model, data reporting, and commercial arrangement', thoughts: '"The account manager understood immediately that this was a group commissioning conversation. That\'s different."', emotion: 7, emotionLabel: 'Engaged', painPoints: ['Any proposal that is a standard individual practice document with "×12" added will be dismissed', 'Response time to the proposal request signals organisational capability'], opportunities: ['A professionally structured group proposal — referral standards, SLAs, account management, data reporting, commercial framework — differentiates EyePros as a genuine group partner'], channel: 'Email / Phone', touchpoint: 'Group service proposal', uxRec: 'Develop a formal group referral partnership proposal template — clinical SLAs, account management structure, data reporting commitment, commercial framework. This is the highest-value B2B document EyePros can produce.', isOpportunity: true },
+    { stage: 'Pilot Decision', icon: '🔬', goal: 'Approve a two-practice pilot to test group capability', action: 'Agrees a three-month pilot at Solihull and Coventry practices; KPIs defined: outcome letter turnaround, urgent access time, patient satisfaction score, referral volume', thoughts: '"If it works at two, I can take the data to the board and get approval for the full rollout."', emotion: 7, emotionLabel: 'Committed to process', painPoints: ['Pilot KPIs must be agreed in writing before the pilot starts — verbal commitments are insufficient', 'Any significant variance between the two pilot practices signals a consistency problem'], opportunities: ['The pilot is Neil\'s proof mechanism — treat pilot practices as priority accounts and proactively share data throughout'], channel: 'Email / Contract', touchpoint: 'Pilot agreement', uxRec: 'Assign a senior account manager to both pilot practices and provide a weekly data update throughout the pilot period — proactive data sharing signals the group reporting capability he is evaluating' },
+    { stage: 'Pilot Review', icon: '📈', goal: 'Assess pilot data and prepare board recommendation', action: 'Three-month pilot data reviewed: outcome letters at 4.2 days average, zero urgent access failures, patient satisfaction 4.6/5, consistent across both practices', thoughts: '"Four point two days, consistent across both sites. That\'s the evidence I need. Board will approve this."', emotion: 9, emotionLabel: 'Confident', painPoints: ['Data that is close but not clearly positive makes the board recommendation difficult to defend', 'Any inconsistency between Solihull and Coventry practices would raise questions about group scalability'], opportunities: ['A clean pilot data pack that Neil can present to the board without editing is the final conversion step', 'Offer to join the board meeting (or provide a statement) — this signals partnership confidence'], channel: 'Data report / Board presentation', touchpoint: 'Pilot data pack', uxRec: 'At pilot end, prepare a board-ready data summary — one-page executive format, headline metrics, comparison against baseline. This is what gets EyePros the group contract.', isOpportunity: true },
+    { stage: 'Group Rollout', icon: '🚀', goal: 'Roll out the referral partnership across all 12 practices', action: 'Group referral agreement signed; 12-practice rollout completed over six weeks; all practice managers briefed; EyePros account manager meets with each site', thoughts: '"Twelve practices, one provider, one standard. This is what the audit required."', emotion: 9, emotionLabel: 'Resolved', painPoints: ['Rollout logistics — each practice manager needs to be individually briefed and onboarded', 'Any early-stage failures during rollout would require immediate escalation and response'], opportunities: ['Group rollout is the relationship milestone that generates loyalty — proactive onboarding support at each site cements the partnership'], channel: 'Direct / Email / Site visits', touchpoint: 'Group onboarding', uxRec: 'Assign a dedicated group rollout coordinator — the transition from pilot to full group must be managed as a project, not a series of individual conversations' },
+    { stage: 'Strategic Partnership', icon: '🏆', goal: 'Maintain and develop the group referral partnership as a strategic asset', action: 'Quarterly business reviews with EyePros senior leadership; annual board report produced jointly; Neil presents the programme at the ABDO conference as a governance case study', thoughts: '"This is a partnership now, not a supplier contract. That\'s what I was looking for."', emotion: 10, emotionLabel: 'Proud', painPoints: ['Annual contract renewal requires ongoing evidence of quality — complacency would be detected immediately', 'Changes in EyePros senior leadership without introduction would require relationship rebuilding'], opportunities: ['Neil presenting the programme at ABDO is the most powerful marketing asset EyePros can acquire in the group optometry sector', 'Co-produce the ABDO case study — this reaches every regional clinical director in the UK'], channel: 'Conference, board, LinkedIn', touchpoint: 'Joint conference presentation / annual report', uxRec: 'Invest in the strategic relationship with Neil — a co-produced case study at ABDO is worth more than 18 months of direct marketing to the group optometry sector', isOpportunity: true },
+  ],
+  decision: {
+    whySeeksCare: 'Internal audit identified inconsistent ophthalmology referral pathways across 12 practices. Board mandate to resolve before Q3 annual review. Two practices have no pathway at all — a clinical governance gap.',
+    whyDelays: 'Procurement process — pilot required before group commitment, board approval timelines, internal sign-off procedures. The delay is process-driven, not reluctance. Timescale: 6–12 months from first contact to signed group agreement.',
+    whyPrivate: 'N/A — he operates in private referral pathways. The question is which private provider can deliver at group scale.',
+    whyEyePros: 'Group account management capability, consultant-led clinical standard, data reporting infrastructure, and a pilot model that lets him prove quality before full commitment.',
+    whyCompetitor: 'Optegra or Newmedica if they can demonstrate stronger group infrastructure, an existing group pricing framework, or a more established group account management model.',
+    infoThatConverts: 'A professionally structured group service proposal and a pilot data pack from two practices showing consistent, measurable quality outcomes.',
+    ultimateConverter: 'Pilot data that is clean, consistent across both sites, and presentable to the board without editing — plus a senior EyePros contact who understands that this is a strategic relationship, not a sales transaction.',
+  },
+  competitors: [
+    SHARED_COMPETITORS.optegra('National brand with established group infrastructure and existing multi-site relationships.', 'EyePros offers more responsive, consultant-led care with a more personal group account management model — Optegra\'s volume scale can work against clinical consistency.'),
+    SHARED_COMPETITORS.newmedica('NHS-associated credibility, familiar across many practices in the Midlands.', 'EyePros provides genuinely consultant-led care and a purpose-built group account management structure — Newmedica\'s NHS model does not translate directly to group private referral management.'),
+    { name: 'Multiple individual consultants (current status quo)', whyConsider: 'Each practice has an existing relationship — switching involves change management at site level.', whyEyeProsWins: 'Consistency, governance, and reporting are impossible across four separate individual provider relationships — only a single group partner delivers what the board requires.' },
+  ],
+  keyMessages: [
+    'One provider, twelve practices, consistent quality — a group referral partnership built for clinical governance',
+    'Named group account manager, monthly data by practice, quarterly board-ready reporting',
+    'Pilot-first — let the data prove it at two practices before you commit the group',
+    'Senior-level relationship — we meet quarterly with your clinical director, not your practice admin',
+  ],
+  contentRecommendations: ['"Group Referral Partnership" landing page with downloadable group service overview', 'Group service proposal template: SLAs, account management, data reporting, commercial framework', 'Pilot case study: 3-month pilot data pack in board-ready format', 'ABDO/Optician conference content: "Clinical governance in multi-site optometry — a referral programme case study"'],
+  marketing: {
+    acquisitionPriority: 5,
+    conversionDifficulty: 'Hard',
+    lifetimeValue: 'Very High',
+    bestChannels: ['LinkedIn (clinical leadership content)', 'ABDO / Optician Conference Networking', 'Peer Recommendation (regional director network)', 'Direct Senior Outreach'],
+    searchIntent: ['"private ophthalmology group referral partner"', '"multi-site optometry referral programme"', '"group clinical governance ophthalmology"', '"Midlands group optometry referral"'],
+    socialBehaviour: {
+      platforms: ['LinkedIn (professional, occasional posts on clinical governance and optometry leadership)', 'ABDO professional network', 'NHS commissioning legacy network'],
+      contentConsumed: ['Clinical governance and quality frameworks', 'NHS optometry commissioning updates', 'Group practice management thought leadership', 'Board-level healthcare strategy content'],
+      postingHabits: 'Posts occasionally on LinkedIn about clinical leadership, governance, and multi-site optometry. Will engage with high-quality content that demonstrates understanding of group commissioning.',
+      trustSources: ['Regional director peer recommendation (the most powerful channel)', 'Quality of EyePros group service proposal document', 'Pilot data from his own trial', 'ABDO conference credibility signals — who is presenting, who attends the EyePros stand'],
+    },
+    contentThatConverts: ['Group referral partnership landing page with downloadable service overview', 'Board-ready pilot data template (shows him what the reporting will look like before he commits)', 'Group service proposal — clinical SLAs, account management, data infrastructure, commercial framework', 'ABDO conference presence and co-produced case study (after the relationship is established)'],
+    emotionalTriggers: ['Board accountability — delivering a consistent, evidenced referral programme that he can defend in governance review', 'Clinical governance control — one provider, one standard, no gaps', 'Professional legacy — building the group referral model that others in the sector will emulate'],
+    mainObjections: ['"Can you actually deliver consistent quality across twelve practices simultaneously — not just in a pilot?"', '"Do you have a genuine group commercial arrangement or will this be priced as individual practices?"', '"Who is the senior relationship contact — someone who can make decisions, not a coordinator?"'],
+    messagingAngles: ['"One provider, twelve practices, one standard — group referral governance built for the board room"', '"Pilot-first: prove it at two practices, then scale — we provide the data"', '"Senior relationship: quarterly business review with clinical director level, not account coordination"'],
+    bestCTA: 'Request Proposal',
+    leadMagnet: 'Corporate Eye Health ROI Guide',
+    campaignType: ['LinkedIn', 'Direct B2B', 'ABDO / Optician Conference', 'Peer Recommendation'],
+    funnelStage: 'TOFU–MOFU',
+    retentionOpportunities: ['Annual Contract Renewal', 'Quarterly Business Review', 'Group Expansion (additional practices)', 'Co-produced Conference Case Study'],
+    referralOpportunities: ['Neil\'s ABDO peer network — once the programme is established, he becomes an advocacy channel for other regional directors', 'Board-level recommendations to peer organisations'],
+    kpis: ['Number of practices active in the group agreement', 'Referral volume per practice per month', 'Outcome letter consistency score across all 12 sites', 'Board report quality score (Neil\'s assessment)', 'Group contract renewal rate'],
+  },
+  conversionAction: 'LinkedIn / peer recommendation → group proposal request → two-practice pilot → board presentation → 12-practice group agreement',
+  conversionMetric: 'Group contract signed; practices active in agreement; monthly referral volume at group level; annual contract renewal rate',
+  reviewDate: '31 Jul 2027',
+};
+
+// ─── Export ──────────────────────────────────────────────────────────────────
+
+const MARGARET = {
+  id: 'margaret', initials: 'MT',
+  name: 'Margaret Thornton', age: 68,
+  role: 'Retired Headteacher', company: 'State Secondary School (Retired)',
+  location: 'Harborne, Birmingham',
+  type: 'patient', category: 'PMI — BILATERAL CATARACT',
+  subcategory: 'PMI-Funded, Consultant-Led',
+  photo: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=600&h=720&fit=crop&auto=format',
+  insurance: 'BUPA', lifestyle: 'Active retirement — daily walking, National Trust volunteer, weekly bridge club, annual European river cruise',
+  family: 'Married to Peter (retired engineer). Two adult sons, four grandchildren. Peter drives but she prefers her own independence.',
+  biography: 'Margaret retired five years ago after thirty years leading a large state secondary school. She is organised, decisive, and accustomed to managing complex operations. Her optometrist diagnosed bilateral cataracts eighteen months ago, and she has watched them progress from mild to moderate. Night driving is now difficult and she has stopped driving after dark. Her BUPA policy through Peter\'s company pension covers ophthalmology and she has never used it for anything significant. She wants this resolved efficiently by someone she can trust, and she expects the process to be as well-organised as she would have run it herself.',
+  oneSentenceSummary: 'A retired headteacher with BUPA cover who expects private cataract surgery to be efficient, transparent, and consultant-led.',
+  quote: '"I\'ve had this BUPA policy for fifteen years and never used it. If I\'m going to use it now, I want the best consultant available — not a lottery."',
+  clinicalGoals: ['Bilateral cataract removal with premium IOL assessment', 'Restore confident driving — especially at night and in rain', 'Reduce dependence on reading glasses if clinically appropriate'],
+  lifestyleGoals: ['Resume evening driving to bridge club and National Trust events', 'Read comfortably without constantly changing glasses', 'Travel without worrying about deteriorating vision'],
+  emotionalGoals: ['Feel confident the surgeon is the best available under her BUPA cover', 'Maintain dignity and control throughout the process', 'Get this done without it becoming a family project'],
+  emotionalDrivers: ['Independence — she managed 1,200 pupils, she can manage her own healthcare', 'Quality expectation — she has paid BUPA premiums for fifteen years and expects premium service', 'Efficiency — she does not tolerate wasted time or disorganised processes'],
+  decisionTriggers: ['Stopped driving after dark three months ago — Peter now drives her to bridge', 'Optometrist confirmed bilateral progression and recommended surgical referral', 'Friend\'s husband had cataract surgery at Newmedica and described it as "a conveyor belt"'],
+  personalMotivations: ['She has paid for BUPA coverage for years and this is the first time it feels genuinely necessary', 'Her friend\'s negative experience at a high-volume provider confirmed she wants consultant-led care'],
+  frustrations: ['BUPA\'s provider directory does not clearly distinguish consultant-led practices from high-volume chains', 'Clinic websites that don\'t show which consultant will actually perform surgery', 'Being treated as a number in a production-line cataract service'],
+  nhsFrustrations: ['NHS waiting list quoted at 9–12 months for routine bilateral cataract', 'No choice of consultant on the NHS pathway', 'Her optometrist said private would be faster and she could choose her surgeon'],
+  fears: ['Getting a different surgeon on the day than the one she consulted with', 'Complications from a surgeon who performs the procedure too quickly or routinely', 'The BUPA pre-authorisation process being complicated or delayed'],
+  financialConcerns: ['BUPA covers standard cataract surgery but premium IOL upgrade may require a top-up of £1,500–£2,500 per eye', 'Wants complete clarity on what BUPA covers vs. what she pays before committing', 'No tolerance for surprise invoices after the procedure'],
+  informationGaps: ['Which premium IOL options are available under BUPA and what is the self-pay top-up?', 'EyePros\' specific BUPA pre-authorisation process and timeline', 'Whether the same consultant performs both eyes or whether this varies'],
+  functionalNeeds: ['Phone booking with a knowledgeable person who understands BUPA pathways', 'Written confirmation of BUPA coverage and any self-pay element before consultation', 'Named consultant confirmed at booking — same surgeon for both eyes'],
+  clinicalNeeds: ['Bilateral cataract removal with thorough premium IOL assessment', 'Pre-operative biometry and tear film assessment', 'Post-operative protocol with clear recovery timeline for each eye'],
+  emotionalNeeds: ['Treated as an intelligent, capable adult — not a confused elderly patient', 'Unhurried consultation that respects her questions', 'Confidence that the practice is well-organised and professionally run'],
+  communicationNeeds: ['Phone preferred for booking; email for confirmations', 'Written patient information pack before consultation', 'No marketing follow-up — she will return when she is ready'],
+  researchHabits: 'Methodical and thorough. Reads BUPA provider directory, checks consultant credentials on GMC register, reads Google reviews (but weights them carefully), asks friends who have had the procedure. Does not use social media for health research.',
+  techUsage: 'Comfortable with iPad, email, and Google. Uses BUPA\'s online portal to check coverage. Distrusts heavily marketed health content.',
+  infoSources: ['BUPA provider directory', 'GMC register', 'Google reviews (read critically)', 'Friends and former colleagues', 'Optometrist recommendation'],
+  channels: ['Phone', 'Email', 'BUPA portal'],
+  decisionStyle: 'Organised and decisive. She gathers information systematically, forms a clear view, then acts. She does not second-guess once committed. She expects the provider to match her level of organisation.',
+  typicalQuestions: [
+    '"Which consultant will perform my surgery and what are their credentials?"',
+    '"Is EyePros a BUPA-recognised provider and what does my policy cover?"',
+    '"What is the top-up cost for a premium lens and what are my options?"',
+    '"Will the same consultant see me for both the consultation and the surgery?"',
+    '"What is your timeline from first consultation to second eye completion?"',
+  ],
+  trustFactors: ['BUPA-recognised provider status', 'Named consultant with GMC credentials', 'Google reviews from real patients', 'Clear pre-authorisation process', 'Recommendation from optometrist or friend'],
+  traits: ['Organised', 'Decisive', 'High standards', 'Direct', 'Independent'],
+  values: ['Efficiency', 'Transparency', 'Clinical excellence', 'Respect', 'Value for money'],
+  journey: [
+    { stage: 'Awareness', icon: '👁', goal: 'Notice progressive visual deterioration', action: 'Driving at night becomes increasingly difficult; stops driving after dark', thoughts: 'I know this is cataracts. My optometrist has been monitoring them for eighteen months.', emotion: 5, emotionLabel: 'Accepting', painPoints: ['Losing independence by not driving at night', 'Gradual but undeniable progression'], opportunities: ['Content: "When should you consider cataract surgery?"', 'Optometrist referral at the right moment'], channel: 'Optometrist', touchpoint: 'Regular optometrist review', uxRec: 'Ensure optometrists have clear referral materials for BUPA-covered patients' },
+    { stage: 'Referral Decision', icon: '📝', goal: 'Decide to use BUPA and find the right provider', action: 'Optometrist recommends surgical referral; Margaret checks BUPA portal for recognised providers', thoughts: 'I have been paying these premiums for fifteen years. This is exactly what they are for.', emotion: 6, emotionLabel: 'Determined', painPoints: ['BUPA directory does not clearly show consultant-led vs. chain providers', 'Too many options with no way to assess quality'], opportunities: ['EyePros listed clearly on BUPA directory with consultant profiles', 'Landing page: "Cataract surgery with BUPA at EyePros"'], channel: 'BUPA portal / Google', touchpoint: 'BUPA provider search', uxRec: 'Create a dedicated BUPA/PMI landing page with pre-authorisation process explained', isOpportunity: true },
+    { stage: 'Research', icon: '🔍', goal: 'Shortlist providers and verify consultant credentials', action: 'Reads EyePros website, checks consultant GMC registration, reads Google reviews, asks friend about their experience', thoughts: 'The consultant\'s credentials look strong. The reviews mention him by name — that\'s a good sign.', emotion: 6, emotionLabel: 'Evaluating', painPoints: ['Competitor websites feel generic and sales-led', 'Hard to tell if reviews are genuine'], opportunities: ['Named consultant profiles with surgical volume and patient reviews', 'Transparent BUPA process page'], channel: 'Website, Google', touchpoint: 'EyePros consultant page', uxRec: 'Ensure consultant profiles include GMC number, specialisms, and named patient reviews' },
+    { stage: 'Comparison', icon: '⚖️', goal: 'Compare EyePros to one alternative', action: 'Friend describes Newmedica experience as impersonal; Margaret reads Optegra reviews; EyePros consultant page stands out', thoughts: 'My friend saw a different surgeon than the one she consulted with. That would not be acceptable to me.', emotion: 5, emotionLabel: 'Cautious', painPoints: ['Competitor model assigns surgeons on the day', 'High-volume feel in competitor reviews'], opportunities: ['Consultant continuity is the decisive differentiator', 'EyePros guarantee: same consultant from assessment to aftercare'], channel: 'Word of mouth, website', touchpoint: 'Friend recommendation + website comparison', uxRec: 'Prominently state the consultant continuity guarantee on the BUPA landing page', isOpportunity: true },
+    { stage: 'First Contact', icon: '📞', goal: 'Confirm BUPA coverage and book consultation', action: 'Calls EyePros; asks about BUPA pre-authorisation; reception explains the process clearly', thoughts: 'They knew exactly how BUPA works. That tells me they do this regularly.', emotion: 7, emotionLabel: 'Reassured', painPoints: ['If the phone team cannot explain BUPA process, she will call elsewhere', 'Any suggestion of complexity or delay in pre-auth will create doubt'], opportunities: ['Phone team trained in PMI pathways is a major conversion factor', 'Offer to handle pre-authorisation on her behalf'], channel: 'Phone', touchpoint: 'First phone call', uxRec: 'Train reception staff specifically on BUPA/AXA/Vitality pre-authorisation language and process', isOpportunity: true },
+    { stage: 'Pre-Authorisation', icon: '✅', goal: 'BUPA approval confirmed before consultation', action: 'EyePros team submits pre-authorisation; BUPA confirms coverage; Margaret receives written confirmation', thoughts: 'They handled the paperwork. I did not have to chase anyone. That is how it should work.', emotion: 8, emotionLabel: 'Confident', painPoints: ['Any delay in pre-auth creates anxiety about the process', 'If she has to chase paperwork herself, trust erodes'], opportunities: ['Proactive pre-auth handling is a service differentiator most competitors miss'], channel: 'Email', touchpoint: 'Pre-authorisation confirmation', uxRec: 'Handle pre-auth proactively and send written confirmation within 48 hours' },
+    { stage: 'Consultation', icon: '🩺', goal: 'Thorough clinical assessment with named consultant', action: 'Attends consultation with named consultant; biometry performed; IOL options discussed; premium upgrade explained', thoughts: 'He explained the premium lens options without pressure. I could make an informed choice.', emotion: 9, emotionLabel: 'Impressed', painPoints: ['Any rushed consultation would undermine the entire experience', 'Confusion about premium IOL top-up costs'], opportunities: ['Exceptional consultation creates advocacy', 'Clear IOL comparison document supports decision'], channel: 'In clinic', touchpoint: 'Consultation with named consultant', uxRec: 'Provide a written IOL comparison with BUPA coverage vs. self-pay top-up clearly stated' },
+    { stage: 'IOL Decision', icon: '📊', goal: 'Choose the right lens option', action: 'Reviews written IOL comparison at home; discusses with Peter; decides on EDOF premium lens', thoughts: 'The top-up is £1,800 per eye. For the difference it makes, that is worth it.', emotion: 7, emotionLabel: 'Decided', painPoints: ['If the IOL document is unclear, she will delay', 'She needs to justify the top-up to herself and Peter'], opportunities: ['Written IOL guide is the key conversion document for PMI patients'], channel: 'Written guide / email', touchpoint: 'IOL decision document', uxRec: 'IOL comparison should clearly separate BUPA-covered element from self-pay upgrade' },
+    { stage: 'Surgery — Eye 1', icon: '🔬', goal: 'Smooth, well-organised surgical experience', action: 'First eye surgery; arrives independently; welcomed by name; same consultant performs procedure', thoughts: 'Well-organised, calm, professional. Exactly as it should be.', emotion: 7, emotionLabel: 'Focused', painPoints: ['Any disorganisation on the day would be unacceptable', 'Anxiety despite confidence in the consultant'], opportunities: ['Day-of experience cements long-term loyalty'], channel: 'In clinic', touchpoint: 'Surgical day', uxRec: 'Ensure day-of experience is impeccably organised — Margaret will notice every detail' },
+    { stage: 'Recovery — Eye 1', icon: '🌅', goal: 'Rapid improvement and clear guidance', action: 'Vision improves within 24 hours; follows post-op instructions precisely; calls support line once with a minor question', thoughts: 'Remarkable. I can see the clock across the room without glasses.', emotion: 8, emotionLabel: 'Delighted', painPoints: ['Uncertainty about what is normal in recovery', 'Needs responsive support line for reassurance'], opportunities: ['Post-op support line builds trust for second eye'], channel: 'Support line', touchpoint: 'Post-operative recovery', uxRec: 'Provide a dedicated post-op contact number and respond within 30 minutes' },
+    { stage: 'Surgery — Eye 2', icon: '🔬', goal: 'Complete bilateral treatment', action: 'Second eye surgery 2 weeks later; same consultant; even smoother than first eye', thoughts: 'I knew exactly what to expect this time. The consistency is reassuring.', emotion: 8, emotionLabel: 'Confident', painPoints: ['Any change in consultant would have been deeply unsettling'], opportunities: ['Seamless second eye experience confirms advocacy potential'], channel: 'In clinic', touchpoint: 'Second eye surgery', uxRec: 'Second eye should be offered and booked at first eye post-op review' },
+    { stage: 'Final Review', icon: '✅', goal: 'Confirm excellent bilateral outcome', action: 'Post-op review confirms 6/6 vision; driving confidently day and night; reading without glasses for most tasks', thoughts: 'Back behind the wheel at night. Bridge club, here I come.', emotion: 9, emotionLabel: 'Thrilled', painPoints: ['Wants ongoing eye health monitoring — not just discharge'], opportunities: ['Annual review programme retains her for life', 'Request testimonial at this peak satisfaction moment'], channel: 'In clinic', touchpoint: 'Final post-op review', uxRec: 'Offer annual eye health review programme at final review — she will say yes', isOpportunity: true },
+    { stage: 'Advocacy', icon: '💬', goal: 'Recommend EyePros to her network', action: 'Tells bridge club, National Trust group, and three former colleagues; leaves a detailed Google review naming her consultant', thoughts: 'When anyone mentions cataracts, I tell them exactly where to go and who to see.', emotion: 9, emotionLabel: 'Ambassador', painPoints: ['No one asked her for a testimonial or referral', 'No mechanism to refer friends formally'], opportunities: ['BUPA patient advocacy is the highest-value referral channel', 'Formal "refer a friend" programme for PMI patients'], channel: 'Word of mouth, Google review', touchpoint: 'Advocacy programme', uxRec: 'Create a PMI patient referral programme — ask Margaret, she will champion it', isOpportunity: true },
+  ],
+  decision: {
+    whySeeksCare: 'Bilateral cataracts affecting night driving and reading. Progression confirmed by optometrist. Quality of life impact is now undeniable.',
+    whyDelays: 'She has been monitoring for eighteen months. The decision to act was triggered by stopping night driving — a tangible loss of independence.',
+    whyPrivate: 'BUPA coverage makes private care a clear choice. NHS wait of 9–12 months is unacceptable. She also requires consultant choice and continuity.',
+    whyEyePros: 'Named consultant with verifiable credentials, BUPA-recognised, consultant continuity guarantee, and a friend\'s negative experience at a competitor confirmed her choice.',
+    whyCompetitor: 'Newmedica or Optegra if EyePros cannot guarantee consultant continuity or if BUPA pre-authorisation is complicated.',
+    infoThatConverts: 'BUPA landing page with named consultants, pre-authorisation process explained, and premium IOL top-up costs clearly stated.',
+    ultimateConverter: 'A friend\'s recommendation combined with a phone call where the team demonstrates fluent knowledge of BUPA pre-authorisation.',
+  },
+  competitors: [
+    SHARED_COMPETITORS.newmedica('NHS-contracted provider with high volume and BUPA recognition. Friend described experience as impersonal.', 'EyePros guarantees consultant continuity — same surgeon from consultation to aftercare. Not a production-line model.'),
+    SHARED_COMPETITORS.optegra('National chain with strong BUPA recognition and multiple locations.', 'EyePros is locally led and consultant-driven. Margaret wants a name and a face, not a brand.'),
+    SHARED_COMPETITORS.opticalExpress('High-street presence with aggressive marketing and competitive pricing.', 'EyePros positions on clinical quality and consultant-led care — precisely what Margaret values above price.'),
+  ],
+  keyMessages: [
+    'BUPA-recognised cataract surgery with a named consultant from start to finish',
+    'We handle your BUPA pre-authorisation — you focus on your care',
+    'Premium IOL options with transparent upgrade costs — no surprises',
+    'The same consultant for both eyes, both consultations, and your aftercare',
+  ],
+  contentRecommendations: ['BUPA cataract surgery landing page with pre-auth process', 'Premium IOL comparison guide with BUPA vs. self-pay breakdown', 'Named consultant profiles with patient reviews', 'Google reviews programme targeting post-surgery satisfaction'],
+  marketing: {
+    acquisitionPriority: 5,
+    conversionDifficulty: 'Easy',
+    lifetimeValue: 'Very High',
+    bestChannels: ['BUPA Provider Directory', 'Optometrist Referral', 'Google Search', 'Word of Mouth', 'SEO'],
+    searchIntent: ['"cataract surgery BUPA Birmingham"', '"private cataract surgery BUPA"', '"best cataract surgeon Midlands"', '"BUPA eye surgeon near me"'],
+    socialBehaviour: {
+      platforms: ['Email', 'Google', 'BUPA portal'],
+      contentConsumed: ['BUPA provider listings', 'Google reviews of named consultants', 'Consultant credential pages', 'NHS vs private cataract comparison articles'],
+      postingHabits: 'Does not use social media for health. Researches via Google and BUPA portal. Shares recommendations verbally at bridge club and National Trust.',
+      trustSources: ['BUPA provider directory', 'GMC register', 'Google reviews (read critically)', 'Friends who have had the procedure', 'Optometrist'],
+    },
+    contentThatConverts: ['BUPA cataract landing page with pre-auth explainer', 'Named consultant profiles with patient reviews', 'Premium IOL comparison with BUPA coverage breakdown', '"What does BUPA cover for cataract surgery?" SEO article'],
+    emotionalTriggers: ['Loss of night driving independence — Peter now drives her', 'Fifteen years of BUPA premiums and this is the first real need', 'Friend\'s impersonal experience at a competitor confirmed she wants better'],
+    mainObjections: ['Will I see the same consultant for both eyes?', 'How much is the premium lens top-up above BUPA coverage?', 'Is the pre-authorisation process complicated?'],
+    messagingAngles: ['"Your BUPA policy. Your choice of consultant. Your eyes."', '"We handle the paperwork — you focus on seeing clearly again"', '"The same surgeon from first consultation to final review — guaranteed"'],
+    bestCTA: 'Check My BUPA Coverage',
+    leadMagnet: 'BUPA Cataract Surgery Guide',
+    campaignType: ['SEO', 'Google Search', 'BUPA Directory Optimisation', 'Referral Network'],
+    funnelStage: 'MOFU–BOFU',
+    retentionOpportunities: ['Annual Eye Health Reviews', 'Glaucoma Screening', 'AMD Monitoring'],
+    referralOpportunities: ['Bridge Club Network', 'National Trust Volunteer Group', 'Former Teaching Colleagues', 'Optometrist'],
+    kpis: ['BUPA pre-auth to surgery conversion rate', 'Consultant continuity satisfaction score', 'PMI patient advocacy/referral rate', 'Premium IOL upgrade rate'],
+  },
+  conversionAction: 'Phone call → BUPA pre-auth handled by EyePros → named consultant confirmed → consultation booked',
+  conversionMetric: 'BUPA pre-authorisation to bilateral surgery completion rate',
+  reviewDate: '31 Oct 2026',
+};
+
+const JAMES = {
+  id: 'james', initials: 'JH',
+  name: 'James Hartley', age: 38,
+  role: 'Secondary School Teacher', company: 'Moseley Grammar School',
+  location: 'Moseley, Birmingham',
+  type: 'patient', category: 'UVEITIS — CHRONIC MANAGEMENT',
+  subcategory: 'Autoimmune, Long-Term Monitoring',
+  photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=720&fit=crop&auto=format',
+  insurance: 'Self-Pay', lifestyle: 'Active teacher, cycling commuter, weekend hill walker, reads extensively',
+  family: 'Married to Hannah (physiotherapist). Two young children (ages 5 and 3). Hannah is his main support during flares.',
+  biography: 'James was diagnosed with anterior uveitis at 29 following his third episode of acute eye redness, pain, and photophobia. His GP initially treated the first episode as conjunctivitis. The second was managed at A&E with steroid drops. By the third, an ophthalmologist diagnosed recurrent HLA-B27-associated anterior uveitis and referred him for rheumatology review, which confirmed ankylosing spondylitis. He has had seven flares in nine years. NHS follow-up has been inconsistent — he sees a different registrar at every hospital visit, waits 4–6 months between appointments, and has never had a clear long-term management plan. He has developed early posterior synechiae in his left eye. He wants a consultant who knows his history, can offer a proactive management strategy rather than reactive flare treatment, and can coordinate with his rheumatologist.',
+  oneSentenceSummary: 'A teacher with recurrent HLA-B27 uveitis who is frustrated by fragmented NHS care and wants proactive, consultant-led management.',
+  quote: '"Every time I go to the hospital I see someone different. They read my notes, ask the same questions, and tell me to come back in four months. Nobody is actually managing this."',
+  clinicalGoals: ['Proactive uveitis management plan with a named consultant who knows his history', 'Reduce flare frequency through immunomodulatory therapy assessment', 'Monitor for posterior complications (synechiae, cystoid macular oedema, glaucoma)'],
+  lifestyleGoals: ['Stop losing 2–3 weeks of work per year to flares and hospital visits', 'Be confident that a flare will be treated quickly rather than waiting for an emergency slot', 'Continue cycling and walking without fear of sudden photophobia'],
+  emotionalGoals: ['Feel that someone is actually in charge of his eye care', 'Stop explaining his full history at every appointment', 'Reduce the anxiety that each flare could cause permanent damage'],
+  emotionalDrivers: ['Frustration with fragmented NHS care — no continuity, no plan', 'Fear of long-term complications — he has read about secondary glaucoma and CMO', 'Responsibility — two young children depend on his ability to work and drive'],
+  decisionTriggers: ['Developed posterior synechiae in left eye — evidence of inadequate flare management', 'Rheumatologist suggested private ophthalmology for better continuity', 'Colleague recommended EyePros after her husband\'s glaucoma care there'],
+  personalMotivations: ['He wants to be proactive, not reactive', 'Hannah is tired of the anxiety every time his eye goes red'],
+  frustrations: ['NHS hospital eye service sees him every 4–6 months with a different registrar each time', 'No shared management plan between ophthalmology and rheumatology', 'Flare treatment requires an emergency slot — often a 6-hour A&E wait'],
+  nhsFrustrations: ['No named consultant — rotating registrars with no continuity', '4–6 month follow-up intervals are too long for active uveitis', 'No clear pathway for urgent flare management outside A&E', 'Rheumatology and ophthalmology operate in silos'],
+  fears: ['Progressive sight loss from uncontrolled inflammation', 'Secondary glaucoma from chronic steroid use', 'Missing a posterior segment complication between infrequent NHS reviews'],
+  financialConcerns: ['Private uveitis management is an ongoing cost, not a one-off procedure', 'Wants clear pricing for monitoring visits, imaging, and any injections', 'Teacher salary means this is a stretch — but he cannot afford not to manage it properly'],
+  informationGaps: ['Whether EyePros has uveitis-specialist consultants or medical retina expertise for complex inflammation', 'What a proactive management plan actually looks like — monitoring frequency, imaging protocol, flare pathway', 'How EyePros coordinates with his existing rheumatologist'],
+  functionalNeeds: ['Named consultant who maintains continuity across all visits', 'Rapid access pathway for flare management (within 24–48 hours, not A&E)', 'OCT and anterior segment imaging at every review to track subclinical inflammation'],
+  clinicalNeeds: ['Comprehensive uveitis assessment including anterior chamber cell grading, OCT macula, and IOP monitoring', 'Review of immunomodulatory therapy — is he a candidate for steroid-sparing agents?', 'Coordination letter to rheumatologist after each review'],
+  emotionalNeeds: ['Feel that his consultant knows him, his history, and his disease pattern', 'Reassurance that complications are being actively monitored, not discovered reactively', 'Hannah to feel included and reassured'],
+  communicationNeeds: ['Phone for urgent flare access', 'Email for appointment scheduling and results', 'Written management plan he can share with his GP and rheumatologist'],
+  researchHabits: 'Moderate. Has read Uveitis Society guidance, NICE pathways, and several academic summaries. Follows a uveitis patient forum on Facebook. Does not research daily but reads thoroughly when prompted by a flare.',
+  techUsage: 'Comfortable with email, school platforms, and Google. Uses Facebook for the uveitis patient group. Does not use Instagram or TikTok for health.',
+  infoSources: ['Uveitis Society UK', 'NICE guidance', 'Facebook uveitis patient group', 'Rheumatologist recommendation', 'Colleague word of mouth'],
+  channels: ['Phone', 'Email', 'Google Search'],
+  decisionStyle: 'Deliberate and research-informed. He will verify consultant credentials and ask specific clinical questions before committing. Once satisfied, he is loyal and will not switch lightly.',
+  typicalQuestions: [
+    '"Does EyePros have a consultant with uveitis subspecialty experience?"',
+    '"What is your rapid access pathway if I have a flare — can I be seen within 48 hours?"',
+    '"Will I see the same consultant every time?"',
+    '"Do you coordinate with rheumatology and can you write to my rheumatologist after each visit?"',
+    '"What imaging do you do at each review — OCT, anterior segment photography?"',
+  ],
+  trustFactors: ['Named uveitis-experienced consultant', 'Rapid flare access pathway', 'OCT at every visit', 'Coordination with rheumatology', 'Colleague recommendation'],
+  traits: ['Thorough', 'Frustrated', 'Loyal once trusting', 'Proactive', 'Responsible'],
+  values: ['Continuity', 'Clinical rigour', 'Communication', 'Efficiency', 'Family security'],
+  journey: [
+    { stage: 'Awareness', icon: '👁', goal: 'Recognise that NHS uveitis care is inadequate', action: 'Ninth year of uveitis; developed synechiae despite \'regular\' NHS follow-up; rheumatologist suggests private ophthalmology', thoughts: 'The synechiae prove that something has been missed. I need someone who is actually tracking this.', emotion: 3, emotionLabel: 'Frustrated', painPoints: ['Evidence of disease progression despite NHS care', 'No continuity — every visit feels like starting over'], opportunities: ['Content: "Why uveitis needs a named consultant, not a rotating registrar"', 'Rheumatologist referral pathway'], channel: 'Rheumatologist', touchpoint: 'Rheumatology appointment', uxRec: 'Create a uveitis service page that speaks to patients frustrated with fragmented hospital care' },
+    { stage: 'Research', icon: '🔍', goal: 'Find a private consultant with uveitis expertise', action: 'Searches Google for private uveitis specialist Birmingham; reads EyePros medical retina page; checks consultant profiles', thoughts: 'I need someone who has actually managed complex uveitis, not just cataracts and AMD.', emotion: 4, emotionLabel: 'Searching', painPoints: ['Most private ophthalmology sites focus on cataract and refractive — hard to find uveitis expertise', 'No clear indication of uveitis subspecialty on many websites'], opportunities: ['EyePros uveitis-specific landing page with consultant credentials', 'SEO: "private uveitis specialist Birmingham"'], channel: 'Google, Website', touchpoint: 'EyePros consultant profiles', uxRec: 'Add uveitis as a named subspecialty on the medical retina service page with specific consultant credentials', isOpportunity: true },
+    { stage: 'Comparison', icon: '⚖️', goal: 'Verify EyePros has genuine uveitis capability', action: 'Calls EyePros to ask specifically about uveitis management; colleague confirms positive experience', thoughts: 'They mentioned OCT at every visit and a flare access pathway. That is what I need.', emotion: 6, emotionLabel: 'Cautiously optimistic', painPoints: ['If the phone team cannot answer uveitis-specific questions, credibility drops immediately'], opportunities: ['Phone team trained to discuss uveitis pathway is a rare differentiator'], channel: 'Phone, Word of mouth', touchpoint: 'First phone call', uxRec: 'Train reception to handle uveitis enquiries with clinical confidence', isOpportunity: true },
+    { stage: 'Consultation', icon: '🩺', goal: 'Comprehensive uveitis assessment with a named consultant', action: 'Full anterior segment examination, OCT macula, IOP, disease activity grading, and management plan discussion', thoughts: 'He read my entire history before I sat down. For the first time in nine years, someone has a plan.', emotion: 8, emotionLabel: 'Relieved', painPoints: ['Any sense of being rushed or unfamiliar with his history would destroy the relationship'], opportunities: ['Exceptional first consultation creates lifelong loyalty in chronic disease patients'], channel: 'In clinic', touchpoint: 'First consultation', uxRec: 'Ensure consultant reviews full history before the patient enters the room — chronic disease patients notice immediately', isOpportunity: true },
+    { stage: 'Management Plan', icon: '📋', goal: 'Receive a written management plan with clear monitoring schedule', action: 'Consultant provides written plan: 3-monthly reviews, OCT at each, flare pathway documented, coordination letter to rheumatologist', thoughts: 'I have a plan. Hannah can see the plan. My GP has the plan. This is what I have needed for nine years.', emotion: 9, emotionLabel: 'Empowered', painPoints: ['If the plan is verbal only, it loses its power'], opportunities: ['Written management plan shared with GP and rheumatologist is a powerful differentiator'], channel: 'Written letter / email', touchpoint: 'Management plan document', uxRec: 'Produce a structured, shareable management plan document for every chronic uveitis patient' },
+    { stage: 'Ongoing Monitoring', icon: '📅', goal: 'Regular 3-monthly reviews with the same consultant', action: 'Attends quarterly reviews; OCT tracked; IOP monitored; steroid-sparing therapy discussed', thoughts: 'Same consultant. Same room. He knows my disease. I am not starting over every time.', emotion: 8, emotionLabel: 'Secure', painPoints: ['Any loss of consultant continuity would feel like returning to NHS fragmentation'], opportunities: ['Long-term monitoring relationship is the highest LTV patient in the practice'], channel: 'In clinic', touchpoint: 'Quarterly review', uxRec: 'Guarantee same-consultant continuity for chronic disease patients — this is the core value proposition' },
+    { stage: 'Flare Management', icon: '⚡', goal: 'Rapid access when a flare occurs', action: 'Eye goes red on a Tuesday morning; calls EyePros; seen by his consultant that afternoon; treatment escalated immediately', thoughts: 'I called at 8am and was seen at 2pm. At the hospital, this would have been a 6-hour A&E wait and a different doctor.', emotion: 7, emotionLabel: 'Grateful', painPoints: ['If the flare pathway fails even once, trust collapses'], opportunities: ['Rapid flare access is the single strongest differentiator vs. NHS for uveitis'], channel: 'Phone → Same-day clinic', touchpoint: 'Flare access pathway', uxRec: 'Guarantee same-day or next-day flare access for enrolled uveitis patients', isOpportunity: true },
+    { stage: 'Advocacy', icon: '💬', goal: 'Recommend EyePros to other uveitis patients', action: 'Posts in the Facebook uveitis patient group; tells his rheumatologist; recommends to colleagues', thoughts: 'If anyone with uveitis asks me, I tell them to stop wasting time at the hospital and go to EyePros.', emotion: 9, emotionLabel: 'Ambassador', painPoints: ['No formal referral mechanism for patient-to-patient recommendation'], opportunities: ['Uveitis patient community is tight-knit — one advocacy post reaches hundreds'], channel: 'Facebook group, Word of mouth, Rheumatologist', touchpoint: 'Patient advocacy', uxRec: 'Encourage satisfied uveitis patients to share their experience in patient communities', isOpportunity: true },
+  ],
+  decision: {
+    whySeeksCare: 'Recurrent HLA-B27 anterior uveitis with 7 flares in 9 years and evidence of complications (posterior synechiae). NHS care has been fragmented with no continuity or proactive management.',
+    whyDelays: 'Assumed NHS hospital eye service was adequate. The synechiae and his rheumatologist\'s suggestion finally triggered the switch.',
+    whyPrivate: 'Named consultant continuity, proactive management plan, rapid flare access, and coordination with rheumatology — none of which NHS hospital eye service provides.',
+    whyEyePros: 'Consultant with uveitis expertise, OCT at every visit, rapid flare pathway, and a colleague\'s positive recommendation.',
+    whyCompetitor: 'If EyePros does not clearly demonstrate uveitis subspecialty expertise on their website or phone, he will search elsewhere.',
+    infoThatConverts: 'A uveitis-specific service page with consultant credentials, monitoring protocol, and flare access pathway.',
+    ultimateConverter: 'A phone call where the team demonstrates clinical understanding of uveitis, combined with his colleague\'s recommendation.',
+  },
+  competitors: [
+    SHARED_COMPETITORS.newmedica('NHS-contracted and established, but uveitis management is not a core offering.', 'EyePros offers named-consultant continuity and a structured uveitis management pathway — Newmedica is primarily a cataract and glaucoma provider.'),
+    { name: 'Birmingham & Midland Eye Centre (NHS)', whyConsider: 'Specialist uveitis service with academic expertise.', whyEyeProsWins: 'NHS service has 4–6 month waits, rotating registrars, and no rapid flare pathway. EyePros offers same-consultant continuity and same-day flare access.' },
+  ],
+  keyMessages: [
+    'Named-consultant uveitis management — no more rotating registrars',
+    'Rapid flare access: call in the morning, seen the same day',
+    'OCT imaging at every review to track subclinical inflammation',
+    'Coordination with your rheumatologist after every appointment',
+  ],
+  contentRecommendations: ['Uveitis service page with consultant credentials and monitoring protocol', 'SEO: "private uveitis specialist Birmingham"', 'Patient story: "Why I switched from NHS to private uveitis care"', 'Rheumatologist referral pathway information'],
+  marketing: {
+    acquisitionPriority: 3,
+    conversionDifficulty: 'Moderate',
+    lifetimeValue: 'Very High',
+    bestChannels: ['Google Search', 'Rheumatologist Referral', 'Facebook (uveitis patient groups)', 'SEO', 'Word of Mouth'],
+    searchIntent: ['"private uveitis specialist Birmingham"', '"uveitis consultant near me"', '"private uveitis management UK"', '"rapid access uveitis clinic"'],
+    socialBehaviour: {
+      platforms: ['Facebook (uveitis patient group)', 'Google'],
+      contentConsumed: ['Uveitis Society UK guidance', 'NICE pathways', 'Patient forum discussions', 'Consultant credential pages'],
+      postingHabits: 'Posts occasionally in the Facebook uveitis patient group. Shares experiences and asks questions. Does not use Instagram or LinkedIn for health.',
+      trustSources: ['Rheumatologist recommendation', 'Uveitis Society UK', 'Facebook patient group', 'Colleague word of mouth', 'Consultant credentials'],
+    },
+    contentThatConverts: ['Uveitis service page with monitoring protocol', '"Why uveitis needs a named consultant" article', 'Patient case study showing NHS-to-private transition', 'Consultant profile with uveitis subspecialty credentials'],
+    emotionalTriggers: ['Evidence of disease progression (synechiae) despite NHS care', 'Rheumatologist\'s recommendation to go private', 'Frustration with rotating registrars and lack of continuity'],
+    mainObjections: ['Does EyePros have genuine uveitis expertise, or just cataract and refractive?', 'Can I afford ongoing private monitoring on a teacher\'s salary?', 'Will my GP and rheumatologist receive letters after every visit?'],
+    messagingAngles: ['"Your uveitis. Your consultant. Every visit."', '"A flare pathway that works in hours, not days"', '"Nine years without a plan. Let\'s change that."'],
+    bestCTA: 'Book a Uveitis Assessment',
+    leadMagnet: 'Uveitis Management Guide: What Private Care Looks Like',
+    campaignType: ['SEO', 'Google Search', 'Rheumatologist Referral Network', 'Facebook Patient Groups'],
+    funnelStage: 'MOFU',
+    retentionOpportunities: ['Quarterly monitoring reviews', 'Annual comprehensive uveitis assessment', 'Cataract surgery if steroid-related cataract develops'],
+    referralOpportunities: ['Facebook uveitis patient group', 'Rheumatologist network', 'Ankylosing Spondylitis support groups', 'Colleague word of mouth'],
+    kpis: ['Uveitis patient retention rate (quarterly)', 'Flare access response time', 'Rheumatologist coordination letter turnaround', 'Patient advocacy/referral rate'],
+  },
+  conversionAction: 'Phone call → uveitis-specific questions answered → named consultant confirmed → assessment booked',
+  conversionMetric: 'Assessment to ongoing monitoring programme conversion rate',
+  reviewDate: '31 Oct 2026',
+};
+
+const DAVID = {
+  id: 'david', initials: 'DO',
+  name: 'David Okoro', age: 56,
+  role: 'Bus Driver', company: 'National Express West Midlands',
+  location: 'Handsworth, Birmingham',
+  type: 'patient', category: 'DIABETIC EYE DISEASE — DMO',
+  subcategory: 'Type 2 Diabetes, DVLA-Dependent',
+  photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&h=720&fit=crop&auto=format',
+  insurance: 'Self-Pay', lifestyle: 'Full-time bus driver, church community leader, weekend gardener, grandfather of four',
+  family: 'Married to Grace (healthcare assistant). Three adult children. Grace manages his diabetes medications and appointments.',
+  biography: 'David was diagnosed with Type 2 diabetes twelve years ago. He manages it with metformin and a GLP-1 agonist, but his HbA1c has fluctuated between 58 and 72 over the past three years. His annual diabetic eye screening flagged \'referable diabetic retinopathy\' eighteen months ago, and he was referred to the hospital eye service. After a 7-month wait, he was seen once, told he had \'moderate non-proliferative diabetic retinopathy with clinically significant diabetic macular oedema in his right eye,\' and placed on a treatment waiting list. He has now waited a further 5 months for his first anti-VEGF injection. His central vision in the right eye is noticeably blurred — he is struggling to read the destination boards on his bus. If his vision drops below DVLA standard, he loses his PCV licence and his livelihood. Grace is frightened. David is angry.',
+  oneSentenceSummary: 'A bus driver with diabetic macular oedema whose livelihood depends on maintaining DVLA vision standards, and the NHS treatment delay is putting his licence at risk.',
+  quote: '"I have waited twelve months since they told me I needed injections. My right eye is getting worse every week. If I lose my PCV licence, I lose everything."',
+  clinicalGoals: ['Urgent initiation of anti-VEGF treatment for clinically significant DMO in right eye', 'Stabilise central vision to maintain DVLA Group 2 (PCV) driving standard', 'Comprehensive bilateral retinal assessment including OCT and wide-field imaging'],
+  lifestyleGoals: ['Keep his PCV driving licence and his job', 'Read comfortably again — scripture at church, stories to grandchildren', 'Stop the daily anxiety about whether his vision has dropped overnight'],
+  emotionalGoals: ['Feel that his sight is being treated with the urgency it deserves', 'Grace to stop worrying — the uncertainty is affecting her health too', 'Regain confidence that his diabetes is being managed properly across all its complications'],
+  emotionalDrivers: ['Livelihood — his PCV licence is his family\'s income', 'Anger at NHS delays — twelve months of waiting while his vision deteriorates', 'Responsibility — Grace depends on him, his grandchildren look up to him'],
+  decisionTriggers: ['Vision in right eye has deteriorated noticeably over 5 months of waiting for NHS treatment', 'Colleague at the bus depot lost his licence due to diabetic eye disease — David sees the same path ahead', 'Grace found EyePros online and insisted he call'],
+  personalMotivations: ['He has worked as a bus driver for 22 years — it is his identity as well as his income', 'Grace said "We will find the money. You cannot wait any longer."'],
+  frustrations: ['Twelve months between diagnosis and still no treatment', 'NHS hospital gave him one appointment in twelve months — no follow-up, no treatment date', 'Nobody has explained what DMO actually means for his vision or his licence'],
+  nhsFrustrations: ['Seven-month wait for first hospital appointment after diabetic screening referral', 'Further five-month wait for treatment that has not yet started', 'No named consultant — he has seen two different doctors who gave slightly different information', 'No coordination between diabetic eye service and his diabetologist'],
+  fears: ['Losing his PCV licence and his job', 'Irreversible central vision loss from untreated DMO', 'Anti-VEGF injections — he is anxious about needles near his eye'],
+  financialConcerns: ['Anti-VEGF injections at £800–1,200 per injection are significant on a bus driver\'s salary', 'Likely needs 3–6 injections in the loading phase — total cost could exceed £4,000', 'Wants a clear treatment plan with total cost estimate before committing', 'Grace has already started saving — they need complete transparency'],
+  informationGaps: ['How many injections will he need and what is the total likely cost?', 'Can anti-VEGF treatment restore his central vision or only stabilise it?', 'How quickly can treatment start at EyePros vs. continuing to wait on the NHS?', 'Will EyePros communicate with his GP and diabetologist?'],
+  functionalNeeds: ['Urgent first appointment within days, not months', 'Clear total cost estimate for the treatment pathway', 'Appointment times that work around his shift pattern (early morning or late afternoon)'],
+  clinicalNeeds: ['OCT macula and wide-field retinal imaging at first visit', 'Anti-VEGF loading dose initiated urgently — faricimab (Vabysmo) preferred for extended intervals', 'Coordination with diabetologist regarding HbA1c optimisation and retinopathy management'],
+  emotionalNeeds: ['Treated with respect and without judgement about his diabetes management', 'Clear, honest explanation of what treatment can and cannot achieve', 'Grace included in the consultation — she needs to understand too'],
+  communicationNeeds: ['Phone for booking — Grace will likely make the first call', 'Simple, clear written information about the treatment pathway', 'Text reminders for appointments'],
+  researchHabits: 'Limited. Grace does the online research. David trusts his GP and his diabetologist. He will read information given to him in clinic but does not search independently.',
+  techUsage: 'Basic smartphone user. WhatsApp for family. Does not use social media for health. Grace uses Facebook and Google.',
+  infoSources: ['GP', 'Diabetologist', 'Grace (online research)', 'Colleague at bus depot', 'NHS diabetic eye screening letter'],
+  channels: ['Phone (Grace calls)', 'Text reminders', 'In-clinic written information'],
+  decisionStyle: 'Grace-led research, David-led decision. He trusts clinical authority and will follow consultant recommendation once he feels respected and informed. Price transparency is essential — he will not commit to an open-ended cost.',
+  typicalQuestions: [
+    '"How quickly can you start the injections?"',
+    '"How many injections will I need and what will it cost in total?"',
+    '"Will the injections save my driving licence?"',
+    '"Is the injection painful? I am not good with needles."',
+    '"Will you write to my GP and my diabetes doctor?"',
+  ],
+  trustFactors: ['Urgent appointment availability', 'Clear total cost estimate', 'Named consultant', 'Communication with GP/diabetologist', 'Grace\'s research and satisfaction'],
+  traits: ['Hardworking', 'Anxious', 'Loyal', 'Stoic', 'Community-minded'],
+  values: ['Family', 'Work ethic', 'Transparency', 'Respect', 'Faith'],
+  journey: [
+    { stage: 'Screening', icon: '📷', goal: 'Annual diabetic eye screening', action: 'Attends NHS diabetic eye screening; result letter says \'referable diabetic retinopathy\'', thoughts: 'The letter said they found something. But nobody called me to explain what it means.', emotion: 4, emotionLabel: 'Confused', painPoints: ['Screening letter uses clinical language without explanation', 'No phone call or follow-up — just a letter and a referral'], opportunities: ['Content: "What does referable diabetic retinopathy mean?"'], channel: 'NHS Screening', touchpoint: 'Screening result letter', uxRec: 'Create a simple explainer page: "Your diabetic eye screening result explained"' },
+    { stage: 'NHS Wait', icon: '⏳', goal: 'Wait for hospital eye service appointment', action: 'Waits 7 months for first hospital appointment; vision in right eye gradually deteriorating', thoughts: 'Seven months. My right eye is getting worse and nobody is doing anything.', emotion: 2, emotionLabel: 'Angry', painPoints: ['7-month wait with no interim communication', 'No one to call for an update or reassurance'], opportunities: ['EyePros urgent access messaging: "Don\'t wait months for treatment that should start now"'], channel: 'NHS pathway', touchpoint: 'Hospital waiting list', uxRec: 'Target patients stuck on NHS diabetic eye waiting lists with urgent access messaging' },
+    { stage: 'Hospital Visit', icon: '🏥', goal: 'First hospital assessment', action: 'Seen once; told he has DMO and needs anti-VEGF injections; placed on another waiting list', thoughts: 'They told me I need injections urgently. Then put me on another waiting list. How is that urgent?', emotion: 2, emotionLabel: 'Frustrated', painPoints: ['Diagnosed as needing urgent treatment but placed on a treatment waiting list', 'Seen by a registrar, not a consultant'], opportunities: ['EyePros same-week treatment initiation is the direct answer to this experience'], channel: 'NHS', touchpoint: 'Hospital assessment', uxRec: 'Messaging should directly address the NHS diagnosis-to-treatment gap' },
+    { stage: 'Tipping Point', icon: '⚠️', goal: 'Realise NHS timeline is unacceptable', action: 'Colleague loses PCV licence due to diabetic eye disease; Grace insists they go private', thoughts: 'I saw what happened to Tony. If I lose my licence, we lose the house.', emotion: 1, emotionLabel: 'Frightened', painPoints: ['Real-world consequence of delay is now tangible', 'Financial pressure of private treatment vs. financial catastrophe of losing his licence'], opportunities: ['"Protect your driving licence" messaging speaks directly to this fear'], channel: 'Word of mouth, Grace\'s research', touchpoint: 'Colleague\'s experience', uxRec: 'Create content targeting professional drivers with diabetic eye disease', isOpportunity: true },
+    { stage: 'Research', icon: '🔍', goal: 'Find urgent private DMO treatment', action: 'Grace searches Google; finds EyePros medical retina page; reads about anti-VEGF treatment', thoughts: 'Grace found them. They say they can see him this week. Please let that be true.', emotion: 4, emotionLabel: 'Hopeful', painPoints: ['Grace is doing the research because David does not know where to start', 'Cost information must be findable and clear'], opportunities: ['Medical retina page with DMO-specific content and pricing transparency'], channel: 'Google (Grace)', touchpoint: 'EyePros website', uxRec: 'Ensure DMO/diabetic eye content includes clear pricing and urgent access information', isOpportunity: true },
+    { stage: 'First Contact', icon: '📞', goal: 'Book urgent appointment', action: 'Grace calls EyePros; explains the situation; appointment booked for 3 days later', thoughts: 'They understood immediately. They said they could see him this week. Grace is crying with relief.', emotion: 6, emotionLabel: 'Relieved', painPoints: ['If the phone team does not understand DMO urgency, the call fails', 'Grace needs to hear competence and empathy on the phone'], opportunities: ['Phone team trained in diabetic eye urgency is a conversion factor'], channel: 'Phone', touchpoint: 'First phone call', uxRec: 'Train reception specifically on diabetic eye urgency — these calls are often made by a frightened spouse', isOpportunity: true },
+    { stage: 'Consultation', icon: '🩺', goal: 'Comprehensive assessment and treatment plan', action: 'OCT confirms clinically significant DMO; consultant explains treatment clearly; cost estimate provided; first injection scheduled for same visit', thoughts: 'He showed me the scan. Explained what it means. Told me the plan. Started treatment today.', emotion: 8, emotionLabel: 'Trusting', painPoints: ['Needle anxiety is real — must be addressed compassionately', 'Total cost must be stated clearly before any treatment begins'], opportunities: ['Same-day treatment initiation is the ultimate differentiator vs. NHS'], channel: 'In clinic', touchpoint: 'First consultation + treatment', uxRec: 'Offer same-visit treatment initiation for urgent DMO — do not make him come back for injection 1', isOpportunity: true },
+    { stage: 'Treatment', icon: '💉', goal: 'Complete loading dose and stabilise vision', action: 'Three monthly anti-VEGF injections; OCT shows improving macular thickness; central vision stabilising', thoughts: 'The blur is less. I can read the destination board again. I am going to keep my licence.', emotion: 8, emotionLabel: 'Hopeful', painPoints: ['Ongoing injection cost is stressful', 'Each injection still causes anxiety despite improving results'], opportunities: ['Mid-treatment progress update reinforces value and justifies cost'], channel: 'In clinic', touchpoint: 'Injection series', uxRec: 'Show patients their OCT improvement at each visit — visual evidence of treatment working justifies cost' },
+    { stage: 'DVLA Review', icon: '🚌', goal: 'Pass DVLA vision assessment and retain PCV licence', action: 'Vision now meets DVLA Group 2 standard; provides EyePros medical report for DVLA assessment', thoughts: 'I passed. I am keeping my licence. Grace and I held each other and cried.', emotion: 10, emotionLabel: 'Overwhelmed with relief', painPoints: ['If treatment had started 12 months earlier, this anxiety would never have happened'], opportunities: ['DVLA support letter/report is a high-value service for professional drivers'], channel: 'Written report', touchpoint: 'DVLA medical report', uxRec: 'Offer DVLA vision assessment reports as a standard service for professional driver patients', isOpportunity: true },
+    { stage: 'Advocacy', icon: '💬', goal: 'Tell others', action: 'Tells colleagues at the bus depot; tells his church community; Grace shares in a local Facebook group', thoughts: 'If anyone at the depot gets that screening letter, I tell them: do not wait. Call EyePros.', emotion: 9, emotionLabel: 'Ambassador', painPoints: ['No formal referral mechanism'], opportunities: ['Professional driver community is tight-knit — one advocacy story reaches many'], channel: 'Word of mouth, Church, Bus depot colleagues', touchpoint: 'Community advocacy', uxRec: 'Ask David for a testimonial specifically addressing professional drivers and DVLA concerns', isOpportunity: true },
+  ],
+  decision: {
+    whySeeksCare: 'Clinically significant DMO diagnosed 12 months ago; still waiting for NHS treatment; vision deteriorating; PCV driving licence at risk.',
+    whyDelays: 'Trusted the NHS system. Assumed he would be treated. The colleague\'s licence loss was the tipping point.',
+    whyPrivate: 'NHS wait is now 12 months with no treatment date. Private treatment can start this week. His livelihood is at stake.',
+    whyEyePros: 'Grace\'s research, urgent appointment availability, clear pricing, and medical retina expertise.',
+    whyCompetitor: 'If EyePros cannot provide clear total cost or urgent access, Grace will search further.',
+    infoThatConverts: 'Medical retina page with DMO-specific content, clear pricing, and urgent access information.',
+    ultimateConverter: 'A phone call where the team understands the urgency, provides a clear cost estimate, and books an appointment within days.',
+  },
+  competitors: [
+    SHARED_COMPETITORS.newmedica('NHS-contracted with medical retina capability, but treatment waits mirror NHS timelines.', 'EyePros offers same-week urgent access and same-visit treatment initiation — critical for DMO patients at risk of licence loss.'),
+    { name: 'University Hospitals Birmingham (NHS)', whyConsider: 'Large academic centre with medical retina expertise.', whyEyeProsWins: 'NHS wait is the problem. EyePros offers urgent private access with the same clinical quality but without the 12-month delay.' },
+  ],
+  keyMessages: [
+    'Urgent diabetic eye treatment — don\'t wait months for injections you need now',
+    'Protect your driving licence with same-week DMO assessment and treatment',
+    'Clear, transparent pricing for your complete anti-VEGF treatment pathway',
+    'We write to your GP and diabetologist after every visit',
+  ],
+  contentRecommendations: ['DMO-specific landing page with urgent access and pricing', '"Protect your driving licence" content for professional drivers', 'Diabetic eye screening result explainer', 'Patient story: NHS wait to private treatment'],
+  marketing: {
+    acquisitionPriority: 4,
+    conversionDifficulty: 'Moderate',
+    lifetimeValue: 'High',
+    bestChannels: ['Google Search', 'GP/Diabetologist Referral', 'Word of Mouth', 'SEO', 'Facebook (Grace)'],
+    searchIntent: ['"private diabetic eye treatment Birmingham"', '"urgent DMO injection near me"', '"diabetic macular oedema private treatment cost"', '"driving licence diabetic eye disease"'],
+    socialBehaviour: {
+      platforms: ['WhatsApp (family)', 'Facebook (Grace)'],
+      contentConsumed: ['NHS diabetic eye screening information', 'Diabetes UK guidance', 'Local Facebook community groups'],
+      postingHabits: 'David does not post. Grace may share in local Facebook groups after positive experience.',
+      trustSources: ['GP', 'Diabetologist', 'Colleague experience', 'Grace\'s research', 'Church community'],
+    },
+    contentThatConverts: ['DMO treatment page with pricing and urgent access', '"What does referable diabetic retinopathy mean?" explainer', 'Professional driver diabetic eye care content', 'Patient testimonial from a driver who kept their licence'],
+    emotionalTriggers: ['Colleague lost his PCV licence', 'Vision deteriorating while waiting for NHS treatment', 'Grace\'s fear and determination'],
+    mainObjections: ['How much will the full treatment cost?', 'How many injections will I need?', 'Will my GP and diabetologist be informed?'],
+    messagingAngles: ['"Your vision cannot wait. Neither should your treatment."', '"Protect your livelihood. Start treatment this week."', '"Clear pricing. Clear plan. Clear vision."'],
+    bestCTA: 'Book Urgent DMO Assessment',
+    leadMagnet: 'Diabetic Eye Disease: What Your Screening Result Means',
+    campaignType: ['SEO', 'Google Search', 'GP/Diabetologist Referral Network', 'Community Outreach'],
+    funnelStage: 'BOFU',
+    retentionOpportunities: ['Ongoing anti-VEGF monitoring', 'Annual comprehensive diabetic eye assessment', 'Cataract surgery if needed in future'],
+    referralOpportunities: ['Bus depot colleagues', 'Church community', 'Diabetes UK local support groups', 'GP/diabetologist network'],
+    kpis: ['DMO referral to first injection time', 'Treatment completion rate', 'DVLA licence retention rate', 'Patient advocacy/referral rate'],
+  },
+  conversionAction: 'Grace phone call → urgency understood → clear cost estimate → appointment within days → same-visit treatment',
+  conversionMetric: 'Referral to first anti-VEGF injection time (target: <7 days)',
+  reviewDate: '31 Oct 2026',
+};
+
+const SUSAN = {
+  id: 'susan', initials: 'SB',
+  name: 'Susan Bradley', age: 59,
+  role: 'Estate Agent (Branch Director)', company: 'Knight Frank, Edgbaston',
+  location: 'Edgbaston, Birmingham',
+  type: 'patient', category: 'OCULOPLASTICS — EYELID SURGERY',
+  subcategory: 'Functional + Cosmetic, Self-Pay',
+  photo: 'assets/susan.jpg',
+  insurance: 'Self-Pay', lifestyle: 'Client-facing professional, Pilates three times weekly, theatre subscriber, active social life',
+  family: 'Divorced. One adult daughter (lives in London). Close circle of friends. Appearance matters professionally and personally.',
+  biography: 'Susan has noticed progressive drooping of her upper eyelids over the past three years. Initially it was cosmetic — she looked tired in photos and clients sometimes asked if she was feeling well. Over the past year, it has become functional: she catches herself tilting her head back to see her laptop screen, and her superior visual field feels restricted, particularly when driving in rain. Her optometrist confirmed significant ptosis and dermatochalasis and suggested she explore blepharoplasty. She has researched cosmetic clinics but is uncomfortable with the sales-oriented approach. She wants a medically qualified oculoplastic surgeon, not a cosmetic clinic, but she also wants an excellent aesthetic result. She is willing to pay for quality.',
+  oneSentenceSummary: 'A professional woman with functional ptosis and dermatochalasis who wants a medically qualified oculoplastic surgeon delivering both functional improvement and cosmetic excellence.',
+  quote: '"I don\'t want a cosmetic clinic. I want an eye surgeon who understands eyelids. But I also want to look like myself, just less tired."',
+  clinicalGoals: ['Upper eyelid blepharoplasty for functional dermatochalasis with ptosis assessment', 'Restore full superior visual field — functional improvement is the priority', 'Excellent aesthetic outcome — natural, refreshed, not \'worked on\''],
+  lifestyleGoals: ['Stop tilting her head back to see screens and road signs', 'Look rested and confident in client meetings and photos', 'Feel like herself again — not someone who looks permanently exhausted'],
+  emotionalGoals: ['Confidence that her surgeon is medically qualified, not just cosmetically trained', 'Natural result that her friends notice but cannot identify specifically', 'Feel in control of the decision — not pressured by a cosmetic clinic sales process'],
+  emotionalDrivers: ['Professional image — in estate agency, appearance and energy matter', 'Self-confidence — she has avoided photos for two years', 'Clinical safety — her eyes are too important for a cosmetic clinic'],
+  decisionTriggers: ['Optometrist confirmed functional ptosis and recommended oculoplastic assessment', 'Colleague had blepharoplasty at a cosmetic clinic and the result looked unnatural', 'Caught herself tilting her head back during a client property viewing — functional impact is now undeniable'],
+  personalMotivations: ['She wants this done once, done properly, by someone who operates on eyelids as their specialism', 'Her daughter said "Mum, you look tired all the time now. It\'s not like you."'],
+  frustrations: ['Cosmetic clinic websites focus on price promotions and before/after galleries rather than surgeon credentials', 'Hard to distinguish medically qualified oculoplastic surgeons from cosmetic practitioners online', 'Sales-oriented consultation experiences at two cosmetic clinics she visited'],
+  nhsFrustrations: ['NHS will only consider blepharoplasty for severe functional impairment — her visual field loss may not meet the threshold', 'NHS waiting list for oculoplastics is 12–18 months', 'No choice of surgeon and no cosmetic consideration on the NHS pathway'],
+  fears: ['An unnatural or overdone result that looks \'surgical\'', 'Complications — particularly asymmetry, dry eye, or lagophthalmos', 'Scarring that is visible'],
+  financialConcerns: ['Upper blepharoplasty at £3,000–£4,500 is significant but affordable', 'Wants all-inclusive pricing including follow-up', 'No tolerance for upselling or add-on costs at the consultation'],
+  informationGaps: ['Whether EyePros has a dedicated oculoplastic surgeon', 'What the recovery timeline looks like — how soon can she return to client-facing work?', 'Whether functional and cosmetic outcomes can both be optimised in one procedure'],
+  functionalNeeds: ['Consultation with a medically qualified oculoplastic surgeon, not a cosmetic practitioner', 'Before/after gallery of natural results — she wants to see real outcomes', 'Clear pricing with no upselling or sales pressure'],
+  clinicalNeeds: ['Visual field assessment to document functional impairment', 'Ptosis assessment — is a levator repair needed alongside blepharoplasty?', 'Pre-operative photography and surgical planning'],
+  emotionalNeeds: ['Treated as an intelligent professional making a considered decision', 'No sales pressure — she will decide in her own time', 'Reassurance that her surgeon specialises in eyelids, not general cosmetics'],
+  communicationNeeds: ['Email for information and scheduling', 'Phone for booking', 'Written recovery guide with realistic timeline'],
+  researchHabits: 'Thorough. Has researched the difference between oculoplastic surgeons and cosmetic practitioners. Has read BAPRAS and BOPSS guidance. Visited two cosmetic clinics and rejected both. Reads Google reviews critically.',
+  techUsage: 'Professional user. Active on LinkedIn and Instagram. Uses Google extensively. Reads reviews on multiple platforms.',
+  infoSources: ['Optometrist recommendation', 'Google reviews', 'BOPSS (British Oculoplastic Surgery Society)', 'Instagram (before/after research)', 'Friends who have had procedures'],
+  channels: ['Email', 'Phone', 'Google', 'Instagram'],
+  decisionStyle: 'Research-complete, quality-driven. She has already rejected two cosmetic clinics. She is looking for clinical credibility combined with aesthetic excellence. Price is secondary to quality and surgeon credentials.',
+  typicalQuestions: [
+    '"Is your oculoplastic surgeon a member of BOPSS?"',
+    '"Can I see before and after photographs of patients with a similar presentation to mine?"',
+    '"What is the recovery timeline — how soon can I be client-facing again?"',
+    '"Do you combine functional blepharoplasty with ptosis repair in one procedure?"',
+    '"What are the risks of visible scarring or asymmetry?"',
+  ],
+  trustFactors: ['BOPSS-registered oculoplastic surgeon', 'Before/after gallery of natural results', 'Google reviews mentioning eyelid surgery specifically', 'No sales pressure at consultation', 'Optometrist recommendation'],
+  traits: ['Discerning', 'Professional', 'Image-conscious', 'Research-driven', 'Quality-first'],
+  values: ['Quality', 'Authenticity', 'Clinical safety', 'Natural results', 'Professionalism'],
+  journey: [
+    { stage: 'Awareness', icon: '👁', goal: 'Notice progressive eyelid drooping', action: 'Notices tired appearance in photos; clients ask if she is feeling well; starts tilting head back', thoughts: 'I look exhausted in every photograph. And now I am tilting my head back to see my screen.', emotion: 4, emotionLabel: 'Self-conscious', painPoints: ['Cosmetic impact has been gradual but undeniable', 'Functional impact (head tilt, field restriction) confirms this is medical, not vanity'], opportunities: ['Content: "When drooping eyelids become more than cosmetic"'], channel: 'Self-awareness', touchpoint: 'Mirror / photos', uxRec: 'Create content that validates the functional component of eyelid drooping — patients need permission to seek care' },
+    { stage: 'Optometrist Referral', icon: '📝', goal: 'Clinical confirmation of functional impairment', action: 'Optometrist confirms ptosis and dermatochalasis; suggests oculoplastic assessment', thoughts: 'My optometrist confirmed it. This is not just vanity — it is affecting my vision.', emotion: 5, emotionLabel: 'Validated', painPoints: ['Patients feel they need clinical permission to pursue eyelid surgery'], opportunities: ['Optometrist referral pathway for oculoplastics — most don\'t know where to refer'], channel: 'Optometrist', touchpoint: 'Optometrist assessment', uxRec: 'Equip optometrist partners with oculoplastics referral materials' },
+    { stage: 'Cosmetic Clinic Visits', icon: '❌', goal: 'Explore cosmetic clinics and reject them', action: 'Visits two cosmetic clinics; both use sales pressure and promote packages; neither surgeon is an oculoplastic specialist', thoughts: 'One offered me 20% off if I booked today. The other couldn\'t explain what ptosis is. No.', emotion: 3, emotionLabel: 'Disillusioned', painPoints: ['Cosmetic clinic model is sales-driven and clinically shallow', 'Cannot verify surgeon credentials easily'], opportunities: ['EyePros positions as the anti-cosmetic-clinic: medically qualified, no sales pressure, oculoplastic expertise'], channel: 'Cosmetic clinic visits', touchpoint: 'Rejected alternatives', uxRec: 'Explicitly differentiate EyePros oculoplastics from cosmetic clinic model on website', isOpportunity: true },
+    { stage: 'Research', icon: '🔍', goal: 'Find a medically qualified oculoplastic surgeon', action: 'Searches BOPSS directory; finds EyePros oculoplastics page; reads consultant profile; checks Google reviews', thoughts: 'BOPSS-registered. Oculoplastic subspecialty. Before/after photos that look natural. This is what I need.', emotion: 6, emotionLabel: 'Hopeful', painPoints: ['If the website does not clearly state oculoplastic credentials, she will not enquire'], opportunities: ['BOPSS credentials and natural before/after gallery are the decisive differentiators'], channel: 'Google, BOPSS, Website', touchpoint: 'EyePros oculoplastics page', uxRec: 'Display BOPSS membership and natural before/after results prominently on the oculoplastics page', isOpportunity: true },
+    { stage: 'Consultation', icon: '🩺', goal: 'Assess surgeon and discuss realistic outcomes', action: 'Unhurried consultation; visual field test documents functional impairment; surgical plan discussed; natural results shown', thoughts: 'No sales pitch. Just clinical expertise and a clear plan. This is the surgeon I want.', emotion: 8, emotionLabel: 'Confident', painPoints: ['Any sense of sales pressure would end the relationship immediately'], opportunities: ['No-pressure consultation with visual field documentation creates conversion and loyalty'], channel: 'In clinic', touchpoint: 'Oculoplastic consultation', uxRec: 'Consultation must be unhurried and clinical — Susan will walk away from any sales pressure', isOpportunity: true },
+    { stage: 'Surgery', icon: '🔬', goal: 'Upper blepharoplasty with ptosis repair', action: 'Day-case procedure; well-organised; calm environment; same surgeon from consultation', thoughts: 'Professional, calm, and exactly as described. No surprises.', emotion: 7, emotionLabel: 'Focused', painPoints: ['Any disorganisation would create anxiety'], opportunities: ['Excellent day-case experience cements advocacy'], channel: 'In clinic', touchpoint: 'Surgical day', uxRec: 'Ensure seamless day-case experience with the same surgeon' },
+    { stage: 'Recovery', icon: '🌅', goal: 'Heal and return to client-facing work', action: 'Bruising fades over 10–14 days; returns to work at day 10; friends notice she looks refreshed', thoughts: 'My daughter said I look like myself again. That is exactly what I wanted.', emotion: 9, emotionLabel: 'Delighted', painPoints: ['Recovery timeline anxiety — she needs to know when she can see clients'], opportunities: ['Before/after photograph at 6-week review becomes a powerful testimonial'], channel: 'Post-op review', touchpoint: 'Recovery and review', uxRec: 'Offer to photograph results at 6-week review for the before/after gallery (with consent)', isOpportunity: true },
+    { stage: 'Advocacy', icon: '💬', goal: 'Recommend to her network', action: 'Tells her Pilates group, estate agency colleagues, and her daughter; leaves a Google review', thoughts: 'When anyone mentions looking tired, I tell them: it might be your eyelids, and I know exactly who to see.', emotion: 9, emotionLabel: 'Ambassador', painPoints: ['No formal referral mechanism'], opportunities: ['Professional woman\'s network is high-value for oculoplastic referrals'], channel: 'Word of mouth, Google review', touchpoint: 'Network advocacy', uxRec: 'Create a referral pathway for oculoplastic patients — their networks contain future patients', isOpportunity: true },
+  ],
+  decision: {
+    whySeeksCare: 'Progressive upper eyelid ptosis and dermatochalasis causing functional visual field restriction and cosmetic concern affecting professional confidence.',
+    whyDelays: 'Initially dismissed as cosmetic. Functional impact (head tilt, field restriction) and optometrist confirmation triggered action.',
+    whyPrivate: 'NHS threshold for functional blepharoplasty may not be met; NHS wait is 12–18 months; no surgeon choice; no cosmetic consideration.',
+    whyEyePros: 'BOPSS-registered oculoplastic surgeon, medically qualified rather than cosmetic clinic model, natural before/after results, no sales pressure.',
+    whyCompetitor: 'Cosmetic clinics if EyePros does not clearly differentiate on medical credentials. NHS if she meets the functional threshold and is willing to wait.',
+    infoThatConverts: 'Oculoplastics page with BOPSS credentials, natural before/after gallery, and clear pricing.',
+    ultimateConverter: 'An unhurried consultation with a BOPSS-registered surgeon who demonstrates clinical expertise without sales pressure.',
+  },
+  competitors: [
+    { name: 'Cosmetic surgery clinics (Transform, MYA)', whyConsider: 'Heavy marketing, easy to find online, competitive pricing.', whyEyeProsWins: 'Susan has already rejected two cosmetic clinics. EyePros offers a medically qualified oculoplastic surgeon with BOPSS credentials — not a cosmetic practitioner.' },
+    SHARED_COMPETITORS.optegra('National brand with oculoplastic capability.', 'EyePros offers a more personal, consultant-led experience. Susan wants a name and a face, not a corporate brand.'),
+  ],
+  keyMessages: [
+    'Oculoplastic surgery by a BOPSS-registered eye surgeon — not a cosmetic clinic',
+    'Natural results: refreshed, not \'worked on\'',
+    'Functional and cosmetic improvement in one procedure',
+    'No sales pressure. No packages. Just expert clinical care.',
+  ],
+  contentRecommendations: ['Oculoplastics page with BOPSS credentials and before/after gallery', '"When drooping eyelids become more than cosmetic" article', 'Recovery timeline guide for professionals', 'Google reviews from eyelid surgery patients'],
+  marketing: {
+    acquisitionPriority: 3,
+    conversionDifficulty: 'Moderate',
+    lifetimeValue: 'Medium',
+    bestChannels: ['Google Search', 'SEO', 'Optometrist Referral', 'Instagram', 'Word of Mouth'],
+    searchIntent: ['"oculoplastic surgeon Birmingham"', '"upper blepharoplasty near me"', '"eyelid surgery medical not cosmetic"', '"ptosis repair Birmingham"'],
+    socialBehaviour: {
+      platforms: ['Instagram', 'LinkedIn', 'Google'],
+      contentConsumed: ['Before/after photographs', 'BOPSS surgeon directory', 'Google reviews', 'Recovery timeline articles'],
+      postingHabits: 'Active on Instagram and LinkedIn professionally. Will not post about her own procedure but will share by word of mouth.',
+      trustSources: ['BOPSS directory', 'Optometrist recommendation', 'Google reviews', 'Friends who have had procedures', 'Consultation experience'],
+    },
+    contentThatConverts: ['Natural before/after gallery', 'BOPSS surgeon credentials page', 'Recovery timeline for professionals', '"Medical vs. cosmetic eyelid surgery" comparison'],
+    emotionalTriggers: ['Looking tired in every photo for two years', 'Daughter\'s comment', 'Functional impact on driving and screen work', 'Rejection of cosmetic clinic sales model'],
+    mainObjections: ['Is the surgeon medically qualified or cosmetically trained?', 'Will the result look natural?', 'What is the recovery timeline for client-facing work?'],
+    messagingAngles: ['"Medical expertise. Natural results. No sales pitch."', '"Look refreshed, not \'done\' — oculoplastic surgery by an eye surgeon"', '"Your eyelids deserve an eye specialist, not a cosmetic clinic"'],
+    bestCTA: 'Book an Oculoplastic Consultation',
+    leadMagnet: 'Eyelid Surgery Guide: Medical vs. Cosmetic',
+    campaignType: ['SEO', 'Google Search', 'Instagram (before/after content)', 'Optometrist Referral'],
+    funnelStage: 'MOFU–BOFU',
+    retentionOpportunities: ['Lower eyelid assessment', 'Dry eye management', 'Annual eye health review'],
+    referralOpportunities: ['Pilates group', 'Estate agency colleagues', 'Professional women\'s networks', 'Daughter\'s London network'],
+    kpis: ['Consultation to surgery conversion rate', 'Before/after gallery consent rate', 'Google review rate post-surgery', 'Word-of-mouth referral tracking'],
+  },
+  conversionAction: 'Google research → BOPSS credentials verified → consultation booked → no-pressure assessment → surgery scheduled',
+  conversionMetric: 'Consultation to surgery conversion rate',
+  reviewDate: '31 Oct 2026',
+};
+
+const ROBERT = {
+  id: 'robert', initials: 'RC',
+  name: 'Robert Chen', age: 52,
+  role: 'Graphic Designer (Freelance)', company: 'Self-Employed',
+  location: 'Kings Heath, Birmingham',
+  type: 'patient', category: 'FLASHES & FLOATERS — URGENT PVD',
+  subcategory: 'Acute Presentation, Retinal Risk',
+  photo: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=600&h=720&fit=crop&auto=format',
+  insurance: 'Self-Pay', lifestyle: 'Freelance designer, screen-based work 10+ hours daily, amateur photographer, moderately myopic (-4.00)',
+  family: 'Partner Emma (architect). No children. Emma is practical and supportive but insists on professional assessment.',
+  biography: 'Robert was working on a client presentation at 9pm on a Wednesday when he noticed a sudden shower of dark floaters in his right eye, accompanied by brief flashes of light in his peripheral vision. He has had occasional floaters for years — \'normal\' for a myope, his optometrist said — but this was different: sudden, dense, and accompanied by flashes. He Googled \'sudden floaters and flashes\' and the results terrified him: retinal detachment, vitreous haemorrhage, permanent sight loss. Emma insisted he call someone immediately. His optometrist was closed. NHS 111 advised A&E but warned of a 6–8 hour wait. He needs urgent assessment to rule out retinal tear or detachment, and he needs it now, not in 8 hours.',
+  oneSentenceSummary: 'A myopic freelance designer with acute-onset flashes and floaters who needs urgent retinal assessment to rule out retinal tear or detachment.',
+  quote: '"I Googled it at 9pm and the first result said retinal detachment. I haven\'t slept. I need someone to look at my retina today."',
+  clinicalGoals: ['Urgent dilated fundus examination and retinal assessment to rule out retinal tear or detachment', 'OCT and wide-field retinal imaging to document vitreous and retinal status', 'Clear explanation of findings and follow-up plan'],
+  lifestyleGoals: ['Return to screen work without the anxiety that every floater is a retinal emergency', 'Understand what is normal PVD progression vs. warning signs requiring urgent review', 'Stop the catastrophic thinking that has kept him awake for 36 hours'],
+  emotionalGoals: ['Urgent reassurance — or urgent treatment if something is found', 'Feel that the severity of his symptoms is being taken seriously', 'Emma to stop worrying — she has been more frightened than he has'],
+  emotionalDrivers: ['Fear — Google has told him this could be sight-threatening', 'Frustration — NHS 111 offered nothing useful; A&E means hours of waiting with no eye specialist', 'His livelihood depends on his vision — he is a visual professional'],
+  decisionTriggers: ['Sudden onset of dense floaters and flashes — qualitatively different from his usual floaters', 'Google search results describing retinal detachment created acute anxiety', 'NHS 111 could only suggest A&E with a 6–8 hour estimated wait and no guarantee of ophthalmology review'],
+  personalMotivations: ['His entire career is visual — graphic design and photography require detailed vision', 'Emma said "Call someone private. We are not sitting in A&E for eight hours."'],
+  frustrations: ['Optometrist closed — no evening or weekend emergency access', 'NHS 111 offered A&E as the only option — no direct ophthalmology pathway', 'A&E wait of 6–8 hours with no certainty of seeing an eye specialist'],
+  nhsFrustrations: ['No urgent community ophthalmology pathway for acute flashes and floaters', 'A&E is the default but ophthalmology review may not be available out of hours', 'If seen at A&E, likely reviewed by a non-specialist who may refer on — adding further delay'],
+  fears: ['Retinal detachment requiring emergency surgery', 'Permanent visual field loss', 'The dense floaters never clearing — affecting his ability to do detailed design work'],
+  financialConcerns: ['Willing to pay for urgent assessment — this is not a price-sensitive decision', 'Wants clarity on what the urgent assessment costs before arriving', 'If treatment is needed (laser retinopexy), wants to know the additional cost'],
+  informationGaps: ['Whether EyePros offers same-day or next-day urgent retinal assessment', 'What the assessment involves and how long it takes', 'Whether laser treatment can be performed at the same visit if a tear is found'],
+  functionalNeeds: ['Same-day or next-morning urgent appointment', 'Dilated retinal examination with wide-field imaging', 'Clear written explanation of findings to share with his optometrist and GP'],
+  clinicalNeeds: ['Comprehensive dilated fundus examination', 'Wide-field retinal imaging and OCT', 'Laser retinopexy if retinal tear identified — ideally at the same visit'],
+  emotionalNeeds: ['Speed — every hour of waiting increases his anxiety', 'Competence — he needs to feel the person examining him is a retinal specialist', 'Clear, honest communication — tell him what you see, not what he wants to hear'],
+  communicationNeeds: ['Phone for urgent booking — he will call at 7am', 'Email confirmation of appointment', 'Written findings report after assessment'],
+  researchHabits: 'Extensive and anxious. Has read NHS Choices, Moorfields patient information, and multiple ophthalmology websites since 9pm last night. Google has both informed and terrified him.',
+  techUsage: 'Expert digital user. Works on screens all day. Active on Instagram (photography). Uses Google extensively.',
+  infoSources: ['Google (anxious searching)', 'NHS Choices', 'Moorfields patient information', 'Emma\'s research', 'Optometrist (when available)'],
+  channels: ['Phone (urgent)', 'Email', 'Google Search'],
+  decisionStyle: 'Urgency-driven. Normal research behaviour is overridden by acute anxiety. He will call the first credible provider who can see him today. Price is not the deciding factor — speed and expertise are.',
+  typicalQuestions: [
+    '"Can you see me today? I had sudden floaters and flashes last night."',
+    '"Is this a retinal detachment? I have been Googling all night."',
+    '"How much does the urgent assessment cost?"',
+    '"If you find a tear, can you treat it at the same visit?"',
+    '"I am moderately myopic — does that increase my risk?"',
+  ],
+  trustFactors: ['Same-day availability', 'Retinal specialist, not a generalist', 'Wide-field imaging capability', 'Ability to treat at same visit if needed', 'Clear communication under pressure'],
+  traits: ['Anxious', 'Visual professional', 'Research-driven', 'Decisive under pressure', 'Detail-oriented'],
+  values: ['Speed', 'Expertise', 'Honesty', 'Reassurance', 'Visual quality'],
+  journey: [
+    { stage: 'Symptom Onset', icon: '⚡', goal: 'Recognise something is wrong', action: 'Dense floater shower and peripheral flashes while working at 9pm; qualitatively different from usual floaters', thoughts: 'This is not normal. This is sudden. Something has changed.', emotion: 3, emotionLabel: 'Alarmed', painPoints: ['Sudden onset creates immediate panic', 'Cannot distinguish PVD from retinal detachment without professional assessment'], opportunities: ['Content: "Sudden floaters and flashes: when to seek urgent assessment"'], channel: 'Self-awareness', touchpoint: 'Symptom onset', uxRec: 'Create urgent content that appears in Google for "sudden floaters and flashes" searches' },
+    { stage: 'Google Search', icon: '🔍', goal: 'Understand what the symptoms mean', action: 'Googles "sudden floaters and flashes" at 9pm; reads about retinal detachment; anxiety escalates', thoughts: 'Every result says retinal detachment. I need to see someone now.', emotion: 1, emotionLabel: 'Terrified', painPoints: ['Google provides worst-case information with no triage', 'No way to assess severity without professional examination'], opportunities: ['SEO: EyePros urgent retinal assessment page ranking for "sudden floaters and flashes"'], channel: 'Google', touchpoint: 'Google search results', uxRec: 'Ensure EyePros ranks for urgent floater/flash searches with a clear "call us now" message', isOpportunity: true },
+    { stage: 'Failed NHS Pathway', icon: '❌', goal: 'Find immediate professional help', action: 'Calls NHS 111; told to go to A&E; warned of 6–8 hour wait; no guarantee of ophthalmology review', thoughts: 'Eight hours in A&E to possibly not even see an eye doctor? That is not acceptable.', emotion: 2, emotionLabel: 'Frustrated', painPoints: ['NHS 111 cannot offer ophthalmology-specific urgent care', 'A&E wait is inappropriate for an anxious patient with acute visual symptoms'], opportunities: ['EyePros urgent access is the direct alternative to A&E for eye emergencies'], channel: 'NHS 111', touchpoint: 'NHS 111 call', uxRec: 'Position EyePros as the urgent alternative to A&E for acute eye symptoms' },
+    { stage: 'Finding EyePros', icon: '📱', goal: 'Find a private clinic that can see him urgently', action: 'Emma searches "urgent private eye assessment Birmingham"; finds EyePros; notes same-day availability', thoughts: 'Emma found them. They say urgent retinal assessment available. I am calling at 7am.', emotion: 4, emotionLabel: 'Hopeful', painPoints: ['If the website does not clearly state urgent/same-day availability, he will move on', 'He is searching at 10pm — the website must do the work, not a phone call'], opportunities: ['Website must convert anxious late-night searchers with clear urgent access information'], channel: 'Google (Emma)', touchpoint: 'EyePros website', uxRec: 'Urgent retinal page must clearly state same-day availability and phone number — visible at 10pm', isOpportunity: true },
+    { stage: 'First Contact', icon: '📞', goal: 'Book same-day urgent appointment', action: 'Calls at 7:30am; reception understands urgency; appointment booked for 10am', thoughts: 'They understood immediately. No questions about whether it could wait. Appointment in two hours.', emotion: 6, emotionLabel: 'Relieved', painPoints: ['If reception treats this as routine, trust collapses', 'He needs to hear urgency matched in the phone response'], opportunities: ['Urgent phone pathway is the conversion moment'], channel: 'Phone', touchpoint: 'Urgent phone call', uxRec: 'Train reception to treat flashes/floaters calls as urgent — same-day appointment should be the default', isOpportunity: true },
+    { stage: 'Assessment', icon: '🩺', goal: 'Comprehensive retinal examination', action: 'Dilated examination; wide-field imaging; OCT; consultant confirms posterior vitreous detachment with no retinal tear', thoughts: 'No tear. No detachment. PVD. He showed me the scan. I nearly collapsed with relief.', emotion: 9, emotionLabel: 'Overwhelmed with relief', painPoints: ['If the assessment is rushed or feels incomplete, residual anxiety remains'], opportunities: ['Showing the patient their own retinal image is powerfully reassuring'], channel: 'In clinic', touchpoint: 'Retinal assessment', uxRec: 'Show patients their wide-field retinal image and explain what you see — visual reassurance is more powerful than verbal', isOpportunity: true },
+    { stage: 'Follow-Up Plan', icon: '📅', goal: 'Understand what happens next', action: 'Consultant explains PVD timeline, warning signs for re-presentation, and books 6-week review', thoughts: 'I know what to watch for. I know when to call. I have a plan. I can breathe again.', emotion: 8, emotionLabel: 'Secure', painPoints: ['Without a clear follow-up plan, anxiety will return'], opportunities: ['Written PVD information sheet with red flag symptoms is essential'], channel: 'In clinic / written', touchpoint: 'Follow-up plan', uxRec: 'Provide a written PVD information sheet with clear red-flag re-presentation criteria' },
+    { stage: 'Advocacy', icon: '💬', goal: 'Recommend urgent pathway to others', action: 'Tells his optometrist about the experience; posts in a local photography group; tells freelancer friends', thoughts: 'If anyone gets sudden floaters, I tell them: do not go to A&E. Call EyePros.', emotion: 9, emotionLabel: 'Ambassador', painPoints: ['No formal mechanism for patient referral'], opportunities: ['Myopic professionals (designers, photographers, developers) are a high-value referral network'], channel: 'Word of mouth, Optometrist, Photography community', touchpoint: 'Network advocacy', uxRec: 'Create referral pathway for optometrists who see acute PVD patients after hours', isOpportunity: true },
+  ],
+  decision: {
+    whySeeksCare: 'Acute-onset dense floaters and flashes in a moderately myopic eye. Google has created acute anxiety about retinal detachment.',
+    whyDelays: 'No delay. This is an acute presentation. The only delay is finding someone who can see him today.',
+    whyPrivate: 'NHS offers only A&E with a 6–8 hour wait and no guarantee of ophthalmology review. Private urgent access provides same-day retinal specialist assessment.',
+    whyEyePros: 'Same-day urgent retinal assessment, retinal specialist, wide-field imaging, and the ability to treat a tear at the same visit if needed.',
+    whyCompetitor: 'Any provider who can see him today. Speed is the only deciding factor.',
+    infoThatConverts: 'Website clearly stating urgent same-day retinal assessment with phone number visible.',
+    ultimateConverter: 'A phone call at 7am where reception books him for 10am without questioning whether it could wait.',
+  },
+  competitors: [
+    { name: 'A&E / NHS Emergency', whyConsider: 'Free, always open, hospital setting.', whyEyeProsWins: '6–8 hour wait, non-specialist review likely, no imaging. EyePros: retinal specialist within hours, wide-field imaging, same-visit treatment if needed.' },
+    { name: 'High-street optometrist (emergency slot)', whyConsider: 'May offer same-day assessment with limited equipment.', whyEyeProsWins: 'Optometrist cannot perform laser retinopexy if a tear is found. EyePros can diagnose and treat in one visit.' },
+  ],
+  keyMessages: [
+    'Sudden floaters and flashes? Same-day urgent retinal assessment',
+    'Retinal specialist with wide-field imaging — not an A&E wait',
+    'If a tear is found, laser treatment at the same visit',
+    'Don\'t wait 8 hours in A&E wondering. Know today.',
+  ],
+  contentRecommendations: ['Urgent flashes & floaters landing page with same-day booking', '"Sudden floaters: what to do right now" SEO article', 'Optometrist urgent referral pathway', 'Patient story: PVD scare to same-day reassurance'],
+  marketing: {
+    acquisitionPriority: 4,
+    conversionDifficulty: 'Easy',
+    lifetimeValue: 'Medium',
+    bestChannels: ['Google Search (urgent)', 'SEO', 'Optometrist Referral', 'Word of Mouth'],
+    searchIntent: ['"sudden floaters and flashes"', '"urgent eye assessment near me"', '"private retinal scan same day"', '"floaters retinal detachment symptoms"', '"emergency eye doctor Birmingham"'],
+    socialBehaviour: {
+      platforms: ['Instagram (photography)', 'Google'],
+      contentConsumed: ['NHS Choices flashes/floaters', 'Moorfields patient info', 'Google search results', 'Photography community forums'],
+      postingHabits: 'Active on Instagram for photography. Will not post about his eye scare but will mention EyePros in conversation.',
+      trustSources: ['Google search results', 'Optometrist', 'Emma\'s research', 'Moorfields patient information', 'Colleague recommendations'],
+    },
+    contentThatConverts: ['"Sudden floaters: what to do right now" page', 'Urgent same-day assessment information', 'Wide-field retinal imaging explanation', '"A&E vs. private urgent eye care" comparison'],
+    emotionalTriggers: ['Acute fear of retinal detachment', 'Google-induced anxiety', 'NHS 111 inability to offer ophthalmology-specific care', 'Livelihood depends on vision'],
+    mainObjections: ['Can you see me today?', 'How much does the urgent assessment cost?', 'Can you treat a tear at the same visit?'],
+    messagingAngles: ['"Don\'t wait in A&E. Know today."', '"Same-day retinal specialist assessment when your vision can\'t wait"', '"From panic to peace of mind in hours, not days"'],
+    bestCTA: 'Call for Urgent Retinal Assessment',
+    leadMagnet: 'Flashes & Floaters: When to Seek Urgent Care (downloadable guide)',
+    campaignType: ['SEO', 'Google Search (urgent terms)', 'Optometrist Referral Network'],
+    funnelStage: 'BOFU',
+    retentionOpportunities: ['6-week PVD follow-up', 'Annual retinal screening for myopes', 'Dry eye management'],
+    referralOpportunities: ['Optometrist network', 'Photography/design community', 'Freelancer networks'],
+    kpis: ['Urgent call to same-day appointment rate', 'Retinal tear detection rate', 'Patient satisfaction for urgent pathway', 'Optometrist referral volume'],
+  },
+  conversionAction: 'Urgent phone call → same-day appointment booked → retinal assessment → diagnosis and plan within hours',
+  conversionMetric: 'Call to same-day assessment completion rate',
+  reviewDate: '31 Oct 2026',
+};
+
+const CHLOE = {
+  id: 'chloe', initials: 'CF',
+  name: 'Chloe Farrell', age: 21,
+  role: 'Final-Year Law Student', company: 'University of Birmingham',
+  location: 'Selly Oak, Birmingham',
+  type: 'patient', category: 'REFRACTIVE — PRK / SURFACE ABLATION',
+  subcategory: 'Student, Budget-Conscious, Contact Lens Intolerant',
+  photo: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&h=720&fit=crop&auto=format',
+  insurance: 'Self-Pay', lifestyle: 'Law student, part-time barista, netball team, festival-goer, social media active',
+  family: 'Lives with housemates in Selly Oak. Parents in Solihull. Mum (Claire) is her main sounding board and will help financially.',
+  biography: 'Chloe has worn glasses since she was 11 and switched to daily contact lenses at 16. Over the past two years, she has developed chronic contact lens intolerance — by 4pm her eyes are red, gritty, and painful. She has tried multiple lens brands, preservative-free drops, and even scleral lenses, but nothing works beyond a few hours. Her optometrist has told her she needs to stop wearing contacts entirely. For Chloe, this feels like a life sentence back in glasses. She is deeply self-conscious about her appearance in glasses, especially in professional settings. She starts her training contract at a Birmingham law firm in September 2027 and cannot imagine walking into court wearing thick glasses. She has been researching LASIK and PRK obsessively for six months — watching YouTube videos, reading Reddit threads, and following LASIK influencers on TikTok. Her prescription is -3.75/-4.25 with mild astigmatism. Her corneas are borderline thin, which means she may not qualify for LASIK and might need PRK instead. She is frightened of the longer PRK recovery but more frightened of wearing glasses for the rest of her career. Her mum has agreed to help with the cost as an early graduation gift.',
+  oneSentenceSummary: 'A 21-year-old law student with contact lens intolerance who is terrified of a career in glasses and needs PRK assessment before her training contract begins.',
+  quote: '"I cannot start my legal career wearing these glasses. I just can\'t. I need to know if PRK will work for me."',
+  clinicalGoals: ['Comprehensive refractive assessment including corneal topography and pachymetry', 'Determine suitability for PRK (given borderline thin corneas) vs. LASIK vs. ICL', 'Correct -3.75/-4.25 with astigmatism to achieve spectacle independence'],
+  lifestyleGoals: ['Start her training contract at a law firm without glasses or contacts', 'Play netball without glasses slipping or contacts drying out', 'Stop planning her entire day around contact lens comfort windows'],
+  emotionalGoals: ['Feel confident in professional settings without glasses', 'Stop dreading every networking event, date, and photograph because of her glasses', 'Prove to herself she made a brave, considered decision'],
+  emotionalDrivers: ['Self-image — she feels fundamentally different in glasses vs. without', 'Professional identity — she is building a career where first impressions matter', 'Independence — she wants to make this decision herself, not rely on her mum forever'],
+  decisionTriggers: ['Optometrist told her she must stop wearing contact lenses entirely', 'Training contract starts September 2027 — she has a deadline', 'A friend from university had LASIK and posted her entire journey on TikTok'],
+  personalMotivations: ['Her mum said: "If this is what you need to feel confident, we\'ll find the money."', 'She wants to walk into her first day at the firm feeling like herself, not hiding behind glasses'],
+  frustrations: ['Contact lens intolerance has taken away her only glasses-free option', 'Most refractive surgery websites are aimed at 30–50 year olds — she feels invisible', 'Terrified that her thin corneas will disqualify her from LASIK'],
+  nhsFrustrations: ['Refractive surgery is not available on the NHS', 'GP was dismissive: "Glasses work perfectly well for most people"', 'No NHS pathway for contact lens intolerance beyond "try different lenses"'],
+  fears: ['PRK recovery — she has read it takes 5–7 days of pain and weeks of blurry vision', 'Being told her corneas are too thin for any laser procedure', 'Something going wrong at 21 and having to live with the consequences for 60+ years', 'Regretting spending her mum\'s money if it doesn\'t work'],
+  financialConcerns: ['PRK/LASIK at \u00a33,000–\u00a34,500 is a huge amount for a student', 'Her mum is helping but Chloe feels guilty about the cost', 'Wants transparent all-in pricing — no hidden enhancement fees', 'Interested in patient finance / monthly payments if available'],
+  informationGaps: ['Whether her corneas are too thin for LASIK and whether PRK is a safe alternative', 'What PRK recovery really looks like day by day — she has read conflicting accounts', 'Whether she can have the procedure during Easter break and be back at university for exams', 'How young patients\' eyes change after 21 — will she need an enhancement later?'],
+  functionalNeeds: ['Honest suitability assessment — not a sales pitch', 'Realistic recovery timeline she can plan around her academic calendar', 'Patient finance options clearly presented'],
+  clinicalNeeds: ['Corneal topography, tomography, and pachymetry to determine LASIK vs. PRK suitability', 'Cycloplegic refraction to confirm stable prescription', 'Dry eye assessment given contact lens intolerance history'],
+  emotionalNeeds: ['Treated as an intelligent adult making a serious decision, not a young person being impulsive', 'Honest conversation about risks at her age', 'Reassurance that PRK is a proven procedure, not a compromise'],
+  communicationNeeds: ['Instagram DM or online booking — she will not call first', 'WhatsApp for appointment reminders', 'Video content she can show her mum to build confidence'],
+  researchHabits: 'Extensive and ongoing for 6 months. Watches YouTube LASIK/PRK diaries daily. Follows r/lasik on Reddit. Follows 3 TikTok accounts that post refractive surgery content. Has a saved folder on Instagram of before/after Reels. Cross-references everything she reads.',
+  techUsage: 'Digital native. iPhone, Instagram, TikTok, Reddit, YouTube. Does not use Facebook. Will not call a phone number unless absolutely necessary.',
+  infoSources: ['TikTok (LASIK/PRK influencers)', 'Reddit r/lasik', 'YouTube recovery diaries', 'Instagram saved posts', 'Google Search', 'Friend who had LASIK'],
+  channels: ['Instagram DM', 'Online booking form', 'WhatsApp', 'TikTok'],
+  decisionStyle: 'Research-obsessive but emotionally driven. She has consumed more refractive surgery content than most ophthalmologists. She needs a consultant who matches her knowledge level and does not patronise her. Her mum\'s approval is the final gate.',
+  typicalQuestions: [
+    '"Are my corneas thick enough for LASIK, or will I need PRK?"',
+    '"What does PRK recovery actually feel like day by day?"',
+    '"How long until I can read a screen comfortably after PRK?"',
+    '"I\'m 21 — will my prescription change again?"',
+    '"Do you offer payment plans?"',
+  ],
+  trustFactors: ['Consultant credentials and GMC registration', 'Real patient PRK recovery videos', 'Reddit/TikTok mentions of EyePros', 'No sales pressure at consultation', 'Transparent pricing with finance options'],
+  traits: ['Research-obsessive', 'Self-conscious', 'Determined', 'Budget-aware', 'Digitally native'],
+  values: ['Authenticity', 'Transparency', 'Self-confidence', 'Independence', 'Value for money'],
+  journey: [
+    { stage: 'Awareness', icon: '👓', goal: 'Realise contact lenses are no longer an option', action: 'Optometrist confirms chronic contact lens intolerance; told to stop wearing lenses', thoughts: 'If I can\'t wear contacts, I\'m stuck in glasses forever. Unless surgery is an option.', emotion: 3, emotionLabel: 'Devastated', painPoints: ['Contact lens intolerance feels like losing her identity', 'No NHS solution beyond "wear glasses"'], opportunities: ['Content targeting contact lens intolerance patients under 25'], channel: 'Optometrist', touchpoint: 'Optometrist appointment', uxRec: 'Create content: "Contact lens intolerance at 21: your options beyond glasses"' },
+    { stage: 'Research', icon: '🔍', goal: 'Understand whether PRK/LASIK could work for her', action: 'Six months of YouTube, Reddit, TikTok research. Searches "PRK thin corneas" and "LASIK at 21"', thoughts: 'Some people say PRK is fine. Others say the recovery is awful. I need a professional opinion.', emotion: 4, emotionLabel: 'Overwhelmed', painPoints: ['Conflicting information online creates decision paralysis', 'Most content is from US clinics — hard to find UK-specific guidance'], opportunities: ['EyePros TikTok/YouTube content directly answering "Can I have LASIK at 21?"', 'SEO: "PRK thin corneas UK"'], channel: 'TikTok, Reddit, YouTube, Google', touchpoint: 'Social content and search', uxRec: 'Create short-form video content answering the exact questions 18–25 year olds ask about laser eye surgery', isOpportunity: true },
+    { stage: 'Shortlisting', icon: '📱', goal: 'Find a consultant she trusts', action: 'Searches Instagram for "LASIK Birmingham"; finds EyePros Reels; checks Google reviews; reads consultant profile', thoughts: 'Their content feels real. Not salesy. And the consultant is a proper ophthalmologist, not a laser tech.', emotion: 5, emotionLabel: 'Cautiously interested', painPoints: ['Many clinics feel like sales operations — she can spot a hard sell immediately', 'She needs to see someone like her (young, female) in their content'], opportunities: ['Young patient recovery Reels on Instagram/TikTok', 'Consultant profile emphasising ophthalmologist vs. laser technician distinction'], channel: 'Instagram, Google Reviews, Website', touchpoint: 'EyePros social media and website', uxRec: 'Ensure social content features young patients (20s) alongside the 50+ demographic', isOpportunity: true },
+    { stage: 'Mum\'s Approval', icon: '👩👧', goal: 'Get mum on board emotionally and financially', action: 'Shows mum EyePros website, consultant profile, and patient videos. Mum calls to ask questions.', thoughts: 'Mum was worried at first. But she watched the patient videos and read the reviews. She said yes.', emotion: 6, emotionLabel: 'Hopeful', painPoints: ['If the website doesn\'t reassure parents, the booking won\'t happen', 'Mum needs to speak to a real person on the phone'], opportunities: ['"A parent\'s guide to refractive surgery" page', 'Phone team trained to reassure parents of young patients'], channel: 'Phone (mum), Website, Patient videos', touchpoint: 'Mum\'s phone call', uxRec: 'Create a dedicated "Parents\' Guide to Laser Eye Surgery" page — many young patients need parental financial and emotional support', isOpportunity: true },
+    { stage: 'Consultation', icon: '🩺', goal: 'Definitive suitability assessment', action: 'Full refractive workup: topography, tomography, pachymetry, cycloplegic refraction, dry eye assessment. Consultant recommends PRK due to borderline corneal thickness.', thoughts: 'He didn\'t just say "you\'re suitable." He explained WHY PRK is better for my corneas. I felt respected.', emotion: 8, emotionLabel: 'Empowered', painPoints: ['Any sense of being talked down to because of her age would end the relationship', 'She needs the PRK recommendation to feel like the best clinical choice, not a consolation prize'], opportunities: ['Thorough, evidence-based consultation creates intense loyalty in young patients'], channel: 'In clinic', touchpoint: 'Refractive consultation', uxRec: 'Treat young patients with the same clinical rigour as executives — they notice and they tell everyone', isOpportunity: true },
+    { stage: 'Treatment', icon: '🔬', goal: 'PRK procedure during Easter break', action: 'Bilateral PRK performed. Consultant explains recovery timeline: 3–5 days of discomfort, vision stabilising over 4–6 weeks.', thoughts: 'It was over in 10 minutes per eye. Less scary than I expected. Now I just need to get through recovery.', emotion: 6, emotionLabel: 'Nervous but determined', painPoints: ['PRK recovery is genuinely uncomfortable for 3–5 days — she needs support'], opportunities: ['Post-op care pack (dark glasses, eye drops, paracetamol) shows attention to detail'], channel: 'In clinic', touchpoint: 'PRK surgery day', uxRec: 'Provide a curated PRK recovery kit and a clear day-by-day recovery guide' },
+    { stage: 'Recovery', icon: '🌟', goal: 'Get through recovery and see results', action: 'Days 1–3: uncomfortable, blurry. Day 5: bandage lens removed. Day 10: vision improving noticeably. Week 4: reading clearly without glasses for the first time in 10 years.', thoughts: 'Day 3 was tough. But by week 2, I could see the lecture slides from the back of the hall. I cried.', emotion: 9, emotionLabel: 'Amazed', painPoints: ['Days 1–3 are difficult and she needs reassurance that this is normal'], opportunities: ['Day-by-day WhatsApp check-in during recovery creates deep loyalty', 'She will document her recovery on TikTok/Instagram — encourage this'], channel: 'WhatsApp, Instagram', touchpoint: 'Recovery period', uxRec: 'Offer daily WhatsApp check-ins for the first 5 days post-PRK — young patients share everything on social media', isOpportunity: true },
+    { stage: 'Advocacy', icon: '📲', goal: 'Share her experience with everyone', action: 'Posts her PRK journey on TikTok (17k views). Tags EyePros on Instagram. Tells every friend who wears glasses.', thoughts: 'If anyone asks me about laser eye surgery, I talk for 20 minutes. I am obsessed with how much it changed my life.', emotion: 10, emotionLabel: 'Evangelical', painPoints: ['No formal mechanism to amplify her advocacy'], opportunities: ['Chloe\'s TikTok content reaches thousands of peers who are exactly the target audience', 'Offer her an ambassador role or content collaboration'], channel: 'TikTok, Instagram, Word of mouth, University', touchpoint: 'Social media advocacy', uxRec: 'Create a young patient ambassador programme — one Chloe is worth \u00a310,000 of TikTok advertising', isOpportunity: true },
+  ],
+  decision: {
+    whySeeksCare: 'Chronic contact lens intolerance has removed her only alternative to glasses. Training contract deadline creates urgency.',
+    whyDelays: 'Age anxiety ("Am I too young?"), PRK recovery fear, financial guilt about using mum\'s money.',
+    whyPrivate: 'Refractive surgery is only available privately. She is comparing EyePros against Optical Express and Optimax.',
+    whyEyePros: 'Consultant-led (not laser technician), authentic social media content, no sales pressure, positive Google reviews.',
+    whyCompetitor: 'Optical Express if EyePros doesn\'t have visible young patient content. Optimax if price is significantly lower.',
+    infoThatConverts: 'Young patient PRK recovery Reel/TikTok + consultant profile + transparent pricing + finance options.',
+    ultimateConverter: 'A consultation where the consultant treats her as an intelligent adult, explains WHY PRK is clinically better for her corneas, and provides a clear recovery timeline she can plan around.',
+  },
+  competitors: [
+    SHARED_COMPETITORS.opticalExpress('Dominant brand in refractive surgery. Heavy TikTok and Instagram presence. Competitive pricing.', 'EyePros is consultant-led, not technician-led. No sales pressure, no upselling, and a named ophthalmologist performs the procedure — not a rotating laser operator.'),
+    SHARED_COMPETITORS.optimax('Lower price point. Familiar high-street brand.', 'EyePros provides a comprehensive corneal assessment that determines the safest procedure for her specific anatomy, not a one-size-fits-all LASIK factory.'),
+  ],
+  keyMessages: [
+    'Consultant-led PRK and LASIK — your procedure performed by an ophthalmologist, not a technician',
+    'Honest suitability assessment: we tell you what is safest for YOUR corneas',
+    'Real recovery stories from patients your age',
+    'Transparent pricing with monthly payment options',
+  ],
+  contentRecommendations: ['"Can I have laser eye surgery at 21?" TikTok/YouTube content', 'PRK vs LASIK explainer for thin corneas', 'Young patient recovery diaries (video)', 'Parents\' guide to refractive surgery'],
+  marketing: {
+    acquisitionPriority: 3,
+    conversionDifficulty: 'Medium',
+    lifetimeValue: 'Medium',
+    bestChannels: ['TikTok', 'Instagram', 'YouTube', 'Reddit r/lasik', 'Google Search', 'Word of Mouth'],
+    searchIntent: ['"PRK thin corneas"', '"laser eye surgery at 21 UK"', '"LASIK vs PRK"', '"contact lens intolerance surgery"', '"laser eye surgery Birmingham student"'],
+    socialBehaviour: {
+      platforms: ['TikTok', 'Instagram', 'Reddit', 'YouTube'],
+      contentConsumed: ['LASIK/PRK recovery TikToks', 'Reddit r/lasik posts', 'YouTube surgery vlogs', 'Instagram before/after Reels'],
+      postingHabits: 'Highly active. Will post her entire PRK journey on TikTok and Instagram Stories without being asked.',
+      trustSources: ['Reddit r/lasik community', 'TikTok recovery videos', 'Google Reviews', 'Friend who had LASIK', 'Consultant credentials'],
+    },
+    contentThatConverts: ['Young patient PRK recovery TikTok', '"Am I too young for laser eye surgery?" article', 'Before/after Reels from patients under 25', 'Finance calculator on website'],
+    emotionalTriggers: ['Contact lens intolerance diagnosis', 'Training contract deadline', 'Friend\'s successful LASIK', 'Self-consciousness about glasses in professional settings'],
+    mainObjections: ['Am I too young at 21?', 'Is PRK recovery really that painful?', 'Can I afford it as a student?', 'Will my prescription change and need retreatment?'],
+    messagingAngles: ['"Your career shouldn\'t start behind glasses you hate"', '"PRK: the procedure your corneas deserve"', '"21 and considering laser eye surgery? Here\'s the honest truth."'],
+    bestCTA: 'Book Your Free Suitability Check',
+    leadMagnet: 'PRK Recovery Guide: What to Really Expect, Day by Day',
+    campaignType: ['TikTok Organic', 'Instagram Reels', 'YouTube Shorts', 'Google Search', 'Reddit Engagement'],
+    funnelStage: 'MOFU',
+    retentionOpportunities: ['12-month post-op review', 'Dry eye management if needed', 'Referral programme for friends'],
+    referralOpportunities: ['University friends', 'Netball team', 'Law firm colleagues', 'TikTok followers', 'Instagram audience'],
+    kpis: ['TikTok/Instagram content engagement', 'Consultation bookings from social media', 'Young patient (under 25) conversion rate', 'Patient ambassador content reach'],
+  },
+  conversionAction: 'Instagram DM or online booking \u2192 consultation with mum present \u2192 honest suitability assessment \u2192 PRK scheduled during university break',
+  conversionMetric: 'Social media to consultation booking rate (under 25 segment)',
+  reviewDate: '31 Oct 2026',
+};
+
+const RYAN = {
+  id: 'ryan', initials: 'RM',
+  name: 'Ryan Mitchell', age: 26,
+  role: 'Software Engineer', company: 'Gymshark (Remote)',
+  location: 'Digbeth, Birmingham',
+  type: 'patient', category: 'REFRACTIVE — LASIK',
+  subcategory: 'Tech Professional, Active Lifestyle, Data-Driven',
+  photo: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&h=720&fit=crop&auto=format',
+  insurance: 'Self-Pay', lifestyle: 'Software engineer (remote), CrossFit 5x/week, amateur MMA, weekend mountain biker, gamer',
+  family: 'Single. Lives alone in a Digbeth apartment. Parents in Wolverhampton. Makes his own decisions but will tell his mum after.',
+  biography: 'Ryan has worn glasses since he was 14 and contacts since university. His prescription is -4.50/-5.00 with -0.75 astigmatism. He works remotely as a software engineer, spending 10+ hours a day on screens, and his contacts dry out by mid-afternoon. He trains CrossFit five times a week and does MMA twice a week — his glasses are useless in both, and contacts shift during sparring. He has been saving for LASIK for two years and has \u00a35,000 set aside specifically for this. He has researched refractive surgery with the same rigour he applies to his code: he has read clinical papers, compared wavefront-guided vs. topography-guided ablation profiles, and can quote complication rates from the PROWL studies. He knows he wants LASIK, not PRK (he cannot afford the recovery downtime), and he knows his prescription and corneal thickness are within safe parameters based on his optometrist\'s measurements. What he does not know is whether the clinic he chooses will match his level of preparation. He has been to a free consultation at Optical Express and left feeling like he was being processed through a sales funnel. He wants a consultant who will engage with his questions at a technical level, not read from a script.',
+  oneSentenceSummary: 'A 26-year-old software engineer who has saved \u00a35,000 and researched LASIK to clinical-paper depth, and needs a consultant who matches his knowledge rather than patronising him.',
+  quote: '"I went to Optical Express and the \\"surgeon\\" was actually an optometrist doing the assessment. The real surgeon was introduced for 90 seconds. That\'s not how I make a \u00a34,000 decision."',
+  clinicalGoals: ['Wavefront-guided or topography-guided LASIK to correct -4.50/-5.00 with astigmatism', 'Comprehensive pre-op assessment including aberrometry, pachymetry, and dry eye evaluation', 'Achieve 20/20 or better with minimal higher-order aberrations'],
+  lifestyleGoals: ['Train CrossFit and MMA without glasses slipping or contacts shifting', 'Mountain bike without rain-splattered glasses', 'Stop the 3pm screen-induced dry eye cycle with contacts'],
+  emotionalGoals: ['Feel that his \u00a35,000 is buying a consultant relationship, not a production line', 'Know that the person operating on his eyes is the same person who assessed him', 'Confidence that the technology matches the best available globally'],
+  emotionalDrivers: ['Control — he has researched exhaustively because he needs to feel in control of this decision', 'Competence-seeking — he respects expertise and will test any consultant\'s knowledge', 'Efficiency — he does not want wasted appointments, sales pitches, or unnecessary upselling'],
+  decisionTriggers: ['Disappointing Optical Express consultation — felt like a conveyor belt', 'Contact lens dried out during MMA sparring and he took a hit he should have blocked', 'Has \u00a35,000 saved and ready to commit to the right provider'],
+  personalMotivations: ['He approaches this like a technical investment: he wants the best outcome for his budget', 'He told his CrossFit coach: "By summer, no more glasses at the box"'],
+  frustrations: ['Optical Express consultation felt scripted and impersonal — the surgeon appeared for 90 seconds', 'Most clinic websites use vague language instead of specific technology and outcomes data', 'He cannot find UK complication rate data or surgeon-specific outcome statistics'],
+  nhsFrustrations: ['Refractive surgery not available on NHS', 'NHS ophthalmology has no relevance to his situation'],
+  fears: ['Higher-order aberrations (halos, starbursts) affecting night driving and screen work', 'Dry eye syndrome post-LASIK — he already has mild screen-induced dry eye', 'Ectasia risk — he has read about post-LASIK corneal weakening'],
+  financialConcerns: ['Has \u00a35,000 saved — this is not a financial stretch, but he demands value', 'Wants to understand exactly what the fee includes (enhancements, follow-up, retreatment guarantee)', 'Will not pay for a package that includes services he does not need'],
+  informationGaps: ['Whether EyePros uses wavefront-guided or topography-guided ablation (and which platform)', 'Surgeon-specific outcome data (% achieving 20/20, enhancement rate)', 'What the all-inclusive fee covers and whether lifetime enhancements are included', 'How EyePros manages post-LASIK dry eye in patients with pre-existing screen fatigue'],
+  functionalNeeds: ['Detailed pre-op workup matching clinical trial standards', 'Named consultant surgeon who performs the assessment AND the procedure', 'Written post-op protocol including return-to-sport timelines for CrossFit and MMA'],
+  clinicalNeeds: ['Pentacam or equivalent corneal tomography', 'Aberrometry', 'Tear film and meibomian gland assessment', 'Scotopic pupil measurement (for night vision risk assessment)'],
+  emotionalNeeds: ['Treated as a peer, not a customer — he has done the research and expects clinical-level dialogue', 'No scripts, no sales funnel, no "limited-time offer"', 'Genuine engagement with his technical questions'],
+  communicationNeeds: ['Online booking — he will not call', 'Email for detailed information', 'Website with specific technology and outcomes data'],
+  researchHabits: 'Clinical-grade. Has read the PROWL-1 and PROWL-2 studies. Follows r/lasik on Reddit (has posted questions). Watches ophthalmologist YouTube channels. Has compared EyePros, Optical Express, Optegra, Centre for Sight, and Moorfields Private on Google Reviews.',
+  techUsage: 'Expert. Software engineer. Uses Reddit, YouTube, Google Scholar. Does not use TikTok or Facebook for health decisions. LinkedIn for professional networking.',
+  infoSources: ['Reddit r/lasik', 'Google Scholar (clinical papers)', 'YouTube (ophthalmologist channels)', 'Google Reviews', 'RCOphth surgeon finder', 'Optometrist recommendation'],
+  channels: ['Online booking', 'Email', 'Google Search', 'Reddit'],
+  decisionStyle: 'Data-driven and methodical. He will not be convinced by marketing — only by clinical evidence, surgeon credentials, and technology specifications. Once satisfied, he commits quickly and completely.',
+  typicalQuestions: [
+    '"What laser platform do you use and is it wavefront-guided or topography-guided?"',
+    '"What is your surgeon\'s personal 20/20 achievement rate and enhancement rate?"',
+    '"Will the same consultant who assesses me also perform the surgery?"',
+    '"How do you manage post-LASIK dry eye in patients with pre-existing screen fatigue?"',
+    '"What does the fee include — specifically, are lifetime enhancements covered?"',
+  ],
+  trustFactors: ['Named consultant surgeon who assesses AND operates', 'Specific technology information on website', 'Surgeon-specific outcome data', 'No sales pressure at consultation', 'Detailed post-op protocol including sport-specific return timelines'],
+  traits: ['Data-driven', 'Technically rigorous', 'Sceptical of marketing', 'Decisive once convinced', 'Physically active'],
+  values: ['Competence', 'Transparency', 'Evidence', 'Efficiency', 'Quality over price'],
+  journey: [
+    { stage: 'Awareness', icon: '💻', goal: 'Decide to pursue LASIK', action: 'Contact lens dries out during MMA sparring; takes a hit he should have blocked; decides this is the trigger', thoughts: 'I have \u00a35,000 saved. My contacts are a liability in training. It\'s time.', emotion: 6, emotionLabel: 'Determined', painPoints: ['Contacts are a performance liability in combat sports', 'Glasses are incompatible with his active lifestyle'], opportunities: ['Content targeting active/athletic patients frustrated with contacts during sport'], channel: 'Self-motivated', touchpoint: 'Training incident', uxRec: 'Create content: "Laser eye surgery for athletes: when contacts become a liability"' },
+    { stage: 'Deep Research', icon: '🔬', goal: 'Understand LASIK at clinical-paper depth', action: 'Reads PROWL studies, compares ablation platforms, calculates his residual stromal bed thickness, reviews complication rates', thoughts: 'I know my corneas can handle this. I know the risks. Now I need to find a surgeon I trust.', emotion: 7, emotionLabel: 'Confident in research', painPoints: ['Most clinic websites don\'t provide the technical depth he wants', 'Hard to find UK surgeon-specific outcome data'], opportunities: ['EyePros website with specific technology and outcomes data = instant credibility with this persona'], channel: 'Google Scholar, Reddit, YouTube', touchpoint: 'Clinical literature', uxRec: 'Publish surgeon-specific outcome data and technology specifications on the website — this is what converts the Ryans', isOpportunity: true },
+    { stage: 'Optical Express Consultation', icon: '❌', goal: 'Assess the market leader', action: 'Attends free Optical Express consultation. Optometrist does assessment. Surgeon appears for 90 seconds. Told he is "suitable" with no clinical depth.', thoughts: 'They didn\'t answer a single technical question properly. The surgeon didn\'t even sit down. This is a factory.', emotion: 3, emotionLabel: 'Disappointed', painPoints: ['Production-line consultation felt impersonal and superficial', 'Could not get surgeon-specific outcome data', 'Felt like a customer, not a patient'], opportunities: ['EyePros is the anti-Optical Express: consultant-led, technically rigorous, no sales pressure'], channel: 'Optical Express clinic', touchpoint: 'Competitor consultation', uxRec: 'Position EyePros explicitly as the consultant-led alternative to high-street refractive chains', isOpportunity: true },
+    { stage: 'Finding EyePros', icon: '🔍', goal: 'Find a consultant-led alternative', action: 'Searches "consultant ophthalmologist LASIK Birmingham not Optical Express"; finds EyePros; reads consultant profile; checks Google reviews for clinical detail', thoughts: 'Consultant ophthalmologist, not an optometrist doing assessments. GMC registered. Let me check the reviews.', emotion: 6, emotionLabel: 'Interested', painPoints: ['If the website lacks technology specs, he will move on to Centre for Sight'], opportunities: ['Detailed consultant profile + technology page + outcome data = the EyePros website Ryan is looking for'], channel: 'Google, Website', touchpoint: 'EyePros website', uxRec: 'Ensure the refractive surgery page includes laser platform, assessment technology, and outcome statistics', isOpportunity: true },
+    { stage: 'Consultation', icon: '🩺', goal: 'Test the consultant\'s knowledge', action: 'Full workup: Pentacam, aberrometry, tear film analysis, scotopic pupil. Consultant engages with his technical questions at clinical depth. 45-minute consultation.', thoughts: 'He answered every question without flinching. He challenged one of my assumptions about aberrometry and he was right. This is my surgeon.', emotion: 9, emotionLabel: 'Convinced', painPoints: ['If the consultant cannot match his research depth, credibility collapses'], opportunities: ['Ryan\'s conversion is entirely determined by the quality of the clinical conversation'], channel: 'In clinic', touchpoint: 'Refractive consultation', uxRec: 'Mr Elsahn\'s ability to engage at clinical depth with technically sophisticated patients is a unique differentiator — protect and promote this', isOpportunity: true },
+    { stage: 'Treatment', icon: '✨', goal: 'LASIK procedure', action: 'Bilateral wavefront-guided LASIK. 15 minutes total. Sees the clock across the room on the drive home.', thoughts: 'I can see the clock on the wall. Without glasses. I can see the clock.', emotion: 9, emotionLabel: 'Amazed', painPoints: ['Any deviation from the pre-op plan would cause anxiety'], opportunities: ['Immediate visual improvement creates instant advocacy'], channel: 'In clinic', touchpoint: 'LASIK day', uxRec: 'Send a same-day post-op message: "How are you seeing?" — Ryan will reply with a rave review' },
+    { stage: 'Return to Sport', icon: '🏋️', goal: 'Train without glasses or contacts', action: 'Returns to CrossFit at day 7, MMA at day 21, mountain biking at day 14. No glasses. No contacts. Full performance.', thoughts: 'First sparring session without contacts. I saw everything. Every punch. Every opening.', emotion: 10, emotionLabel: 'Liberated', painPoints: ['Needs clear sport-specific return timelines to plan training'], opportunities: ['Sport-specific return-to-training content creates engagement with athletic audience'], channel: 'In clinic / post-op review', touchpoint: 'Return to training', uxRec: 'Create a sport-specific post-LASIK return timeline — Ryan will share this with his entire gym', isOpportunity: true },
+    { stage: 'Advocacy', icon: '💬', goal: 'Recommend to his network', action: 'Posts a detailed Reddit review on r/lasik. Tells his CrossFit box. Writes a Google review with technical detail.', thoughts: 'When someone on Reddit asks "Who did you go with?", I write a paragraph. Because it matters.', emotion: 9, emotionLabel: 'Ambassador', painPoints: ['No formal mechanism to amplify his advocacy'], opportunities: ['Ryan\'s Reddit review reaches thousands of research-driven prospects globally', 'His Google review with technical detail builds credibility with other Ryans'], channel: 'Reddit, Google Reviews, CrossFit community, Word of mouth', touchpoint: 'Online advocacy', uxRec: 'Ask Ryan-type patients for Google reviews specifically — their technical reviews convert other technical patients', isOpportunity: true },
+  ],
+  decision: {
+    whySeeksCare: 'Contact lens incompatibility with combat sports and screen-induced dry eye. Has \u00a35,000 saved and ready.',
+    whyDelays: 'Wanted to find the right surgeon. Optical Express consultation was the wrong fit. He has been looking for a consultant-led alternative.',
+    whyPrivate: 'Refractive surgery is private-only. Budget is not the constraint — quality is.',
+    whyEyePros: 'Consultant ophthalmologist who assesses and operates. Technical depth at consultation. No sales funnel.',
+    whyCompetitor: 'Centre for Sight if EyePros lacks technology specs on the website. Moorfields Private if he wants London-level academic credentials.',
+    infoThatConverts: 'Website with laser platform details, surgeon-specific outcome data, and all-inclusive fee breakdown.',
+    ultimateConverter: 'A 45-minute consultation where the consultant engages with his clinical questions at technical depth and challenges his assumptions where appropriate.',
+  },
+  competitors: [
+    SHARED_COMPETITORS.opticalExpress('Market leader. Ryan has already been and left disappointed by the production-line model.', 'EyePros is consultant-led from assessment to surgery. Ryan\'s Optical Express experience is EyePros\'s strongest recruitment tool.'),
+    SHARED_COMPETITORS.centreForSight('Highly clinical website with detailed technology information. Ryan has it bookmarked.', 'EyePros matches the clinical depth with a more personal, less corporate experience. Centre for Sight is in London; EyePros is local.'),
+  ],
+  keyMessages: [
+    'Consultant-led LASIK: the surgeon who assesses you is the surgeon who operates on you',
+    'Technical excellence: wavefront-guided ablation with comprehensive pre-op workup',
+    'No sales funnel. No scripts. Just clinical expertise.',
+    'Built for athletes: sport-specific return-to-training protocols',
+  ],
+  contentRecommendations: ['Technology and outcomes page with surgeon-specific data', 'LASIK for athletes content (CrossFit, MMA, cycling)', '"Why I left Optical Express" patient story', 'Reddit r/lasik engagement'],
+  marketing: {
+    acquisitionPriority: 4,
+    conversionDifficulty: 'Medium',
+    lifetimeValue: 'Medium',
+    bestChannels: ['Google Search', 'Reddit r/lasik', 'YouTube', 'SEO', 'Google Reviews'],
+    searchIntent: ['"consultant LASIK Birmingham"', '"best LASIK surgeon UK not Optical Express"', '"wavefront-guided LASIK Birmingham"', '"LASIK for athletes"', '"LASIK dry eye risk"'],
+    socialBehaviour: {
+      platforms: ['Reddit', 'YouTube', 'LinkedIn (professional)'],
+      contentConsumed: ['Clinical papers', 'Reddit r/lasik', 'Ophthalmologist YouTube channels', 'Google Reviews (reads all negative ones first)'],
+      postingHabits: 'Will write a detailed Reddit review and Google review. Will not post on Instagram or TikTok.',
+      trustSources: ['Clinical evidence', 'Surgeon credentials (GMC, RCOphth)', 'Reddit community', 'Google Reviews with clinical detail', 'Consultation experience'],
+    },
+    contentThatConverts: ['Surgeon-specific outcome statistics', 'Technology specifications page', 'Detailed Google reviews from technically-minded patients', '"Optical Express vs. consultant-led LASIK" comparison content'],
+    emotionalTriggers: ['Disappointing Optical Express experience', 'Contact lens incident during MMA', '\u00a35,000 saved and ready to spend', 'Desire for a surgeon who respects his research'],
+    mainObjections: ['What laser platform do you use?', 'What are your surgeon\'s personal outcome statistics?', 'Will the same consultant do my assessment AND surgery?', 'What happens if I need an enhancement?'],
+    messagingAngles: ['"Your surgeon, not a sales team"', '"The LASIK consultation Optical Express didn\'t give you"', '"Built for patients who have done their research"'],
+    bestCTA: 'Book a Consultant-Led LASIK Assessment',
+    leadMagnet: 'LASIK Technical Guide: Platforms, Outcomes & What to Ask Your Surgeon',
+    campaignType: ['Google Search', 'SEO', 'Reddit Engagement', 'YouTube'],
+    funnelStage: 'MOFU-BOFU',
+    retentionOpportunities: ['12-month post-op review', 'Dry eye management', 'Referral programme'],
+    referralOpportunities: ['CrossFit community', 'MMA gym', 'Software engineering colleagues', 'Reddit r/lasik'],
+    kpis: ['Google review quality score', 'Reddit mention tracking', 'Consultation booking from website technology page', 'Optical Express switcher rate'],
+  },
+  conversionAction: 'Online booking \u2192 comprehensive workup \u2192 consultant engages at clinical depth \u2192 LASIK scheduled within 4 weeks',
+  conversionMetric: 'Consultation to surgery conversion rate for refractive patients',
+  reviewDate: '31 Oct 2026',
+};
+
+const PERSONAS = [ELEANOR, RICHARD, PATRICIA, GEORGE, VIVIENNE, MARCUS, CHLOE, RYAN, JAMES, DAVID, SUSAN, ROBERT, ANJALI, DANIEL, DEBORAH, NEIL, SIMON, KATHERINE, MARGARET];
+
+    
+    // Make PERSONAS available globally
+    window.PERSONAS = PERSONAS;
+    
+    const ACRONYM_GLOSSARY = {
+        'MOFU':  'Middle of Funnel — prospect is evaluating options',
+        'BOFU':  'Bottom of Funnel — prospect is ready to convert',
+        'TOFU':  'Top of Funnel — prospect is just becoming aware',
+        'SEO':   'Search Engine Optimisation',
+        'CTA':   'Call to Action — the button or prompt that drives conversion',
+        'PMI':   'Private Medical Insurance',
+        'IOL':   'Intraocular Lens — artificial lens implanted during cataract surgery',
+        'AMD':   'Age-related Macular Degeneration',
+        'CAC':   'Customer Acquisition Cost',
+        'KPI':   'Key Performance Indicator',
+        'CQC':   'Care Quality Commission — UK healthcare regulator',
+        'IOP':   'Intraocular Pressure',
+        'LTV':   'Lifetime Value — total revenue from a patient over time',
+        'OCT':   'Optical Coherence Tomography — retinal imaging scan',
+        'NHS':   'National Health Service',
+        'AREDS': 'Age-Related Eye Disease Study — supplement protocol for AMD',
+        'PCN':   'Primary Care Network',
+        'LOC':   'Local Optical Committee',
+        'YAG':   'YAG Laser Capsulotomy — post-cataract laser treatment',
+        'DVLA':  'Driver and Vehicle Licensing Agency',
+        'GMC':   'General Medical Council — UK doctor register',
+        'CPD':   'Continuing Professional Development',
+    };
+
+    // Build regex that matches whole-word acronyms (longest first to catch AREDS before A)
+    const ACRONYM_KEYS = Object.keys(ACRONYM_GLOSSARY).sort((a, b) => b.length - a.length);
+    const ACRONYM_RE = new RegExp('\\b(' + ACRONYM_KEYS.join('|') + ')\\b', 'g');
+
+    function explainAcronyms(html) {
+        // Only wrap acronyms in text content, not inside HTML tags or attributes
+        // Split on HTML tags, process only text segments
+        return html.replace(/>([^<]+)</g, function(match, textContent) {
+            const processed = textContent.replace(ACRONYM_RE, function(acr) {
+                const tip = ACRONYM_GLOSSARY[acr];
+                if (!tip) return acr;
+                return '<span class="acr" data-tip="' + tip + '">' + acr + '</span>';
+            });
+            return '>' + processed + '<';
+        });
+    }
+
+    // --- Utils ---
+    const PATIENT_COLOR = "#8FBBB5";
+    const REFERRER_COLOR = "#C98B5E";
+
+    function typeColor(t) {
+        return t === "patient" ? PATIENT_COLOR : REFERRER_COLOR;
+    }
+
+    const PLATFORM_COLORS = {
+        LinkedIn:  "#5BA3D9",
+        Instagram: "#C98B5E",
+        YouTube:   "#E07060",
+        Reddit:    "#D9856A",
+        Facebook:  "#6B9FD4",
+        WhatsApp:  "#8FBBB5",
+    };
+
+    function getSocialPlatforms(persona) {
+        const result = [];
+        for (const p of persona.marketing.socialBehaviour.platforms) {
+            const l = p.toLowerCase();
+            if (l.includes("linkedin"))  result.push("LinkedIn");
+            else if (l.includes("instagram")) result.push("Instagram");
+            else if (l.includes("youtube"))   result.push("YouTube");
+            else if (l.includes("reddit"))    result.push("Reddit");
+            else if (l.includes("facebook"))  result.push("Facebook");
+            else if (l.includes("whatsapp"))  result.push("WhatsApp");
+        }
+        return result;
+    }
+
+    function getSocialReach(persona) {
+        const platforms = getSocialPlatforms(persona);
+        if (platforms.length === 0) return "none";
+        const habits = persona.marketing.socialBehaviour.postingHabits.toLowerCase();
+        if (habits.includes("active") || habits.includes("likely to post")) return "high";
+        if (habits.includes("occasion")) return "moderate";
+        return "passive";
+    }
+
+    const REACH_CONFIG = {
+        high:     { label: "HIGH REACH",  color: "#8FBBB5" },
+        moderate: { label: "MODERATE",    color: "#C98B5E" },
+        passive:  { label: "PASSIVE",     color: "rgba(250,248,244,0.4)" },
+        none:     { label: "NOT ON SOCIAL", color: "rgba(250,248,244,0.2)" },
+    };
+
+    const REACH_DETAIL_CONFIG = {
+        high:     { label: "HIGH REACH",    color: "#8FBBB5", bg: "rgba(143,187,181,0.12)", description: "Actively posts — paid social and organic content will both land here." },
+        moderate: { label: "MODERATE REACH", color: "#C98B5E", bg: "rgba(201,139,94,0.12)", description: "Occasional professional poster. Sponsored content and peer-shared posts work best." },
+        passive:  { label: "PASSIVE CONSUMER", color: "rgba(250,248,244,0.5)", bg: "rgba(250,248,244,0.05)", description: "Reads but does not engage publicly. Retargeting and awareness ads can still reach them." },
+        none:     { label: "NOT ON SOCIAL",  color: "rgba(250,248,244,0.3)", bg: "rgba(250,248,244,0.03)", description: "No usable social media presence. Route budget to email, phone, direct mail, or peer referral channels instead." },
+    };
+
+    // --- State ---
+    let currentFilter = 'all';
+    let currentPersona = null;
+    let activeTab = 'overview';
+
+    // --- Components ---
+    function renderApp() {
+        const app = document.getElementById('app');
+        app.innerHTML = `
+            ${renderHubView()}
+            <div id="detail-view"></div>
+        `;
+        
+        setupHubListeners();
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+
+    function renderEyeProsLogo(size) {
+        const s = size === 'sm' ? 24 : size === 'md' ? 32 : 48;
+        return `<div class="flex items-center justify-center rounded-full" style="width: ${s}px; height: ${s}px; background: rgba(143,187,181,0.15); color: #8FBBB5;"><i data-lucide="eye" width="${s*0.6}" height="${s*0.6}"></i></div>`;
+    }
+
+    function renderAvatar(persona, size) {
+        const accent = typeColor(persona.type);
+        const sizes = { sm: { w: 40, h: 40, fs: 14 }, md: { w: 200, h: 240, fs: 48 }, card: { w: '100%', h: 200, fs: 36 } };
+        const s = sizes[size] || sizes.card;
+        const gradAngle = persona.type === 'patient' ? '135deg' : '225deg';
+        const grad = persona.type === 'patient' 
+            ? 'linear-gradient(' + gradAngle + ', #1E1B31 0%, rgba(143,187,181,0.25) 100%)'
+            : 'linear-gradient(' + gradAngle + ', #1E1B31 0%, rgba(201,139,94,0.25) 100%)';
+        const w = typeof s.w === 'number' ? s.w + 'px' : s.w;
+        const h = typeof s.h === 'number' ? s.h + 'px' : s.h;
+        return '<div style="width: ' + w + '; height: ' + h + '; background: ' + grad + '; display: flex; align-items: center; justify-content: center; overflow: hidden;">' +
+            '<span style="font-size: ' + s.fs + 'px; font-weight: 700; font-family: ui-monospace, monospace; color: ' + accent + '; opacity: 0.85; letter-spacing: 0.08em;">' + persona.initials + '</span>' +
+        '</div>';
+    }
+
+    function renderHubView() {
+        const patients = PERSONAS.filter(p => p.type === "patient");
+        const referrers = PERSONAS.filter(p => p.type === "referrer");
+        const highPriorityPersonas = PERSONAS.filter(p => p.marketing && p.marketing.acquisitionPriority >= 4);
+        const highPriorityPatients = highPriorityPersonas.filter(p => p.type === "patient");
+        const highPriorityReferrers = highPriorityPersonas.filter(p => p.type === "referrer");
+
+        const showPatients = currentFilter === "all" || currentFilter === "patient" || currentFilter === "priority";
+        const showReferrers = currentFilter === "all" || currentFilter === "referrer" || currentFilter === "priority";
+
+        const displayedPatients = currentFilter === "priority" ? highPriorityPatients : patients;
+        const displayedReferrers = currentFilter === "priority" ? highPriorityReferrers : referrers;
+
+        return `
+            <div class="min-h-screen relative">
+                <!-- Navigation Header -->
+                <div class="px-6 md:px-12 py-4 flex gap-4 text-xs font-mono border-b" style="border-color: rgba(143,187,181,0.1); background: rgba(30,27,49,0.95);">
+                    <a href="eyepros — Brand Strategy.html" class="text-[rgba(250,248,244,0.6)] hover:text-[#FAF8F4]">Brand Strategy</a>
+                    <span class="text-[rgba(250,248,244,0.2)]">|</span>
+                    <a href="eyepros — Stakeholder Map.html" class="text-[rgba(250,248,244,0.6)] hover:text-[#FAF8F4]">Stakeholder Map</a>
+                    <span class="text-[rgba(250,248,244,0.2)]">|</span>
+                    <a href="eyepros — Partnership Intelligence.html" class="text-[rgba(250,248,244,0.6)] hover:text-[#FAF8F4]">Partnership Intelligence</a>
+                    <span class="text-[rgba(250,248,244,0.2)]">|</span>
+                    <a href="#" class="text-[#FAF8F4] border-b border-[#FAF8F4]">Persona Boards</a>
+                </div>
+
+                <div class="px-6 md:px-12 pt-12 pb-10 border-b border-[rgba(143,187,181,0.1)]">
+                    <div class="max-w-7xl mx-auto">
+                        <div class="flex items-center gap-4 mb-6">
+                            ${renderEyeProsLogo('md')}
+                            <div class="w-px h-4 bg-[rgba(143,187,181,0.25)]"></div>
+                            <span class="text-xs tracking-[0.15em] text-[rgba(250,248,244,0.4)]">PERSONA INTELLIGENCE SYSTEM</span>
+                        </div>
+                        <div class="flex flex-wrap items-end justify-between gap-8 mb-8">
+                            <div class="max-w-2xl">
+                                <h1 class="text-5xl md:text-6xl font-bold mb-4 leading-none text-[#FAF8F4]">Who We Serve</h1>
+                                <p class="text-base leading-relaxed text-[rgba(250,248,244,0.55)]">
+                                    A strategic intelligence system across nineteen distinct audience profiles — thirteen patients, six referral partners. Each profile carries a complete channel layer, decision framework, customer journey, and competitive positioning. Built for EyePros marketing, clinical, and business development teams.
+                                </p>
+                            </div>
+                            <div class="flex gap-8">
+                                <div>
+                                    <div class="text-4xl font-bold text-mono mb-1" style="color: ${PATIENT_COLOR}">${patients.length}</div>
+                                    <div class="text-xs text-mono tracking-widest text-[#8FA8A5]">PATIENT PROFILES</div>
+                                </div>
+                                <div class="w-px self-stretch bg-[rgba(143,187,181,0.12)]"></div>
+                                <div>
+                                    <div class="text-4xl font-bold text-mono mb-1" style="color: ${REFERRER_COLOR}">${referrers.length}</div>
+                                    <div class="text-xs text-mono tracking-widest text-[#8FA8A5]">REFERRER PROFILES</div>
+                                </div>
+                                <div class="w-px self-stretch bg-[rgba(143,187,181,0.12)]"></div>
+                                <div>
+                                    <div class="text-4xl font-bold text-mono mb-1 text-[#FAF8F4]">${PERSONAS.length}</div>
+                                    <div class="text-xs text-mono tracking-widest text-[#8FA8A5]">TOTAL PROFILES</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 flex flex-wrap gap-4">
+                            <div class="flex items-start gap-2.5 px-4 py-3 bg-[rgba(250,248,244,0.02)] border border-[rgba(250,248,244,0.06)] rounded-sm flex-1" style="min-width: 280px;">
+                                <span class="flex-shrink-0 mt-0.5 text-[rgba(250,248,244,0.3)]"><i data-lucide="shield" width="13" height="13"></i></span>
+                                <div>
+                                    <div class="text-xs text-mono tracking-widest mb-1 text-[rgba(250,248,244,0.4)]" style="letter-spacing: 0.08em;">DATA NOTICE</div>
+                                    <p class="text-xs leading-relaxed text-[rgba(250,248,244,0.5)]">All personas are composite archetypes constructed from aggregated research. They do not represent real individuals. Names, photographs, and biographical details are illustrative. No patient data has been used.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-2.5 px-4 py-3 bg-[rgba(250,248,244,0.02)] border border-[rgba(250,248,244,0.06)] rounded-sm" style="min-width: 180px;">
+                                <span class="flex-shrink-0 mt-0.5 text-[rgba(250,248,244,0.3)]"><i data-lucide="clock" width="13" height="13"></i></span>
+                                <div>
+                                    <div class="text-xs text-mono tracking-widest mb-1 text-[rgba(250,248,244,0.4)]" style="letter-spacing: 0.08em;">VERSION</div>
+                                    <p class="text-xs leading-relaxed text-[rgba(250,248,244,0.5)]">v2.0 · Last validated: July 2026<br/>Next review: October 2026</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FILTER -->
+                <div class="sticky top-0 z-40 px-6 md:px-12 py-4 border-b border-[rgba(143,187,181,0.07)]" style="background: rgba(30,27,49,0.95); backdrop-filter: blur(16px);">
+                    <div class="max-w-7xl mx-auto flex items-center gap-1" id="filter-container">
+                        <button data-filter="all" class="flex items-center gap-1.5 px-4 py-2 text-xs text-mono tracking-widest transition-all duration-200 outline-none rounded-sm" style="letter-spacing: 0.1em; background: ${currentFilter==='all' ? '#8FBBB515' : 'transparent'}; color: ${currentFilter==='all' ? '#8FBBB5' : 'rgba(122,155,189,0.7)'}; border: 1px solid ${currentFilter==='all' ? '#8FBBB535' : 'transparent'};">
+                            ALL (${PERSONAS.length})
+                        </button>
+                        <button data-filter="patient" class="flex items-center gap-1.5 px-4 py-2 text-xs text-mono tracking-widest transition-all duration-200 outline-none rounded-sm" style="letter-spacing: 0.1em; background: ${currentFilter==='patient' ? PATIENT_COLOR+'15' : 'transparent'}; color: ${currentFilter==='patient' ? PATIENT_COLOR : 'rgba(122,155,189,0.7)'}; border: 1px solid ${currentFilter==='patient' ? PATIENT_COLOR+'35' : 'transparent'};">
+                            PATIENTS (${patients.length})
+                        </button>
+                        <button data-filter="referrer" class="flex items-center gap-1.5 px-4 py-2 text-xs text-mono tracking-widest transition-all duration-200 outline-none rounded-sm" style="letter-spacing: 0.1em; background: ${currentFilter==='referrer' ? REFERRER_COLOR+'15' : 'transparent'}; color: ${currentFilter==='referrer' ? REFERRER_COLOR : 'rgba(122,155,189,0.7)'}; border: 1px solid ${currentFilter==='referrer' ? REFERRER_COLOR+'35' : 'transparent'};">
+                            REFERRERS (${referrers.length})
+                        </button>
+                        <button data-filter="priority" class="flex items-center gap-1.5 px-4 py-2 text-xs text-mono tracking-widest transition-all duration-200 outline-none rounded-sm" style="letter-spacing: 0.1em; background: ${currentFilter==='priority' ? '#C98B5E15' : 'transparent'}; color: ${currentFilter==='priority' ? '#C98B5E' : 'rgba(122,155,189,0.7)'}; border: 1px solid ${currentFilter==='priority' ? '#C98B5E35' : 'transparent'};">
+                            <i data-lucide="star" width="10" height="10"></i>
+                            HIGH PRIORITY (${highPriorityPersonas.length})
+                        </button>
+                    </div>
+                </div>
+
+                <!-- GRID -->
+                <div class="px-6 md:px-12 py-10">
+                    <div class="max-w-7xl mx-auto space-y-14">
+                        ${showPatients ? `
+                        <section>
+                            <div class="flex items-center gap-4 mb-6">
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="users" width="13" height="13" style="color: ${PATIENT_COLOR}"></i>
+                                    <span class="text-xs text-mono tracking-widest" style="color: ${PATIENT_COLOR}; letter-spacing: 0.16em;">PATIENTS</span>
+                                </div>
+                                <div class="flex-1 h-px bg-[rgba(143,187,181,0.12)]"></div>
+                                <span class="text-xs text-mono text-[rgba(122,155,189,0.5)]">
+                                    ${currentFilter === "priority" ? `${displayedPatients.length} of ${patients.length} high-priority acquisition targets` : "Cataract · AMD · Dry Eye · Glaucoma · Premium Lens · Refractive"}
+                                </span>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
+                                ${displayedPatients.map(p => renderPersonaCard(p)).join('')}
+                            </div>
+                        </section>
+                        ` : ''}
+
+                        ${showReferrers ? `
+                        <section>
+                            <div class="flex items-center gap-4 mb-6">
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="wifi" width="13" height="13" style="color: ${REFERRER_COLOR}"></i>
+                                    <span class="text-xs text-mono tracking-widest" style="color: ${REFERRER_COLOR}; letter-spacing: 0.16em;">REFERRAL PARTNERS</span>
+                                </div>
+                                <div class="flex-1 h-px bg-[rgba(74,155,142,0.12)]"></div>
+                                <span class="text-xs text-mono text-[rgba(122,155,189,0.5)]">
+                                    ${currentFilter === "priority" ? `${displayedReferrers.length} of ${referrers.length} high-priority acquisition targets` : "Owner-Optometrist · Clinical Lead · Practice Manager · LOC Member · Group Director · GP Partner · Corporate Wellbeing"}
+                                </span>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
+                                ${displayedReferrers.map(p => renderPersonaCard(p)).join('')}
+                            </div>
+                        </section>
+                        ` : ''}
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    function renderPersonaCard(persona) {
+        const accent = typeColor(persona.type);
+        const platforms = getSocialPlatforms(persona);
+        const reach = getSocialReach(persona);
+        const rc = REACH_CONFIG[reach];
+
+        return `
+            <div class="persona-card ${persona.type}" data-id="${persona.id}" onclick="openPersonaDetail('${persona.id}')">
+                <div class="relative overflow-hidden flex-shrink-0" style="height: 200px; background: #1E1B31;">
+                    <img src="${persona.photo}" alt="${persona.name}" class="w-full h-full object-cover transition-transform duration-500" style="object-position: center top;" />
+                    <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(30,27,49,0) 35%, rgba(37,32,66,0.98) 100%);"></div>
+                    <div class="absolute top-3 left-3 px-2 py-0.5 text-xs text-mono tracking-widest" style="background: rgba(30,27,49,0.85); border: 1px solid rgba(250,248,244,0.12); color: ${accent}; letter-spacing: 0.08em;">
+                        ${persona.insurance}
+                    </div>
+                    <div class="absolute bottom-3 right-3 w-9 h-9 flex items-center justify-center rounded-full text-xs text-mono font-bold" style="background: ${accent}; color: #1E1B31; letter-spacing: 0.05em;">
+                        ${persona.initials}
+                    </div>
+                </div>
+                <div class="p-5 flex flex-col flex-1">
+                    <div class="flex items-start justify-between gap-2 mb-2">
+                        <div class="text-xs text-mono tracking-widest leading-tight" style="color: ${accent}; letter-spacing: 0.1em;">
+                            ${persona.category}
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-bold leading-tight mb-0.5 text-[#FAF8F4]">${persona.name}</h3>
+                    <div class="flex items-center gap-1.5 mb-1 text-[#8FA8A5]">
+                        <span class="text-sm text-mono">${persona.age}</span>
+                        <span class="opacity-30">·</span>
+                        <span class="text-xs truncate">${persona.role}</span>
+                    </div>
+                    <div class="flex items-center gap-1 mb-4 text-xs text-[rgba(122,155,189,0.7)]">
+                        <i data-lucide="map-pin" width="10" height="10" class="flex-shrink-0"></i>
+                        <span class="truncate">${persona.location}</span>
+                    </div>
+                    <p class="text-xs leading-relaxed mb-4 flex-1 text-[rgba(250,248,244,0.6)]">
+                        ${persona.oneSentenceSummary}
+                    </p>
+                    <div class="mb-4 px-3 py-2.5 bg-[rgba(250,248,244,0.03)]" style="border-left: 2px solid ${accent}50;">
+                        <p class="text-xs italic leading-relaxed line-clamp-2 text-[rgba(250,248,244,0.7)]">"${persona.quote}"</p>
+                    </div>
+                    <div class="flex flex-wrap gap-1.5 mb-3">
+                        ${persona.traits.slice(0, 4).map(t => `<span class="px-2 py-0.5 text-xs text-mono" style="background: rgba(250,248,244,0.05); border: 1px solid rgba(250,248,244,0.1); color: rgba(250,248,244,0.55); letter-spacing: 0.04em;">${t}</span>`).join('')}
+                    </div>
+                    <div class="flex flex-wrap items-center gap-1.5 mb-4">
+                        ${platforms.length > 0 ? 
+                            platforms.slice(0, 3).map(pl => `<span class="px-2 py-0.5 text-xs text-mono rounded-sm" style="background: ${PLATFORM_COLORS[pl]}15; border: 1px solid ${PLATFORM_COLORS[pl]}35; color: ${PLATFORM_COLORS[pl]}; letter-spacing: 0.04em;">${pl}</span>`).join('') +
+                            `<span class="text-xs text-mono" style="color: ${rc.color}; letter-spacing: 0.06em;">· ${rc.label}</span>`
+                        :
+                            `<span class="px-2 py-0.5 text-xs text-mono rounded-sm" style="background: rgba(250,248,244,0.02); border: 1px solid rgba(250,248,244,0.07); color: rgba(250,248,244,0.22); letter-spacing: 0.04em;">Not on social</span>`
+                        }
+                    </div>
+                    <div class="flex items-center justify-between pt-3 border-t border-[rgba(250,248,244,0.07)] mt-auto">
+                        <div class="flex items-center gap-1.5 text-xs text-mono text-[rgba(122,155,189,0.7)]">
+                            <i data-lucide="target" width="10" height="10"></i>
+                            <span class="truncate max-w-[140px]">${persona.conversionAction.split("→")[0].trim()}</span>
+                        </div>
+                        <div class="flex items-center gap-1 text-xs text-mono transition-colors duration-200 view-profile" style="color: ${accent}">
+                            View profile
+                            <i data-lucide="chevron-right" width="12" height="12" style="transition: transform 0.2s"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // Handlers
+    function setupHubListeners() {
+        document.querySelectorAll('#filter-container button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentFilter = btn.getAttribute('data-filter');
+                renderApp();
+            });
+        });
+    }
+
+    function openPersonaDetail(id) {
+        currentPersona = PERSONAS.find(p => p.id === id);
+        activeTab = 'overview';
+        document.body.classList.add('no-scroll');
+        const detailView = document.getElementById('detail-view');
+        detailView.innerHTML = explainAcronyms(renderPersonaDetail(currentPersona));
+        if (typeof lucide !== 'undefined') lucide.createIcons({ root: detailView });
+        detailView.classList.add('active');
+        detailView.scrollTop = 0;
+        
+        setupDetailListeners();
+    }
+
+    function closePersonaDetail() {
+        document.body.classList.remove('no-scroll');
+        const detailView = document.getElementById('detail-view');
+        detailView.classList.remove('active');
+    }
+
+    window.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closePersonaDetail();
+    });
+
+    function navigatePersona(offset) {
+        const idx = PERSONAS.findIndex(p => p.id === currentPersona.id);
+        const newIdx = idx + offset;
+        if (newIdx >= 0 && newIdx < PERSONAS.length) {
+            openPersonaDetail(PERSONAS[newIdx].id);
+        }
+    }
+
+    function renderPersonaDetail(persona) {
+        const accent = typeColor(persona.type);
+        const idx = PERSONAS.findIndex(p => p.id === persona.id);
+        const prevP = idx > 0 ? PERSONAS[idx - 1] : null;
+        const nextP = idx < PERSONAS.length - 1 ? PERSONAS[idx + 1] : null;
+
+        return `
+            <div class="border-b border-[rgba(143,187,181,0.1)]">
+                <!-- Navigation bar -->
+                <div class="px-6 md:px-12 pt-5 pb-4 border-b border-[rgba(250,248,244,0.05)]">
+                    <div class="max-w-7xl mx-auto flex items-center gap-3">
+                        <div class="hidden md:flex items-center gap-3 flex-1">
+                            ${renderEyeProsLogo('sm')}
+                            <div class="w-px h-3.5 bg-[rgba(143,187,181,0.2)]"></div>
+                            <div class="flex items-center gap-1.5 text-xs">
+                                <span class="text-[rgba(250,248,244,0.35)]">All Personas</span>
+                                <i data-lucide="chevron-right" width="10" height="10" class="text-[rgba(250,248,244,0.2)]"></i>
+                                <span class="text-[rgba(250,248,244,0.6)]">${persona.name}</span>
+                            </div>
+                        </div>
+                        <div class="flex-1 md:hidden"></div>
+                        <div class="flex items-center gap-1.5">
+                            <button onclick="navigatePersona(-1)" ${!prevP ? 'disabled' : ''} class="flex items-center gap-1.5 px-3 py-1.5 text-xs text-mono outline-none transition-colors duration-150 rounded-sm" style="color: ${prevP ? 'rgba(143,168,165,0.75)' : 'rgba(143,168,165,0.2)'}; border: 1px solid rgba(250,248,244,0.08); background: ${prevP ? 'rgba(250,248,244,0.04)' : 'transparent'}; cursor: ${prevP ? 'pointer' : 'default'};">
+                                <i data-lucide="chevron-left" width="11" height="11"></i>
+                                <span class="hidden sm:inline">${prevP ? prevP.name.split(' ')[0] : ''}</span>
+                            </button>
+                            <span class="text-xs text-mono px-1.5 text-[rgba(143,168,165,0.35)]">${idx + 1}/${PERSONAS.length}</span>
+                            <button onclick="navigatePersona(1)" ${!nextP ? 'disabled' : ''} class="flex items-center gap-1.5 px-3 py-1.5 text-xs text-mono outline-none transition-colors duration-150 rounded-sm" style="color: ${nextP ? 'rgba(143,168,165,0.75)' : 'rgba(143,168,165,0.2)'}; border: 1px solid rgba(250,248,244,0.08); background: ${nextP ? 'rgba(250,248,244,0.04)' : 'transparent'}; cursor: ${nextP ? 'pointer' : 'default'};">
+                                <span class="hidden sm:inline">${nextP ? nextP.name.split(' ')[0] : ''}</span>
+                                <i data-lucide="chevron-right" width="11" height="11"></i>
+                            </button>
+                        </div>
+                        <button onclick="closePersonaDetail()" class="flex items-center justify-center w-8 h-8 outline-none transition-all duration-200 rounded-sm" style="color: rgba(143,168,165,0.65); border: 1px solid rgba(250,248,244,0.1); background: rgba(250,248,244,0.03);" onmouseenter="this.style.color='#FAF8F4';this.style.background='rgba(224,112,96,0.1)';this.style.borderColor='rgba(224,112,96,0.3)';" onmouseleave="this.style.color='rgba(143,168,165,0.65)';this.style.background='rgba(250,248,244,0.03)';this.style.borderColor='rgba(250,248,244,0.1)';">
+                            <i data-lucide="x" width="14" height="14"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Hero -->
+                <div class="px-6 md:px-12 py-8">
+                    <div class="max-w-7xl mx-auto">
+                        <div class="flex flex-col lg:flex-row gap-8 items-start">
+                            <div class="flex-shrink-0" style="width: 200px;">
+                                <div class="overflow-hidden rounded-sm" style="height: 240px; background: #1E1B31; border: 1px solid ${accent}30;">
+                                    <img src="${persona.photo}" alt="${persona.name}" class="w-full h-full object-cover" style="object-position: center top;" />
+                                </div>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center gap-3 mb-3">
+                                    <div class="text-xs text-mono tracking-widest px-2 py-1" style="color: ${accent}; background: ${accent}12; border: 1px solid ${accent}30; letter-spacing: 0.1em;">
+                                        ${persona.type === "patient" ? "PATIENT" : "REFERRAL PARTNER"}
+                                    </div>
+                                    <div class="text-xs text-mono tracking-widest text-[rgba(143,168,165,0.6)]" style="letter-spacing: 0.1em;">
+                                        ${persona.category}
+                                    </div>
+                                </div>
+                                <h1 class="text-4xl md:text-5xl font-bold mb-2 leading-tight text-[#FAF8F4]">${persona.name}</h1>
+                                <div class="flex flex-wrap items-center gap-3 mb-3">
+                                    <span class="text-lg text-mono text-[#8FA8A5]">${persona.age}</span>
+                                    <span class="opacity-30 text-sm">·</span>
+                                    <span class="text-base text-[rgba(250,248,244,0.7)]">${persona.role}</span>
+                                    <span class="opacity-30 text-sm">·</span>
+                                    <span class="text-sm text-[rgba(250,248,244,0.5)]">${persona.company}</span>
+                                </div>
+                                <div class="flex items-center gap-1.5 mb-5 text-[rgba(143,168,165,0.6)]">
+                                    <i data-lucide="map-pin" width="12" height="12"></i>
+                                    <span class="text-sm">${persona.location}</span>
+                                </div>
+                                <p class="text-lg leading-relaxed max-w-3xl text-[rgba(250,248,244,0.65)]">${persona.oneSentenceSummary}</p>
+                            </div>
+                            <div class="flex-shrink-0 w-full lg:w-64 space-y-3">
+                                ${[{ label: "INSURANCE", value: persona.insurance, color: accent },
+                                   { label: "CONVERSION", value: persona.conversionAction.split("→")[0].trim(), color: accent },
+                                   { label: "REVIEW DATE", value: persona.reviewDate, color: "#8FA8A5" }].map(s => `
+                                <div class="p-4 bg-[#252042] border border-[rgba(250,248,244,0.07)] rounded-sm">
+                                    <div class="text-xs text-mono tracking-widest mb-1 text-[#8FA8A5]" style="letter-spacing: 0.1em;">${s.label}</div>
+                                    <div class="text-sm font-medium" style="color: ${s.color}">${s.value}</div>
+                                </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TABS -->
+                <div class="sticky top-0 z-40 px-6 md:px-12 border-b border-[rgba(143,187,181,0.08)]" style="background: rgba(30,27,49,0.97); backdrop-filter: blur(16px);">
+                    <div class="max-w-7xl mx-auto flex gap-0" id="detail-tabs">
+                        ${[
+                            { id: "overview", label: "01 · PROFILE" },
+                            { id: "journey", label: "02 · JOURNEY" },
+                            { id: "empathy", label: "03 · EMPATHY MAP" },
+                            { id: "decision", label: "04 · DECISION" },
+                            { id: "messaging", label: "05 · MESSAGING" },
+                            { id: "marketing", label: "06 · MARKETING" }
+                        ].map(t => `
+                            <button data-tab="${t.id}" class="tab-btn ${activeTab === t.id ? 'active' : ''}" style="${activeTab === t.id ? `color: ${accent}; border-bottom-color: ${accent}; background: ${accent}08;` : ''}">${t.label}</button>
+                        `).join('')}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- TAB CONTENT -->
+            <div class="px-6 md:px-12 py-10">
+                <div class="max-w-7xl mx-auto relative">
+                    <div id="tab-overview" class="tab-content ${activeTab === 'overview' ? 'active' : ''}">${renderOverview(persona, accent)}</div>
+                    <div id="tab-journey" class="tab-content ${activeTab === 'journey' ? 'active' : ''}">${renderJourney(persona.journey, persona.type)}</div>
+                    <div id="tab-empathy" class="tab-content ${activeTab === 'empathy' ? 'active' : ''}">${renderEmpathyMap(persona, accent)}</div>
+                    <div id="tab-decision" class="tab-content ${activeTab === 'decision' ? 'active' : ''}">${renderDecision(persona, accent)}</div>
+                    <div id="tab-messaging" class="tab-content ${activeTab === 'messaging' ? 'active' : ''}">${renderMessaging(persona, accent)}</div>
+                    <div id="tab-marketing" class="tab-content ${activeTab === 'marketing' ? 'active' : ''}">${renderMarketing(persona, accent)}</div>
+                </div>
+            </div>
+        `;
+    }
+
+    function setupDetailListeners() {
+        const detailView = document.getElementById('detail-view');
+        const tabBtns = detailView.querySelectorAll('.tab-btn');
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                activeTab = tabId;
+                
+                // Redraw UI for tab switch (simplest way is to rerender PersonaDetail but we can just manipulate DOM for speed)
+                const accent = typeColor(currentPersona.type);
+                tabBtns.forEach(b => {
+                    if (b.getAttribute('data-tab') === tabId) {
+                        b.style.color = accent;
+                        b.style.borderBottomColor = accent;
+                        b.style.background = accent + '08';
+                    } else {
+                        b.style.color = 'rgba(143,168,165,0.6)';
+                        b.style.borderBottomColor = 'transparent';
+                        b.style.background = 'transparent';
+                    }
+                });
+                
+                detailView.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                detailView.querySelector('#tab-' + tabId).classList.add('active');
+                
+                // Re-init lucide icons for the newly active tab if needed
+                if (typeof lucide !== 'undefined') lucide.createIcons({ root: detailView.querySelector('#tab-' + tabId) });
+            });
+        });
+        
+        // Journey SVG setup
+        setupJourneyInteractions();
+    }
+    
+    // --- Render Helpers ---
+    function renderSectionLabel(iconName, label, color) {
+        return `
+            <div class="flex items-center gap-2 mb-4 text-[${color}]">
+                <i data-lucide="${iconName}" width="13" height="13" style="color: ${color}"></i>
+                <div class="text-xs text-mono tracking-widest" style="color: ${color}; letter-spacing: 0.12em;">${label}</div>
+            </div>
+        `;
+    }
+
+    function renderBulletList(items, color, negative = false) {
+        return `
+            <ul class="space-y-2">
+                ${items.map(item => `
+                    <li class="flex items-start gap-2.5 text-sm leading-relaxed text-[rgba(250,248,244,0.75)]">
+                        <span class="flex-shrink-0 mt-0.5" style="color: ${negative ? '#E07060' : color}">${negative ? '–' : '+'}</span>
+                        ${item}
+                    </li>
+                `).join('')}
+            </ul>
+        `;
+    }
+
+    // --- Tab Renders ---
+
+    function renderEmpathyMap(persona, accent) {
+        const journeyThoughts = persona.journey.map(s => s.thoughts).filter(Boolean);
+        const topThoughts = journeyThoughts.slice(0, 5);
+        const feelsItems = [...persona.emotionalDrivers.slice(0, 3), ...persona.fears.slice(0, 2)];
+        const saysItems = [persona.quote, ...persona.typicalQuestions.slice(0, 4)];
+        const doesItems = [persona.researchHabits, persona.techUsage, ...persona.journey.slice(0, 3).map(s => s.action)];
+        const hearsItems = [...persona.infoSources.slice(0, 3), ...persona.trustFactors.slice(0, 2)];
+        const seesItems = [...persona.channels, ...persona.informationGaps.slice(0, 2)];
+        const pains = [...persona.frustrations.slice(0, 3), ...persona.fears.slice(0, 2)];
+        const gains = [...persona.clinicalGoals.slice(0, 2), ...persona.emotionalGoals.slice(0, 2), ...persona.lifestyleGoals.slice(0, 1)];
+
+        const quadrants = [
+            { icon: 'brain', label: 'THINKS', color: '#9B7AAA', bg: 'rgba(155,122,170,0.08)', border: 'rgba(155,122,170,0.2)', desc: 'Internal monologue during the care journey', items: topThoughts, isQuote: true },
+            { icon: 'heart', label: 'FEELS', color: '#E07060', bg: 'rgba(224,112,96,0.08)', border: 'rgba(224,112,96,0.2)', desc: 'Emotional drivers and fears shaping decisions', items: feelsItems, isQuote: false },
+            { icon: 'message-circle', label: 'SAYS', color: accent, bg: accent + '08', border: accent + '20', desc: 'Verbatim statements and questions they ask', items: saysItems, isQuote: true },
+            { icon: 'activity', label: 'DOES', color: '#C98B5E', bg: 'rgba(201,139,94,0.08)', border: 'rgba(201,139,94,0.2)', desc: 'Observable research and decision behaviours', items: doesItems, isQuote: false },
+        ];
+
+        const bottomCards = [
+            { icon: 'volume-2', label: 'HEARS', color: '#5BA3D9', bg: 'rgba(91,163,217,0.08)', border: 'rgba(91,163,217,0.2)', desc: 'Information sources and voices they trust', items: hearsItems },
+            { icon: 'eye', label: 'SEES', color: '#8FA8A5', bg: 'rgba(143,168,165,0.08)', border: 'rgba(143,168,165,0.2)', desc: 'Channels, touchpoints, and what they encounter', items: seesItems },
+        ];
+
+        function renderQuadrant(q) {
+            const itemsHTML = q.items.map(item => {
+                if (q.isQuote) {
+                    return '<div class="flex items-start gap-2.5"><span class="flex-shrink-0 mt-0.5 text-xs" style="color: ' + q.color + '">“</span><p class="text-sm italic leading-relaxed text-[rgba(250,248,244,0.75)]">' + item + '</p></div>';
+                } else {
+                    return '<div class="flex items-start gap-2.5"><span class="flex-shrink-0 mt-1 w-1.5 h-1.5 rounded-full" style="background: ' + q.color + '"></span><p class="text-sm leading-relaxed text-[rgba(250,248,244,0.75)]">' + item + '</p></div>';
+                }
+            }).join('');
+
+            return '<div class="p-5 rounded-sm relative overflow-hidden" style="background: ' + q.bg + '; border: 1px solid ' + q.border + ';">' +
+                '<div class="flex items-center gap-2 mb-1">' +
+                    '<i data-lucide="' + q.icon + '" width="14" height="14" style="color: ' + q.color + '"></i>' +
+                    '<span class="text-xs text-mono tracking-widest font-semibold" style="color: ' + q.color + '; letter-spacing: 0.12em;">' + q.label + '</span>' +
+                '</div>' +
+                '<p class="text-xs text-[rgba(250,248,244,0.35)] mb-4">' + q.desc + '</p>' +
+                '<div class="space-y-2.5">' + itemsHTML + '</div>' +
+            '</div>';
+        }
+
+        function renderBottomCard(c) {
+            const tagsHTML = c.items.map(item =>
+                '<span class="px-2.5 py-1.5 text-xs text-mono rounded-sm" style="background: ' + c.color + '12; border: 1px solid ' + c.color + '25; color: ' + c.color + ';">' + item + '</span>'
+            ).join('');
+
+            return '<div class="p-5 rounded-sm" style="background: ' + c.bg + '; border: 1px solid ' + c.border + ';">' +
+                '<div class="flex items-center gap-2 mb-1">' +
+                    '<i data-lucide="' + c.icon + '" width="14" height="14" style="color: ' + c.color + '"></i>' +
+                    '<span class="text-xs text-mono tracking-widest font-semibold" style="color: ' + c.color + '; letter-spacing: 0.12em;">' + c.label + '</span>' +
+                '</div>' +
+                '<p class="text-xs text-[rgba(250,248,244,0.35)] mb-3">' + c.desc + '</p>' +
+                '<div class="flex flex-wrap gap-2">' + tagsHTML + '</div>' +
+            '</div>';
+        }
+
+        const painsHTML = pains.map(p =>
+            '<li class="flex items-start gap-2.5 text-sm leading-relaxed text-[rgba(250,248,244,0.75)]"><span class="flex-shrink-0 mt-0.5 text-[#E07060]">–</span>' + p + '</li>'
+        ).join('');
+
+        const gainsHTML = gains.map(g =>
+            '<li class="flex items-start gap-2.5 text-sm leading-relaxed text-[rgba(250,248,244,0.75)]"><span class="flex-shrink-0 mt-0.5 text-[#8FBBB5]">+</span>' + g + '</li>'
+        ).join('');
+
+        return '<div class="space-y-8">' +
+            // Header
+            '<div class="flex flex-wrap items-start justify-between gap-4">' +
+                '<div>' +
+                    '<div class="text-xs text-mono tracking-widest mb-2 text-[#8FA8A5]" style="letter-spacing: 0.12em;">EMPATHY MAP · ' + persona.name.toUpperCase() + '</div>' +
+                    '<h3 class="text-xl font-bold text-[#F0E8D8] mb-1">Understanding Their World</h3>' +
+                    '<p class="text-sm text-[rgba(250,248,244,0.5)] max-w-xl">A synthesised view of what ' + persona.name.split(' ')[0] + ' thinks, feels, says, and does — drawn from journey research, interview data, and behavioural analysis.</p>' +
+                '</div>' +
+                '<div class="flex items-center gap-2 px-3 py-2 rounded-sm" style="background: ' + accent + '10; border: 1px solid ' + accent + '25;">' +
+                    '<div class="w-10 h-10 flex items-center justify-center rounded-full text-sm text-mono font-bold" style="background: ' + accent + '; color: #1E1B31;">' + persona.initials + '</div>' +
+                    '<div>' +
+                        '<div class="text-sm font-medium text-[#FAF8F4]">' + persona.name + '</div>' +
+                        '<div class="text-xs text-[rgba(250,248,244,0.5)]">' + persona.role + ' · ' + persona.age + '</div>' +
+                    '</div>' +
+                '</div>' +
+            '</div>' +
+
+            // Central avatar + 4 quadrants
+            '<div class="relative">' +
+                '<div class="hidden lg:flex absolute inset-0 items-center justify-center z-10 pointer-events-none">' +
+                    '<div class="w-20 h-20 rounded-full flex items-center justify-center text-lg font-bold" style="background: #252042; border: 2px solid ' + accent + '40; color: ' + accent + '; box-shadow: 0 0 40px ' + accent + '15;">' + persona.initials + '</div>' +
+                '</div>' +
+                '<div class="grid grid-cols-1 lg:grid-cols-2 gap-3">' +
+                    quadrants.map(q => renderQuadrant(q)).join('') +
+                '</div>' +
+            '</div>' +
+
+            // Hears + Sees
+            '<div class="grid grid-cols-1 md:grid-cols-2 gap-3">' +
+                bottomCards.map(c => renderBottomCard(c)).join('') +
+            '</div>' +
+
+            // Pains & Gains
+            '<div class="grid grid-cols-1 md:grid-cols-2 gap-3">' +
+                '<div class="p-5 rounded-sm" style="background: rgba(224,112,96,0.06); border: 1px solid rgba(224,112,96,0.18);">' +
+                    '<div class="flex items-center gap-2 mb-1"><i data-lucide="cloud-rain" width="14" height="14" style="color: #E07060"></i><span class="text-xs text-mono tracking-widest font-semibold" style="color: #E07060; letter-spacing: 0.12em;">PAINS</span></div>' +
+                    '<p class="text-xs text-[rgba(250,248,244,0.35)] mb-3">Frustrations, fears, and obstacles that block progress</p>' +
+                    '<ul class="space-y-2">' + painsHTML + '</ul>' +
+                '</div>' +
+                '<div class="p-5 rounded-sm" style="background: rgba(143,187,181,0.06); border: 1px solid rgba(143,187,181,0.18);">' +
+                    '<div class="flex items-center gap-2 mb-1"><i data-lucide="sun" width="14" height="14" style="color: #8FBBB5"></i><span class="text-xs text-mono tracking-widest font-semibold" style="color: #8FBBB5; letter-spacing: 0.12em;">GAINS</span></div>' +
+                    '<p class="text-xs text-[rgba(250,248,244,0.35)] mb-3">Desired outcomes, goals, and what success looks like</p>' +
+                    '<ul class="space-y-2">' + gainsHTML + '</ul>' +
+                '</div>' +
+            '</div>' +
+
+            // Strategic Insight
+            '<div class="p-5 rounded-sm" style="background: ' + accent + '06; border: 1px solid ' + accent + '18;">' +
+                '<div class="flex items-center gap-2 mb-3"><i data-lucide="lightbulb" width="14" height="14" style="color: ' + accent + '"></i><span class="text-xs text-mono tracking-widest font-semibold" style="color: ' + accent + '; letter-spacing: 0.12em;">STRATEGIC INSIGHT</span></div>' +
+                '<div class="grid grid-cols-1 md:grid-cols-3 gap-4">' +
+                    '<div><div class="text-xs text-mono tracking-widest mb-2 text-[#8FA8A5]" style="letter-spacing: 0.08em;">CORE TENSION</div><p class="text-sm leading-relaxed text-[rgba(250,248,244,0.75)]">' + (persona.emotionalDrivers[0] || 'N/A') + '</p></div>' +
+                    '<div><div class="text-xs text-mono tracking-widest mb-2 text-[#8FA8A5]" style="letter-spacing: 0.08em;">DECISION STYLE</div><p class="text-sm leading-relaxed text-[rgba(250,248,244,0.75)]">' + persona.decisionStyle + '</p></div>' +
+                    '<div><div class="text-xs text-mono tracking-widest mb-2 text-[#8FA8A5]" style="letter-spacing: 0.08em;">ULTIMATE CONVERTER</div><p class="text-sm leading-relaxed text-[rgba(250,248,244,0.75)]">' + persona.decision.ultimateConverter + '</p></div>' +
+                '</div>' +
+            '</div>' +
+        '</div>';
+    }
+
+    function renderOverview(persona, accent) {
+        return `
+            <div class="space-y-8">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-2">
+                        <div class="bg-card p-5 border border-[rgba(250,248,244,0.07)] rounded-sm">
+                            ${renderSectionLabel('user', 'BIOGRAPHY', accent)}
+                            <p class="text-base leading-relaxed mb-4 text-[rgba(250,248,244,0.85)]">${persona.biography}</p>
+                            <blockquote class="pl-4 italic text-base text-[rgba(250,248,244,0.7)]" style="border-left: 2px solid ${accent};">"${persona.quote}"</blockquote>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        ${[
+                            { label: "INSURANCE", value: persona.insurance },
+                            { label: "LIFESTYLE", value: persona.lifestyle },
+                            { label: "FAMILY", value: persona.family },
+                            { label: "DECISION STYLE", value: persona.decisionStyle },
+                        ].map(item => `
+                            <div class="bg-card p-4 border border-[rgba(250,248,244,0.07)] rounded-sm">
+                                <div class="text-xs text-mono tracking-widest mb-1.5 text-[#8FA8A5]" style="letter-spacing: 0.1em;">${item.label}</div>
+                                <p class="text-sm leading-snug text-[rgba(250,248,244,0.8)]">${item.value}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    ${[
+                        { label: "CLINICAL GOALS", items: persona.clinicalGoals, icon: "target", color: accent },
+                        { label: "LIFESTYLE GOALS", items: persona.lifestyleGoals, icon: "heart", color: accent },
+                        { label: "EMOTIONAL GOALS", items: persona.emotionalGoals, icon: "zap", color: accent },
+                    ].map(s => `
+                        <div class="bg-card p-5 border border-[rgba(250,248,244,0.07)] rounded-sm">
+                            ${renderSectionLabel(s.icon, s.label, s.color)}
+                            ${renderBulletList(s.items, s.color)}
+                        </div>
+                    `).join('')}
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-card p-5 border border-[rgba(250,248,244,0.07)] rounded-sm">
+                        ${renderSectionLabel("trending-up", "MOTIVATIONS", accent)}
+                        <div class="space-y-5">
+                            ${[
+                                { label: "Emotional Drivers", items: persona.emotionalDrivers },
+                                { label: "Decision Triggers", items: persona.decisionTriggers },
+                                { label: "Personal Motivations", items: persona.personalMotivations },
+                            ].map(g => `
+                                <div>
+                                    <div class="text-xs text-mono tracking-widest mb-2 text-[#8FA8A5]" style="letter-spacing: 0.08em;">${g.label.toUpperCase()}</div>
+                                    ${renderBulletList(g.items, accent)}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div class="bg-card p-5 border border-[rgba(250,248,244,0.07)] rounded-sm">
+                        ${renderSectionLabel("alert-triangle", "PAIN POINTS", "#E07060")}
+                        <div class="space-y-5">
+                            ${[
+                                { label: "Frustrations", items: persona.frustrations },
+                                { label: "Fears", items: persona.fears },
+                                { label: "Information Gaps", items: persona.informationGaps },
+                            ].map(g => `
+                                <div>
+                                    <div class="text-xs text-mono tracking-widest mb-2 text-[#8FA8A5]" style="letter-spacing: 0.08em;">${g.label.toUpperCase()}</div>
+                                    ${renderBulletList(g.items, "#E07060", true)}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Needs -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    ${[
+                        { label: "FUNCTIONAL NEEDS", items: persona.functionalNeeds, color: accent },
+                        { label: "CLINICAL NEEDS", items: persona.clinicalNeeds, color: "#C98B5E" },
+                        { label: "EMOTIONAL NEEDS", items: persona.emotionalNeeds, color: "#8FA8A5" },
+                        { label: "COMMUNICATION", items: persona.communicationNeeds, color: "#9B7AAA" },
+                    ].map(s => `
+                        <div class="bg-card p-5 border border-[rgba(250,248,244,0.07)] rounded-sm">
+                            <div class="text-xs text-mono tracking-widest mb-3" style="color: ${s.color}; letter-spacing: 0.1em;">${s.label}</div>
+                            ${renderBulletList(s.items, s.color)}
+                        </div>
+                    `).join('')}
+                </div>
+
+                <!-- Behaviour -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-card p-5 border border-[rgba(250,248,244,0.07)] rounded-sm">
+                        ${renderSectionLabel("book-open", "BEHAVIOUR & RESEARCH", accent)}
+                        <div class="space-y-4">
+                            <div><div class="text-xs text-mono tracking-widest mb-2 text-[#8FA8A5]" style="letter-spacing: 0.08em;">RESEARCH HABITS</div><p class="text-sm leading-relaxed text-[rgba(250,248,244,0.75)]">${persona.researchHabits}</p></div>
+                            <div><div class="text-xs text-mono tracking-widest mb-2 text-[#8FA8A5]" style="letter-spacing: 0.08em;">TECHNOLOGY USAGE</div><p class="text-sm leading-relaxed text-[rgba(250,248,244,0.75)]">${persona.techUsage}</p></div>
+                            <div><div class="text-xs text-mono tracking-widest mb-2 text-[#8FA8A5]" style="letter-spacing: 0.08em;">KEY INFORMATION SOURCES</div>${renderBulletList(persona.infoSources, accent)}</div>
+                            <div><div class="text-xs text-mono tracking-widest mb-2 text-[#8FA8A5]" style="letter-spacing: 0.08em;">PREFERRED CHANNELS</div><div class="flex flex-wrap gap-2">${persona.channels.map(c => `<span class="px-2.5 py-1 text-xs text-mono bg-[rgba(250,248,244,0.06)] border border-[rgba(250,248,244,0.12)] text-[rgba(250,248,244,0.7)] rounded-sm">${c}</span>`).join('')}</div></div>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="bg-card p-5 border border-[rgba(250,248,244,0.07)] rounded-sm">
+                            ${renderSectionLabel("message-square", "TYPICAL QUESTIONS", accent)}
+                            <div class="space-y-2.5">
+                                ${persona.typicalQuestions.map((q, i) => `
+                                    <div class="flex items-start gap-2.5 p-2.5 bg-[rgba(250,248,244,0.03)] border border-[rgba(250,248,244,0.06)] rounded-sm">
+                                        <span class="flex-shrink-0 text-xs text-mono mt-0.5" style="color: ${accent}">${i + 1}</span>
+                                        <p class="text-xs italic leading-relaxed text-[rgba(250,248,244,0.7)]">${q}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        <div class="bg-card p-5 border border-[rgba(250,248,244,0.07)] rounded-sm">
+                            ${renderSectionLabel("shield", "TRUST FACTORS", accent)}
+                            ${renderBulletList(persona.trustFactors, accent)}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Traits -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-card p-5 border border-[rgba(250,248,244,0.07)] rounded-sm">
+                        <div class="text-xs text-mono tracking-widest mb-4 text-[#8FA8A5]" style="letter-spacing: 0.1em;">PERSONALITY TRAITS</div>
+                        <div class="flex flex-wrap gap-2">
+                            ${persona.traits.map(t => `<span class="px-3 py-1.5 text-xs text-mono rounded-sm" style="background: ${accent}12; border: 1px solid ${accent}30; color: ${accent};">${t}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="bg-card p-5 border border-[rgba(250,248,244,0.07)] rounded-sm">
+                        <div class="text-xs text-mono tracking-widest mb-4 text-[#8FA8A5]" style="letter-spacing: 0.1em;">CORE VALUES</div>
+                        <div class="flex flex-wrap gap-2">
+                            ${persona.values.map(v => `<span class="px-3 py-1.5 text-xs text-mono rounded-sm bg-[rgba(250,248,244,0.04)] border border-[rgba(250,248,244,0.1)] text-[rgba(250,248,244,0.6)]">${v}</span>`).join('')}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    function renderDecision(persona, accent) {
+        return `
+            <div class="space-y-8">
+                <div class="bg-card p-5 border border-[rgba(250,248,244,0.07)] rounded-sm">
+                    ${renderSectionLabel("target", "DECISION FRAMEWORK", accent)}
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-0">
+                        ${[
+                            { q: "Why they seek care", a: persona.decision.whySeeksCare, icon: "01" },
+                            { q: "Why they delay", a: persona.decision.whyDelays, icon: "02" },
+                            { q: "Why they choose private care", a: persona.decision.whyPrivate, icon: "03" },
+                            { q: "Why they choose EyePros", a: persona.decision.whyEyePros, icon: "04" },
+                            { q: "Why they might go to a competitor", a: persona.decision.whyCompetitor, icon: "05" },
+                            { q: "Information that changes their decision", a: persona.decision.infoThatConverts, icon: "06" },
+                        ].map((item, i) => `
+                            <div class="flex items-start gap-4 p-5" style="border-bottom: ${i < 4 ? '1px solid rgba(250,248,244,0.06)' : 'none'}; border-right: ${i % 2 === 0 ? '1px solid rgba(250,248,244,0.06)' : 'none'};">
+                                <span class="flex-shrink-0 w-8 h-8 flex items-center justify-center text-xs text-mono font-bold rounded-sm" style="background: ${accent}15; color: ${accent};">${item.icon}</span>
+                                <div>
+                                    <div class="text-xs text-mono tracking-widest mb-1.5 text-[#8FA8A5]" style="letter-spacing: 0.08em;">${item.q.toUpperCase()}</div>
+                                    <p class="text-sm leading-relaxed text-[rgba(250,248,244,0.8)]">${item.a}</p>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="mt-0 p-5 flex items-start gap-4 border-t border-[rgba(250,248,244,0.06)]" style="background: ${accent}08">
+                        <div class="flex-shrink-0 w-8 h-8 flex items-center justify-center text-xs text-mono font-bold rounded-sm" style="background: ${accent}; color: #1E1B31;">★</div>
+                        <div>
+                            <div class="text-xs text-mono tracking-widest mb-1.5" style="color: ${accent}; letter-spacing: 0.08em;">ULTIMATE CONVERTER</div>
+                            <p class="text-sm leading-relaxed font-medium text-[#FAF8F4]">${persona.decision.ultimateConverter}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex items-center gap-2 mb-4 text-[#8FA8A5]">
+                        <i data-lucide="users" width="13" height="13"></i>
+                        <div class="text-xs text-mono tracking-widest" style="letter-spacing: 0.12em;">COMPETITIVE POSITIONING</div>
+                    </div>
+                    <div class="space-y-3">
+                        ${persona.competitors.map(comp => `
+                            <div class="grid grid-cols-1 md:grid-cols-5 gap-0 overflow-hidden bg-card border border-[rgba(250,248,244,0.07)] rounded-sm">
+                                <div class="md:col-span-1 p-4 flex items-center border-r border-[rgba(250,248,244,0.07)]">
+                                    <div>
+                                        <div class="text-xs text-mono tracking-widest mb-1 text-[#8FA8A5]" style="letter-spacing: 0.08em;">COMPETITOR</div>
+                                        <div class="font-medium text-sm text-[#FAF8F4]">${comp.name}</div>
+                                    </div>
+                                </div>
+                                <div class="md:col-span-2 p-4 border-r border-[rgba(250,248,244,0.07)]">
+                                    <div class="text-xs text-mono tracking-widest mb-2 text-[#E07060]" style="letter-spacing: 0.08em;">WHY THEY MIGHT CONSIDER THEM</div>
+                                    <p class="text-sm leading-relaxed text-[rgba(250,248,244,0.7)]">${comp.whyConsider}</p>
+                                </div>
+                                <div class="md:col-span-2 p-4">
+                                    <div class="text-xs text-mono tracking-widest mb-2 text-[#C98B5E]" style="letter-spacing: 0.08em;">WHY EYEPROS WINS</div>
+                                    <p class="text-sm leading-relaxed text-[rgba(250,248,244,0.7)]">${comp.whyEyeProsWins}</p>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div class="bg-card p-5 border border-[rgba(250,248,244,0.07)] rounded-sm">
+                    <div class="text-xs text-mono tracking-widest mb-4" style="color: ${accent}; letter-spacing: 0.1em;">EYEPROS STRATEGIC POSITIONING</div>
+                    <p class="text-sm leading-relaxed mb-6 italic text-[rgba(250,248,244,0.6)]">"Comprehensive private eye care for complex and time-sensitive vision needs — personalised around the whole patient."</p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        ${["Consultant-led", "Whole-eye care", "Faster access", "PMI accepted", "Premium lenses", "Glaucoma expertise", "Medical retina", "Personalised"].map(tag => `
+                            <div class="flex items-center gap-2 text-xs text-mono text-[rgba(250,248,244,0.6)]">
+                                <i data-lucide="check-circle" width="10" height="10" class="flex-shrink-0" style="color: ${accent}"></i>
+                                ${tag}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    function renderMessaging(persona, accent) {
+        return `
+            <div class="space-y-6">
+                <div class="bg-card p-5 border border-[rgba(250,248,244,0.07)] rounded-sm">
+                    ${renderSectionLabel("message-square", "KEY MESSAGES FOR THIS PERSONA", accent)}
+                    <div class="space-y-3">
+                        ${persona.keyMessages.map((msg, i) => `
+                            <div class="flex items-start gap-4 p-4 rounded-sm" style="background: ${accent}08; border: 1px solid ${accent}20;">
+                                <span class="flex-shrink-0 w-6 h-6 flex items-center justify-center text-xs text-mono font-bold rounded-sm" style="background: ${accent}; color: #1E1B31;">${i + 1}</span>
+                                <p class="text-sm leading-relaxed text-[#FAF8F4]">${msg}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div class="bg-card p-5 border border-[rgba(250,248,244,0.07)] rounded-sm">
+                    ${renderSectionLabel("book-open", "CONTENT RECOMMENDATIONS", accent)}
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        ${persona.contentRecommendations.map(rec => `
+                            <div class="flex items-start gap-2.5 p-3 bg-[rgba(250,248,244,0.03)] border border-[rgba(250,248,244,0.07)] rounded-sm">
+                                <i data-lucide="chevron-right" width="12" height="12" class="flex-shrink-0 mt-0.5" style="color: ${accent}"></i>
+                                <p class="text-sm leading-relaxed text-[rgba(250,248,244,0.75)]">${rec}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-card p-5 border border-[rgba(250,248,244,0.07)] rounded-sm">
+                        <div class="text-xs text-mono tracking-widest mb-3 text-[#8FA8A5]" style="letter-spacing: 0.1em;">NHS FRUSTRATIONS</div>
+                        ${renderBulletList(persona.nhsFrustrations.length ? persona.nhsFrustrations : ["N/A for this persona type"], "#E07060", true)}
+                    </div>
+                    <div class="bg-card p-5 border border-[rgba(250,248,244,0.07)] rounded-sm">
+                        <div class="text-xs text-mono tracking-widest mb-3 text-[#8FA8A5]" style="letter-spacing: 0.1em;">FINANCIAL CONCERNS</div>
+                        ${renderBulletList(persona.financialConcerns.length ? persona.financialConcerns : ["N/A for this persona type"], accent)}
+                    </div>
+                    <div class="bg-card p-5 border border-[rgba(250,248,244,0.07)] rounded-sm">
+                        <div class="text-xs text-mono tracking-widest mb-3 text-[#8FA8A5]" style="letter-spacing: 0.1em;">TRUST FACTORS</div>
+                        ${renderBulletList(persona.trustFactors, accent)}
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-card p-5 border border-[rgba(250,248,244,0.07)] rounded-sm">
+                        <div class="text-xs text-mono tracking-widest mb-3" style="color: ${accent}; letter-spacing: 0.1em;">CONVERSION ACTION</div>
+                        <p class="text-sm leading-relaxed text-[#FAF8F4]">${persona.conversionAction}</p>
+                        <div class="mt-4 text-xs text-mono tracking-widest mb-2 text-[#8FA8A5]" style="letter-spacing: 0.1em;">SUCCESS METRIC</div>
+                        <p class="text-sm leading-relaxed text-[rgba(250,248,244,0.75)]">${persona.conversionMetric}</p>
+                    </div>
+                    <div class="bg-card p-5 border border-[rgba(250,248,244,0.07)] rounded-sm">
+                        <div class="text-xs text-mono tracking-widest mb-3 text-[#8FA8A5]" style="letter-spacing: 0.1em;">REVIEW DATE</div>
+                        <div class="flex items-center gap-2 mb-4">
+                            <i data-lucide="calendar" width="14" height="14" style="color: ${accent}"></i>
+                            <span class="text-sm text-mono text-[#FAF8F4]">${persona.reviewDate}</span>
+                        </div>
+                        <div class="text-xs text-mono tracking-widest mb-2 text-[#8FA8A5]" style="letter-spacing: 0.1em;">PREFERRED CHANNELS</div>
+                        <div class="flex flex-wrap gap-2">
+                            ${persona.channels.map(c => `
+                                <span class="px-2.5 py-1 text-xs text-mono rounded-sm" style="background: ${accent}12; border: 1px solid ${accent}25; color: ${accent};">${c}</span>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    function renderMarketing(persona, accent) {
+        const m = persona.marketing;
+        const platforms = getSocialPlatforms(persona);
+        const reach = getSocialReach(persona);
+        const cfg = REACH_DETAIL_CONFIG[reach];
+
+        const starRatingHTML = Array(5).fill(0).map((_, i) => `
+            <i data-lucide="star" width="13" height="13" style="color: ${i < m.acquisitionPriority ? '#8FBBB5' : 'rgba(250,248,244,0.15)'}; fill: ${i < m.acquisitionPriority ? '#8FBBB5' : 'none'};"></i>
+        `).join('');
+
+        const diffColors = {
+            Easy: { bg: "rgba(201,139,94,0.12)", border: "rgba(201,139,94,0.3)", text: "#C98B5E" },
+            Medium: { bg: "rgba(143,187,181,0.12)", border: "rgba(143,187,181,0.3)", text: "#8FBBB5" },
+            Hard: { bg: "rgba(224,112,96,0.12)", border: "rgba(224,112,96,0.3)", text: "#E07060" }
+        };
+        const diffC = diffColors[m.conversionDifficulty] || diffColors.Medium;
+
+        const ltvColors = {
+            Low: { bg: "rgba(143,168,165,0.1)", border: "rgba(143,168,165,0.25)", text: "#8FA8A5" },
+            Medium: { bg: "rgba(143,187,181,0.1)", border: "rgba(143,187,181,0.25)", text: "#8FBBB5" },
+            High: { bg: "rgba(201,139,94,0.12)", border: "rgba(201,139,94,0.3)", text: "#C98B5E" },
+            "Very High": { bg: "rgba(143,187,181,0.2)", border: "rgba(143,187,181,0.45)", text: "#D4B870" }
+        };
+        const ltvC = ltvColors[m.lifetimeValue] || ltvColors.Medium;
+
+        return `
+            <div class="space-y-8">
+                <!-- Social Reachability -->
+                <div class="p-5 flex flex-col gap-4 rounded-sm" style="background: ${cfg.bg}; border: 1px solid ${cfg.color}30;">
+                    <div class="flex flex-wrap items-start justify-between gap-4">
+                        <div>
+                            <div class="text-xs text-mono tracking-widest mb-1.5 text-[#8FA8A5]" style="letter-spacing: 0.12em;">SOCIAL MEDIA REACHABILITY</div>
+                            <div class="flex items-center gap-3">
+                                <span class="px-3 py-1 text-xs text-mono font-bold tracking-widest rounded-sm" style="background: ${cfg.color}20; border: 1px solid ${cfg.color}50; color: ${cfg.color}; letter-spacing: 0.1em;">${cfg.label}</span>
+                                <p class="text-sm leading-relaxed max-w-xl text-[rgba(250,248,244,0.7)]">${cfg.description}</p>
+                            </div>
+                        </div>
+                        ${platforms.length > 0 ? `
+                        <div class="flex flex-wrap gap-1.5">
+                            ${platforms.map(pl => `<span class="px-3 py-1.5 text-xs text-mono rounded-sm" style="background: ${PLATFORM_COLORS[pl]}18; border: 1px solid ${PLATFORM_COLORS[pl]}40; color: ${PLATFORM_COLORS[pl]};">${pl}</span>`).join('')}
+                        </div>
+                        ` : ''}
+                    </div>
+                    ${platforms.length > 0 ? `
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-3" style="border-top: 1px solid ${cfg.color}20">
+                            <div><div class="text-xs text-mono tracking-widest mb-2 text-[#8FA8A5]" style="letter-spacing: 0.08em;">POSTING BEHAVIOUR</div><p class="text-xs leading-relaxed text-[rgba(250,248,244,0.65)]">${persona.marketing.socialBehaviour.postingHabits}</p></div>
+                            <div><div class="text-xs text-mono tracking-widest mb-2 text-[#8FA8A5]" style="letter-spacing: 0.08em;">CONTENT THEY CONSUME</div><ul class="space-y-1">${m.socialBehaviour.contentConsumed.slice(0,3).map(c => `<li class="flex items-start gap-2 text-xs leading-relaxed text-[rgba(250,248,244,0.65)]"><span style="color: ${accent}; flex-shrink: 0">+</span>${c}</li>`).join('')}</ul></div>
+                            <div><div class="text-xs text-mono tracking-widest mb-2 text-[#8FA8A5]" style="letter-spacing: 0.08em;">WHO THEY TRUST ONLINE</div><ul class="space-y-1">${m.socialBehaviour.trustSources.slice(0,3).map(c => `<li class="flex items-start gap-2 text-xs leading-relaxed text-[rgba(250,248,244,0.65)]"><span style="color: ${accent}; flex-shrink: 0">+</span>${c}</li>`).join('')}</ul></div>
+                        </div>
+                    ` : ''}
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="bg-card p-5 border border-[rgba(250,248,244,0.07)] rounded-sm">
+                        <div class="text-xs text-mono tracking-widest mb-3 text-[#8FA8A5]" style="letter-spacing: 0.1em;">ACQUISITION PRIORITY</div>
+                        <div class="flex items-center gap-0.5">${starRatingHTML}</div>
+                        <p class="text-xs mt-2 text-[rgba(250,248,244,0.45)]">${m.acquisitionPriority === 5 ? "Highest priority" : m.acquisitionPriority >= 4 ? "High priority" : "Standard priority"}</p>
+                    </div>
+                    <div class="bg-card p-5 border border-[rgba(250,248,244,0.07)] rounded-sm">
+                        <div class="text-xs text-mono tracking-widest mb-3 text-[#8FA8A5]" style="letter-spacing: 0.1em;">CONVERSION DIFFICULTY</div>
+                        <span class="px-2.5 py-1.5 text-xs text-mono rounded-sm" style="background: ${diffC.bg}; border: 1px solid ${diffC.border}; color: ${diffC.text};">${m.conversionDifficulty}</span>
+                    </div>
+                    <div class="bg-card p-5 border border-[rgba(250,248,244,0.07)] rounded-sm">
+                        <div class="text-xs text-mono tracking-widest mb-3 text-[#8FA8A5]" style="letter-spacing: 0.1em;">LIFETIME VALUE</div>
+                        <span class="px-2.5 py-1.5 text-xs text-mono rounded-sm" style="background: ${ltvC.bg}; border: 1px solid ${ltvC.border}; color: ${ltvC.text};">${m.lifetimeValue}</span>
+                    </div>
+                    <div class="bg-card p-5 border border-[rgba(250,248,244,0.07)] rounded-sm">
+                        <div class="text-xs text-mono tracking-widest mb-3 text-[#8FA8A5]" style="letter-spacing: 0.1em;">FUNNEL STAGE</div>
+                        <span class="px-2.5 py-1.5 text-xs text-mono rounded-sm" style="background: ${accent}12; border: 1px solid ${accent}30; color: ${accent};">${m.funnelStage}</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-card p-5 border border-[rgba(250,248,244,0.07)] rounded-sm">
+                        ${renderSectionLabel("bar-chart-2", "BEST ACQUISITION CHANNELS", accent)}
+                        <div class="space-y-2 mb-6">
+                            ${m.bestChannels.map((c, i) => `
+                                <div class="flex items-center gap-3">
+                                    <span class="flex-shrink-0 w-5 h-5 flex items-center justify-center text-xs text-mono font-bold rounded-sm" style="background: ${accent}15; color: ${accent};">${i + 1}</span>
+                                    <span class="text-sm text-[rgba(250,248,244,0.8)]">${c}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="text-xs text-mono tracking-widest mb-3 text-[#8FA8A5]" style="letter-spacing: 0.1em;">SEARCH INTENT</div>
+                        <div class="flex flex-wrap gap-2">
+                            ${m.searchIntent.map(t => `<span class="px-2.5 py-1 text-xs text-mono bg-[rgba(250,248,244,0.04)] border border-[rgba(250,248,244,0.1)] text-[rgba(250,248,244,0.65)] rounded-sm">${t}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="bg-card p-5 border border-[rgba(250,248,244,0.07)] rounded-sm">
+                        ${renderSectionLabel("users", "SOCIAL MEDIA BEHAVIOUR", accent)}
+                        <div class="space-y-4">
+                            <div><div class="text-xs text-mono tracking-widest mb-2 text-[#8FA8A5]" style="letter-spacing: 0.08em;">PLATFORMS</div><div class="flex flex-wrap gap-1.5">${m.socialBehaviour.platforms.map(p => `<span class="px-2 py-0.5 text-xs text-mono rounded-sm" style="background: ${accent}10; border: 1px solid ${accent}25; color: ${accent};">${p}</span>`).join('')}</div></div>
+                            <div><div class="text-xs text-mono tracking-widest mb-2 text-[#8FA8A5]" style="letter-spacing: 0.08em;">CONTENT CONSUMED</div>${renderBulletList(m.socialBehaviour.contentConsumed, accent)}</div>
+                            <div><div class="text-xs text-mono tracking-widest mb-1.5 text-[#8FA8A5]" style="letter-spacing: 0.08em;">POSTING HABITS</div><p class="text-sm leading-relaxed text-[rgba(250,248,244,0.7)]">${m.socialBehaviour.postingHabits}</p></div>
+                            <div><div class="text-xs text-mono tracking-widest mb-2 text-[#8FA8A5]" style="letter-spacing: 0.08em;">TRUST SOURCES</div>${renderBulletList(m.socialBehaviour.trustSources, accent)}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-card p-5 border border-[rgba(250,248,244,0.07)] rounded-sm">${renderSectionLabel("book-open", "CONTENT THAT CONVERTS", accent)}${renderBulletList(m.contentThatConverts, accent)}</div>
+                    <div class="bg-card p-5 border border-[rgba(250,248,244,0.07)] rounded-sm">${renderSectionLabel("zap", "EMOTIONAL TRIGGERS", "#8FBBB5")}${renderBulletList(m.emotionalTriggers, "#8FBBB5")}</div>
+                    <div class="bg-card p-5 border border-[rgba(250,248,244,0.07)] rounded-sm">${renderSectionLabel("x-circle", "MAIN OBJECTIONS", "#E07060")}${renderBulletList(m.mainObjections, "#E07060", true)}</div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="md:col-span-2">
+                        <div class="bg-card p-5 border border-[rgba(250,248,244,0.07)] rounded-sm h-full">
+                            ${renderSectionLabel("megaphone", "MESSAGING ANGLES", accent)}
+                            <div class="space-y-3">
+                                ${m.messagingAngles.map((msg, i) => `
+                                    <div class="flex items-start gap-4 p-3.5 rounded-sm" style="background: ${accent}08; border: 1px solid ${accent}20;">
+                                        <span class="flex-shrink-0 w-5 h-5 flex items-center justify-center text-xs text-mono font-bold rounded-sm" style="background: ${accent}; color: #1E1B31;">${i + 1}</span>
+                                        <p class="text-sm italic leading-relaxed text-[#FAF8F4]">${msg}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="bg-card p-5 border border-[rgba(250,248,244,0.07)] rounded-sm">
+                            <div class="text-xs text-mono tracking-widest mb-3 text-[#8FA8A5]" style="letter-spacing: 0.1em;">BEST CTA</div>
+                            <div class="px-4 py-3 text-sm font-medium text-center rounded-sm" style="background: ${accent}18; border: 1px solid ${accent}40; color: ${accent};">${m.bestCTA}</div>
+                        </div>
+                        <div class="bg-card p-5 border border-[rgba(250,248,244,0.07)] rounded-sm">
+                            <div class="text-xs text-mono tracking-widest mb-3 text-[#8FA8A5]" style="letter-spacing: 0.1em;">LEAD MAGNET</div>
+                            <div class="px-3 py-2.5 text-sm rounded-sm bg-[rgba(250,248,244,0.04)] border border-[rgba(250,248,244,0.1)] text-[rgba(250,248,244,0.8)]">${m.leadMagnet}</div>
+                        </div>
+                        <div class="bg-card p-5 border border-[rgba(250,248,244,0.07)] rounded-sm">
+                            <div class="text-xs text-mono tracking-widest mb-3 text-[#8FA8A5]" style="letter-spacing: 0.1em;">CAMPAIGN TYPES</div>
+                            <div class="flex flex-wrap gap-1.5">
+                                ${m.campaignType.map(ct => `<span class="px-2 py-0.5 text-xs text-mono rounded-sm bg-[rgba(250,248,244,0.05)] border border-[rgba(250,248,244,0.12)] text-[rgba(250,248,244,0.65)]">${ct}</span>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-card p-5 border border-[rgba(250,248,244,0.07)] rounded-sm">${renderSectionLabel("calendar", "RETENTION OPPORTUNITIES", accent)}${renderBulletList(m.retentionOpportunities, accent)}</div>
+                    <div class="bg-card p-5 border border-[rgba(250,248,244,0.07)] rounded-sm">${renderSectionLabel("users", "REFERRAL OPPORTUNITIES", "#C98B5E")}${renderBulletList(m.referralOpportunities, "#C98B5E")}</div>
+                </div>
+
+                <div class="bg-card p-5 border border-[rgba(250,248,244,0.07)] rounded-sm">
+                    ${renderSectionLabel("trending-up", "KEY PERFORMANCE INDICATORS", accent)}
+                    <div class="flex flex-wrap gap-2">
+                        ${m.kpis.map(kpi => `<span class="px-3 py-1.5 text-xs text-mono rounded-sm bg-[rgba(250,248,244,0.04)] border" style="border-color: ${accent}25; color: ${accent}">${kpi}</span>`).join('')}
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // Journey Map Helpers
+    function emotionColor(score) {
+        if (score <= 3) return "#E07060";
+        if (score <= 5) return "#C98B5E";
+        if (score <= 7) return "#8FA8A5";
+        return "#8FBBB5";
+    }
+
+    function emotionBg(score) {
+        if (score <= 3) return "rgba(224,112,96,0.12)";
+        if (score <= 5) return "rgba(143,187,181,0.12)";
+        if (score <= 7) return "rgba(122,155,189,0.12)";
+        return "rgba(74,155,142,0.12)";
+    }
+
+    function scoreY(score) {
+        return 18 + (1 - (score - 1) / 9) * (110 - 2 * 18);
+    }
+
+    function buildPath(stages) {
+        const pts = stages.map((s, i) => ({ x: i * 148 + 148 / 2, y: scoreY(s.emotion) }));
+        if (pts.length < 2) return "";
+        let d = `M ${pts[0].x} ${pts[0].y}`;
+        for (let i = 1; i < pts.length; i++) {
+            const prev = pts[i - 1];
+            const curr = pts[i];
+            const cpX = (prev.x + curr.x) / 2;
+            d += ` C ${cpX} ${prev.y} ${cpX} ${curr.y} ${curr.x} ${curr.y}`;
+        }
+        return d;
+    }
+
+    function buildFill(stages) {
+        const path = buildPath(stages);
+        const lastX = (stages.length - 1) * 148 + 148 / 2;
+        const firstX = 148 / 2;
+        return `${path} L ${lastX} 110 L ${firstX} 110 Z`;
+    }
+
+    function renderJourney(stages, personaType) {
+        const accent = personaType === "patient" ? "#C98B5E" : "#8FBBB5";
+        const avgEmotion = stages.reduce((a, s) => a + s.emotion, 0) / stages.length;
+        const peakStage = stages.reduce((a, s) => (s.emotion > a.emotion ? s : a), stages[0]);
+        const troughStage = stages.reduce((a, s) => (s.emotion < a.emotion ? s : a), stages[0]);
+        const opportunities = stages.filter(s => s.isOpportunity);
+
+        let activeJourneyIndex = null;
+        window.activeJourneyIndex = activeJourneyIndex;
+        window.currentJourneyStages = stages;
+
+        const totalW = stages.length * 148;
+
+        return `
+            <div>
+                <div class="flex flex-wrap items-start justify-between gap-6 mb-8">
+                    <div>
+                        <div class="text-xs text-mono tracking-widest mb-2 text-[#8FA8A5]" style="letter-spacing: 0.12em;">CUSTOMER JOURNEY MAP · ${stages.length} STAGES</div>
+                        <h3 class="text-xl font-bold text-[#F0E8D8]">End-to-End Experience</h3>
+                    </div>
+                    <div class="flex gap-6">
+                        ${[
+                            { label: "AVG EXPERIENCE", value: avgEmotion.toFixed(1) + "/10", color: emotionColor(avgEmotion) },
+                            { label: "PEAK STAGE", value: peakStage.stage, color: "#8FBBB5" },
+                            { label: "LOWEST POINT", value: troughStage.stage, color: "#E07060" },
+                            { label: "OPPORTUNITIES", value: String(opportunities.length), color: "#C98B5E" }
+                        ].map(stat => `
+                            <div class="text-right">
+                                <div class="text-xs text-mono tracking-widest mb-1 text-[#8FA8A5]" style="letter-spacing: 0.1em;">${stat.label}</div>
+                                <div class="text-sm text-mono" style="color: ${stat.color}">${stat.value}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-6 mb-4">
+                    <div class="flex items-center gap-1.5 text-xs text-mono text-[#8FA8A5]"><div class="w-3 h-3 rounded-full bg-[#E07060]"></div>Frustrated (1–3)</div>
+                    <div class="flex items-center gap-1.5 text-xs text-mono text-[#8FA8A5]"><div class="w-3 h-3 rounded-full bg-[#C98B5E]"></div>Uncertain (4–5)</div>
+                    <div class="flex items-center gap-1.5 text-xs text-mono text-[#8FA8A5]"><div class="w-3 h-3 rounded-full bg-[#8FA8A5]"></div>Neutral (6–7)</div>
+                    <div class="flex items-center gap-1.5 text-xs text-mono text-[#8FA8A5]"><div class="w-3 h-3 rounded-full bg-[#8FBBB5]"></div>Positive (8–10)</div>
+                    <div class="flex items-center gap-1.5 text-xs text-mono text-[#8FA8A5]"><i data-lucide="star" width="10" height="10" style="color: #C98B5E; fill: #C98B5E;"></i>Key opportunity</div>
+                </div>
+
+                <div class="overflow-x-auto pb-4" style="scrollbar-width: thin; scrollbar-color: ${accent}30 transparent;">
+                    <div style="min-width: ${totalW}px;">
+                        <div style="position: relative; height: 120px;">
+                            <svg width="${totalW}" height="110" style="position: absolute; top: 0; left: 0; overflow: visible;">
+                                <defs>
+                                    <linearGradient id="curveGrad" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="${accent}" stop-opacity="0.3" />
+                                        <stop offset="100%" stop-color="${accent}" stop-opacity="0.02" />
+                                    </linearGradient>
+                                </defs>
+                                ${[2,4,6,8,10].map(s => `<line x1="74" x2="${totalW - 74}" y1="${scoreY(s)}" y2="${scoreY(s)}" stroke="rgba(250,248,244,0.05)" stroke-width="1" />`).join('')}
+                                ${[2,5,8].map(s => `<text x="14" y="${scoreY(s) + 4}" fill="rgba(250,248,244,0.2)" font-size="9" font-family="Poppins, sans-serif" text-anchor="middle">${s}</text>`).join('')}
+                                
+                                <path d="${buildFill(stages)}" fill="url(#curveGrad)" />
+                                <path d="${buildPath(stages)}" fill="none" stroke="${accent}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                
+                                ${stages.map((s, i) => {
+                                    const x = i * 148 + 74;
+                                    const y = scoreY(s.emotion);
+                                    const color = emotionColor(s.emotion);
+                                    return `
+                                        <g>
+                                            <line x1="${x}" y1="${y + 5}" x2="${x}" y2="110" stroke="${color}" stroke-width="1" stroke-opacity="0.15" stroke-dasharray="2 3" />
+                                            <circle cx="${x}" cy="${y}" r="9" fill="${color}" fill-opacity="0" class="j-ring-${i}" />
+                                            <circle cx="${x}" cy="${y}" r="5" fill="${color}" stroke="#1E1B31" stroke-width="1" class="j-dot-${i} cursor-pointer" onclick="toggleJourneyStage(${i})" />
+                                            ${s.isOpportunity ? `<text x="${x}" y="${y - 10}" text-anchor="middle" font-size="9" fill="#C98B5E">★</text>` : ''}
+                                        </g>
+                                    `;
+                                }).join('')}
+                            </svg>
+                        </div>
+                        <div class="flex mt-1" id="journey-cards">
+                            ${stages.map((s, i) => renderStageCard(s, i)).join('')}
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="expanded-stage-container"></div>
+
+                ${opportunities.length > 0 ? `
+                    <div class="mt-8">
+                        <div class="flex items-center gap-2 mb-4">
+                            <i data-lucide="star" width="12" height="12" style="color: #C98B5E; fill: #C98B5E;"></i>
+                            <div class="text-xs text-mono tracking-widest text-[#C98B5E]" style="letter-spacing: 0.12em;">KEY OPPORTUNITIES (${opportunities.length})</div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            ${opportunities.map(s => `
+                                <div class="flex items-start gap-3 p-4 bg-[rgba(143,187,181,0.06)] border border-[rgba(143,187,181,0.2)] rounded-sm">
+                                    <span class="text-base flex-shrink-0">${s.icon}</span>
+                                    <div>
+                                        <div class="text-xs text-mono tracking-wide mb-1 text-[#C98B5E]">${s.stage}</div>
+                                        <p class="text-sm leading-relaxed text-[rgba(250,248,244,0.8)]">${s.uxRec}</p>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                ` : ''}
+            </div>
+        `;
+    }
+
+    function renderStageCard(stage, index) {
+        const ec = emotionColor(stage.emotion);
+        const eb = emotionBg(stage.emotion);
+        return `
+            <button onclick="toggleJourneyStage(${index})" class="flex-shrink-0 text-left transition-all duration-200 outline-none stage-card group" id="s-card-${index}">
+                <div class="flex items-center justify-center mb-0" style="height: 2px;">
+                    ${index > 0 ? '<div class="w-full h-px bg-[rgba(143,187,181,0.2)]"></div>' : ''}
+                </div>
+                <div class="mx-1.5 p-3 transition-all duration-200 rounded-sm" style="background: rgba(250,248,244,0.03); border: 1px solid rgba(250,248,244,0.08);" id="s-card-inner-${index}">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs text-mono text-[rgba(250,248,244,0.3)]">${String(index + 1).padStart(2, "0")}</span>
+                        ${stage.isOpportunity ? '<div title="Key opportunity"><i data-lucide="star" width="10" height="10" style="color: #C98B5E; fill: #C98B5E;"></i></div>' : ''}
+                    </div>
+                    <div class="text-base mb-1 leading-none">${stage.icon}</div>
+                    <div class="text-xs text-mono mb-2 leading-tight text-[#F0E8D8]" style="letter-spacing: 0.02em;">${stage.stage}</div>
+                    <div class="flex items-center gap-1.5">
+                        <div class="w-1.5 h-1.5 rounded-full" style="background: ${ec}"></div>
+                        <span class="text-xs" style="color: ${ec}">${stage.emotionLabel}</span>
+                    </div>
+                    <div class="flex justify-center mt-2 opacity-0 group-hover:opacity-100 transition-opacity" id="s-card-chev-${index}">
+                        <i data-lucide="chevron-down" width="12" height="12" style="color: rgba(250,248,244,0.3)"></i>
+                    </div>
+                </div>
+            </button>
+        `;
+    }
+
+    window.toggleJourneyStage = function(index) {
+        const prevIndex = window.activeJourneyIndex;
+        window.activeJourneyIndex = prevIndex === index ? null : index;
+        
+        // Reset old active
+        if (prevIndex !== null) {
+            const s = window.currentJourneyStages[prevIndex];
+            const ec = emotionColor(s.emotion);
+            const eb = emotionBg(s.emotion);
+            document.querySelector(`.j-ring-${prevIndex}`).setAttribute('fill-opacity', '0');
+            document.querySelector(`.j-dot-${prevIndex}`).setAttribute('stroke', '#1E1B31');
+            document.querySelector(`.j-dot-${prevIndex}`).setAttribute('stroke-width', '1');
+            
+            const cardInner = document.getElementById(`s-card-inner-${prevIndex}`);
+            if (cardInner) {
+                cardInner.style.background = 'rgba(250,248,244,0.03)';
+                cardInner.style.borderColor = 'rgba(250,248,244,0.08)';
+            }
+            const chev = document.getElementById(`s-card-chev-${prevIndex}`);
+            if(chev) chev.innerHTML = `<i data-lucide="chevron-down" width="12" height="12" style="color: rgba(250,248,244,0.3)"></i>`;
+        }
+
+        const container = document.getElementById('expanded-stage-container');
+        
+        if (window.activeJourneyIndex !== null) {
+            const s = window.currentJourneyStages[index];
+            const ec = emotionColor(s.emotion);
+            const eb = emotionBg(s.emotion);
+            
+            document.querySelector(`.j-ring-${index}`).setAttribute('fill-opacity', '0.15');
+            document.querySelector(`.j-dot-${index}`).setAttribute('stroke', '#F0E8D8');
+            document.querySelector(`.j-dot-${index}`).setAttribute('stroke-width', '1.5');
+            
+            const cardInner = document.getElementById(`s-card-inner-${index}`);
+            if (cardInner) {
+                cardInner.style.background = eb;
+                cardInner.style.borderColor = ec + '50';
+            }
+            const chev = document.getElementById(`s-card-chev-${index}`);
+            if (chev) chev.innerHTML = `<i data-lucide="chevron-up" width="12" height="12" style="color: ${ec}"></i>`;
+            
+            container.innerHTML = explainAcronyms(`
+                <div class="mx-4 my-4 p-6 rounded-sm" style="background: ${eb}; border: 1px solid ${ec}30;">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div>
+                            <div class="text-xs text-mono tracking-widest mb-2" style="color: ${ec}; letter-spacing: 0.1em;">GOAL</div>
+                            <p class="text-sm leading-relaxed text-[#F0E8D8]">${s.goal}</p>
+                            <div class="mt-3 text-xs text-mono tracking-widest mb-2" style="color: ${ec}; letter-spacing: 0.1em;">ACTION</div>
+                            <p class="text-sm leading-relaxed text-[rgba(250,248,244,0.8)]">${s.action}</p>
+                            <div class="mt-3 text-xs text-mono tracking-widest mb-2" style="color: ${ec}; letter-spacing: 0.1em;">THOUGHTS</div>
+                            <p class="text-sm italic leading-relaxed text-[rgba(250,248,244,0.7)]">"${s.thoughts}"</p>
+                        </div>
+                        <div>
+                            <div class="text-xs text-mono tracking-widest mb-2 text-[#E07060]" style="letter-spacing: 0.1em;">PAIN POINTS</div>
+                            <ul class="space-y-1.5">
+                                ${s.painPoints.map(p => `<li class="flex items-start gap-2 text-sm text-[rgba(250,248,244,0.75)]"><span class="text-[#E07060] mt-0.5 flex-shrink-0">–</span>${p}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="text-xs text-mono tracking-widest mb-2 text-[#8FBBB5]" style="letter-spacing: 0.1em;">OPPORTUNITIES</div>
+                            <ul class="space-y-1.5">
+                                ${s.opportunities.map(o => `<li class="flex items-start gap-2 text-sm text-[rgba(250,248,244,0.75)]"><span class="text-[#8FBBB5] mt-0.5 flex-shrink-0">+</span>${o}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="text-xs text-mono tracking-widest mb-2 text-[#8FA8A5]" style="letter-spacing: 0.1em;">CHANNEL</div>
+                            <p class="text-sm mb-3 text-[rgba(250,248,244,0.8)]">${s.channel}</p>
+                            <div class="text-xs text-mono tracking-widest mb-2 text-[#8FA8A5]" style="letter-spacing: 0.1em;">TOUCHPOINT</div>
+                            <p class="text-sm mb-3 text-[rgba(250,248,244,0.8)]">${s.touchpoint}</p>
+                            <div class="text-xs text-mono tracking-widest mb-2 text-[#C98B5E]" style="letter-spacing: 0.1em;">UX RECOMMENDATION</div>
+                            <p class="text-sm text-[rgba(250,248,244,0.8)]">${s.uxRec}</p>
+                        </div>
+                    </div>
+                </div>
+            `);
+        } else {
+            container.innerHTML = '';
+        }
+        if (typeof lucide !== 'undefined') lucide.createIcons({ root: container });
+    };
+
+    function setupJourneyInteractions() {
+        // Just setup the UI logic, the inline onclick takes care of most of it.
+    }
+
+    // --- Init ---
+    try { renderApp(); } catch(e) { console.error('EyePros init error:', e); document.getElementById('app').innerHTML = '<div style="color:#FAF8F4;padding:2rem;"><h1>Error loading Persona Boards</h1><pre style="color:#C98B5E;">' + e.message + '</pre></div>'; }
+    

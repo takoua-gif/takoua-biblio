@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EyePros — Persona Intelligence System</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Sidebar CSS -->
+    <link rel="stylesheet" href="css/sidebar.css">
+    <style>
+        body {
+            background-color: #1E1B31;
+            color: #FAF8F4;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding-top: 28px;
+        }
+        @media (prefers-contrast: more) {
+            .text-xs { font-size: 0.8125rem !important; }
+        }
+        .text-mono {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        }
+        .patient-accent { color: #8FBBB5; }
+        .referrer-accent { color: #C98B5E; }
+        .bg-card { background-color: #252042; }
+        
+        .persona-card {
+            display: block;
+            background: #252042;
+            border: 1px solid rgba(250,248,244,0.07);
+            border-radius: 2px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-align: left;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .persona-card:hover {
+            transform: translateY(-2px);
+        }
+        .persona-card.patient:hover {
+            border-color: rgba(143,187,181,0.5);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(143,187,181,0.3);
+        }
+        .persona-card.referrer:hover {
+            border-color: rgba(201,139,94,0.5);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(201,139,94,0.3);
+        }
+        .persona-card:hover img {
+            transform: scale(1.04);
+        }
+        .persona-card:hover .view-profile i {
+            transform: translateX(2px);
+        }
+
+        #detail-view {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            overflow-y: auto;
+            background: #1E1B31;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(28px);
+            transition: opacity 0.28s ease, transform 0.28s ease;
+        }
+        #detail-view.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+        body.no-scroll {
+            overflow: hidden;
+        }
+        
+        .tab-btn {
+            padding: 1rem 1.5rem;
+            font-size: 0.75rem;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            letter-spacing: 0.1em;
+            transition: all 0.2s ease;
+            color: rgba(143,168,165,0.6);
+            border-bottom: 2px solid transparent;
+            background: transparent;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        
+        .stage-card {
+            width: 148px;
+            transition: all 0.2s ease;
+        }
+        
+        /* Acronym tooltips */
+        .acr {
+            position: relative;
+            border-bottom: 1px dotted rgba(143,187,181,0.35);
+            cursor: help;
+            transition: border-color 0.2s;
+        }
+        .acr:hover {
+            border-bottom-color: #8FBBB5;
+        }
+        .acr::after {
+            content: attr(data-tip);
+            position: absolute;
+            bottom: calc(100% + 6px);
+            left: 50%;
+            transform: translateX(-50%) scale(0.95);
+            padding: 6px 10px;
+            background: #252042;
+            color: #FAF8F4;
+            font-size: 11px;
+            font-family: 'Poppins', sans-serif;
+            font-style: normal;
+            font-weight: 400;
+            letter-spacing: 0.01em;
+            line-height: 1.45;
+            white-space: nowrap;
+            border: 1px solid rgba(143,187,181,0.25);
+            border-radius: 3px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.18s ease, transform 0.18s ease;
+            z-index: 100;
+        }
+        .acr:hover::after {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
+    </style>
+</head>
+<body class="longsighted-theme">
+    <div style="position: fixed; top: 0; z-index: 9999; width: 100%; height: 28px; background: #1a0a0a; font-family: ui-monospace, monospace; font-size: 10px; letter-spacing: 0.15em; color: rgba(224,112,96,0.8); display: flex; align-items: center; justify-content: center; border-bottom: 1px solid rgba(224,112,96,0.2);">CONFIDENTIAL — INTERNAL USE ONLY · EYEPROS STRATEGIC INTELLIGENCE</div>
+
+    <div class="main-content">
+        <div id="app"></div>
+    </div>
+
+    <script src="js/personas-data.js"></script>
+    <script src="js/sidebar.js"></script>
+</body>
+</html>

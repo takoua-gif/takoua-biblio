@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EyePros — Business &amp; Brand Strategy</title>
+    <link rel="stylesheet" href="eyepros-design-system.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .layout { 
+            display: grid; 
+            grid-template-columns: 240px 1fr; 
+            min-height: calc(100vh - 90px); 
+        }
+        
+        .sidebar { 
+            position: sticky; 
+            top: 90px; 
+            height: calc(100vh - 90px); 
+            overflow-y: auto; 
+            padding: 24px 16px; 
+            border-right: 1px solid var(--border-glass); 
+            background: rgba(12,10,24,0.5); 
+        }
+        
+        .sidebar nav ul { 
+            list-style: none; 
+            padding: 0;
+            margin: 0;
+        }
+        
+        .sidebar nav ul li a { 
+            display: block; 
+            padding: 8px 12px; 
+            font-size: 12px; 
+            color: var(--text-secondary); 
+            border-radius: 8px; 
+            transition: all 0.2s; 
+            font-family: var(--font-mono); 
+            text-transform: uppercase; 
+            letter-spacing: 0.04em; 
+            text-decoration: none;
+        }
+        
+        .sidebar nav ul li a:hover { 
+            color: var(--text-primary); 
+            background: rgba(143,187,181,0.08); 
+        }
+        
+        .content { 
+            padding: 32px 40px; 
+            max-width: 900px; 
+        }
+        
+        @media (max-width: 900px) { 
+            .layout { grid-template-columns: 1fr; } 
+            .sidebar { display: none; } 
+        }
+
+        .document-header {
+            margin-bottom: 4rem;
+        }
+
+        .document-header h1 {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .document-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        section {
+            margin-bottom: 4rem;
+            scroll-margin-top: 120px;
+        }
+
+        .section-title {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            color: var(--accent-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .grid-2, .grid-4 { grid-template-columns: 1fr; }
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            background: rgba(255,255,255,0.01);
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        th {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            background: rgba(255,255,255,0.02);
+        }
+
+        tr:last-child td { border-bottom: none; }
+
+        .timeline {
+            border-left: 2px solid var(--border-glass);
+            padding-left: 24px;
+            margin-left: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .timeline-item {
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -31px;
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 2px solid var(--accent-primary);
+            box-shadow: 0 0 10px rgba(143,187,181,0.2);
+        }
+    </style>
+</head>
+<body class="longsighted-theme">
+    <div class="main-content">
+
+    <!-- Layout -->
+    <div class="layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <nav>
+                <ul>
+                    <li><a href="#executive-summary">1. Executive Summary</a></li>
+                    <li><a href="#market-overview">2. Market Overview</a></li>
+                    <li><a href="#swot-analysis">3. SWOT Analysis</a></li>
+                    <li><a href="#risk-analysis">4. Risk Analysis</a></li>
+                    <li><a href="#brand-positioning">5. Brand Positioning</a></li>
+                    <li><a href="#marketing-strategy">6. Marketing Strategy</a></li>
+                    <li><a href="#sales-strategy">7. Sales Strategy</a></li>
+                    <li><a href="#commercial-operations">7b. Operations</a></li>
+                    <li><a href="#customer-experience">8. Customer Experience</a></li>
+                    <li><a href="#implementation-roadmap">9. Implementation Roadmap</a></li>
+                    <li><a href="#budget-priorities">10. Budget Priorities</a></li>
+                    <li><a href="#success-metrics">11. Success Metrics</a></li>
+                    <li><a href="#final-recommendations">12. Recommendations</a></li>
+                    <li><a href="#storytelling-strategy">13. Storytelling</a></li>
+                    <li><a href="#competitor-benchmarking">14. Competitor Benchmarking</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <div class="document-header">
+                <h1>Business & Brand Strategy</h1>
+                <p>Commercial Operations, Brand Positioning & Growth Roadmap 2026-2029</p>
+            </div>
+
+            <!-- Section 1 -->
+            <section id="executive-summary">
+                <h2 class="section-title"><i data-lucide="target"></i> 1. Executive Summary</h2>
+                <div class="card">
+                    <h3>Vision & Mission</h3>
+                    <p class="text-secondary" style="margin-bottom: 1.5rem;">To become the region's leading consultant-led ophthalmic center, delivering unparalleled clinical excellence and a holistic patient experience, focusing on transparent and personalized care.</p>
+                    
+                    <div class="grid-4" style="margin-top: 1.5rem;">
+                        <div class="stat-box">
+                            <span class="stat-label">Year 1 Target</span>
+                            <div class="stat-value">£500K</div>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-label">Year 2 Target</span>
+                            <div class="stat-value">£1.2M</div>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-label">Year 3 Target</span>
+                            <div class="stat-value">£2.5M</div>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-label">Growth Rate</span>
+                            <div class="stat-value text-accent">+108%</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2 -->
+            <section id="market-overview">
+                <h2 class="section-title"><i data-lucide="globe"></i> 2. Market Overview</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>UK Ophthalmology Market</h3>
+                        <div class="stat-value" style="margin: 1rem 0;">£1.55B</div>
+                        <p class="text-secondary">Total addressable market for private ophthalmology services in the UK, experiencing rapid growth due to demographic shifts.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Private Cataracts</h3>
+                        <div class="stat-value" style="margin: 1rem 0;">80,875/yr</div>
+                        <p class="text-secondary">Current volume of private cataract procedures annually, heavily influenced by an average NHS waiting time of 16-20 weeks.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3 -->
+            <section id="swot-analysis">
+                <h2 class="section-title"><i data-lucide="layout-grid"></i> 3. SWOT Analysis</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                            <h3>Strengths</h3>
+                            <span class="badge" style="background: rgba(143,187,181,0.2); color: var(--accent-primary);">Internal</span>
+                        </div>
+                        <ul class="text-secondary" style="margin-left: 1.2rem;">
+                            <li>Consultant-led model</li>
+                            <li>Advanced MIGS capabilities</li>
+                            <li>Kingfisher technology access</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                            <h3>Weaknesses</h3>
+                            <span class="badge">Internal</span>
+                        </div>
+                        <ul class="text-secondary" style="margin-left: 1.2rem;">
+                            <li>New brand entity</li>
+                            <li>Limited initial market awareness</li>
+                            <li>Reliance on early cash flow</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                            <h3>Opportunities</h3>
+                            <span class="badge" style="background: rgba(143,187,181,0.2); color: var(--accent-primary);">External</span>
+                        </div>
+                        <ul class="text-secondary" style="margin-left: 1.2rem;">
+                            <li>Significant NHS backlog</li>
+                            <li>Growth in self-pay market</li>
+                            <li>Premium lens adoption</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                            <h3>Threats</h3>
+                            <span class="badge">External</span>
+                        </div>
+                        <ul class="text-secondary" style="margin-left: 1.2rem;">
+                            <li>PE-backed high-street chains</li>
+                            <li>Aggressive price competition</li>
+                            <li>Regulatory shifts in private care</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4 -->
+            <section id="risk-analysis">
+                <h2 class="section-title"><i data-lucide="alert-triangle"></i> 4. Risk Analysis</h2>
+                <div class="card" style="padding: 0;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Risk Category</th>
+                                <th>Description</th>
+                                <th>Severity</th>
+                                <th>Mitigation Strategy</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Clinical Governance</td>
+                                <td>Surgical complications or infection outbreaks</td>
+                                <td><span class="badge" style="color: #ff4d4d; border-color: #ff4d4d;">High</span></td>
+                                <td>Strict audit trails, consultant-only surgery, premium equipment.</td>
+                            </tr>
+                            <tr>
+                                <td>Regulatory</td>
+                                <td>CQC compliance failure or changes in policy</td>
+                                <td><span class="badge" style="color: #ffad33; border-color: #ffad33;">Medium</span></td>
+                                <td>Dedicated compliance officer, regular internal mock inspections.</td>
+                            </tr>
+                            <tr>
+                                <td>Financial</td>
+                                <td>Delayed profitability, cash flow shortages</td>
+                                <td><span class="badge" style="color: #ff4d4d; border-color: #ff4d4d;">High</span></td>
+                                <td>Phased launch, PMI fast-track credentialing, robust credit control.</td>
+                            </tr>
+                            <tr>
+                                <td>Competitive</td>
+                                <td>Local rivals dropping prices aggressively</td>
+                                <td><span class="badge" style="color: #ffad33; border-color: #ffad33;">Medium</span></td>
+                                <td>Focus on value/quality over price, unique sub-specialties.</td>
+                            </tr>
+                            <tr>
+                                <td>Reputational</td>
+                                <td>Negative online reviews affecting trust</td>
+                                <td><span class="badge" style="color: #ffad33; border-color: #ffad33;">Medium</span></td>
+                                <td>Proactive patient feedback loops, high-touch aftercare.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Section 5: Brand Strategy & Positioning -->
+            <section id="brand-positioning">
+                <h2 class="section-title"><i data-lucide="star"></i> 5. Brand Strategy &amp; Positioning</h2>
+                
+                <!-- Brand Foundation -->
+                <div class="grid-3" style="margin-bottom: 1.5rem;">
+                    <div class="card">
+                        <span class="badge" style="margin-bottom: 0.5rem; display: inline-block;">Vision</span>
+                        <h3 style="margin-bottom: 0.5rem;">Business Vision</h3>
+                        <p class="text-secondary" style="font-size: 0.9rem;">To become the Midlands' most trusted independent ophthalmic practice.</p>
+                    </div>
+                    <div class="card">
+                        <span class="badge" style="margin-bottom: 0.5rem; display: inline-block;">Mission</span>
+                        <h3 style="margin-bottom: 0.5rem;">Mission</h3>
+                        <p class="text-secondary" style="font-size: 0.9rem;">EyePros exists to help people experience life with clarity, confidence, and independence.</p>
+                    </div>
+                    <div class="card">
+                        <span class="badge" style="margin-bottom: 0.5rem; display: inline-block;">Tagline</span>
+                        <h3 style="margin-bottom: 0.5rem;">Core Brand Promise</h3>
+                        <p style="font-size: 1.25rem; font-weight: 700; color: #2dd4bf; margin-top: 0.25rem;">"Back in Focus"</p>
+                    </div>
+                </div>
+
+                <!-- Brand Audit & Advantages -->
+                <div class="card" style="margin-bottom: 1.5rem;">
+                    <h3 style="margin-bottom: 1rem;"><i data-lucide="shield-check" class="icon-accent" style="width: 20px; height: 20px; display: inline-block; vertical-align: middle; margin-right: 8px;"></i> Brand Advantages vs. Digital Audit</h3>
+                    <div class="grid-2">
+                        <div>
+                            <h4 style="color: #2dd4bf; margin-bottom: 0.75rem;">Core Brand Advantages</h4>
+                            <ul class="text-secondary" style="display: flex; flex-direction: column; gap: 8px; margin-left: 1.2rem; font-size: 0.9rem;">
+                                <li><strong>Consultant-Led Care:</strong> Direct patient-surgeon relationship from consultation through surgery and aftercare.</li>
+                                <li><strong>Specialist Leadership:</strong> Mr Ahmad Elsahn's dual subspecialty expertise in glaucoma &amp; complex cataract.</li>
+                                <li><strong>Kingfisher House Facility:</strong> Purpose-built Nottingham surgical hub opening January 2027.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 style="color: #eab308; margin-bottom: 0.75rem;">Strategic Brand Shifts</h4>
+                            <ul class="text-secondary" style="display: flex; flex-direction: column; gap: 8px; margin-left: 1.2rem; font-size: 0.9rem;">
+                                <li><strong>From Clinic to Partner:</strong> Shift positioning from an external surgical provider to an integrated partner for community optometrists.</li>
+                                <li><strong>From Procedural to Human:</strong> Elevate patient transformation stories and visual freedom over sterile clinical descriptions.</li>
+                                <li><strong>Radical Transparency:</strong> All-inclusive pricing without hidden facility fees or ambiguous lens top-ups.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Brand Pillars -->
+                <div class="grid-4" style="margin-bottom: 1.5rem;">
+                    <div class="card text-center" style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                        <i data-lucide="award" class="icon-accent" style="width: 28px; height: 28px;"></i>
+                        <h4>Consultant Continuity</h4>
+                        <p class="text-secondary" style="font-size: 0.85rem;">Named surgeon throughout. No handoffs to junior rotas or laser technicians.</p>
+                    </div>
+                    <div class="card text-center" style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                        <i data-lucide="users" class="icon-accent" style="width: 28px; height: 28px;"></i>
+                        <h4>Empathetic Connection</h4>
+                        <p class="text-secondary" style="font-size: 0.85rem;">Unhurried consultations that respect clinical literacy and patient dignity.</p>
+                    </div>
+                    <div class="card text-center" style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                        <i data-lucide="shield-check" class="icon-accent" style="width: 28px; height: 28px;"></i>
+                        <h4>Transparent Integrity</h4>
+                        <p class="text-secondary" style="font-size: 0.85rem;">Honest prognosis discussions, complete fee clarity, zero commercial pressure.</p>
+                    </div>
+                    <div class="card text-center" style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                        <i data-lucide="microscope" class="icon-accent" style="width: 28px; height: 28px;"></i>
+                        <h4>Specialist Depth</h4>
+                        <p class="text-secondary" style="font-size: 0.85rem;">Advanced glaucoma MIGS, medical retina, and premium customized IOL biometry.</p>
+                    </div>
+                </div>
+
+                <!-- Brand Voice & PR -->
+                <div class="grid-2">
+                    <div class="card">
+                        <h4 style="margin-bottom: 0.75rem;"><i data-lucide="volume-2" class="icon-accent" style="width: 18px; height: 18px; display: inline-block; vertical-align: middle; margin-right: 6px;"></i> Brand Voice &amp; Tone</h4>
+                        <div class="grid-2" style="gap: 8px;">
+                            <div style="padding: 8px; background: rgba(255,255,255,0.03); border-radius: 6px;">
+                                <strong style="color: #2dd4bf; font-size: 0.85rem;">Consultative</strong>
+                                <p class="text-secondary" style="font-size: 0.8rem; margin-top: 2px;">Advisory, unhurried, reassuring</p>
+                            </div>
+                            <div style="padding: 8px; background: rgba(255,255,255,0.03); border-radius: 6px;">
+                                <strong style="color: #2dd4bf; font-size: 0.85rem;">Rigorous</strong>
+                                <p class="text-secondary" style="font-size: 0.8rem; margin-top: 2px;">Evidence-based, clinically precise</p>
+                            </div>
+                            <div style="padding: 8px; background: rgba(255,255,255,0.03); border-radius: 6px;">
+                                <strong style="color: #2dd4bf; font-size: 0.85rem;">Accessible</strong>
+                                <p class="text-secondary" style="font-size: 0.8rem; margin-top: 2px;">Clear, jargon-free patient guides</p>
+                            </div>
+                            <div style="padding: 8px; background: rgba(255,255,255,0.03); border-radius: 6px;">
+                                <strong style="color: #2dd4bf; font-size: 0.85rem;">Dignified</strong>
+                                <p class="text-secondary" style="font-size: 0.8rem; margin-top: 2px;">Respectful, never promotional</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h4 style="margin-bottom: 0.75rem;"><i data-lucide="radio" class="icon-accent" style="width: 18px; height: 18px; display: inline-block; vertical-align: middle; margin-right: 6px;"></i> PR &amp; Thought Leadership</h4>
+                        <p class="text-secondary" style="font-size: 0.9rem; line-height: 1.6;">
+                            Position <strong>Mr Ahmad Elsahn</strong> as the primary regional expert in MIGS and premium cataract surgery through trade publications, Local Optical Committee (LOC) lectures, and accredited clinical CPD evenings for community optometrists.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 6 -->
+            <section id="marketing-strategy">
+                <h2 class="section-title"><i data-lucide="megaphone"></i> 6. Marketing Strategy</h2>
+                <div class="card">
+                    <div class="grid-2">
+                        <div>
+                            <h3 style="margin-bottom: 1rem;">Digital Channels</h3>
+                            <ul class="text-secondary" style="display: flex; flex-direction: column; gap: 12px; margin-left: 1.2rem;">
+                                <li><strong>Google PPC:</strong> Intent-based targeting for "private cataract surgery" and "MIGS specialists".</li>
+                                <li><strong>SEO:</strong> Content dominance on condition-specific queries and local search presence.</li>
+                                <li><strong>Social Media:</strong> Patient stories and educational snippets on Facebook and Instagram.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 style="margin-bottom: 1rem;">B2B & Outreach</h3>
+                            <ul class="text-secondary" style="display: flex; flex-direction: column; gap: 12px; margin-left: 1.2rem;">
+                                <li><strong>Referrer Outreach:</strong> Direct liaison with local independent optometrists.</li>
+                                <li><strong>CPD Events:</strong> Hosting accredited education sessions to build clinical trust.</li>
+                                <li><strong>Community:</strong> Sponsoring local health initiatives and wellness fairs.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 7 -->
+            <section id="sales-strategy">
+                <h2 class="section-title"><i data-lucide="trending-up"></i> 7. Sales Strategy</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>Revenue Channels</h3>
+                        <div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 16px;">
+                            <div>
+                                <h4 class="text-primary">Direct Self-Pay Funnel</h4>
+                                <p class="text-secondary" style="font-size: 0.9rem;">Optimized web conversions and dedicated patient coordinators.</p>
+                            </div>
+                            <div>
+                                <h4 class="text-primary">PMI Partnerships</h4>
+                                <p class="text-secondary" style="font-size: 0.9rem;">Preferred provider status with Bupa, AXA, and Vitality.</p>
+                            </div>
+                            <div>
+                                <h4 class="text-primary">Corporate Wellness</h4>
+                                <p class="text-secondary" style="font-size: 0.9rem;">Executive eye health screening packages for local enterprises.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 1rem;">
+                            <i data-lucide="network" class="icon-accent" style="width: 24px; height: 24px;"></i>
+                            <h3>Optometrist Pipeline</h3>
+                        </div>
+                        <p class="text-secondary" style="margin-bottom: 1rem;">Conversion Funnel Strategy:</p>
+                        <ul class="text-secondary" style="margin-left: 1.2rem; display: flex; flex-direction: column; gap: 8px; margin-bottom: 1rem;">
+                            <li><strong>72</strong> first visits/month &rarr; <strong>48</strong> reach decision-maker &rarr; <strong>12</strong> proper meetings &rarr; <strong>8-10</strong> agree to refer &rarr; <strong>4-6</strong> start referring</li>
+                        </ul>
+                        <div style="margin-top: 1.5rem;">
+                            <h4 class="text-primary" style="margin-bottom: 0.5rem;">Weekly Cadence</h4>
+                            <p class="text-secondary" style="font-size: 0.9rem;">6 visits/day, 3 field days/week, 18 visits/week</p>
+                        </div>
+                        <div style="margin-top: 1rem;">
+                            <h4 class="text-primary" style="margin-bottom: 0.5rem;">Follow-up Rhythm</h4>
+                            <ul class="text-secondary" style="font-size: 0.9rem; margin-left: 1.2rem; display: flex; flex-direction: column; gap: 4px;">
+                                <li>Hot = within 2 days</li>
+                                <li>Warm = within 7 days</li>
+                                <li>Day 21 = final try</li>
+                                <li>Every 90 days = existing referrers</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 7b -->
+            <section id="commercial-operations">
+                <h2 class="section-title"><i data-lucide="clipboard-list"></i> 7b. Commercial Operations</h2>
+                
+                <div class="grid-2" style="margin-bottom: 1.5rem;">
+                    <div class="card">
+                        <h3>KPI Scorecard <span class="badge" style="margin-left: 8px;">30% Work / 70% Results</span></h3>
+                        <div style="margin-top: 1.5rem;">
+                            <h4 class="text-primary" style="margin-bottom: 0.5rem;">Work Metrics (30%)</h4>
+                            <ul class="text-secondary" style="font-size: 0.9rem; margin-left: 1.2rem; display: flex; flex-direction: column; gap: 8px;">
+                                <li>First visits made: 18/week</li>
+                                <li>Follow-ups done when due: 9 out of 10</li>
+                                <li>Visits written up same day: everyone</li>
+                                <li>Good conversation criteria met: 4 out of every 6</li>
+                            </ul>
+                        </div>
+                        <div style="margin-top: 1.5rem;">
+                            <h4 class="text-primary" style="margin-bottom: 0.5rem;">Results Metrics (70%)</h4>
+                            <ul class="text-secondary" style="font-size: 0.9rem; margin-left: 1.2rem; display: flex; flex-direction: column; gap: 8px;">
+                                <li>Practices that sign agreement: 4/month rising to 6</li>
+                                <li>Of those, how many send a patient: 6 out of 10</li>
+                                <li>Referrals arriving: more each month</li>
+                                <li>Practices that stop sending: fewer than 2/month</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>30/60/90 Day Milestones</h3>
+                        <div class="timeline" style="margin-top: 1.5rem;">
+                            <div class="timeline-item">
+                                <h4>First 30 Days</h4>
+                                <ul class="text-secondary" style="font-size: 0.9rem; margin-left: 1.2rem; display: flex; flex-direction: column; gap: 4px; margin-top: 0.5rem;">
+                                    <li>~70 first visits done</li>
+                                    <li>4 in 6 visits reach decision-maker</li>
+                                    <li>At least 4 practices agree to refer</li>
+                                    <li>All 28 group owners found, 8 contacted</li>
+                                    <li>First referrals arriving</li>
+                                </ul>
+                            </div>
+                            <div class="timeline-item">
+                                <h4>First 60 Days</h4>
+                                <ul class="text-secondary" style="font-size: 0.9rem; margin-left: 1.2rem; display: flex; flex-direction: column; gap: 4px; margin-top: 0.5rem;">
+                                    <li>~140 visits done</li>
+                                    <li>Second meetings happening</li>
+                                    <li>At least 10 practices agreed total</li>
+                                    <li>At least 4 group meetings held</li>
+                                    <li>Referrals going up month by month</li>
+                                </ul>
+                            </div>
+                            <div class="timeline-item">
+                                <h4>First 90 Days</h4>
+                                <ul class="text-secondary" style="font-size: 0.9rem; margin-left: 1.2rem; display: flex; flex-direction: column; gap: 4px; margin-top: 0.5rem;">
+                                    <li>~210 visits done</li>
+                                    <li>Queue of booked meetings</li>
+                                    <li>At least 16 practices agreed total</li>
+                                    <li>At least 2 groups agreed</li>
+                                    <li>Three months of records to review</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>Friday Report Framework</h3>
+                        <ul class="text-secondary" style="margin-left: 1.2rem; margin-top: 1rem; display: flex; flex-direction: column; gap: 12px;">
+                            <li><strong>Block 1 — Work this week:</strong> visits, good first visits, conversations, follow-ups, referrals</li>
+                            <li><strong>Block 2 — Pipeline:</strong> how many practices at each of the 6 stages, what moved</li>
+                            <li><strong>Block 3 — Problems:</strong> anything getting in the way (3 lines enough)</li>
+                            <li><strong>Block 4 — Next week:</strong> 3 things to focus on, no more</li>
+                        </ul>
+                    </div>
+
+                    <div class="card" style="padding: 0;">
+                        <div style="padding: 1.5rem 1.5rem 0.5rem 1.5rem;">
+                            <h3>CRM Recommendation</h3>
+                            <p class="text-secondary" style="font-size: 0.9rem; margin-top: 0.5rem;">Start simple, prove value, scale later. HubSpot Starter is enough for now.</p>
+                        </div>
+                        <table style="border: none; border-top: 1px solid var(--border-glass); margin-top: 1rem;">
+                            <thead>
+                                <tr>
+                                    <th style="color: var(--accent-primary);">Feature</th>
+                                    <th style="color: var(--accent-primary);">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>CRM & contacts</td>
+                                    <td><span class="badge" style="background: rgba(143,187,181,0.2); color: var(--accent-primary);">YES</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Pipelines & deals (6-stage)</td>
+                                    <td><span class="badge" style="background: rgba(143,187,181,0.2); color: var(--accent-primary);">YES</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Custom properties (8 fields/visit)</td>
+                                    <td><span class="badge" style="background: rgba(143,187,181,0.2); color: var(--accent-primary);">YES</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Dashboards/reports</td>
+                                    <td><span class="badge" style="background: rgba(143,187,181,0.2); color: var(--accent-primary);">YES</span></td>
+                                </tr>
+                                <tr>
+                                    <td>AI/Breeze credits</td>
+                                    <td><span class="badge" style="color: #ffad33; border-color: #ffad33;">LOW PRIORITY</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Advanced custom reporting</td>
+                                    <td><span class="badge">NOT NEEDED NOW</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Complex automation</td>
+                                    <td><span class="badge">NOT NEEDED NOW</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 8 -->
+            <section id="customer-experience">
+                <h2 class="section-title"><i data-lucide="heart"></i> 8. Customer Experience</h2>
+                <div class="card">
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <h4>1. First Contact</h4>
+                            <p class="text-secondary">Dedicated patient coordinator handles inquiry within 2 hours. Clear pricing and process explanation.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>2. The Consultation</h4>
+                            <p class="text-secondary">Unhurried, consultant-led diagnosis using state-of-the-art imaging. Honest discussion of options.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>3. Treatment Day</h4>
+                            <p class="text-secondary">Concierge-style welcome, calming environment, and seamless surgical experience.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>4. Lifetime Aftercare</h4>
+                            <p class="text-secondary">24/7 post-op support line, scheduled follow-ups, and long-term eye health monitoring.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 9 -->
+            <section id="implementation-roadmap">
+                <h2 class="section-title"><i data-lucide="map"></i> 9. Implementation Roadmap</h2>
+                <div class="card">
+                    <div class="grid-2">
+                        <div>
+                            <h4>Q3 2026: Launch & Setup</h4>
+                            <p class="text-secondary" style="font-size: 0.9rem; margin-bottom: 1rem;">CQC registration, core staff hiring, soft marketing launch, facility fit-out completion.</p>
+                            
+                            <h4>Q4 2026: Referrer Activation</h4>
+                            <p class="text-secondary" style="font-size: 0.9rem;">Host first major CPD event, finalize PMI contracts, scale PPC campaigns.</p>
+                        </div>
+                        <div>
+                            <h4>2027: Stabilization & Growth</h4>
+                            <p class="text-secondary" style="font-size: 0.9rem; margin-bottom: 1rem;">Target 50 procedures/month, launch corporate wellness packages, expand MIGS offerings.</p>
+                            
+                            <h4>2028-2029: Expansion</h4>
+                            <p class="text-secondary" style="font-size: 0.9rem;">Achieve £2.5M run rate, hire associate specialists, explore secondary satellite location.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 10 -->
+            <section id="budget-priorities">
+                <h2 class="section-title"><i data-lucide="pie-chart"></i> 10. Budget Priorities</h2>
+                <div class="grid-4">
+                    <div class="card">
+                        <h3>Marketing (Yr 1)</h3>
+                        <div class="stat-value text-accent" style="margin-top: 0.5rem;">£50K</div>
+                    </div>
+                    <div class="card">
+                        <h3>Clinical Equip</h3>
+                        <div class="stat-value text-accent" style="margin-top: 0.5rem;">£120K</div>
+                    </div>
+                    <div class="card">
+                        <h3>Core Staffing</h3>
+                        <div class="stat-value text-accent" style="margin-top: 0.5rem;">£180K</div>
+                    </div>
+                    <div class="card">
+                        <h3>Working Cap</h3>
+                        <div class="stat-value text-accent" style="margin-top: 0.5rem;">£150K</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 11 -->
+            <section id="success-metrics">
+                <h2 class="section-title"><i data-lucide="bar-chart-2"></i> 11. Success Metrics</h2>
+                <div class="card" style="padding: 0;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Key Performance Indicator</th>
+                                <th>Target (Year 1)</th>
+                                <th>Target (Year 3)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Monthly Procedures</td>
+                                <td>25-30</td>
+                                <td>100+</td>
+                            </tr>
+                            <tr>
+                                <td>Revenue Per Patient</td>
+                                <td>£2,800</td>
+                                <td>£3,200 (Premium Shift)</td>
+                            </tr>
+                            <tr>
+                                <td>Net Promoter Score (NPS)</td>
+                                <td>> 85</td>
+                                <td>> 90</td>
+                            </tr>
+                            <tr>
+                                <td>Referrer Conversion Rate</td>
+                                <td>15%</td>
+                                <td>35%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Section 12 -->
+            <section id="final-recommendations">
+                <h2 class="section-title"><i data-lucide="check-circle"></i> 12. Final Recommendations</h2>
+                <div class="card">
+                    <ol class="text-secondary" style="margin-left: 1.2rem; display: flex; flex-direction: column; gap: 12px;">
+                        <li><strong>Prioritize Digital Acquisition:</strong> Front-load the £50K marketing budget into high-intent Google Ads to drive early self-pay volume while PMI pathways mature.</li>
+                        <li><strong>Aggressive Optometrist Outreach:</strong> The £865K pipeline requires immediate action. Dedicate one day per week purely to visiting local practices.</li>
+                        <li><strong>Premium Lens Conversion:</strong> Train staff deeply on communicating the value of toric and multifocal lenses to increase revenue per patient safely.</li>
+                        <li><strong>Review Management:</strong> Implement an automated system to capture Google Reviews post-discharge to build social proof rapidly against established chains.</li>
+                        <li><strong>MIGS Differentiation:</strong> Heavily feature advanced glaucoma surgical options in B2B marketing, as this is a clear differentiator from standard cataract factories.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Section 13 -->
+            <section id="storytelling-strategy">
+                <h2 class="section-title"><i data-lucide="video"></i> 13. Storytelling Strategy</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>Patient Story Framework</h3>
+                        <p class="text-secondary" style="margin-top: 1rem;">Focus on the <em>"Before, During, and After"</em> emotional journey. Highlight not just the visual outcome, but the return to hobbies, driving, and independence.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Video Content Plan</h3>
+                        <ul class="text-secondary" style="margin-left: 1.2rem; margin-top: 1rem;">
+                            <li>"Meet the Consultant" intro series</li>
+                            <li>Facility walkthroughs to reduce anxiety</li>
+                            <li>Patient testimonial documentaries</li>
+                            <li>Educational snippets on eye conditions</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 14 -->
+            <section id="competitor-benchmarking">
+                <h2 class="section-title"><i data-lucide="swords"></i> 14. Competitor Benchmarking</h2>
+                <div class="card" style="margin-bottom: 1.5rem;">
+                    <h3>Counter-Positioning Pillars</h3>
+                    <div class="grid-4" style="margin-top: 1rem;">
+                        <div>
+                            <h4 class="text-primary" style="font-size: 0.9rem;">vs Chains</h4>
+                            <p class="text-secondary" style="font-size: 0.8rem;">Highlight consultant continuity vs rotating surgeons.</p>
+                        </div>
+                        <div>
+                            <h4 class="text-primary" style="font-size: 0.9rem;">vs NHS</h4>
+                            <p class="text-secondary" style="font-size: 0.8rem;">Speed of access and premium lens choices.</p>
+                        </div>
+                        <div>
+                            <h4 class="text-primary" style="font-size: 0.9rem;">vs Gen. Hospitals</h4>
+                            <p class="text-secondary" style="font-size: 0.8rem;">Ophthalmic-specific environment and expertise.</p>
+                        </div>
+                        <div>
+                            <h4 class="text-primary" style="font-size: 0.9rem;">Pricing</h4>
+                            <p class="text-secondary" style="font-size: 0.8rem;">Transparent package pricing with no hidden fees.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card" style="padding: 0;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Segment</th>
+                                <th>Their Focus</th>
+                                <th>EyePros Advantage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>High-Street Chains (PE-Backed)</td>
+                                <td>Volume, heavy marketing, price promotions.</td>
+                                <td>Personalized care, non-commercial clinical decisions.</td>
+                            </tr>
+                            <tr>
+                                <td>NHS "Factories" (ISPs)</td>
+                                <td>High-volume standard cataracts, NHS contracts.</td>
+                                <td>Premium environment, advanced lenses, zero waiting.</td>
+                            </tr>
+                            <tr>
+                                <td>Acute Private Hospitals</td>
+                                <td>Multi-specialty care, large infrastructure.</td>
+                                <td>Agility, lower overheads, specialized ophthalmic focus.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content" style="max-width: 1200px; margin: 0 auto; padding: 32px 40px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-glass);">
+            <div class="logo text-accent" style="font-family: var(--font-mono); letter-spacing: 0.2em;">
+                BACK IN FOCUS
+            </div>
+            <div class="footer-links" style="display: flex; gap: 24px;">
+                <a href="#" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">Privacy</a>
+                <a href="#" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">Terms</a>
+                <a href="#" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+<footer class="ep-footer">
+    <h3>BACK IN FOCUS</h3>
+    <p>EyePros Strategic Intelligence Platform · v3.0 · 2026</p>
+    <p class="conf-notice">DATA CLASSIFICATION: CONFIDENTIAL — BOARD & MANAGEMENT USE ONLY</p>
+</footer>
+</div><!-- /.main-content -->
+<script src="js/sidebar.js"></script>
+</body>
+</html>

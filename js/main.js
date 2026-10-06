@@ -23,14 +23,17 @@ $(window).on('load', function() {
         nav = $('nav'),
         nav_height = nav.outerHeight();
 
-    nav.find('a').on('click', function(){
+    nav.find('a').on('click', function(e){
         var $el = $(this),
         id = $el.attr('href');
 
+        // Only smooth-scroll for internal #hash links
+        if (!id || id.charAt(0) !== '#' || !$(id).length) return;
+
+        e.preventDefault();
         $('html, body').animate({
             scrollTop: $(id).offset().top - nav_height + 1
         }, 500);
-        return false;
     });
     $(window).on('scroll', function(){
         var cur_pos = $(this).scrollTop();

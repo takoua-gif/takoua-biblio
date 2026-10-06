@@ -1,0 +1,1356 @@
+/**
+ * LONGSIGHTED — Klarna-Inspired Design System
+ * "Insight Today. Better Vision Tomorrow."
+ * 
+ * Design philosophy: Dark ink + single accent, editorial oversized type,
+ * pill interaction patterns, section colour rhythm, zero visual clutter.
+ */
+
+/* ============================================================
+   1. GOOGLE FONTS IMPORT
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ============================================================
+   2. DESIGN TOKENS
+   ============================================================ */
+:root {
+  /* Colours */
+  --ls-ink:         #0D0D1A;
+  --ls-ink-soft:    #1e1e30;
+  --ls-navy:        #1B2B5C;
+  --ls-navy-light:  #e8ecf7;
+  --ls-gold:        #B8975A;
+  --ls-gold-hover:  #A07C3E;
+  --ls-gold-light:  #F8F3E8;
+  --ls-gold-border: rgba(184, 151, 90, 0.25);
+  --ls-white:       #FFFFFF;
+  --ls-cream:       #FAFAF7;
+  --ls-cream-deep:  #F3F1EC;
+  --ls-muted:       #5C5A6B;
+  --ls-subtle:      #9896A6;
+  --ls-border:      rgba(0, 0, 0, 0.08);
+  --ls-border-soft: rgba(0, 0, 0, 0.05);
+  --ls-focus:       #3B4ECC;
+
+  /* Typography */
+  --font-display: 'Sora', system-ui, -apple-system, sans-serif;
+  --font-body:    'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Type scale */
+  --text-xs:   0.75rem;
+  --text-sm:   0.875rem;
+  --text-base: 1rem;
+  --text-lg:   1.125rem;
+  --text-xl:   1.25rem;
+  --text-2xl:  1.5rem;
+  --text-3xl:  1.875rem;
+  --text-4xl:  2.25rem;
+  --text-5xl:  3rem;
+  --text-6xl:  3.75rem;
+  --text-hero: clamp(3rem, 8vw, 6rem);
+
+  /* Spacing rhythm */
+  --space-section: clamp(72px, 10vw, 120px);
+  --space-section-sm: clamp(48px, 6vw, 72px);
+
+  /* Radius */
+  --radius-sm:   8px;
+  --radius-md:   16px;
+  --radius-lg:   24px;
+  --radius-xl:   32px;
+  --radius-pill: 9999px;
+
+  /* Motion */
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.45, 0, 0.55, 1);
+  --dur-fast:    200ms;
+  --dur-base:    350ms;
+  --dur-slow:    600ms;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.07), 0 2px 6px rgba(0,0,0,0.04);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.1), 0 4px 16px rgba(0,0,0,0.05);
+  --shadow-xl: 0 24px 64px rgba(0,0,0,0.12), 0 8px 24px rgba(0,0,0,0.06);
+
+  /* Nav height */
+  --nav-h: 72px;
+}
+
+/* ============================================================
+   3. GLOBAL RESET & BASE
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  color: var(--ls-ink);
+  background-color: var(--ls-white);
+  overflow-x: hidden;
+}
+
+img, video { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+ul, ol { list-style: none; padding: 0; margin: 0; }
+button { cursor: pointer; font-family: inherit; }
+
+/* ============================================================
+   4. TYPOGRAPHY
+   ============================================================ */
+.ls-display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+}
+
+.ls-hero-title {
+  font-family: var(--font-display);
+  font-size: var(--text-hero);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  color: var(--ls-ink);
+}
+
+.ls-section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--ls-ink);
+}
+
+.ls-eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ls-gold);
+}
+
+.ls-body {
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  line-height: 1.65;
+  color: var(--ls-muted);
+  font-weight: 400;
+}
+
+.ls-body-sm {
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--ls-muted);
+}
+
+.ls-label {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ls-subtle);
+}
+
+/* ============================================================
+   5. LAYOUT CONTAINERS
+   ============================================================ */
+.ls-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.ls-container-lg {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.ls-container-sm {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+@media (max-width: 480px) {
+  .ls-container, .ls-container-lg, .ls-container-sm {
+    padding: 0 16px;
+  }
+}
+
+/* ============================================================
+   6. SECTIONS & SCROLL ANCHORING
+   ============================================================ */
+.ls-section {
+  padding: var(--space-section) 0;
+}
+
+.ls-section-sm {
+  padding: var(--space-section-sm) 0;
+}
+
+/* Fix sticky navbar content overlap on all internal section jumps */
+section[id], [id].ls-section, [id].ls-page-hero, .ls-chapter-target {
+  scroll-margin-top: calc(var(--nav-h) + 24px);
+}
+
+/* Section backgrounds for Klarna-style colour rhythm */
+.ls-bg-white  { background-color: var(--ls-white); }
+.ls-bg-cream  { background-color: var(--ls-cream); }
+.ls-bg-dark   { background-color: var(--ls-ink); color: var(--ls-white); }
+.ls-bg-navy   { background-color: var(--ls-navy); color: var(--ls-white); }
+.ls-bg-gold   { background-color: var(--ls-gold-light); }
+
+
+/* ============================================================
+   7. NAVIGATION
+   ============================================================ */
+.ls-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--nav-h);
+  z-index: 1000;
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--ls-border);
+  transition: background var(--dur-base) var(--ease-out),
+              border-color var(--dur-base) var(--ease-out);
+}
+
+.ls-nav.transparent {
+  background: transparent;
+  border-color: transparent;
+}
+
+.ls-nav-inner {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
+  gap: 32px;
+}
+
+.ls-nav-logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.ls-nav-logo img {
+  height: 48px;
+  width: auto;
+  max-width: 290px;
+  object-fit: contain;
+  transition: transform 0.2s ease;
+}
+
+.ls-nav-logo:hover img {
+  transform: scale(1.02);
+}
+
+@media (max-width: 768px) {
+  .ls-nav-logo img {
+    height: 38px;
+    max-width: 210px;
+  }
+}
+
+.ls-nav-logo-text {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.35rem;
+  letter-spacing: -0.03em;
+  color: var(--ls-ink);
+}
+
+.ls-nav-logo-text span {
+  color: var(--ls-gold);
+}
+
+/* Desktop nav links */
+.ls-nav-links {
+  display: none;
+  flex-grow: 1;
+  gap: 4px;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .ls-nav-links { display: flex; }
+}
+
+.ls-nav-link {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--ls-muted);
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  transition: background var(--dur-fast) var(--ease-out),
+              color var(--dur-fast) var(--ease-out);
+  white-space: nowrap;
+}
+
+.ls-nav-link:hover {
+  background: var(--ls-cream-deep);
+  color: var(--ls-ink);
+  text-decoration: none;
+}
+
+.ls-nav-link.active {
+  background: var(--ls-navy-light);
+  color: var(--ls-navy);
+  font-weight: 600;
+}
+
+/* Nav right CTA */
+.ls-nav-cta {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Mobile burger */
+.ls-burger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: none;
+  background: var(--ls-cream-deep);
+  border-radius: var(--radius-pill);
+  color: var(--ls-ink);
+  flex-shrink: 0;
+}
+
+@media (min-width: 1024px) {
+  .ls-burger { display: none; }
+}
+
+/* Mobile drawer */
+.ls-mobile-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: min(380px, 90vw);
+  background: var(--ls-white);
+  z-index: 2000;
+  transform: translateX(-100%);
+  transition: transform var(--dur-base) var(--ease-out);
+  padding: 28px 24px;
+  overflow-y: auto;
+  border-right: 1px solid var(--ls-border);
+}
+
+.ls-mobile-drawer.open { transform: translateX(0); }
+
+.ls-mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(13,13,26,0.5);
+  backdrop-filter: blur(4px);
+  z-index: 1999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-base) var(--ease-out);
+}
+
+.ls-mobile-overlay.open { opacity: 1; pointer-events: auto; }
+
+.ls-mobile-nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 32px;
+}
+
+.ls-mobile-nav-link {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 600;
+  font-family: var(--font-display);
+  color: var(--ls-ink);
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  transition: background var(--dur-fast);
+  letter-spacing: -0.02em;
+}
+
+.ls-mobile-nav-link:hover {
+  background: var(--ls-cream);
+  text-decoration: none;
+}
+
+/* ============================================================
+   8. BUTTONS
+   ============================================================ */
+.ls-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  line-height: 1;
+  padding: 14px 28px;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background var(--dur-fast) var(--ease-out),
+              transform 200ms var(--ease-out),
+              box-shadow var(--dur-fast) var(--ease-out),
+              border-color var(--dur-fast) var(--ease-out);
+  white-space: nowrap;
+}
+
+.ls-btn:active {
+  transform: scale(0.96);
+  transition-duration: 100ms;
+}
+
+.ls-btn:focus-visible {
+  outline: 2px solid var(--ls-focus);
+  outline-offset: 3px;
+}
+
+/* Dark (primary) */
+.ls-btn-dark {
+  background: var(--ls-ink);
+  color: var(--ls-white);
+}
+.ls-btn-dark:hover {
+  background: var(--ls-ink-soft);
+  color: var(--ls-white);
+  box-shadow: 0 4px 16px rgba(13,13,26,0.2);
+}
+
+/* Gold (accent) */
+.ls-btn-gold {
+  background: var(--ls-gold);
+  color: var(--ls-white);
+}
+.ls-btn-gold:hover {
+  background: var(--ls-gold-hover);
+  color: var(--ls-white);
+  box-shadow: 0 4px 16px rgba(184,151,90,0.3);
+}
+
+/* Ghost dark */
+.ls-btn-ghost {
+  background: transparent;
+  color: var(--ls-ink);
+  border-color: var(--ls-ink);
+}
+.ls-btn-ghost:hover {
+  background: var(--ls-ink);
+  color: var(--ls-white);
+}
+
+/* Ghost light (on dark bg) */
+.ls-btn-ghost-light {
+  background: transparent;
+  color: var(--ls-white);
+  border-color: rgba(255,255,255,0.4);
+}
+.ls-btn-ghost-light:hover {
+  background: rgba(255,255,255,0.1);
+  color: var(--ls-white);
+}
+
+/* Small button */
+.ls-btn-sm {
+  padding: 9px 18px;
+  font-size: 0.78rem;
+}
+
+/* ============================================================
+   9. PILLS / TAGS
+   ============================================================ */
+.ls-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background: var(--ls-cream-deep);
+  color: var(--ls-muted);
+  border: 1px solid var(--ls-border);
+}
+
+.ls-pill-gold {
+  background: var(--ls-gold-light);
+  color: var(--ls-gold-hover);
+  border-color: var(--ls-gold-border);
+}
+
+.ls-pill-navy {
+  background: var(--ls-navy-light);
+  color: var(--ls-navy);
+  border-color: rgba(27,43,92,0.2);
+}
+
+.ls-pill-dark {
+  background: var(--ls-ink);
+  color: var(--ls-white);
+  border-color: transparent;
+}
+
+/* ============================================================
+   10. CARDS
+   ============================================================ */
+.ls-card {
+  background: var(--ls-white);
+  border: 1px solid var(--ls-border);
+  border-radius: var(--radius-xl);
+  padding: 32px;
+  transition: transform var(--dur-base) var(--ease-out),
+              box-shadow var(--dur-base) var(--ease-out),
+              border-color var(--dur-base) var(--ease-out);
+}
+
+.ls-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(0,0,0,0.12);
+}
+
+.ls-card-sm {
+  padding: 24px;
+  border-radius: var(--radius-lg);
+}
+
+/* ============================================================
+   11. HORIZONTAL DIVIDER
+   ============================================================ */
+.ls-divider {
+  border: none;
+  border-top: 1px solid var(--ls-border);
+}
+
+/* ============================================================
+   12. STAT DISPLAY
+   ============================================================ */
+.ls-stat-num {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--ls-ink);
+}
+
+.ls-stat-label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--ls-ink);
+  margin-top: 6px;
+}
+
+.ls-stat-sub {
+  font-size: 0.78rem;
+  color: var(--ls-muted);
+  line-height: 1.4;
+  margin-top: 4px;
+}
+
+/* ============================================================
+   13. SCROLL REVEAL ANIMATIONS
+   ============================================================ */
+@media (prefers-reduced-motion: no-preference) {
+  .ls-reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity var(--dur-slow) var(--ease-out),
+                transform var(--dur-slow) var(--ease-out);
+  }
+
+  .ls-reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .ls-reveal-delay-1 { transition-delay: 80ms; }
+  .ls-reveal-delay-2 { transition-delay: 160ms; }
+  .ls-reveal-delay-3 { transition-delay: 240ms; }
+  .ls-reveal-delay-4 { transition-delay: 320ms; }
+
+  .ls-reveal-up {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity var(--dur-base) var(--ease-out),
+                transform var(--dur-base) var(--ease-out);
+  }
+  .ls-reveal-up.visible { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   14. FILTER BAR (for Intel Feed, Acronyms, etc.)
+   ============================================================ */
+.ls-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.ls-filter-btn {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--ls-muted);
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--ls-border);
+  background: var(--ls-white);
+  transition: all var(--dur-fast) var(--ease-out);
+  cursor: pointer;
+}
+
+.ls-filter-btn:hover, .ls-filter-btn.active {
+  background: var(--ls-ink);
+  color: var(--ls-white);
+  border-color: transparent;
+}
+
+/* ============================================================
+   15. TABLE
+   ============================================================ */
+.ls-table-wrap {
+  background: var(--ls-white);
+  border: 1px solid var(--ls-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.ls-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+.ls-table th {
+  background: var(--ls-cream);
+  font-weight: 600;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ls-muted);
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--ls-border);
+  text-align: left;
+}
+
+.ls-table td {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--ls-border-soft);
+  color: var(--ls-muted);
+  vertical-align: top;
+}
+
+.ls-table td strong { color: var(--ls-ink); font-weight: 600; }
+.ls-table tr:last-child td { border-bottom: none; }
+.ls-table tr:hover td { background: var(--ls-cream); }
+
+/* ============================================================
+   16. TIMELINE (Vertical Spine)
+   ============================================================ */
+.ls-timeline-spine {
+  position: relative;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 0 80px;
+}
+
+.ls-timeline-spine::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 20px;
+  width: 1.5px;
+  background: var(--ls-border);
+  z-index: 0;
+}
+
+@media (min-width: 640px) {
+  .ls-timeline-spine::before { left: 24px; }
+}
+
+/* Phase header */
+.ls-phase-header {
+  position: relative;
+  z-index: 1;
+  padding: 48px 0 20px 64px;
+}
+
+.ls-phase-header:first-child { padding-top: 0; }
+
+.ls-phase-label {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--ls-ink);
+  margin: 4px 0 6px;
+}
+
+.ls-phase-desc {
+  font-size: var(--text-sm);
+  color: var(--ls-muted);
+  line-height: 1.55;
+}
+
+/* Milestone row */
+.ls-milestone {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 12px;
+  padding-right: 0;
+  cursor: pointer;
+}
+
+.ls-milestone-dot-wrap {
+  flex-shrink: 0;
+  width: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 14px;
+}
+
+.ls-milestone-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--ls-border);
+  background: var(--ls-white);
+  flex-shrink: 0;
+  transition: all var(--dur-base) var(--ease-out);
+  position: relative;
+  z-index: 2;
+}
+
+.ls-milestone.completed .ls-milestone-dot {
+  background: var(--ls-gold);
+  border-color: var(--ls-gold);
+}
+
+.ls-milestone.completed .ls-milestone-dot::after {
+  content: '';
+  display: block;
+  width: 6px;
+  height: 3.5px;
+  border-left: 2px solid white;
+  border-bottom: 2px solid white;
+  transform: rotate(-45deg) translate(2px, -1px);
+  margin: auto;
+}
+
+.ls-milestone.current .ls-milestone-dot {
+  background: var(--ls-navy);
+  border-color: var(--ls-navy);
+  box-shadow: 0 0 0 5px var(--ls-navy-light);
+  animation: ls-pulse 2.5s infinite;
+}
+
+.ls-milestone.upcoming .ls-milestone-dot {
+  background: var(--ls-cream-deep);
+  border-color: rgba(0,0,0,0.12);
+}
+
+@keyframes ls-pulse {
+  0%, 100% { box-shadow: 0 0 0 4px var(--ls-navy-light); }
+  50%       { box-shadow: 0 0 0 8px rgba(27,43,92,0.08); }
+}
+
+/* Milestone summary card */
+.ls-milestone-card {
+  flex-grow: 1;
+  padding: 16px 20px;
+  border: 1px solid var(--ls-border);
+  border-radius: var(--radius-lg);
+  background: var(--ls-white);
+  transition: all var(--dur-base) var(--ease-out);
+}
+
+.ls-milestone:hover .ls-milestone-card,
+.ls-milestone.selected .ls-milestone-card {
+  border-color: rgba(0,0,0,0.15);
+  box-shadow: var(--shadow-md);
+  transform: translateX(4px);
+}
+
+.ls-milestone.selected .ls-milestone-card {
+  border-left: 3px solid var(--ls-navy);
+}
+
+.ls-milestone-title {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ls-ink);
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+}
+
+.ls-milestone-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+
+.ls-milestone-date {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ls-subtle);
+}
+
+.ls-milestone-summary {
+  font-size: var(--text-sm);
+  color: var(--ls-muted);
+  line-height: 1.5;
+}
+
+.ls-milestone-cue {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ls-gold-hover);
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Status tags */
+.ls-status-done {
+  font-size: 0.65rem;
+  font-weight: 700;
+  background: #ecfdf5;
+  color: #065f46;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.ls-status-active {
+  background: var(--ls-navy-light);
+  color: var(--ls-navy);
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.ls-status-upcoming {
+  background: var(--ls-cream-deep);
+  color: var(--ls-subtle);
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   17. DETAIL DRAWER
+   ============================================================ */
+.ls-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(13,13,26,0.5);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 3000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-base) var(--ease-out);
+}
+
+.ls-drawer-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.ls-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(540px, 100vw);
+  background: var(--ls-white);
+  border-left: 1px solid var(--ls-border);
+  z-index: 3100;
+  transform: translateX(100%);
+  transition: transform var(--dur-base) var(--ease-out);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.ls-drawer-backdrop.open .ls-drawer {
+  transform: translateX(0);
+}
+
+.ls-drawer-top {
+  padding: 24px 28px 20px;
+  border-bottom: 1px solid var(--ls-border);
+  flex-shrink: 0;
+  background: var(--ls-cream);
+}
+
+.ls-drawer-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.ls-drawer-bottom {
+  padding: 16px 28px;
+  border-top: 1px solid var(--ls-border);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--ls-cream);
+}
+
+.ls-drawer-section-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ls-subtle);
+  margin-bottom: 8px;
+}
+
+.ls-drawer-box {
+  background: var(--ls-cream);
+  border: 1px solid var(--ls-border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+}
+
+.ls-drawer-deliverable {
+  background: var(--ls-gold-light);
+  border: 1px solid var(--ls-gold-border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+}
+
+/* ============================================================
+   18. INTEL FEED CARDS
+   ============================================================ */
+.ls-intel-card {
+  background: var(--ls-white);
+  border: 1px solid var(--ls-border);
+  border-radius: var(--radius-xl);
+  padding: 28px;
+  transition: all var(--dur-base) var(--ease-out);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ls-intel-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+  border-color: rgba(0,0,0,0.12);
+}
+
+/* ============================================================
+   19. ACRONYM CARDS (flip)
+   ============================================================ */
+.ls-acronym-card {
+  perspective: 1000px;
+  cursor: pointer;
+  height: 160px;
+}
+
+.ls-acronym-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.5s var(--ease-out);
+}
+
+.ls-acronym-card.flipped .ls-acronym-card-inner {
+  transform: rotateY(180deg);
+}
+
+.ls-acronym-front,
+.ls-acronym-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  background: var(--ls-white);
+  border: 1px solid var(--ls-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ls-acronym-back {
+  transform: rotateY(180deg);
+  background: var(--ls-cream);
+}
+
+.ls-acronym-abbr {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--ls-ink);
+  line-height: 1;
+}
+
+.ls-acronym-full {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--ls-muted);
+  margin-top: 6px;
+}
+
+/* ============================================================
+   20. FOOTER
+   ============================================================ */
+.ls-footer {
+  background: var(--ls-ink);
+  color: var(--ls-white);
+  padding: 72px 0 40px;
+}
+
+.ls-footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 48px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+@media (max-width: 900px) {
+  .ls-footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+}
+@media (max-width: 540px) {
+  .ls-footer-grid { grid-template-columns: 1fr; }
+}
+
+.ls-footer-col-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 16px;
+}
+
+.ls-footer-links li + li { margin-top: 10px; }
+.ls-footer-links a {
+  color: rgba(255,255,255,0.65);
+  font-size: var(--text-sm);
+  transition: color var(--dur-fast);
+}
+.ls-footer-links a:hover { color: var(--ls-white); }
+
+.ls-footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 32px;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.35);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* ============================================================
+   21. RESPONSIVE UTILITIES
+   ============================================================ */
+.ls-hide-mobile  { display: none !important; }
+.ls-hide-desktop { display: block; }
+
+@media (min-width: 768px) {
+  .ls-hide-mobile  { display: block !important; }
+  .ls-hide-desktop { display: none !important; }
+}
+
+@media (max-width: 1023px) {
+  .ls-nav-inner { padding: 0 20px; }
+  .ls-container-lg { padding: 0 20px; }
+}
+
+@media (max-width: 639px) {
+  .ls-container { padding: 0 16px; }
+  .ls-hero-title { font-size: clamp(2.5rem, 12vw, 4rem); }
+  .ls-section { padding: 56px 0; }
+}
+
+/* ============================================================
+   22. AWARENESS CALENDAR
+   ============================================================ */
+.ls-cal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.ls-cal-item {
+  background: var(--ls-white);
+  border: 1px solid var(--ls-border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: all var(--dur-base) var(--ease-out);
+}
+
+.ls-cal-item:hover {
+  border-color: var(--ls-gold-border);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-2px);
+}
+
+.ls-cal-date {
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ls-gold-hover);
+}
+
+.ls-cal-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ls-ink);
+}
+
+/* ============================================================
+   23. SEARCH INPUT
+   ============================================================ */
+.ls-search-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--ls-white);
+  border: 1px solid var(--ls-border);
+  border-radius: var(--radius-pill);
+  padding: 10px 20px;
+  transition: border-color var(--dur-fast);
+}
+
+.ls-search-wrap:focus-within {
+  border-color: var(--ls-navy);
+  box-shadow: 0 0 0 3px rgba(27,43,92,0.08);
+}
+
+.ls-search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--ls-ink);
+}
+
+.ls-search-input::placeholder { color: var(--ls-subtle); }
+
+/* ============================================================
+   24. PROGRESS BAR
+   ============================================================ */
+.ls-progress-track {
+  height: 3px;
+  background: var(--ls-border);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.ls-progress-fill {
+  height: 100%;
+  background: var(--ls-gold);
+  border-radius: var(--radius-pill);
+  transition: width 0.6s var(--ease-out);
+}
+
+/* ============================================================
+   25. MODAL OVERLAY
+   ============================================================ */
+.ls-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(13,13,26,0.55);
+  backdrop-filter: blur(6px);
+  z-index: 4000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-base) var(--ease-out);
+  padding: 16px;
+}
+
+.ls-modal-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.ls-modal {
+  background: var(--ls-white);
+  border-radius: var(--radius-xl);
+  padding: 36px;
+  width: 100%;
+  max-width: 560px;
+  box-shadow: var(--shadow-xl);
+  transform: translateY(16px);
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+.ls-modal-backdrop.open .ls-modal {
+  transform: translateY(0);
+}
+
+/* Form elements inside modal */
+.ls-form-group {
+  margin-bottom: 20px;
+}
+
+.ls-form-label {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--ls-ink);
+  margin-bottom: 6px;
+}
+
+.ls-form-input,
+.ls-form-select,
+.ls-form-textarea {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--ls-ink);
+  background: var(--ls-cream);
+  border: 1.5px solid var(--ls-border);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  outline: none;
+  transition: border-color var(--dur-fast);
+}
+
+.ls-form-input:focus,
+.ls-form-select:focus,
+.ls-form-textarea:focus {
+  border-color: var(--ls-navy);
+  box-shadow: 0 0 0 3px rgba(27,43,92,0.08);
+}
+
+.ls-form-textarea { resize: vertical; min-height: 88px; }
+
+/* ============================================================
+   26. TOAST NOTIFICATION
+   ============================================================ */
+.ls-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--ls-ink);
+  color: var(--ls-white);
+  border-radius: var(--radius-pill);
+  padding: 12px 24px;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: var(--shadow-lg);
+  z-index: 9999;
+  transition: transform var(--dur-base) var(--ease-out);
+  white-space: nowrap;
+}
+
+.ls-toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ============================================================
+   27. INTEL CAROUSEL CONTROLS
+   ============================================================ */
+.ls-intel-carousel-wrap {
+  position: relative;
+  overflow: hidden;
+}
+
+.ls-intel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+}
+
+/* ============================================================
+   28. STREAM TAGS (Timeline)
+   ============================================================ */
+.ls-stream {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+}
+.ls-stream-school   { background:#fdf2f0; color:#991b1b; border:1px solid #fca5a5; }
+.ls-stream-people   { background:#f0fdfa; color:#115e59; border:1px solid #5eead4; }
+.ls-stream-research { background:#f5f3ff; color:#5b21b6; border:1px solid #c4b5fd; }
+.ls-stream-social   { background:#f0f9ff; color:#075985; border:1px solid #7dd3fc; }
+.ls-stream-brand    { background:#fefce8; color:#854d0e; border:1px solid #fde047; }
+.ls-stream-playbook { background:#f0fdf4; color:#166534; border:1px solid #86efac; }

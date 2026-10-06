@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en-GB" data-theme="light">
 <head>
     <meta charset="UTF-8">
@@ -15,6 +15,9 @@
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <!-- Longsighted Sidebar Navigation -->
+    <link rel="stylesheet" href="css/sidebar.css">
     
     <!-- Custom styling -->
     <style>
@@ -2316,7 +2319,8 @@ body.tp-active .teleprompter-overlay {
 
 </style>
 </head>
-<body>
+<body class="longsighted-theme">
+<div class="main-content">
 
     <!-- Header bar -->
     <header class="app-header">
@@ -2324,10 +2328,10 @@ body.tp-active .teleprompter-overlay {
             <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle Navigation">
                 <i class="fa fa-bars"></i>
             </button>
-            <a href="index.html" class="logo" title="Back to main playbook dashboard">
+            <div class="logo" title="Sixty Seconds on Your Sight">
                 <i class="fa fa-eye"></i>
                 <span>EyePros</span>
-            </a>
+            </div>
             <div class="divider"></div>
             <div class="title-area">
                 <h1>Sixty Seconds on Your Sight</h1>
@@ -2339,12 +2343,6 @@ body.tp-active .teleprompter-overlay {
                 <span class="stat-item"><i class="fa fa-film"></i> 9 Episodes</span>
                 <span class="stat-item"><i class="fa fa-refresh"></i> Alternating Styles</span>
             </div>
-            <a href="index.html" class="icon-btn text-btn d-none-mobile" title="Return to Playbook Dashboard" style="width: auto; padding: 0 0.85rem; font-size: 0.8rem; font-weight: 550; gap: 0.35rem; display: inline-flex; text-decoration: none; align-items: center;">
-                <i class="fa fa-book"></i> Playbook
-            </a>
-            <a href="index.html" class="icon-btn d-show-mobile" title="Return to Playbook" style="text-decoration: none; align-items: center; justify-content: center;">
-                <i class="fa fa-book"></i>
-            </a>
             <button class="icon-btn" id="themeToggleBtn" title="Toggle Light/Dark Theme" aria-label="Toggle Theme">
                 <i class="fa fa-sun-o sun-icon"></i>
                 <i class="fa fa-moon-o moon-icon"></i>
@@ -2364,9 +2362,6 @@ body.tp-active .teleprompter-overlay {
             <div class="sidebar-info">
                 <h3>The Series</h3>
                 <p>8 direct-to-camera short scripts designed for silent, scroll-based social viewing with British audience appeal.</p>
-                <a href="index.html" class="back-link" style="display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; margin-top: 0.75rem; font-weight: 600; color: var(--clinical-teal); text-decoration: none;">
-                    <i class="fa fa-arrow-left"></i> Back to Dashboard
-                </a>
             </div>
 
             <!-- Filters -->
@@ -5288,6 +5283,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 </script>
+</div><!-- /.main-content -->
+<script src="js/sidebar.js"></script>
 </body>
 </html>
 

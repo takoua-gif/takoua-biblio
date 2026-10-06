@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Business Plan Eyepros · Commercial Strategy &amp; Brand</title>
+  <meta name="description" content="Brand architecture, clinical leadership positioning, 8 strategic priorities, 19 audience personas, and the 6-stage commercial optometrist partnership engine.">
+  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/longsighted.css">
+
+  <style>
+    .ls-page-hero {
+      background: var(--ls-navy);
+      color: var(--ls-white);
+      padding: 100px 0 72px;
+    }
+
+    /* Chapter nav */
+    .ls-chapter-nav {
+      position: sticky;
+      top: var(--nav-h);
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--ls-border);
+      z-index: 500;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .ls-chapter-nav::-webkit-scrollbar { display: none; }
+    .ls-chapter-nav-inner {
+      display: flex;
+      padding: 0 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .ls-chapter-link {
+      flex-shrink: 0;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--ls-muted);
+      padding: 14px 18px;
+      border-bottom: 2px solid transparent;
+      transition: all var(--dur-fast);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .ls-chapter-link:hover, .ls-chapter-link.active {
+      color: var(--ls-ink);
+      border-bottom-color: var(--ls-navy);
+      text-decoration: none;
+    }
+
+    /* Priority cards */
+    .ls-priority-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 14px;
+    }
+
+    .ls-priority-card {
+      background: var(--ls-white);
+      border: 1px solid var(--ls-border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      transition: all var(--dur-fast);
+    }
+
+    .ls-priority-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: rgba(0,0,0,0.12);
+    }
+
+    .ls-priority-card.highlight {
+      background: var(--ls-navy-light);
+      border-color: rgba(27,43,92,0.15);
+    }
+
+    .ls-priority-num {
+      font-family: var(--font-display);
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--ls-subtle);
+      margin-bottom: 6px;
+    }
+
+    .ls-priority-title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--ls-ink);
+      margin-bottom: 8px;
+    }
+
+    /* Persona cards */
+    .ls-persona-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .ls-persona-card {
+      background: var(--ls-white);
+      border: 1px solid var(--ls-border);
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      transition: all var(--dur-fast);
+    }
+
+    .ls-persona-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .ls-persona-card.gatekeeper {
+      border-color: rgba(27,43,92,0.2);
+      background: var(--ls-navy-light);
+    }
+
+    .ls-persona-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .ls-persona-quote {
+      font-style: italic;
+      color: var(--ls-muted);
+      font-size: var(--text-sm);
+      line-height: 1.55;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--ls-border);
+    }
+
+    /* Funnel */
+    .ls-funnel {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: stretch;
+      counter-reset: funnel;
+    }
+
+    .ls-funnel-step {
+      flex: 1 1 140px;
+      background: var(--ls-white);
+      border: 1px solid var(--ls-border);
+      border-radius: var(--radius-lg);
+      padding: 20px 16px;
+      text-align: center;
+      position: relative;
+      transition: all var(--dur-fast);
+    }
+
+    .ls-funnel-step:hover { box-shadow: var(--shadow-sm); }
+
+    .ls-funnel-step.active-step {
+      background: var(--ls-navy-light);
+      border-color: rgba(27,43,92,0.2);
+    }
+
+    .ls-funnel-metric {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--ls-navy);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .ls-funnel-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--ls-ink);
+      margin-bottom: 2px;
+    }
+
+    .ls-funnel-sub {
+      font-size: 0.65rem;
+      color: var(--ls-subtle);
+    }
+
+    /* Partnership section */
+    .ls-partnership-placeholder {
+      background: var(--ls-cream);
+      border: 2px dashed var(--ls-border);
+      border-radius: var(--radius-xl);
+      padding: 60px 32px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV injected by js/ls-nav.js -->
+
+  <!-- ── Page Hero -->
+  <section class="ls-page-hero" style="position:relative; overflow:hidden; background:var(--ls-navy);">
+    <div style="position:absolute;inset:0;z-index:0;">
+      <img src="images/business-strategy.jpg" alt="EyePros strategic planning" style="width:100%;height:100%;object-fit:cover;opacity:0.15;filter:saturate(0.3);">
+      <div style="position:absolute;inset:0;background:linear-gradient(120deg,var(--ls-navy) 40%,rgba(27,43,92,0.85) 100%);"></div>
+    </div>
+    <div class="ls-container" style="position:relative;z-index:1;">
+      <div class="ls-reveal">
+        <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;font-size:0.8rem;color:rgba(255,255,255,0.5);margin-bottom:24px;text-decoration:none;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">
+          <i class="fa fa-arrow-left"></i> Home
+        </a>
+        <div class="ls-eyebrow" style="color:var(--ls-gold); margin-bottom:12px;">Commercial Strategy</div>
+        <h1 class="ls-hero-title" style="font-size:clamp(2.5rem, 6vw, 5rem);">Business Plan<br>Eyepros</h1>
+        <p style="color:rgba(255,255,255,0.65); font-size:1.1rem; line-height:1.65; max-width:680px; margin-top:20px;">
+          Brand architecture, clinical leadership positioning, 8 strategic priorities, 19 audience personas
+          with empathy maps, and the 6-stage commercial optometrist partnership engine.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Chapter nav -->
+  <div class="ls-chapter-nav">
+    <div class="ls-chapter-nav-inner">
+      <a href="#brand" class="ls-chapter-link active">Brand Foundation</a>
+      <a href="#priorities" class="ls-chapter-link">8 Priorities</a>
+      <a href="#personas" class="ls-chapter-link">Personas</a>
+      <a href="#territory" class="ls-chapter-link">Territory &amp; Pipeline</a>
+      <a href="#partnership" class="ls-chapter-link">Partnership Strategy</a>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       1. BRAND FOUNDATION
+  ══════════════════════════════════════════════════ -->
+  <section id="brand" class="ls-section ls-bg-white">
+    <div class="ls-container">
+      <div class="ls-reveal" style="margin-bottom:40px;">
+        <div class="ls-eyebrow" style="margin-bottom:10px;">Brand Strategy</div>
+        <h2 class="ls-section-title">Brand Architecture &amp; Clinical Leadership</h2>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:16px;" class="ls-reveal ls-reveal-delay-1">
+        <div class="ls-card">
+          <div class="ls-eyebrow" style="color:var(--ls-navy); margin-bottom:10px;">Vision</div>
+          <h4 class="ls-display" style="font-size:1.1rem; margin-bottom:10px;">Redefining Private Eye Care</h4>
+          <p class="ls-body-sm">
+            To become the East Midlands' premier consultant-led ophthalmic hospital, seamlessly bridging advanced surgical technology with personalized patient continuity.
+          </p>
+        </div>
+
+        <div class="ls-card">
+          <div class="ls-eyebrow" style="color:var(--ls-navy); margin-bottom:10px;">Mission</div>
+          <h4 class="ls-display" style="font-size:1.1rem; margin-bottom:10px;">Rapid Access &amp; Clinical Excellence</h4>
+          <p class="ls-body-sm">
+            To eliminate anxiety and prolonged hospital wait times by providing rapid consultation, micro-incisional surgery, and bespoke vision restoration.
+          </p>
+        </div>
+
+        <div class="ls-card" style="background:var(--ls-navy); border-color:transparent; color:white;">
+          <div class="ls-eyebrow" style="color:var(--ls-gold); margin-bottom:10px;">Brand Promise</div>
+          <h4 class="ls-display" style="font-size:1.1rem; color:white; margin-bottom:10px;">"Specialist Care for Today, Long-Term Health for Future"</h4>
+          <p style="font-size:var(--text-sm); color:rgba(255,255,255,0.7); line-height:1.55;">
+            Every patient sees a named consultant surgeon from initial biometry scan through to post-operative discharge.
+          </p>
+        </div>
+      </div>
+
+      <!-- Clinical director profile -->
+      <div class="ls-card ls-reveal ls-reveal-delay-2" style="margin-top:24px; padding:0; overflow:hidden;">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:0; align-items:stretch;">
+          <!-- Image -->
+          <div style="height:100%; min-height:240px; overflow:hidden;">
+            <img src="images/patient-exam.jpg" alt="Mr Ahmad Elsahn ophthalmology consultation" style="width:100%; height:100%; object-fit:cover; object-position:center 25%;">
+          </div>
+          <!-- Text -->
+          <div style="padding:32px 28px; display:flex; flex-direction:column; justify-content:center; gap:12px;">
+            <div style="display:flex; align-items:center; gap:14px;">
+              <div class="ls-avatar" style="width:44px; height:44px; font-size:0.95rem; background:var(--ls-ink); flex-shrink:0;">AE</div>
+              <div>
+                <h4 class="ls-display" style="font-size:1.15rem; margin:0 0 2px;">Mr Ahmad Elsahn</h4>
+                <div class="ls-eyebrow" style="color:var(--ls-navy); font-size:0.68rem;">Clinical Director &amp; PR Anchor</div>
+              </div>
+            </div>
+            <p class="ls-body-sm" style="margin:0; line-height:1.6;">
+              Substantive Consultant Ophthalmic Surgeon at Sherwood Forest Hospitals NHS Trust. Specialist key opinion leader in MIGS glaucoma micro-stenting and complex cataract surgery.
+              Ahmad represents the clinical credibility backbone that builds unwavering trust with high-street optometrists and self-pay patients alike.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       2. 8 STRATEGIC PRIORITIES
+  ══════════════════════════════════════════════════ -->
+  <section id="priorities" class="ls-section ls-bg-cream">
+    <div class="ls-container">
+      <div class="ls-reveal" style="margin-bottom:40px;">
+        <div class="ls-eyebrow" style="margin-bottom:10px;">Strategy Fit</div>
+        <h2 class="ls-section-title">8 Strategic Priorities &amp;<br>Market Opportunities</h2>
+      </div>
+
+      <div class="ls-priority-grid ls-reveal ls-reveal-delay-1">
+        <div class="ls-priority-card highlight">
+          <div class="ls-priority-num">01 · Priority</div>
+          <div class="ls-priority-title">Optometrist Partnerships</div>
+          <p class="ls-body-sm">470 territory practices are the primary engine. Shared care fees and accredited CPD build an unshakeable moat.</p>
+        </div>
+
+        <div class="ls-priority-card">
+          <div class="ls-priority-num">02 · Priority</div>
+          <div class="ls-priority-title">Private Consultations</div>
+          <p class="ls-body-sm">Capturing self-pay cataract conversions from patients tired of 26-week NHS hospital eye service queues.</p>
+        </div>
+
+        <div class="ls-priority-card">
+          <div class="ls-priority-num">03 · Priority</div>
+          <div class="ls-priority-title">Dry Eye / EyeSpa</div>
+          <p class="ls-body-sm">20–30% adult prevalence. High-margin wellness packages and recurring maintenance visits with near-zero competition.</p>
+        </div>
+
+        <div class="ls-priority-card">
+          <div class="ls-priority-num">04 · Priority</div>
+          <div class="ls-priority-title">Glaucoma Subscriptions</div>
+          <p class="ls-body-sm">Lifetime management condition. 6-month IOP reviews and visual field tracking build recurring subscription revenue.</p>
+        </div>
+
+        <div class="ls-priority-card">
+          <div class="ls-priority-num">05 · Priority</div>
+          <div class="ls-priority-title">Premium Diagnostics</div>
+          <p class="ls-body-sm">IOLMaster 700 &amp; Spectralis OCT establish diagnostic authority over high-street optical retailers.</p>
+        </div>
+
+        <div class="ls-priority-card">
+          <div class="ls-priority-num">06 · Priority</div>
+          <div class="ls-priority-title">NHS Patient Contracts</div>
+          <p class="ls-body-sm">Selective AQP slots with Nottingham ICB to balance theatre capacity while maintaining brand equity.</p>
+        </div>
+
+        <div class="ls-priority-card highlight">
+          <div class="ls-priority-num">07 · Priority</div>
+          <div class="ls-priority-title">Valeda for Dry AMD</div>
+          <p class="ls-body-sm">First-mover photobiomodulation therapy addressing the previously untreated intermediate dry macular degeneration cohort.</p>
+        </div>
+
+        <div class="ls-priority-card">
+          <div class="ls-priority-num">08 · Priority</div>
+          <div class="ls-priority-title">Compliance &amp; Marketing</div>
+          <p class="ls-body-sm">Strict adherence to ASA healthcare guidelines, GMC ethical codes, and CQC Single Assessment Framework.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       3. PERSONAS
+  ══════════════════════════════════════════════════ -->
+  <section id="personas" class="ls-section ls-bg-white">
+    <div class="ls-container">
+      <div class="ls-reveal" style="display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:16px; margin-bottom:40px;">
+        <div>
+          <div class="ls-eyebrow" style="margin-bottom:10px;">Audience Intelligence</div>
+          <h2 class="ls-section-title">19 Audience Personas &amp; Empathy Maps</h2>
+        </div>
+        <span class="ls-label">13 Patients · 6 Gatekeepers</span>
+      </div>
+
+      <div class="ls-persona-grid ls-reveal ls-reveal-delay-1">
+        <!-- Patient 1 -->
+        <div class="ls-persona-card">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+            <img src="https://ui-avatars.com/api/?name=Eleanor+W&background=1B2B5C&color=fff&size=48" class="ls-persona-avatar" alt="Eleanor">
+            <div>
+              <div class="ls-display" style="font-size:0.95rem;">Eleanor Whitfield (68)</div>
+              <div class="ls-pill ls-pill-navy" style="font-size:0.6rem; margin-top:4px;">Active Retiree · Cataract</div>
+            </div>
+          </div>
+          <p class="ls-body-sm">Fears night glare and driving loss. Ready to pay £3,600 for Toric lenses to maintain active lifestyle.</p>
+          <div class="ls-persona-quote">"I don't want to wait 8 months and still need reading glasses."</div>
+        </div>
+
+        <!-- Patient 2 -->
+        <div class="ls-persona-card">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+            <img src="https://ui-avatars.com/api/?name=Richard+H&background=1e40af&color=fff&size=48" class="ls-persona-avatar" alt="Richard">
+            <div>
+              <div class="ls-display" style="font-size:0.95rem;">Richard Harrington (54)</div>
+              <div class="ls-pill" style="font-size:0.6rem; margin-top:4px;">Executive · Presbyopia</div>
+            </div>
+          </div>
+          <p class="ls-body-sm">Corporate leader with PMI insurance. Wants fast lens exchange so he can read presentations without juggling spectacles.</p>
+          <div class="ls-persona-quote">"Give me the best surgeon with the most advanced lens available."</div>
+        </div>
+
+        <!-- Gatekeeper 1 -->
+        <div class="ls-persona-card gatekeeper">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+            <img src="https://ui-avatars.com/api/?name=Anjali+S&background=0d9488&color=fff&size=48" class="ls-persona-avatar" alt="Anjali">
+            <div>
+              <div class="ls-display" style="font-size:0.95rem;">Anjali Sheringham-Sheridan</div>
+              <div class="ls-pill ls-pill-navy" style="font-size:0.6rem; margin-top:4px;">Independent Optom · Partner</div>
+            </div>
+          </div>
+          <p class="ls-body-sm">Practice owner in West Bridgford. Wants reliable consultant clinic letters, patient return, and accredited CPD evenings.</p>
+          <div class="ls-persona-quote">"If I send my private patients to Ahmad, will you keep me updated?"</div>
+        </div>
+      </div>
+
+      <div style="margin-top:28px; text-align:center;" class="ls-reveal ls-reveal-delay-2">
+        <a href="eyepros — Persona Boards.html" class="ls-btn ls-btn-ghost">
+          <i class="fa fa-id-card-o" style="margin-right:6px;"></i>
+          View All 19 Interactive Persona Boards with Empathy Maps
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       4. TERRITORY & PIPELINE
+  ══════════════════════════════════════════════════ -->
+  <section id="territory" class="ls-section ls-bg-cream">
+    <div class="ls-container">
+      <div class="ls-reveal" style="margin-bottom:40px;">
+        <div class="ls-eyebrow" style="margin-bottom:10px;">Field Operations</div>
+        <h2 class="ls-section-title">470 Practice Territory &amp; Commercial Pipeline</h2>
+      </div>
+
+      <!-- County stats -->
+      <div class="ls-stats-bar ls-reveal ls-reveal-delay-1" style="margin-bottom:32px;">
+        <div class="ls-stat-cell">
+          <div class="ls-stat-num">58</div>
+          <div class="ls-stat-label">Nottinghamshire</div>
+          <div class="ls-stat-sub">9 field visit days · 30–35 min from Kingfisher House.</div>
+        </div>
+        <div class="ls-stat-cell">
+          <div class="ls-stat-num">115</div>
+          <div class="ls-stat-label">Leicestershire</div>
+          <div class="ls-stat-sub">18 field visit days · 25–30 min drive · High independent density.</div>
+        </div>
+        <div class="ls-stat-cell">
+          <div class="ls-stat-num">61</div>
+          <div class="ls-stat-label">Derbyshire</div>
+          <div class="ls-stat-sub">11 field visit days · 40–45 min drive · D.I. Blow target group.</div>
+        </div>
+        <div class="ls-stat-cell">
+          <div class="ls-stat-num">236</div>
+          <div class="ls-stat-label">Groups &amp; Chains</div>
+          <div class="ls-stat-sub">91 group practices + 145 multiple shops.</div>
+        </div>
+      </div>
+
+      <!-- Conversion funnel -->
+      <div class="ls-card ls-reveal ls-reveal-delay-2" style="margin-bottom:24px;">
+        <h4 class="ls-display" style="font-size:1.1rem; margin-bottom:20px;">6-Stage Practice Conversion Funnel (Monthly Cadence)</h4>
+        <div class="ls-funnel">
+          <div class="ls-funnel-step">
+            <div class="ls-funnel-metric">72</div>
+            <div class="ls-funnel-label">First Visits / Mo</div>
+            <div class="ls-funnel-sub">6 visits/day × 3 days</div>
+          </div>
+          <div class="ls-funnel-step">
+            <div class="ls-funnel-metric">48</div>
+            <div class="ls-funnel-label">Decision Maker Met</div>
+            <div class="ls-funnel-sub">Spoke with lead optom (67%)</div>
+          </div>
+          <div class="ls-funnel-step">
+            <div class="ls-funnel-metric">12</div>
+            <div class="ls-funnel-label">Proper Meetings</div>
+            <div class="ls-funnel-sub">Full pathway presentation (25%)</div>
+          </div>
+          <div class="ls-funnel-step">
+            <div class="ls-funnel-metric">8–10</div>
+            <div class="ls-funnel-label">Agree to Refer</div>
+            <div class="ls-funnel-sub">Portal &amp; pack setup</div>
+          </div>
+          <div class="ls-funnel-step active-step">
+            <div class="ls-funnel-metric">4–6</div>
+            <div class="ls-funnel-label">Active Referrers</div>
+            <div class="ls-funnel-sub">Send repeat patients</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- KPI + CRM -->
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;" class="ls-reveal ls-reveal-delay-3">
+        <div class="ls-card">
+          <h5 class="ls-display" style="font-size:1rem; margin-bottom:12px;">KPI Scorecard (30% Work / 70% Results)</h5>
+          <ul style="font-size:var(--text-sm); color:var(--ls-muted); display:flex; flex-direction:column; gap:8px; list-style:none; padding:0;">
+            <li><strong style="color:var(--ls-ink);">Work Metrics (30%):</strong> 18 visits/week · 9/10 follow-ups on time · Same-day visit write-ups.</li>
+            <li><strong style="color:var(--ls-ink);">Results Metrics (70%):</strong> 4–6 signed practice agreements/month · &lt;2 practices stopping referrals.</li>
+          </ul>
+        </div>
+        <div class="ls-card">
+          <h5 class="ls-display" style="font-size:1rem; margin-bottom:12px;">CRM Architecture (HubSpot Starter)</h5>
+          <p class="ls-body-sm">
+            Recommended lean CRM configuration: 6-stage referral pipeline, 8 custom fields per practice visit, automated follow-up reminders at Day 2, Day 7, and Day 21.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       5. PARTNERSHIP STRATEGY (Placeholder)
+  ══════════════════════════════════════════════════ -->
+  <section id="partnership" class="ls-section ls-bg-dark">
+    <div class="ls-container">
+      <div class="ls-reveal" style="margin-bottom:40px;">
+        <div class="ls-eyebrow" style="color:var(--ls-gold); margin-bottom:10px;">Partnership Strategy</div>
+        <h2 class="ls-section-title" style="color:var(--ls-white);">Strategic Partnership Framework</h2>
+        <p style="color:rgba(255,255,255,0.55); font-size:1rem; margin-top:8px; max-width:600px;">
+          Structure ready for future content. This section will house EyePros partnership agreements, co-branding guidelines, joint venture frameworks, and optometrist accreditation programmes.
+        </p>
+      </div>
+
+      <div style="background:rgba(255,255,255,0.05); border:2px dashed rgba(255,255,255,0.12); border-radius:var(--radius-xl); padding:60px 32px; text-align:center;" class="ls-reveal ls-reveal-delay-1">
+        <div style="font-size:2.5rem; margin-bottom:16px;">🤝</div>
+        <h4 class="ls-display" style="font-size:1.3rem; color:var(--ls-white); margin-bottom:12px;">Content Coming Soon</h4>
+        <p style="color:rgba(255,255,255,0.5); font-size:var(--text-sm); max-width:400px; margin:0 auto 24px;">
+          Partnership strategy content will be added monthly as the internship progresses through the Define and Develop phases of the Double Diamond.
+        </p>
+        <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:12px;">
+          <div class="ls-pill" style="background:rgba(255,255,255,0.08); border-color:rgba(255,255,255,0.1); color:rgba(255,255,255,0.5);">Optometrist Co-Management Model</div>
+          <div class="ls-pill" style="background:rgba(255,255,255,0.08); border-color:rgba(255,255,255,0.1); color:rgba(255,255,255,0.5);">CPD Accreditation Programme</div>
+          <div class="ls-pill" style="background:rgba(255,255,255,0.08); border-color:rgba(255,255,255,0.1); color:rgba(255,255,255,0.5);">Revenue Share Agreements</div>
+          <div class="ls-pill" style="background:rgba(255,255,255,0.08); border-color:rgba(255,255,255,0.1); color:rgba(255,255,255,0.5);">PracticePartners Theatre Rentals</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer -->
+  <footer class="ls-footer">
+    <div class="ls-container">
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:20px; padding-bottom:32px; border-bottom:1px solid rgba(255,255,255,0.1);">
+        <img src="images/longsighted-logo-horizontal-white.png" alt="Longsighted" style="height:44px; width:auto;" onerror="this.src='images/longsighted-logo.png';">
+        <nav style="display:flex; flex-wrap:wrap; gap:20px;">
+          <a href="index.html" style="color:rgba(255,255,255,0.5); font-size:var(--text-sm);">Home</a>
+          <a href="patient-pathways.html" style="color:rgba(255,255,255,0.5); font-size:var(--text-sm);">Patient Pathways</a>
+          <a href="market-numbers.html" style="color:rgba(255,255,255,0.5); font-size:var(--text-sm);">Market &amp; Numbers</a>
+          <a href="timeline.html" style="color:rgba(255,255,255,0.5); font-size:var(--text-sm);">Timeline</a>
+        </nav>
+      </div>
+      <div class="ls-footer-bottom">
+        <span>&copy; 2026 EyePros Strategic Intelligence · Business Plan Eyepros</span>
+        <span>Mr Ahmad Elsahn · Sherwood Forest Hospitals NHS FT</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/ls-nav.js"></script>
+  <script>
+    const chapters = document.querySelectorAll('section[id]');
+    const chapterLinks = document.querySelectorAll('.ls-chapter-link');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          chapterLinks.forEach(l => {
+            l.classList.toggle('active', l.getAttribute('href') === '#' + entry.target.id);
+          });
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    chapters.forEach(s => observer.observe(s));
+  </script>
+</body>
+</html>

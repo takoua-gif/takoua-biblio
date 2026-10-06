@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EyePros — Partnership Intelligence</title>
+    <link rel="stylesheet" href="eyepros-design-system.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Page-specific styles */
+        .dashboard-container {
+            padding: var(--spacing-xl) 0;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: var(--spacing-sm);
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: var(--spacing-sm) var(--spacing-md);
+            cursor: pointer;
+            color: var(--text-muted);
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            transition: var(--transition-fast);
+        }
+        
+        .tab-btn:hover {
+            color: var(--primary-color);
+        }
+        
+        .tab-btn.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .stat-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .stat-card h3 {
+            font-size: var(--font-size-sm);
+            color: var(--text-muted);
+            margin: 0 0 var(--spacing-xs) 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .stat-card .value {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0;
+        }
+        
+        /* Funnel */
+        .funnel-container {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .funnel-stage {
+            display: flex;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .funnel-stage-label {
+            width: 200px;
+            font-weight: 500;
+        }
+        
+        .funnel-bar-wrapper {
+            flex: 1;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-sm);
+            height: 32px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+        
+        .funnel-bar {
+            height: 100%;
+            background: var(--primary-color);
+            display: flex;
+            align-items: center;
+            padding-left: var(--spacing-sm);
+            color: white;
+            font-weight: bold;
+            transition: width 1s ease-in-out;
+        }
+        
+        /* Table */
+        .table-container {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: var(--spacing-md);
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        th {
+            background: var(--bg-secondary);
+            font-weight: 600;
+            color: var(--text-muted);
+            font-size: var(--font-size-sm);
+        }
+        
+        tbody tr:hover {
+            background: var(--bg-secondary);
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .status-identified { background: #e2e8f0; color: #475569; }
+        .status-researched { background: #dbeafe; color: #1d4ed8; }
+        .status-contacted { background: #fef08a; color: #a16207; }
+        .status-meeting { background: #fed7aa; color: #c2410c; }
+        
+        /* Select styling inside table */
+        .status-select {
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            font-size: 12px;
+            background: white;
+        }
+        
+        /* Profiles */
+        .profiles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+        }
+        
+        .profile-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+            border-top: 4px solid var(--primary-color);
+        }
+        
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .profile-header h3 {
+            margin: 0 0 4px 0;
+        }
+        
+        .profile-location {
+            color: var(--text-muted);
+            font-size: var(--font-size-sm);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .profile-detail {
+            margin-bottom: var(--spacing-sm);
+            font-size: var(--font-size-sm);
+        }
+        
+        .profile-detail span {
+            font-weight: 600;
+            display: inline-block;
+            width: 120px;
+        }
+        
+        .strategy-box {
+            background: var(--bg-secondary);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-sm);
+            margin-top: var(--spacing-md);
+            font-size: var(--font-size-sm);
+        }
+        
+        /* Map */
+        .map-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-md);
+        }
+        
+        .region-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+        }
+        
+        .region-card h3 {
+            margin: 0 0 var(--spacing-md) 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary-color);
+        }
+        
+        .region-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .region-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .region-list li:last-child {
+            border-bottom: none;
+        }
+        
+    </style>
+</head>
+<body class="longsighted-theme">
+<div class="main-content">
+
+    <main class="container dashboard-container">
+        <h1>Partnership Intelligence</h1>
+        <p class="subtitle">CRM & Strategic Targets Dashboard</p>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="tab-overview">
+                <i data-lucide="layout-dashboard"></i> Overview
+            </button>
+            <button class="tab-btn" data-tab="tab-targets">
+                <i data-lucide="target"></i> Priority Targets
+            </button>
+            <button class="tab-btn" data-tab="tab-profiles">
+                <i data-lucide="users"></i> Profiles
+            </button>
+            <button class="tab-btn" data-tab="tab-map">
+                <i data-lucide="map"></i> Referral Map
+            </button>
+        </div>
+
+        <!-- Tab 1: Overview -->
+        <div id="tab-overview" class="tab-content active">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Target Practices</h3>
+                    <p class="value">470</p>
+                    <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">234 Indiv / 91 Groups / 145 Chains</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Visit Days</h3>
+                    <p class="value">38</p>
+                    <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">~13 weeks (3 days/week)</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Expected New Referrers/Mo</h3>
+                    <p class="value">8-10</p>
+                    <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Per territory</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Active Senders/Mo</h3>
+                    <p class="value">4-6</p>
+                    <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Per territory</p>
+                </div>
+            </div>
+
+            <div class="funnel-container">
+                <h2>Monthly Conversion Funnel (Target)</h2>
+                <div class="funnel-stage">
+                    <div class="funnel-stage-label" style="width: 250px;">First Visits (Stage 1)</div>
+                    <div class="funnel-bar-wrapper">
+                        <div class="funnel-bar" style="width: 100%; background: #3b82f6;">72 visits</div>
+                    </div>
+                </div>
+                <div class="funnel-stage">
+                    <div class="funnel-stage-label" style="width: 250px;">Reached Decision Maker (Stage 2)</div>
+                    <div class="funnel-bar-wrapper">
+                        <div class="funnel-bar" style="width: 67%; background: #06b6d4;">48 (67%)</div>
+                    </div>
+                </div>
+                <div class="funnel-stage">
+                    <div class="funnel-stage-label" style="width: 250px;">Proper Meeting (Stage 3)</div>
+                    <div class="funnel-bar-wrapper">
+                        <div class="funnel-bar" style="width: 25%; background: #10b981;">12 (25%)</div>
+                    </div>
+                </div>
+                <div class="funnel-stage">
+                    <div class="funnel-stage-label" style="width: 250px;">Agreed to Refer (Stage 4)</div>
+                    <div class="funnel-bar-wrapper">
+                        <div class="funnel-bar" style="width: 13%; background: #059669;">8-10</div>
+                    </div>
+                </div>
+                <div class="funnel-stage">
+                    <div class="funnel-stage-label" style="width: 250px;">Sending Patients (Stage 5)</div>
+                    <div class="funnel-bar-wrapper">
+                        <div class="funnel-bar" style="width: 8%; background: #047857;">4-6</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-grid" style="margin-top: var(--spacing-xl);">
+                <div class="stat-card" style="grid-column: 1 / -1;">
+                    <h2 style="margin-top: 0;">Practice Segmentation</h2>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-md); margin-top: var(--spacing-md);">
+                        <div style="background: var(--bg-secondary); padding: var(--spacing-md); border-radius: var(--radius-sm);">
+                            <h3 style="color: var(--primary-color);">234 Individual</h3>
+                            <p style="margin-bottom: 0;">Visited in person, 6/day</p>
+                        </div>
+                        <div style="background: var(--bg-secondary); padding: var(--spacing-md); border-radius: var(--radius-sm);">
+                            <h3 style="color: #06b6d4;">91 in 28 Groups</h3>
+                            <p style="margin-bottom: 0;">One meeting per group owner</p>
+                        </div>
+                        <div style="background: var(--bg-secondary); padding: var(--spacing-md); border-radius: var(--radius-sm);">
+                            <h3 style="color: #8b5cf6;">145 in 11 Chains</h3>
+                            <p style="margin-bottom: 0;">Email to HQ only</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-grid" style="margin-top: var(--spacing-xl);">
+                <div class="stat-card" style="grid-column: 1 / -1;">
+                    <h2 style="margin-top: 0;">Territory Map Breakdown</h2>
+                    <table style="width: 100%; border-collapse: collapse; margin-top: var(--spacing-md);">
+                        <thead>
+                            <tr>
+                                <th style="text-align: left; padding: 8px; border-bottom: 1px solid var(--border-color);">Region</th>
+                                <th style="text-align: left; padding: 8px; border-bottom: 1px solid var(--border-color);">Practices</th>
+                                <th style="text-align: left; padding: 8px; border-bottom: 1px solid var(--border-color);">Visit Days</th>
+                                <th style="text-align: left; padding: 8px; border-bottom: 1px solid var(--border-color);">Travel Time (from office)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="padding: 8px; border-bottom: 1px solid var(--border-color);">Nottinghamshire</td>
+                                <td style="padding: 8px; border-bottom: 1px solid var(--border-color);">58</td>
+                                <td style="padding: 8px; border-bottom: 1px solid var(--border-color);">9</td>
+                                <td style="padding: 8px; border-bottom: 1px solid var(--border-color);">30-35 min</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border-bottom: 1px solid var(--border-color);">Leicestershire</td>
+                                <td style="padding: 8px; border-bottom: 1px solid var(--border-color);">115</td>
+                                <td style="padding: 8px; border-bottom: 1px solid var(--border-color);">18</td>
+                                <td style="padding: 8px; border-bottom: 1px solid var(--border-color);">25-30 min</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border-bottom: 1px solid var(--border-color);">Derbyshire</td>
+                                <td style="padding: 8px; border-bottom: 1px solid var(--border-color);">61</td>
+                                <td style="padding: 8px; border-bottom: 1px solid var(--border-color);">11</td>
+                                <td style="padding: 8px; border-bottom: 1px solid var(--border-color);">40-45 min</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; font-weight: bold; color: var(--primary-color);">Total</td>
+                                <td style="padding: 8px; font-weight: bold; color: var(--primary-color);">234</td>
+                                <td style="padding: 8px; font-weight: bold; color: var(--primary-color);">38</td>
+                                <td style="padding: 8px; font-weight: bold; color: var(--primary-color);">~13 weeks (at 3 field days/week)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="stats-grid" style="margin-top: var(--spacing-xl);">
+                <div class="stat-card" style="grid-column: 1 / -1;">
+                    <h2 style="margin-top: 0;">Visit Quality Criteria</h2>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-lg); margin-top: var(--spacing-md);">
+                        <div>
+                            <h3 style="color: #10b981; margin-bottom: var(--spacing-sm);">Good First Visit (4 checks)</h3>
+                            <ul style="list-style-type: none; padding-left: 0; margin-top: 0;">
+                                <li style="margin-bottom: 8px; padding-left: 24px; position: relative;"><i class="fa fa-check-circle" style="position: absolute; left: 0; top: 4px; color: #10b981;"></i> Spoke to the right person (or got name + best time)</li>
+                                <li style="margin-bottom: 8px; padding-left: 24px; position: relative;"><i class="fa fa-check-circle" style="position: absolute; left: 0; top: 4px; color: #10b981;"></i> Found out where they send patients now, and why</li>
+                                <li style="margin-bottom: 8px; padding-left: 24px; position: relative;"><i class="fa fa-check-circle" style="position: absolute; left: 0; top: 4px; color: #10b981;"></i> Agreed what happens next, with a date</li>
+                                <li style="margin-bottom: 8px; padding-left: 24px; position: relative;"><i class="fa fa-check-circle" style="position: absolute; left: 0; top: 4px; color: #10b981;"></i> Wrote it up the same day</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 style="color: #0d9488; margin-bottom: var(--spacing-sm);">Meaningful Conversation (3 checks)</h3>
+                            <ul style="list-style-type: none; padding-left: 0; margin-top: 0;">
+                                <li style="margin-bottom: 8px; padding-left: 24px; position: relative;"><i class="fa fa-check-circle" style="position: absolute; left: 0; top: 4px; color: #0d9488;"></i> Spoke to the person who decides where referrals go</li>
+                                <li style="margin-bottom: 8px; padding-left: 24px; position: relative;"><i class="fa fa-check-circle" style="position: absolute; left: 0; top: 4px; color: #0d9488;"></i> Talked about how referrals would work for them</li>
+                                <li style="margin-bottom: 8px; padding-left: 24px; position: relative;"><i class="fa fa-check-circle" style="position: absolute; left: 0; top: 4px; color: #0d9488;"></i> Agreed what happens next, with a date</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-grid" style="margin-top: var(--spacing-xl);">
+                <div class="stat-card" style="grid-column: 1 / -1;">
+                    <h2 style="margin-top: 0;">Engagement Scoring</h2>
+                    <p style="color: var(--text-muted); margin-bottom: var(--spacing-md);">Bands over 90 days: 0 = Cold | 15 = Flickering | 35 = Warm | 60 = Active | 100 = In Motion</p>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr>
+                                <th style="text-align: left; padding: 8px; border-bottom: 1px solid var(--border-color);">Action</th>
+                                <th style="text-align: left; padding: 8px; border-bottom: 1px solid var(--border-color);">Points</th>
+                                <th style="text-align: left; padding: 8px; border-bottom: 1px solid var(--border-color);">Act Within</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td style="padding: 8px; border-bottom: 1px solid var(--border-color);">Second optometrist referring</td><td style="padding: 8px; border-bottom: 1px solid var(--border-color); color: #10b981; font-weight: bold;">+25</td><td style="padding: 8px; border-bottom: 1px solid var(--border-color);">14 days</td></tr>
+                            <tr><td style="padding: 8px; border-bottom: 1px solid var(--border-color);">Accepted a visit</td><td style="padding: 8px; border-bottom: 1px solid var(--border-color); color: #10b981; font-weight: bold;">+20</td><td style="padding: 8px; border-bottom: 1px solid var(--border-color);">7 days</td></tr>
+                            <tr><td style="padding: 8px; border-bottom: 1px solid var(--border-color);">Referral arrived</td><td style="padding: 8px; border-bottom: 1px solid var(--border-color); color: #10b981; font-weight: bold;">+15</td><td style="padding: 8px; border-bottom: 1px solid var(--border-color);">-</td></tr>
+                            <tr><td style="padding: 8px; border-bottom: 1px solid var(--border-color);">Clinical question about patient</td><td style="padding: 8px; border-bottom: 1px solid var(--border-color); color: #10b981; font-weight: bold;">+12</td><td style="padding: 8px; border-bottom: 1px solid var(--border-color);">2 days</td></tr>
+                            <tr><td style="padding: 8px; border-bottom: 1px solid var(--border-color);">They phoned us</td><td style="padding: 8px; border-bottom: 1px solid var(--border-color); color: #10b981; font-weight: bold;">+12</td><td style="padding: 8px; border-bottom: 1px solid var(--border-color);">-</td></tr>
+                            <tr><td style="padding: 8px; border-bottom: 1px solid var(--border-color);">They replied to us</td><td style="padding: 8px; border-bottom: 1px solid var(--border-color); color: #10b981; font-weight: bold;">+10</td><td style="padding: 8px; border-bottom: 1px solid var(--border-color);">-</td></tr>
+                            <tr><td style="padding: 8px; border-bottom: 1px solid var(--border-color);">Asked for patient materials</td><td style="padding: 8px; border-bottom: 1px solid var(--border-color); color: #10b981; font-weight: bold;">+10</td><td style="padding: 8px; border-bottom: 1px solid var(--border-color);">7 days</td></tr>
+                            <tr><td style="padding: 8px; border-bottom: 1px solid var(--border-color);">Asked about CPD</td><td style="padding: 8px; border-bottom: 1px solid var(--border-color); color: #10b981; font-weight: bold;">+10</td><td style="padding: 8px; border-bottom: 1px solid var(--border-color);">7 days</td></tr>
+                            <tr><td style="padding: 8px; border-bottom: 1px solid var(--border-color);">Concern or complaint</td><td style="padding: 8px; border-bottom: 1px solid var(--border-color); color: #eab308; font-weight: bold;">+8</td><td style="padding: 8px; border-bottom: 1px solid var(--border-color);">1 day</td></tr>
+                            <tr><td style="padding: 8px; border-bottom: 1px solid var(--border-color);">Came to CPD evening</td><td style="padding: 8px; border-bottom: 1px solid var(--border-color); color: #10b981; font-weight: bold;">+8</td><td style="padding: 8px; border-bottom: 1px solid var(--border-color);">-</td></tr>
+                            <tr><td style="padding: 8px; border-bottom: 1px solid var(--border-color);">Came to an event</td><td style="padding: 8px; border-bottom: 1px solid var(--border-color); color: #10b981; font-weight: bold;">+5</td><td style="padding: 8px; border-bottom: 1px solid var(--border-color);">-</td></tr>
+                            <tr><td style="padding: 8px; border-bottom: 1px solid var(--border-color);">Acknowledged report</td><td style="padding: 8px; border-bottom: 1px solid var(--border-color); color: #3b82f6; font-weight: bold;">+2</td><td style="padding: 8px; border-bottom: 1px solid var(--border-color);">-</td></tr>
+                            <tr><td style="padding: 8px; border-bottom: 1px solid var(--border-color);">LinkedIn engagement</td><td style="padding: 8px; border-bottom: 1px solid var(--border-color); color: #3b82f6; font-weight: bold;">+2</td><td style="padding: 8px; border-bottom: 1px solid var(--border-color);">-</td></tr>
+                            <tr><td style="padding: 8px; border-bottom: 1px solid var(--border-color);">Opened email</td><td style="padding: 8px; border-bottom: 1px solid var(--border-color); color: var(--text-muted); font-weight: bold;">0</td><td style="padding: 8px; border-bottom: 1px solid var(--border-color);">-</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 2: Priority Targets -->
+        <div id="tab-targets" class="tab-content">
+            <div class="stats-grid" style="margin-bottom: var(--spacing-lg);">
+                <div class="stat-card" style="grid-column: span 2;">
+                    <h2 style="margin-top: 0; color: #06b6d4;">Top Group Owners (28 Groups, 91 Practices)</h2>
+                    <p style="color: var(--text-muted); margin-bottom: var(--spacing-md);">Strategy: One meeting per group owner.</p>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Group Name</th>
+                                    <th>Practices</th>
+                                    <th>Locations</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>D I Blow Opticians</strong></td><td>13</td><td>Derbyshire, Nottinghamshire</td></tr>
+                                <tr><td><strong>Henry Smith & Hamylton Ltd</strong></td><td>7</td><td>Leicestershire</td></tr>
+                                <tr><td><strong>Thomas Bond & Partners</strong></td><td>5</td><td>Nottinghamshire</td></tr>
+                                <tr><td><strong>Pinder's Optometrists</strong></td><td>5</td><td>Nottinghamshire</td></tr>
+                                <tr><td><strong>Optivision Opticians Ltd</strong></td><td>5</td><td>Leicestershire</td></tr>
+                                <tr><td><strong>Lancaster & Thorpe</strong></td><td>4</td><td>Derbyshire, Nottinghamshire</td></tr>
+                                <tr><td><strong>Edmonds And Slatter Opticians</strong></td><td>4</td><td>Leicestershire</td></tr>
+                                <tr><td><strong>Lesley Cree Opticians</strong></td><td>3</td><td>Nottinghamshire</td></tr>
+                                <tr><td style="color: var(--text-muted);"><em>... and 20 more smaller groups</em></td><td>-</td><td>-</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="stat-card" style="grid-column: span 1;">
+                    <h2 style="margin-top: 0; color: #8b5cf6;">National HQ Targets (11 Chains, 145 Shops)</h2>
+                    <p style="color: var(--text-muted); margin-bottom: var(--spacing-md);">Strategy: Email to HQ only.</p>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Chain</th>
+                                    <th>Shops in Territory</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>Specsavers</strong></td><td>49</td></tr>
+                                <tr><td><strong>Boots</strong></td><td>32</td></tr>
+                                <tr><td><strong>Vision Express</strong></td><td>22</td></tr>
+                                <tr><td><strong>Scrivens</strong></td><td>15</td></tr>
+                                <tr><td><strong>Tesco</strong></td><td>11</td></tr>
+                                <tr><td><strong>Asda</strong></td><td>9</td></tr>
+                                <tr><td><strong>Optical Express</strong></td><td>3</td></tr>
+                                <tr><td><strong>Costco</strong></td><td>2</td></tr>
+                                <tr><td><strong>M&S</strong></td><td>1</td></tr>
+                                <tr><td><strong>Specs At Home</strong></td><td>1</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 3: Practice Profiles -->
+        <div id="tab-profiles" class="tab-content">
+            <div class="profiles-grid">
+                <!-- Profile 1 -->
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <div>
+                            <h3>Dr Sheeraz Janjua</h3>
+                            <div class="profile-location"><i data-lucide="map-pin" size="14"></i> Leicester</div>
+                        </div>
+                        <span class="status-badge status-researched">Researched</span>
+                    </div>
+                    <div class="profile-detail"><span>Contact:</span> Dr. Sheeraz Janjua</div>
+                    <div class="profile-detail"><span>Branches:</span> 1</div>
+                    <div class="profile-detail"><span>Patient Vol:</span> High</div>
+                    <div class="profile-detail"><span>Current Referral:</span> NHS/Local Hospital</div>
+                    
+                    <div class="strategy-box">
+                        <strong>Strategy:</strong> Position EyePros as a premium, zero-wait-time alternative for private patients. Highlight shared-care model potential.
+                        <br><br>
+                        <strong>Next Action:</strong> Introductory email sequence.
+                        <br>
+                        <strong>Timeline:</strong> Q3 2026
+                    </div>
+                </div>
+
+                <!-- Profile 2 -->
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <div>
+                            <h3>Cacoullis Opticians</h3>
+                            <div class="profile-location"><i data-lucide="map-pin" size="14"></i> Leicester/Lutterworth</div>
+                        </div>
+                        <span class="status-badge status-identified">Identified</span>
+                    </div>
+                    <div class="profile-detail"><span>Contact:</span> Practice Manager</div>
+                    <div class="profile-detail"><span>Branches:</span> 2</div>
+                    <div class="profile-detail"><span>Patient Vol:</span> Medium</div>
+                    <div class="profile-detail"><span>Current Referral:</span> Unknown</div>
+                    
+                    <div class="strategy-box">
+                        <strong>Strategy:</strong> Leverage their dual-location presence. Offer a streamlined referral portal for both clinics.
+                        <br><br>
+                        <strong>Next Action:</strong> Gather intelligence on current referral pathways.
+                        <br>
+                        <strong>Timeline:</strong> Q3 2026
+                    </div>
+                </div>
+
+                <!-- Profile 3 -->
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <div>
+                            <h3>D.I. Blow Opticians</h3>
+                            <div class="profile-location"><i data-lucide="map-pin" size="14"></i> East Midlands</div>
+                        </div>
+                        <span class="status-badge status-identified">Identified</span>
+                    </div>
+                    <div class="profile-detail"><span>Contact:</span> Operations Director</div>
+                    <div class="profile-detail"><span>Branches:</span> 11</div>
+                    <div class="profile-detail"><span>Patient Vol:</span> Very High</div>
+                    <div class="profile-detail"><span>Current Referral:</span> Multiple</div>
+                    
+                    <div class="strategy-box">
+                        <strong>Strategy:</strong> Major target. Propose a network-wide SLA. Focus on volume handling capabilities and integration.
+                        <br><br>
+                        <strong>Next Action:</strong> Executive outreach on LinkedIn.
+                        <br>
+                        <strong>Timeline:</strong> Q4 2026
+                    </div>
+                </div>
+                
+                <!-- Profile 4 -->
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <div>
+                            <h3>Roma Malik (LOC Chair)</h3>
+                            <div class="profile-location"><i data-lucide="map-pin" size="14"></i> Leicestershire</div>
+                        </div>
+                        <span class="status-badge status-researched">Researched</span>
+                    </div>
+                    <div class="profile-detail"><span>Contact:</span> Roma Malik</div>
+                    <div class="profile-detail"><span>Branches:</span> Network</div>
+                    <div class="profile-detail"><span>Patient Vol:</span> County-wide influence</div>
+                    <div class="profile-detail"><span>Current Referral:</span> N/A</div>
+                    
+                    <div class="strategy-box">
+                        <strong>Strategy:</strong> Key Opinion Leader engagement. Seek endorsement rather than direct referrals initially.
+                        <br><br>
+                        <strong>Next Action:</strong> Request advisory meeting regarding local eye care needs.
+                        <br>
+                        <strong>Timeline:</strong> Q3 2026
+                    </div>
+                </div>
+                
+                <!-- Profile 5 -->
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <div>
+                            <h3>Eyesite Eyecare</h3>
+                            <div class="profile-location"><i data-lucide="map-pin" size="14"></i> Midlands</div>
+                        </div>
+                        <span class="status-badge status-identified">Identified</span>
+                    </div>
+                    <div class="profile-detail"><span>Contact:</span> Clinical Lead</div>
+                    <div class="profile-detail"><span>Branches:</span> 4</div>
+                    <div class="profile-detail"><span>Patient Vol:</span> Medium-High</div>
+                    <div class="profile-detail"><span>Current Referral:</span> Local NHS Trusts</div>
+                    
+                    <div class="strategy-box">
+                        <strong>Strategy:</strong> Target their private pay demographic. Offer co-management of post-op care to keep revenue in their practice.
+                        <br><br>
+                        <strong>Next Action:</strong> Finalize competitive analysis.
+                        <br>
+                        <strong>Timeline:</strong> Q4 2026
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 4: Referral Map -->
+        <div id="tab-map" class="tab-content">
+            <div class="map-grid">
+                <div class="region-card">
+                    <h3><i data-lucide="map-pin"></i> Leicester Central</h3>
+                    <ul class="region-list">
+                        <li><span>Dr Sheeraz Janjua</span> <span class="status-badge status-researched">95</span></li>
+                        <li><span>Specsavers Highcross</span> <span class="status-badge status-identified">82</span></li>
+                        <li><span>Vision Express City</span> <span class="status-badge status-identified">78</span></li>
+                    </ul>
+                </div>
+                
+                <div class="region-card">
+                    <h3><i data-lucide="map-pin"></i> Wider Leicestershire</h3>
+                    <ul class="region-list">
+                        <li><span>Cacoullis Opticians</span> <span class="status-badge status-identified">92</span></li>
+                        <li><span>Roma Malik Network</span> <span class="status-badge status-researched">88</span></li>
+                        <li><span>Edmonds & Slatter</span> <span class="status-badge status-identified">84</span></li>
+                        <li><span>Oadby Vision</span> <span class="status-badge status-contacted">80</span></li>
+                    </ul>
+                </div>
+                
+                <div class="region-card">
+                    <h3><i data-lucide="map-pin"></i> Nottingham</h3>
+                    <ul class="region-list">
+                        <li><span>D.I. Blow (HQ)</span> <span class="status-badge status-identified">90</span></li>
+                        <li><span>Nottingham City Eyes</span> <span class="status-badge status-identified">81</span></li>
+                        <li><span>West Bridgford Opticians</span> <span class="status-badge status-identified">79</span></li>
+                    </ul>
+                </div>
+                
+                <div class="region-card">
+                    <h3><i data-lucide="map-pin"></i> Derby / Northants</h3>
+                    <ul class="region-list">
+                        <li><span>Eyesite Eyecare</span> <span class="status-badge status-identified">85</span></li>
+                        <li><span>Derby Premium Vision</span> <span class="status-badge status-contacted">75</span></li>
+                        <li><span>Northampton Eye Centre</span> <span class="status-badge status-identified">72</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-container">
+            <p>&copy; 2026 EyePros Platform. Partnership Intelligence Dashboard.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Tabs logic
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                
+                btn.classList.add('active');
+                document.getElementById(btn.dataset.tab).classList.add('active');
+            });
+        });
+
+        // CRM Data
+        const defaultData = [
+            { id: 1, rank: 1, name: "Dr Sheeraz Janjua", location: "Leicester", branches: 1, revenue: "£120K-£200K", score: 95, status: "Researched", contact: "Dr. Janjua" },
+            { id: 2, rank: 2, name: "Cacoullis Opticians", location: "Leicester/Lutterworth", branches: 2, revenue: "£90K-£150K", score: 92, status: "Identified", contact: "Practice Mgr" },
+            { id: 3, rank: 3, name: "D.I. Blow Opticians", location: "East Midlands", branches: 11, revenue: "£100K-£180K", score: 90, status: "Identified", contact: "Ops Director" },
+            { id: 4, rank: 4, name: "Roma Malik (LOC Chair)", location: "Leicestershire", branches: "Network", revenue: "£Unlocks County", score: 88, status: "Researched", contact: "Roma Malik" },
+            { id: 5, rank: 5, name: "Eyesite Eyecare", location: "Midlands", branches: 4, revenue: "£70K-£130K", score: 85, status: "Identified", contact: "Clinical Lead" },
+            // 15 more generated
+            { id: 6, rank: 6, name: "Edmonds & Slatter", location: "Leicestershire", branches: 3, revenue: "£85K-£140K", score: 84, status: "Identified", contact: "Partner" },
+            { id: 7, rank: 7, name: "Specsavers Highcross", location: "Leicester City", branches: 1, revenue: "£150K-£250K", score: 82, status: "Identified", contact: "Store Director" },
+            { id: 8, rank: 8, name: "Nottingham City Eyes", location: "Nottingham", branches: 1, revenue: "£80K-£130K", score: 81, status: "Identified", contact: "Owner" },
+            { id: 9, rank: 9, name: "Oadby Vision", location: "Oadby", branches: 1, revenue: "£60K-£100K", score: 80, status: "Contacted", contact: "Lead Optom" },
+            { id: 10, rank: 10, name: "West Bridgford Opticians", location: "Nottingham", branches: 1, revenue: "£90K-£120K", score: 79, status: "Identified", contact: "Practice Mgr" },
+            { id: 11, rank: 11, name: "Vision Express City", location: "Leicester", branches: 1, revenue: "£130K-£200K", score: 78, status: "Identified", contact: "Manager" },
+            { id: 12, rank: 12, name: "Syston Eye Care", location: "Syston", branches: 1, revenue: "£50K-£90K", score: 76, status: "Researched", contact: "Owner" },
+            { id: 13, rank: 13, name: "Derby Premium Vision", location: "Derby", branches: 1, revenue: "£75K-£115K", score: 75, status: "Contacted", contact: "Clinical Director" },
+            { id: 14, rank: 14, name: "Loughborough Optometry", location: "Loughborough", branches: 1, revenue: "£65K-£105K", score: 74, status: "Identified", contact: "Lead Optom" },
+            { id: 15, rank: 15, name: "Market Harborough Eyes", location: "Market Harborough", branches: 1, revenue: "£70K-£110K", score: 73, status: "Identified", contact: "Owner" },
+            { id: 16, rank: 16, name: "Northampton Eye Centre", location: "Northampton", branches: 2, revenue: "£80K-£140K", score: 72, status: "Identified", contact: "Manager" },
+            { id: 17, rank: 17, name: "Melton Mowbray Specs", location: "Melton Mowbray", branches: 1, revenue: "£55K-£95K", score: 71, status: "Identified", contact: "Owner" },
+            { id: 18, rank: 18, name: "Hinckley Vision", location: "Hinckley", branches: 1, revenue: "£60K-£90K", score: 70, status: "Identified", contact: "Practice Mgr" },
+            { id: 19, rank: 19, name: "Coalville Eyecare", location: "Coalville", branches: 1, revenue: "£50K-£85K", score: 68, status: "Identified", contact: "Owner" },
+            { id: 20, rank: 20, name: "Ashby Opticians", location: "Ashby-de-la-Zouch", branches: 1, revenue: "£65K-£100K", score: 65, status: "Identified", contact: "Lead Optom" }
+        ];
+
+        const STORAGE_KEY = 'eyepros_crm_v3';
+        
+        function loadData() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            return saved ? JSON.parse(saved) : defaultData;
+        }
+
+        function saveData(data) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        }
+
+        let crmData = loadData();
+
+        function renderTable() {
+            const tbody = document.getElementById('crm-table-body');
+            tbody.innerHTML = '';
+            
+            crmData.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>#${row.rank}</td>
+                    <td><strong>${row.name}</strong></td>
+                    <td>${row.location}</td>
+                    <td>${row.branches}</td>
+                    <td>${row.revenue}</td>
+                    <td><strong>${row.score}</strong></td>
+                    <td>
+                        <select class="status-select" data-id="${row.id}" onchange="updateStatus(${row.id}, this.value)">
+                            <option value="Identified" ${row.status === 'Identified' ? 'selected' : ''}>Identified</option>
+                            <option value="Researched" ${row.status === 'Researched' ? 'selected' : ''}>Researched</option>
+                            <option value="Contacted" ${row.status === 'Contacted' ? 'selected' : ''}>Contacted</option>
+                            <option value="Meeting Scheduled" ${row.status === 'Meeting Scheduled' ? 'selected' : ''}>Meeting Scheduled</option>
+                            <option value="Partnership Active" ${row.status === 'Partnership Active' ? 'selected' : ''}>Partnership Active</option>
+                        </select>
+                    </td>
+                    <td>${row.contact}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Expose globally for inline onchange
+        window.updateStatus = function(id, newStatus) {
+            const record = crmData.find(r => r.id === id);
+            if (record) {
+                record.status = newStatus;
+                saveData(crmData);
+                // Optionally update charts/stats here based on new data
+            }
+        };
+
+        // Initial render
+        renderTable();
+    </script>
+<footer class="ep-footer">
+    <h3>BACK IN FOCUS</h3>
+    <p>EyePros Strategic Intelligence Platform · v3.0 · 2026</p>
+    <p class="conf-notice">DATA CLASSIFICATION: CONFIDENTIAL — BOARD & MANAGEMENT USE ONLY</p>
+</footer>
+</div><!-- /.main-content -->
+<script src="js/sidebar.js"></script>
+</body>
+</html>

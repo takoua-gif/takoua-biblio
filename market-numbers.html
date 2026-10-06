@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Longsighted · Market &amp; Numbers Intelligence</title>
+  <meta name="description" content="National surgical demand figures, NHS waiting list backlogs, regional stakeholder maps, competitor benchmarks, SWOT analysis, and the 9-box Business Model Canvas.">
+  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/longsighted.css">
+
+  <style>
+    .ls-page-hero {
+      background: var(--ls-ink);
+      color: var(--ls-white);
+      padding: 100px 0 72px;
+    }
+
+    /* Chapter nav (sticky on-page navigation) */
+    .ls-chapter-nav {
+      position: sticky;
+      top: var(--nav-h);
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--ls-border);
+      z-index: 500;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .ls-chapter-nav::-webkit-scrollbar { display: none; }
+
+    .ls-chapter-nav-inner {
+      display: flex;
+      gap: 0;
+      padding: 0 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .ls-chapter-link {
+      flex-shrink: 0;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--ls-muted);
+      padding: 14px 18px;
+      border-bottom: 2px solid transparent;
+      transition: all var(--dur-fast);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .ls-chapter-link:hover, .ls-chapter-link.active {
+      color: var(--ls-ink);
+      border-bottom-color: var(--ls-gold);
+      text-decoration: none;
+    }
+
+    /* Tier cards */
+    .ls-tier-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    .ls-tier-card {
+      background: var(--ls-white);
+      border: 1.5px solid var(--ls-border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      transition: all var(--dur-fast);
+    }
+
+    .ls-tier-card:hover {
+      border-color: rgba(0,0,0,0.14);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .ls-tier-card.peer { border-color: var(--ls-navy); }
+    .ls-tier-card.peer .ls-tier-num { color: var(--ls-navy); }
+
+    .ls-tier-num {
+      font-family: var(--font-display);
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--ls-subtle);
+      margin-bottom: 8px;
+    }
+
+    .ls-tier-name {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--ls-ink);
+      margin-bottom: 6px;
+    }
+
+    /* SWOT */
+    .ls-swot-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 600px) { .ls-swot-grid { grid-template-columns: 1fr; } }
+
+    .ls-swot-box {
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      border: 1px solid;
+    }
+
+    .ls-swot-box.strength {
+      background: #f0fdf4;
+      border-color: #bbf7d0;
+    }
+
+    .ls-swot-box.weakness {
+      background: #fff7ed;
+      border-color: #fed7aa;
+    }
+
+    .ls-swot-box.opportunity {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+    }
+
+    .ls-swot-box.threat {
+      background: #fef2f2;
+      border-color: #fecaca;
+    }
+
+    .ls-swot-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+    }
+
+    .ls-swot-box.strength .ls-swot-label { color: #166534; }
+    .ls-swot-box.weakness .ls-swot-label { color: #9a3412; }
+    .ls-swot-box.opportunity .ls-swot-label { color: #1e40af; }
+    .ls-swot-box.threat .ls-swot-label { color: #991b1b; }
+
+    .ls-swot-list li {
+      font-size: var(--text-sm);
+      color: var(--ls-muted);
+      padding: 5px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+      line-height: 1.5;
+    }
+
+    .ls-swot-list li:last-child { border-bottom: none; }
+
+    /* BMC grid */
+    .ls-bmc-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: auto auto;
+      gap: 12px;
+    }
+
+    @media (max-width: 700px) { .ls-bmc-grid { grid-template-columns: 1fr 1fr; } }
+
+    .ls-bmc-box {
+      background: var(--ls-white);
+      border: 1px solid var(--ls-border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+    }
+
+    .ls-bmc-box.value {
+      grid-column: span 2;
+      background: var(--ls-navy-light);
+      border-color: rgba(27,43,92,0.15);
+    }
+
+    .ls-bmc-box.revenue {
+      grid-column: span 2;
+      background: var(--ls-gold-light);
+      border-color: var(--ls-gold-border);
+    }
+
+    .ls-bmc-box.cost {
+      grid-column: span 2;
+    }
+
+    .ls-bmc-box-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ls-subtle);
+      margin-bottom: 10px;
+    }
+
+    .ls-bmc-box.value .ls-bmc-box-label { color: var(--ls-navy); }
+    .ls-bmc-box.revenue .ls-bmc-box-label { color: var(--ls-gold-hover); }
+
+    /* Stakeholder cards */
+    .ls-stakeholder-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .ls-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--ls-navy);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV injected by js/ls-nav.js -->
+
+  <!-- ── Page Hero -->
+  <section class="ls-page-hero" style="position:relative; overflow:hidden;">
+    <div style="position:absolute;inset:0;z-index:0;">
+      <img src="images/hero-clinic.jpg" alt="EyePros clinic" style="width:100%;height:100%;object-fit:cover;opacity:0.12;filter:saturate(0.3);">
+      <div style="position:absolute;inset:0;background:var(--ls-ink);opacity:0.75;"></div>
+    </div>
+    <div class="ls-container" style="position:relative;z-index:1;">
+      <div class="ls-reveal">
+        <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;font-size:0.8rem;color:rgba(255,255,255,0.5);margin-bottom:24px;text-decoration:none;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">
+          <i class="fa fa-arrow-left"></i> Home
+        </a>
+        <div class="ls-eyebrow" style="color:var(--ls-gold); margin-bottom:12px;">Intelligence Architecture</div>
+        <h1 class="ls-hero-title">Market &amp; Numbers</h1>
+        <p style="color:rgba(255,255,255,0.6); font-size:1.1rem; line-height:1.65; max-width:700px; margin-top:20px;">
+          National surgical demand figures, NHS waiting list backlogs, regional stakeholder maps,
+          competitor benchmarks, SWOT analysis, and the 9-box Business Model Canvas.
+          All chapters of one intelligence experience.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Chapter Navigation (sticky) -->
+  <div class="ls-chapter-nav">
+    <div class="ls-chapter-nav-inner">
+      <a href="#macro" class="ls-chapter-link active">Macro Demand</a>
+      <a href="#stakeholders" class="ls-chapter-link">Stakeholder Map</a>
+      <a href="#competitors" class="ls-chapter-link">Competitor Tiers</a>
+      <a href="#pricing" class="ls-chapter-link">Pricing Benchmarks</a>
+      <a href="#swot" class="ls-chapter-link">SWOT</a>
+      <a href="#bmc" class="ls-chapter-link">Business Model Canvas</a>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       1. MACRO DEMAND  — JSON-driven, auto-freshness
+  ══════════════════════════════════════════════════ -->
+  <style>
+    /* ── Macro Demand Diagram ── */
+    .macro-diagram {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      position: relative;
+    }
+
+    .macro-card {
+      flex: 1;
+      background: var(--ls-white);
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 20px;
+      padding: 28px 24px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.25s cubic-bezier(0.16,1,0.3,1), box-shadow 0.25s ease;
+      opacity: 0;
+      animation: macro-rise 0.5s cubic-bezier(0.16,1,0.3,1) forwards;
+    }
+
+    .macro-card:nth-child(1) { animation-delay: 0.05s; }
+    .macro-card:nth-child(3) { animation-delay: 0.15s; }
+    .macro-card:nth-child(5) { animation-delay: 0.25s; }
+    .macro-card:nth-child(7) { animation-delay: 0.35s; }
+
+    @keyframes macro-rise {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .macro-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 36px rgba(0,0,0,0.1), 0 0 0 1px rgba(0,0,0,0.06);
+      z-index: 2;
+    }
+
+    .macro-card-accent {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      border-radius: 20px 20px 0 0;
+    }
+
+    /* Icon circle */
+    .macro-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    /* Big number */
+    .macro-num {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+
+    .macro-label {
+      font-family: var(--font-display);
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--ls-ink);
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+    }
+
+    .macro-sub {
+      font-size: 0.75rem;
+      color: var(--ls-muted);
+      line-height: 1.5;
+      flex: 1;
+    }
+
+    /* Trend badge */
+    .macro-trend {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 100px;
+    }
+
+    .macro-trend.up   { background: #dcfce7; color: #15803d; }
+    .macro-trend.warn { background: #fee2e2; color: #b91c1c; }
+    .macro-trend.gold { background: var(--ls-gold-light); color: var(--ls-gold-hover); }
+
+    /* Fill bar */
+    .macro-fill-track {
+      height: 3px;
+      background: rgba(0,0,0,0.06);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: auto;
+    }
+    .macro-fill-bar {
+      height: 100%;
+      border-radius: 10px;
+      transition: width 1.2s cubic-bezier(0.16,1,0.3,1);
+    }
+
+    /* Arrow connector between cards */
+    .macro-connector {
+      width: 36px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .macro-connector svg {
+      color: rgba(0,0,0,0.15);
+      animation: connector-pulse 2.5s ease-in-out infinite;
+    }
+
+    @keyframes connector-pulse {
+      0%, 100% { opacity: 0.4; transform: translateX(0); }
+      50%       { opacity: 1;   transform: translateX(3px); }
+    }
+
+    @media (max-width: 1024px) {
+      .macro-diagram {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+      .macro-connector { display: none; }
+      .macro-card { min-height: auto; }
+    }
+
+    @media (max-width: 640px) {
+      .macro-diagram {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .macro-card { border-radius: 16px; padding: 22px 18px; }
+    }
+  </style>
+
+  <section id="macro" class="ls-section ls-bg-white">
+    <div class="ls-container">
+
+      <!-- Header -->
+      <div class="ls-reveal" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:12px; margin-bottom:28px;">
+        <div>
+          <div class="ls-eyebrow" style="margin-bottom:10px;">National Benchmarks · NHS &amp; PHIN Data</div>
+          <h2 class="ls-section-title">Macro Demand &amp; Waiting List Indicators</h2>
+          <p class="ls-body" style="max-width:520px; margin-top:12px;">Four interlocking demand signals that define the EyePros commercial opportunity in the East Midlands.</p>
+        </div>
+        <button id="macroUpdateToggle" style="font-family:var(--font-body); font-size:0.78rem; font-weight:600; padding:10px 18px; border-radius:var(--radius-pill); background:var(--ls-cream); color:var(--ls-ink); border:1.5px solid var(--ls-border); cursor:pointer; display:flex; align-items:center; gap:7px; flex-shrink:0;">
+          <i class="fa fa-pencil"></i>Update Data
+        </button>
+      </div>
+
+      <!-- Freshness bar -->
+      <div id="macroFreshnessBar" class="macro-freshness-bar" style="display:none;">
+        <div style="display:flex; align-items:center; gap:9px;">
+          <div class="macro-freshness-dot"></div>
+          <span id="macroFreshnessText" style="font-size:0.78rem; font-weight:600; color:var(--ls-ink);"></span>
+        </div>
+        <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+          <span id="macroNextUpdate" style="font-size:0.72rem; color:var(--ls-muted);"></span>
+          <span id="macroSources" style="font-size:0.7rem; color:var(--ls-subtle);"></span>
+        </div>
+      </div>
+
+      <!-- Diagram (JS renders here) -->
+      <div id="macroDiagram" class="macro-diagram ls-reveal ls-reveal-delay-1">
+        <div style="padding:40px; text-align:center; color:var(--ls-muted); flex:1; opacity:0.6;">
+          <i class="fa fa-spinner fa-spin" style="font-size:1.4rem; display:block; margin-bottom:10px;"></i>
+          Loading indicators…
+        </div>
+      </div>
+
+      <!-- Update Panel -->
+      <div id="macroUpdatePanel" class="macro-update-panel">
+        <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:16px;">
+          <div>
+            <div style="font-family:var(--font-display); font-size:1.05rem; font-weight:700; margin-bottom:4px;">Update Indicators</div>
+            <div style="font-size:0.78rem; color:var(--ls-muted); line-height:1.5; max-width:540px;">
+              Edit values and click <strong>Save</strong>. Changes are stored in your browser instantly. To make permanent, update <code style="background:rgba(0,0,0,0.06); padding:1px 5px; border-radius:4px; font-size:0.7rem;">data/macro-stats.json</code>.
+            </div>
+          </div>
+          <button id="macroUpdateClose" style="background:none; border:none; font-size:1.2rem; color:var(--ls-muted); cursor:pointer; padding:2px; flex-shrink:0; line-height:1;">✕</button>
+        </div>
+        <div id="macroUpdateFields" class="macro-update-grid"></div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px;">
+          <div>
+            <label style="display:block; font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--ls-ink); margin-bottom:5px;">Updated By</label>
+            <input id="macroUpdatedBy" type="text" placeholder="Your name" style="font-family:var(--font-body); font-size:0.85rem; border:1.5px solid var(--ls-border); border-radius:10px; padding:9px 12px; outline:none; background:var(--ls-cream); width:100%; box-sizing:border-box;">
+          </div>
+          <div>
+            <label style="display:block; font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--ls-ink); margin-bottom:5px;">Next Expected Update</label>
+            <input id="macroNextExpected" type="date" style="font-family:var(--font-body); font-size:0.85rem; border:1.5px solid var(--ls-border); border-radius:10px; padding:9px 12px; outline:none; background:var(--ls-cream); width:100%; box-sizing:border-box;">
+          </div>
+        </div>
+        <div style="display:flex; gap:10px; justify-content:space-between; align-items:center; padding-top:16px; border-top:1px solid var(--ls-border); flex-wrap:wrap;">
+          <button id="macroClearOverride" style="font-family:var(--font-body); font-size:0.78rem; padding:9px 16px; border-radius:10px; border:1.5px solid var(--ls-border); background:none; color:var(--ls-muted); cursor:pointer;">
+            <i class="fa fa-undo" style="margin-right:5px;"></i>Reset to JSON defaults
+          </button>
+          <button id="macroSaveBtn" style="font-family:var(--font-body); font-size:0.82rem; font-weight:700; padding:10px 24px; border-radius:10px; border:none; background:var(--ls-navy); color:white; cursor:pointer; display:flex; align-items:center; gap:7px;">
+            <i class="fa fa-check"></i>Save &amp; Refresh Cards
+          </button>
+        </div>
+        <div style="margin-top:16px; padding:12px 14px; border-radius:10px; background:rgba(27,43,92,0.04); border:1px solid rgba(27,43,92,0.1);">
+          <div style="font-size:0.7rem; font-weight:700; color:var(--ls-navy); text-transform:uppercase; letter-spacing:0.07em; margin-bottom:3px;">💡 Making edits permanent</div>
+          <div style="font-size:0.75rem; color:var(--ls-muted); line-height:1.5;">Open <code style="background:rgba(0,0,0,0.06); padding:1px 5px; border-radius:4px;">data/macro-stats.json</code>, update each stat value and set <code style="background:rgba(0,0,0,0.06); padding:1px 5px; border-radius:4px;">"lastUpdated"</code> to today. The freshness badge resets and local overrides clear.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+
+  <!-- ══════════════════════════════════════════════════
+       2. STAKEHOLDER MAP
+  ══════════════════════════════════════════════════ -->
+  <section id="stakeholders" class="ls-section ls-bg-cream">
+    <div class="ls-container">
+      <div class="ls-reveal" style="margin-bottom:40px;">
+        <div class="ls-eyebrow" style="margin-bottom:10px;">Regional Footprint</div>
+        <h2 class="ls-section-title">Regional Stakeholder &amp; Referral Ecosystem</h2>
+        <p class="ls-body" style="max-width:600px; margin-top:12px;">
+          Key clinical and commissioning relationships across Nottinghamshire, Derbyshire, and Leicestershire.
+        </p>
+      </div>
+
+      <!-- Section image -->
+      <div class="ls-reveal" style="width:100%; height:280px; border-radius:var(--radius-xl); overflow:hidden; margin-bottom:40px; position:relative;">
+        <img src="images/optometrist-partners.jpg" alt="Optometrist partnership network" style="width:100%; height:100%; object-fit:cover; object-position:center 25%;">
+        <div style="position:absolute; inset:0; background:linear-gradient(to right, rgba(13,13,26,0.6) 0%, transparent 50%, rgba(13,13,26,0.3) 100%); border-radius:var(--radius-xl);"></div>
+        <div style="position:absolute; left:32px; bottom:28px; color:white;">
+          <div style="font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:rgba(255,255,255,0.6); margin-bottom:4px;">The Referral Network</div>
+          <div style="font-family:var(--font-display); font-size:1.4rem; font-weight:700; letter-spacing:-0.02em;">470 Optometry Practices · 3 Counties</div>
+        </div>
+      </div>
+
+      <div class="ls-stakeholder-grid">
+        <!-- Clinical Director -->
+        <div class="ls-card ls-reveal">
+          <div style="display:flex; align-items:center; gap:14px; margin-bottom:14px;">
+            <div class="ls-avatar">AE</div>
+            <div>
+              <div class="ls-display" style="font-size:1rem;">Mr Ahmad Elsahn</div>
+              <div class="ls-eyebrow" style="font-size:0.65rem; color:var(--ls-navy);">Clinical Director &amp; Consultant</div>
+            </div>
+          </div>
+          <p class="ls-body-sm">
+            Consultant Ophthalmic Surgeon specializing in Complex Cataracts, Glaucoma, MIGS micro-stents, and Anterior Segment.
+            Holds substantive NHS post at <strong>Sherwood Forest Hospitals NHS Foundation Trust</strong>.
+          </p>
+          <div style="margin-top:14px; padding-top:12px; border-top:1px solid var(--ls-border); font-size:0.75rem; color:var(--ls-subtle);">
+            Role: Clinical credibility anchor, surgical governance, and referrer education.
+          </div>
+        </div>
+
+        <!-- Statutory Bodies -->
+        <div class="ls-card ls-reveal ls-reveal-delay-1">
+          <div class="ls-pill ls-pill-navy" style="margin-bottom:14px;">Commissioning</div>
+          <h4 class="ls-display" style="font-size:1.05rem; margin-bottom:12px;">Statutory Bodies &amp; ICBs</h4>
+          <ul class="ls-swot-list" style="list-style:none; padding:0;">
+            <li><strong style="color:var(--ls-ink);">Nottinghamshire ICB:</strong> Commissions regional secondary and community ophthalmic pathways.</li>
+            <li><strong style="color:var(--ls-ink);">Leicestershire &amp; Rutland ICB:</strong> Tendering community glaucoma monitoring schemes.</li>
+            <li><strong style="color:var(--ls-ink);">Local Optical Committees (LOCs):</strong> Notts LOC &amp; Derbyshire LOC represent primary optometrists.</li>
+            <li><strong style="color:var(--ls-ink);">CQC:</strong> Regulates surgical facility safety and clinical quality.</li>
+          </ul>
+        </div>
+
+        <!-- Practice Network -->
+        <div class="ls-card ls-reveal ls-reveal-delay-2">
+          <div class="ls-pill ls-pill-gold" style="margin-bottom:14px;">Distribution</div>
+          <h4 class="ls-display" style="font-size:1.05rem; margin-bottom:12px;">470 Practice Network</h4>
+          <p class="ls-body-sm">
+            Primary distribution universe: 234 independent practices across Notts (58), Leics (115), and Derbys (61),
+            plus 91 group practices and 145 multiple shops.
+          </p>
+          <div class="ls-card ls-card-sm" style="margin-top:14px; background:var(--ls-gold-light); border-color:var(--ls-gold-border);">
+            <div style="font-size:var(--text-sm); font-weight:600; color:var(--ls-gold-hover);">Goal: Sign 8 new practices/year and convert 5 into steady monthly referrers.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       3. COMPETITOR TIERS
+  ══════════════════════════════════════════════════ -->
+  <section id="competitors" class="ls-section ls-bg-white">
+    <div class="ls-container">
+      <div class="ls-reveal" style="margin-bottom:40px;">
+        <div class="ls-eyebrow" style="margin-bottom:10px;">Market Structure</div>
+        <h2 class="ls-section-title">5 Competitor Tiers</h2>
+      </div>
+
+      <div class="ls-tier-grid ls-reveal ls-reveal-delay-1">
+        <div class="ls-tier-card">
+          <div class="ls-tier-num" style="color:#dc2626;">Tier 01 · Tariff</div>
+          <div class="ls-tier-name">NHS High-Volume</div>
+          <p class="ls-body-sm" style="margin-bottom:10px;">SpaMedica, CHEC, Newmedica, Optegra.</p>
+          <span class="ls-pill" style="background:#fef2f2; color:#991b1b; border-color:#fecaca; font-size:0.62rem;">High NHS threat</span>
+        </div>
+
+        <div class="ls-tier-card peer">
+          <div class="ls-tier-num">Tier 02 · Peer</div>
+          <div class="ls-tier-name">Premium Self-Pay</div>
+          <p class="ls-body-sm" style="margin-bottom:10px;">OCL Vision, Cathedral Eye, Stoneygate.</p>
+          <span class="ls-pill ls-pill-navy" style="font-size:0.62rem;">Direct Peer Group</span>
+        </div>
+
+        <div class="ls-tier-card">
+          <div class="ls-tier-num">Tier 03 · Retail</div>
+          <div class="ls-tier-name">High-Street Laser</div>
+          <p class="ls-body-sm" style="margin-bottom:10px;">Optical Express, Optimax.</p>
+          <span class="ls-pill" style="font-size:0.62rem;">Low threat</span>
+        </div>
+
+        <div class="ls-tier-card">
+          <div class="ls-tier-num">Tier 04 · Hospitals</div>
+          <div class="ls-tier-name">Multi-Specialty</div>
+          <p class="ls-body-sm" style="margin-bottom:10px;">Nuffield, Spire, Ramsay (Woodthorpe).</p>
+          <span class="ls-pill" style="font-size:0.62rem;">PMI Hold</span>
+        </div>
+
+        <div class="ls-tier-card">
+          <div class="ls-tier-num">Tier 05 · Solo</div>
+          <div class="ls-tier-name">Solo Practices</div>
+          <p class="ls-body-sm" style="margin-bottom:10px;">Regional solo consultants.</p>
+          <span class="ls-pill" style="font-size:0.62rem;">Lack scale</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       4. PRICING BENCHMARKS TABLE
+  ══════════════════════════════════════════════════ -->
+  <section id="pricing" class="ls-section ls-bg-cream">
+    <div class="ls-container">
+      <div class="ls-reveal" style="margin-bottom:32px;">
+        <div class="ls-eyebrow" style="margin-bottom:10px;">Self-Pay Benchmarks</div>
+        <h2 class="ls-section-title">Pricing Intelligence</h2>
+      </div>
+
+      <div class="ls-table-wrap ls-reveal ls-reveal-delay-1">
+        <table class="ls-table">
+          <thead>
+            <tr>
+              <th>Procedure / Package</th>
+              <th>Market Range</th>
+              <th>Benchmark Clinic</th>
+              <th>EyePros Target</th>
+              <th>Strategic Rationale</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Monofocal Cataract</strong></td>
+              <td>£2,200 – £3,000</td>
+              <td>Newmedica (£2,295)</td>
+              <td><strong style="color:var(--ls-navy);">£2,250 / eye</strong></td>
+              <td>Competitive entry pricing for speed-seeking self-pay patients.</td>
+            </tr>
+            <tr>
+              <td><strong>Premium Toric / EDOF Lens</strong></td>
+              <td>£3,400 – £4,600</td>
+              <td>OCL Vision (£3,900)</td>
+              <td><strong style="color:var(--ls-navy);">£3,600 / eye</strong></td>
+              <td>Spectacle independence premium with customized biometry.</td>
+            </tr>
+            <tr>
+              <td><strong>MIGS Glaucoma Implantation</strong></td>
+              <td>£1,500 – £2,500</td>
+              <td>Stoneygate (£1,850)</td>
+              <td><strong style="color:var(--ls-navy);">£1,800 + care plan</strong></td>
+              <td>Combined during cataract surgery or standalone SLT laser.</td>
+            </tr>
+            <tr>
+              <td><strong>Dry Eye Treatment (EyeSpa)</strong></td>
+              <td>£100 – £180 / session</td>
+              <td>London Clinics (£150)</td>
+              <td><strong style="color:var(--ls-navy);">£120 / session</strong></td>
+              <td>Wellness package driving recurring subscriptions.</td>
+            </tr>
+            <tr>
+              <td><strong>Valeda (Dry AMD PBM)</strong></td>
+              <td>£1,800 – £2,400</td>
+              <td>3 Private UK Sites</td>
+              <td><strong style="color:var(--ls-gold-hover);">£1,950 / 9-cycle</strong></td>
+              <td>First-mover regional exclusivity for untreated dry AMD cohort.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       5. SWOT
+  ══════════════════════════════════════════════════ -->
+  <section id="swot" class="ls-section ls-bg-white">
+    <div class="ls-container">
+      <div class="ls-reveal" style="margin-bottom:40px;">
+        <div class="ls-eyebrow" style="margin-bottom:10px;">Strategic Alignment</div>
+        <h2 class="ls-section-title">SWOT Analysis</h2>
+      </div>
+
+      <div class="ls-swot-grid">
+        <div class="ls-swot-box strength ls-reveal">
+          <div class="ls-swot-label">✓ Strengths (Internal)</div>
+          <ul class="ls-swot-list">
+            <li><strong>Consultant-Led Governance:</strong> Mr Ahmad Elsahn provides recognized surgical leadership.</li>
+            <li><strong>Kingfisher House Facility:</strong> Modern dedicated surgical theatre capturing full margins.</li>
+            <li><strong>Specialty Breadth:</strong> Unified care across Cataract, Glaucoma, Dry Eye, and AMD.</li>
+            <li><strong>Agile Decision Making:</strong> Fast pathway implementation without hospital bureaucracy.</li>
+          </ul>
+        </div>
+
+        <div class="ls-swot-box weakness ls-reveal ls-reveal-delay-1">
+          <div class="ls-swot-label">⚠ Weaknesses (Internal)</div>
+          <ul class="ls-swot-list">
+            <li><strong>Brand Awareness:</strong> Transitioning from solo reputation to enterprise clinical brand.</li>
+            <li><strong>Referral Density:</strong> Initial reliance on small circle of referring optometrists in Nottingham.</li>
+            <li><strong>Team Capacity:</strong> Clinical and marketing teams scaling concurrently.</li>
+          </ul>
+        </div>
+
+        <div class="ls-swot-box opportunity ls-reveal ls-reveal-delay-2">
+          <div class="ls-swot-label">↑ Opportunities (External)</div>
+          <ul class="ls-swot-list">
+            <li><strong>NHS Wait Time Crisis:</strong> 26-week regional waits create unprecedented self-pay conversion tailwinds.</li>
+            <li><strong>PracticePartners Asset Play:</strong> Other surgeons leasing Kingfisher House theatre during off-hours.</li>
+            <li><strong>Under-served Categories:</strong> Dry eye (EyeSpa) and dry AMD (Valeda) have near-zero private competitors.</li>
+          </ul>
+        </div>
+
+        <div class="ls-swot-box threat ls-reveal ls-reveal-delay-3">
+          <div class="ls-swot-label">⚡ Threats (External)</div>
+          <ul class="ls-swot-list">
+            <li><strong>Tariff Compression:</strong> Potential national cuts to NHS cataract tariffs pushing tariff operators into self-pay.</li>
+            <li><strong>Corporate Multiples:</strong> Specsavers and Optical Express expanding in-house co-management.</li>
+            <li><strong>Regional Entry:</strong> Potential Tier 2 chains (OCL, Cathedral) entering Nottingham.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       6. BUSINESS MODEL CANVAS
+  ══════════════════════════════════════════════════ -->
+  <section id="bmc" class="ls-section ls-bg-dark">
+    <div class="ls-container">
+      <div class="ls-reveal" style="margin-bottom:40px;">
+        <div class="ls-eyebrow" style="color:var(--ls-gold); margin-bottom:10px;">Hospital Framework</div>
+        <h2 class="ls-section-title" style="color:var(--ls-white);">9-Box Business Model Canvas</h2>
+        <p style="color:rgba(255,255,255,0.55); font-size:1rem; margin-top:8px;">Kingfisher House Surgical Centre, Nottinghamshire</p>
+      </div>
+
+      <div class="ls-bmc-grid ls-reveal ls-reveal-delay-1" style="margin-bottom:12px;">
+        <div class="ls-bmc-box" style="background:rgba(255,255,255,0.05); border-color:rgba(255,255,255,0.08);">
+          <div class="ls-bmc-box-label" style="color:rgba(255,255,255,0.4);">1. Key Partners</div>
+          <ul style="font-size:var(--text-sm); color:rgba(255,255,255,0.6); list-style:none; padding:0; display:flex; flex-direction:column; gap:5px;">
+            <li>470 Community Optometrists</li>
+            <li>Nottinghamshire ICB</li>
+            <li>Vector Equipment Facility</li>
+            <li>Device Manufacturers (Alcon)</li>
+          </ul>
+        </div>
+
+        <div class="ls-bmc-box" style="background:rgba(255,255,255,0.05); border-color:rgba(255,255,255,0.08);">
+          <div class="ls-bmc-box-label" style="color:rgba(255,255,255,0.4);">2. Key Activities</div>
+          <ul style="font-size:var(--text-sm); color:rgba(255,255,255,0.6); list-style:none; padding:0; display:flex; flex-direction:column; gap:5px;">
+            <li>Cataract &amp; MIGS Surgery</li>
+            <li>Optometrist CPD Seminars</li>
+            <li>EyeSpa Treatments</li>
+            <li>Biometry &amp; Diagnostics</li>
+          </ul>
+        </div>
+
+        <div class="ls-bmc-box value">
+          <div class="ls-bmc-box-label">3. Value Propositions</div>
+          <ul style="font-size:var(--text-sm); color:var(--ls-navy); list-style:none; padding:0; display:flex; flex-direction:column; gap:5px;">
+            <li><strong>Speed:</strong> Surgical slot &lt;14 days.</li>
+            <li><strong>Named Consultant:</strong> Ahmad Elsahn throughout.</li>
+            <li><strong>Premium IOLs:</strong> Spectacle freedom.</li>
+            <li><strong>Innovation:</strong> Valeda, MIGS, EyeSpa.</li>
+          </ul>
+        </div>
+
+        <div class="ls-bmc-box" style="background:rgba(255,255,255,0.05); border-color:rgba(255,255,255,0.08);">
+          <div class="ls-bmc-box-label" style="color:rgba(255,255,255,0.4);">4. Customer Segments</div>
+          <ul style="font-size:var(--text-sm); color:rgba(255,255,255,0.6); list-style:none; padding:0; display:flex; flex-direction:column; gap:5px;">
+            <li>Self-pay elderly cataract</li>
+            <li>PMI corporate holders</li>
+            <li>Chronic glaucoma patients</li>
+            <li>Visiting surgeons</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ls-bmc-grid ls-reveal ls-reveal-delay-2">
+        <div class="ls-bmc-box" style="background:rgba(255,255,255,0.05); border-color:rgba(255,255,255,0.08);">
+          <div class="ls-bmc-box-label" style="color:rgba(255,255,255,0.4);">5. Key Resources</div>
+          <ul style="font-size:var(--text-sm); color:rgba(255,255,255,0.6); list-style:none; padding:0; display:flex; flex-direction:column; gap:5px;">
+            <li>Kingfisher House theatre</li>
+            <li>Ahmad's clinical expertise</li>
+            <li>Diagnostic equipment (OCT, biometry)</li>
+          </ul>
+        </div>
+
+        <div class="ls-bmc-box" style="background:rgba(255,255,255,0.05); border-color:rgba(255,255,255,0.08);">
+          <div class="ls-bmc-box-label" style="color:rgba(255,255,255,0.4);">6. Channels</div>
+          <ul style="font-size:var(--text-sm); color:rgba(255,255,255,0.6); list-style:none; padding:0; display:flex; flex-direction:column; gap:5px;">
+            <li>Optometrist referral network</li>
+            <li>GP practices</li>
+            <li>Digital &amp; social media</li>
+            <li>CPD events &amp; seminars</li>
+          </ul>
+        </div>
+
+        <div class="ls-bmc-box cost" style="background:rgba(255,255,255,0.05); border-color:rgba(255,255,255,0.08);">
+          <div class="ls-bmc-box-label" style="color:rgba(255,255,255,0.4);">7. Cost Structure</div>
+          <p style="font-size:var(--text-sm); color:rgba(255,255,255,0.6); margin:0; line-height:1.55;">
+            Facility lease, Vector debt service, clinical staffing, theatre consumables (IOL packs), referrer CPD hospitality, and marketing investment.
+          </p>
+        </div>
+
+        <div class="ls-bmc-box revenue" style="background:rgba(184,151,90,0.15); border-color:rgba(184,151,90,0.3);">
+          <div class="ls-bmc-box-label">8. Revenue Streams</div>
+          <p style="font-size:var(--text-sm); color:rgba(255,255,255,0.7); margin:0; line-height:1.55;">
+            Self-pay cataract fees (£2,250–£3,600), Glaucoma subscriptions, PracticePartners theatre rentals, EyeSpa packages, and Valeda cycles.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer -->
+  <footer class="ls-footer">
+    <div class="ls-container">
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:20px; padding-bottom:32px; border-bottom:1px solid rgba(255,255,255,0.1);">
+        <img src="images/longsighted-logo-horizontal-white.png" alt="Longsighted" style="height:44px; width:auto;" onerror="this.src='images/longsighted-logo.png';">
+        <nav style="display:flex; flex-wrap:wrap; gap:20px;">
+          <a href="index.html" style="color:rgba(255,255,255,0.5); font-size:var(--text-sm);">Home</a>
+          <a href="patient-pathways.html" style="color:rgba(255,255,255,0.5); font-size:var(--text-sm);">Patient Pathways</a>
+          <a href="business-plan.html" style="color:rgba(255,255,255,0.5); font-size:var(--text-sm);">Business Plan Eyepros</a>
+          <a href="timeline.html" style="color:rgba(255,255,255,0.5); font-size:var(--text-sm);">Timeline</a>
+        </nav>
+      </div>
+      <div class="ls-footer-bottom">
+        <span>&copy; 2026 EyePros Strategic Intelligence · Longsighted by Takoua</span>
+        <span>Mr Ahmad Elsahn · Sherwood Forest Hospitals NHS FT</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/ls-nav.js"></script>
+
+  <!-- ── Macro Demand: AUTO LIVE DATA ENGINE ── -->
+  <script>
+  (function () {
+    'use strict';
+
+    /* ═══════════════════════════════════════════════════════════════════
+       LIVE DATA ENGINE — Macro Demand & Waiting List Indicators
+       Sources: NHS Fingertips API (live) + trend projection (auto-estimated)
+       Cache: 6 hours in localStorage  |  Auto-refresh: every 6h
+    ═══════════════════════════════════════════════════════════════════ */
+
+    const CACHE_KEY   = 'macroLiveCache_v4';
+    const CACHE_HOURS = 6;
+    const ARROW       = `<div class="macro-connector"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h12M11 5l5 5-5 5"/></svg></div>`;
+
+    /* ── Indicator definitions with live-fetch & trend strategies ─────── */
+    const INDICATORS = [
+      {
+        id: 'cataract',
+        label: 'Cataract Surgeries / Year',
+        sub: 'NHS Hospital Episode Statistics — England annual ophthalmic procedures',
+        icon: 'fa-eye',
+        accentColor: 'linear-gradient(90deg,#1B2B5C,#3b5bdb)',
+        numColor: '#1B2B5C',
+        iconBg: '#e8ecf7',
+        iconColor: '#1B2B5C',
+        trend: 'up',
+        trendLabel: '↑ +25% by 2027',
+        source: 'RCOphth · NHS HES',
+        sourceUrl: 'https://www.rcophth.ac.uk/',
+        /* Trend projection: RCOphth 2024 report = 450k; +5% per year YoY */
+        mode: 'trend-annual',
+        baseline: 450000,
+        baselineYear: 2024.25,   /* April 2024 (NHS financial year) */
+        annualRate: 0.05
+      },
+      {
+        id: 'nhs-waitlist',
+        label: 'NHS Total Wait List',
+        sub: 'All specialties RTT — ophthalmology 2nd largest backlog driving self-pay conversion',
+        icon: 'fa-clock-o',
+        accentColor: 'linear-gradient(90deg,#dc2626,#ef4444)',
+        numColor: '#dc2626',
+        iconBg: '#fee2e2',
+        iconColor: '#b91c1c',
+        trend: 'warn',
+        trendLabel: '⚠ 26-week avg wait',
+        source: 'NHS England · RTT',
+        sourceUrl: 'https://www.england.nhs.uk/statistics/statistical-work-areas/rtt-waiting-times/',
+        /* Live: try NHS Fingertips indicator 90282 (People waiting >18wk elective)
+           then multiply by ~4.1 ratio to approximate total RTT list */
+        mode: 'fingertips-scaled',
+        fingertipsId: 90282,
+        fingertipsScale: 4.1,
+        /* Fallback: monthly trend — was 7.11m May 2025, recovering ~75k/month */
+        fallbackMode: 'trend-monthly',
+        baseline: 7110000,
+        baselineDate: '2025-05-01',
+        monthlyDelta: -75000
+      },
+      {
+        id: 'glaucoma',
+        label: 'UK Glaucoma Diagnoses',
+        sub: 'QOF register — lifetime IOP monitoring, visual fields & OCT creates recurring revenue',
+        icon: 'fa-refresh',
+        accentColor: 'linear-gradient(90deg,#16a34a,#22c55e)',
+        numColor: '#16a34a',
+        iconBg: '#dcfce7',
+        iconColor: '#15803d',
+        trend: 'up',
+        trendLabel: '♻ Lifetime monitoring',
+        source: 'Glaucoma UK · QOF',
+        sourceUrl: 'https://glaucoma.uk/',
+        /* Live: try NHS Fingertips QOF glaucoma register — indicator 17 (QOF profile 8)
+           Value is count of registered glaucoma patients across England */
+        mode: 'fingertips-direct',
+        fingertipsId: 17,          /* QOF Glaucoma register — Profile 8 */
+        fingertipsAreaType: 0,     /* National = England */
+        /* Fallback trend: 700k 2024, +2% annual */
+        fallbackMode: 'trend-annual',
+        baseline: 700000,
+        baselineYear: 2024,
+        annualRate: 0.02
+      },
+      {
+        id: 'private-admissions',
+        label: 'Record Private Admissions',
+        sub: 'Self-pay cataract +12.4% · 61.4% of patients now paying directly with no insurer',
+        icon: 'fa-line-chart',
+        accentColor: 'linear-gradient(90deg,#B8975A,#d4a94e)',
+        numColor: '#b8975a',
+        iconBg: 'rgba(184,151,90,0.12)',
+        iconColor: '#b8975a',
+        trend: 'gold',
+        trendLabel: '↑ +7% YoY',
+        source: 'PHIN · Private Healthcare',
+        sourceUrl: 'https://www.phin.org.uk/',
+        /* PHIN has no public API — trend project: 898k 2025, +7% YoY */
+        mode: 'trend-annual',
+        baseline: 898000,
+        baselineYear: 2025,
+        annualRate: 0.07
+      }
+    ];
+
+    /* ── Number formatting ────────────────────────────────────────────── */
+    function fmt(n) {
+      if (n >= 1e6) return (n / 1e6).toFixed(2).replace(/\.?0+$/, '') + 'm';
+      if (n >= 1e3) return Math.round(n / 1000) + 'k';
+      return Math.round(n).toLocaleString('en-GB');
+    }
+
+    /* ── Trend projection ─────────────────────────────────────────────── */
+    function projectValue(ind) {
+      const now = new Date();
+      if (ind.mode === 'trend-annual' || ind.fallbackMode === 'trend-annual') {
+        const yearNow = now.getFullYear() + now.getMonth() / 12;
+        const years   = yearNow - ind.baselineYear;
+        return Math.round(ind.baseline * Math.pow(1 + ind.annualRate, years));
+      }
+      if (ind.mode === 'trend-monthly' || ind.fallbackMode === 'trend-monthly') {
+        const base    = new Date(ind.baselineDate);
+        const months  = (now.getFullYear() - base.getFullYear()) * 12 + (now.getMonth() - base.getMonth());
+        return Math.max(0, Math.round(ind.baseline + ind.monthlyDelta * months));
+      }
+      return ind.baseline;
+    }
+
+    /* ── NHS Fingertips API fetch ──────────────────────────────────────── */
+    async function fetchFingertips(indicatorId, areaTypeId) {
+      const at  = areaTypeId !== undefined ? areaTypeId : 6;
+      /* area_type_id 6 = NHS England region; for national use 15 (NHSE) */
+      const url = `https://fingertips.phe.org.uk/api/latest_data/by_indicator_id?indicator_ids=${indicatorId}&area_type_id=${at}&profile_id=-1&parent_area_type_id=6&child_area_type_id=${at}`;
+      const ctrl = new AbortController();
+      const tid  = setTimeout(() => ctrl.abort(), 7000);
+      try {
+        const res  = await fetch(url, { signal: ctrl.signal });
+        clearTimeout(tid);
+        if (!res.ok) return null;
+        const rows = await res.json();
+        /* Find England national aggregate */
+        const eng = rows.find(r =>
+          r.AreaCode === 'E92000001' ||
+          r.AreaCode === 'E'         ||
+          (r.AreaName && r.AreaName.toLowerCase().includes('england'))
+        );
+        if (eng && eng.Val != null && !isNaN(eng.Val)) return { value: eng.Val, period: eng.TimePeriod || '' };
+        /* Fallback: sum all regions if England not found */
+        if (rows.length > 0) {
+          const total = rows.reduce((s, r) => s + (r.Val || 0), 0);
+          return { value: total, period: rows[0].TimePeriod || '' };
+        }
+        return null;
+      } catch (e) {
+        clearTimeout(tid);
+        return null;
+      }
+    }
+
+    /* ── Resolve one indicator value ──────────────────────────────────── */
+    async function resolveIndicator(ind) {
+      let value = null;
+      let quality = 'estimated';
+      let period  = '';
+
+      /* Try Fingertips live fetch */
+      if (ind.mode === 'fingertips-direct' || ind.mode === 'fingertips-scaled') {
+        try {
+          const live = await fetchFingertips(ind.fingertipsId, ind.fingertipsAreaType);
+          if (live && live.value > 0) {
+            value   = ind.mode === 'fingertips-scaled' ? Math.round(live.value * (ind.fingertipsScale || 1)) : live.value;
+            quality = 'live';
+            period  = live.period;
+          }
+        } catch (e) { /* silent fallback */ }
+      }
+
+      /* Fallback to trend projection */
+      if (value === null) {
+        value   = projectValue(ind);
+        quality = 'estimated';
+      }
+
+      return { ind, value, quality, period };
+    }
+
+    /* ── Badge HTML per quality level ────────────────────────────────── */
+    function qualityBadge(quality, period) {
+      if (quality === 'live') {
+        return `<span style="position:absolute;top:14px;right:14px;font-size:0.55rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;padding:3px 8px;border-radius:100px;background:#dcfce7;color:#15803d;border:1px solid #bbf7d0;display:flex;align-items:center;gap:4px;z-index:5;"><span style="width:5px;height:5px;border-radius:50%;background:#22c55e;animation:live-dot-pulse 1.4s ease-in-out infinite;flex-shrink:0;"></span>LIVE${period ? ' · ' + period : ''}</span>`;
+      }
+      if (quality === 'estimated') {
+        return `<span style="position:absolute;top:14px;right:14px;font-size:0.55rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;padding:3px 8px;border-radius:100px;background:#f0f9ff;color:#0369a1;border:1px solid #bae6fd;z-index:5;">~&nbsp;AUTO-EST</span>`;
+      }
+      return `<span style="position:absolute;top:14px;right:14px;font-size:0.55rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;padding:3px 8px;border-radius:100px;background:var(--ls-cream);color:var(--ls-subtle);border:1px solid var(--ls-border);z-index:5;">ANNUAL</span>`;
+    }
+
+    /* ── Fill bar width (relative to max in dataset) ─────────────────── */
+    function fillPct(value, allValues) {
+      const max = Math.max(...allValues);
+      return Math.round((value / max) * 100);
+    }
+
+    /* ── Build one card HTML ─────────────────────────────────────────── */
+    function buildCard(result, allValues) {
+      const { ind, value, quality, period } = result;
+      const pct  = fillPct(value, allValues);
+      const stat = fmt(value);
+
+      return `<div class="macro-card" data-id="${ind.id}" data-quality="${quality}">
+        <div class="macro-card-accent" style="background:${ind.accentColor};"></div>
+        ${qualityBadge(quality, period)}
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px;">
+          <div class="macro-icon" style="background:${ind.iconBg};color:${ind.iconColor};">
+            <i class="fa ${ind.icon}"></i>
+          </div>
+          <span class="macro-trend ${ind.trend}">${ind.trendLabel}</span>
+        </div>
+        <div class="macro-num" style="color:${ind.numColor};">${stat}</div>
+        <div class="macro-label">${ind.label}</div>
+        <div class="macro-sub">${ind.sub}</div>
+        <div class="macro-fill-track">
+          <div class="macro-fill-bar" data-fill="${pct}" style="background:${ind.accentColor};width:0%;"></div>
+        </div>
+        <a href="${ind.sourceUrl}" target="_blank" rel="noopener"
+           style="font-size:0.62rem;color:var(--ls-subtle);font-weight:700;text-transform:uppercase;letter-spacing:0.08em;text-decoration:none;"
+           onmouseover="this.style.color='var(--ls-navy)'" onmouseout="this.style.color='var(--ls-subtle)'">
+          ${ind.source} ↗
+        </a>
+      </div>`;
+    }
+
+    /* ── Render all cards ────────────────────────────────────────────── */
+    function renderCards(results) {
+      const el = document.getElementById('macroDiagram');
+      if (!el) return;
+      const allValues = results.map(r => r.value);
+      el.innerHTML = results.map((r, i) =>
+        buildCard(r, allValues) + (i < results.length - 1 ? ARROW : '')
+      ).join('');
+      requestAnimationFrame(() => {
+        el.querySelectorAll('.macro-fill-bar').forEach(b => { b.style.width = b.dataset.fill + '%'; });
+      });
+    }
+
+    /* ── Render the status bar ───────────────────────────────────────── */
+    function renderStatus(results, fromCache, cacheAge) {
+      const bar  = document.getElementById('macroFreshnessBar');
+      const text = document.getElementById('macroFreshnessText');
+      const next = document.getElementById('macroNextUpdate');
+      const src  = document.getElementById('macroSources');
+      if (!bar || !text) return;
+
+      bar.style.display = 'flex';
+      bar.classList.remove('stale','overdue');
+
+      const liveCount = results.filter(r => r.quality === 'live').length;
+      const estCount  = results.filter(r => r.quality === 'estimated').length;
+
+      let statusMsg = '';
+      if (liveCount > 0) {
+        statusMsg = `${liveCount} indicator${liveCount > 1 ? 's' : ''} from NHS Fingertips live API`;
+        if (estCount > 0) statusMsg += ` · ${estCount} auto-projected`;
+      } else {
+        statusMsg = `${estCount} indicators auto-projected from published baselines`;
+      }
+
+      if (fromCache) {
+        const mins = Math.floor(cacheAge / 60000);
+        const hrs  = Math.floor(mins / 60);
+        statusMsg += hrs > 0 ? ` · Cached ${hrs}h ago` : ` · Cached ${mins}m ago`;
+      } else {
+        statusMsg += ' · Refreshed just now';
+      }
+
+      text.textContent = statusMsg;
+      if (next) next.textContent = 'Auto-refreshes every 6h · Values update each page load';
+      if (src)  src.textContent  = 'Sources: NHS Fingertips · NHS England RTT · Glaucoma UK · PHIN · RCOphth';
+    }
+
+    /* ── Show per-card loading skeletons ─────────────────────────────── */
+    function showSkeleton() {
+      const el = document.getElementById('macroDiagram');
+      if (!el) return;
+      const skeletonCard = (delay) => `
+        <div class="macro-card" style="animation-delay:${delay}ms;">
+          <div class="macro-card-accent" style="background:rgba(0,0,0,0.08);"></div>
+          <div style="padding:10px 0 4px;">
+            <div style="width:40px;height:40px;border-radius:12px;background:rgba(0,0,0,0.06);animation:skel-pulse 1.4s ease-in-out infinite ${delay}ms;"></div>
+          </div>
+          <div style="height:48px;border-radius:8px;background:rgba(0,0,0,0.06);animation:skel-pulse 1.4s ease-in-out infinite ${delay + 100}ms;margin-top:4px;"></div>
+          <div style="height:14px;width:80%;border-radius:6px;background:rgba(0,0,0,0.05);animation:skel-pulse 1.4s ease-in-out infinite ${delay + 200}ms;"></div>
+          <div style="height:32px;border-radius:6px;background:rgba(0,0,0,0.04);animation:skel-pulse 1.4s ease-in-out infinite ${delay + 300}ms;flex:1;"></div>
+          <div style="height:3px;border-radius:3px;background:rgba(0,0,0,0.06);animation:skel-pulse 1.4s ease-in-out infinite ${delay + 400}ms;"></div>
+        </div>`;
+      el.innerHTML =
+        skeletonCard(0) + ARROW +
+        skeletonCard(80) + ARROW +
+        skeletonCard(160) + ARROW +
+        skeletonCard(240);
+    }
+
+    /* ── Wire "Refresh Now" button ───────────────────────────────────── */
+    function wireRefreshBtn() {
+      const btn = document.getElementById('macroUpdateToggle');
+      if (!btn) return;
+      /* Replace "Update Data" with "Refresh Now" */
+      btn.innerHTML = '<i class="fa fa-refresh"></i> Refresh Now';
+      btn.style.cursor = 'pointer';
+      btn.addEventListener('click', async () => {
+        btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Fetching…';
+        btn.disabled = true;
+        localStorage.removeItem(CACHE_KEY);
+        await runEngine(true);
+        btn.innerHTML = '<i class="fa fa-check"></i> Done';
+        btn.disabled = false;
+        setTimeout(() => { btn.innerHTML = '<i class="fa fa-refresh"></i> Refresh Now'; }, 2500);
+      });
+
+      /* Also hide the old update panel controls since we don't need them */
+      const panel = document.getElementById('macroUpdatePanel');
+      if (panel) panel.style.display = 'none';
+    }
+
+    /* ── Main engine ─────────────────────────────────────────────────── */
+    async function runEngine(force) {
+      /* Check localStorage cache */
+      if (!force) {
+        try {
+          const raw = localStorage.getItem(CACHE_KEY);
+          if (raw) {
+            const { ts, results } = JSON.parse(raw);
+            const age = Date.now() - ts;
+            if (age < CACHE_HOURS * 3600000) {
+              renderCards(results);
+              renderStatus(results, true, age);
+              return;
+            }
+          }
+        } catch(e) { localStorage.removeItem(CACHE_KEY); }
+      }
+
+      /* Show skeletons while fetching */
+      showSkeleton();
+
+      /* Fetch all indicators in parallel */
+      const results = await Promise.all(INDICATORS.map(resolveIndicator));
+
+      /* Cache results */
+      try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), results })); } catch(e) {}
+
+      /* Render */
+      renderCards(results);
+      renderStatus(results, false, 0);
+    }
+
+    /* ── Boot + auto-refresh every 6h ────────────────────────────────── */
+    document.addEventListener('DOMContentLoaded', () => {
+      wireRefreshBtn();
+      runEngine(false);
+      setInterval(() => { localStorage.removeItem(CACHE_KEY); runEngine(false); }, CACHE_HOURS * 3600000);
+    });
+
+  })();
+  </script>
+
+  <!-- Skeleton animation + live dot -->
+  <style>
+    @keyframes skel-pulse {
+      0%, 100% { opacity: 0.6; }
+      50%       { opacity: 1; }
+    }
+    @keyframes live-dot-pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(1.4); }
+    }
+  </style>
+
+  <script>
+    // Chapter nav scroll spy
+
+    const chapters = document.querySelectorAll('section[id]');
+    const chapterLinks = document.querySelectorAll('.ls-chapter-link');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          chapterLinks.forEach(l => {
+            l.classList.toggle('active', l.getAttribute('href') === '#' + entry.target.id);
+          });
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+
+    chapters.forEach(s => observer.observe(s));
+  </script>
+</body>
+</html>

@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EyePros — Market &amp; Competitor Intelligence</title>
+    <link rel="stylesheet" href="eyepros-design-system.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .page-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .ep-tabs {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        .nav-btn {
+            background: rgba(22, 30, 49, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 0.75rem 1.5rem;
+            border-radius: 99px;
+            cursor: pointer;
+            font-weight: 500;
+            color: #94a3b8;
+            transition: all 0.2s ease;
+        }
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #f1f5f9;
+        }
+        .nav-btn.active-tab {
+            background: rgba(13, 148, 136, 0.2);
+            color: #2dd4bf;
+            border-color: #0d9488;
+        }
+        .tab-section {
+            display: none;
+        }
+        .tab-section.active {
+            display: block;
+        }
+
+        /* Charts */
+        .chart-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .chart-wrapper {
+            background: rgba(22, 30, 49, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 1.5rem;
+            border-radius: 12px;
+        }
+        .chart-wrapper h3 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            color: #f1f5f9;
+        }
+        .chart-container {
+            position: relative;
+            height: 320px;
+            width: 100%;
+        }
+
+        /* BMC Grid */
+        .clinic-toggles {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        .clinic-btn {
+            background: rgba(22, 30, 49, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #94a3b8;
+            padding: 0.6rem 1.25rem;
+            cursor: pointer;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+        .clinic-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #f1f5f9;
+        }
+        .clinic-btn.active {
+            background: rgba(13, 148, 136, 0.2);
+            color: #2dd4bf;
+            border-color: #0d9488;
+            font-weight: 600;
+        }
+        .clinic-detail {
+            display: none;
+        }
+        .clinic-detail.active {
+            display: block;
+        }
+        .bmc-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(3, auto);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .bmc-cell {
+            background: rgba(22, 30, 49, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 1.25rem;
+            border-radius: 8px;
+        }
+        .bmc-cell h4 {
+            color: #2dd4bf;
+            font-size: 0.8rem;
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        .bmc-cell p {
+            font-size: 0.88rem;
+            margin: 0;
+            line-height: 1.5;
+            color: #cbd5e1;
+        }
+        .bmc-kp { grid-column: 1 / 2; grid-row: 1 / 3; }
+        .bmc-ka { grid-column: 2 / 3; grid-row: 1 / 2; }
+        .bmc-kr { grid-column: 2 / 3; grid-row: 2 / 3; }
+        .bmc-vp { grid-column: 3 / 4; grid-row: 1 / 3; }
+        .bmc-cr { grid-column: 4 / 5; grid-row: 1 / 2; }
+        .bmc-ch { grid-column: 4 / 5; grid-row: 2 / 3; }
+        .bmc-cs { grid-column: 5 / 6; grid-row: 1 / 3; }
+        .bmc-cost { grid-column: 1 / 4; grid-row: 3 / 4; }
+        .bmc-rev { grid-column: 4 / 6; grid-row: 3 / 4; }
+
+        .dim-box {
+            background: rgba(22, 30, 49, 0.5);
+            padding: 1.25rem;
+            border-radius: 8px;
+            border-left: 4px solid #0d9488;
+            height: 100%;
+        }
+        .win-card {
+            background: rgba(13, 148, 136, 0.12);
+            border: 1px solid rgba(13, 148, 136, 0.3);
+            color: #f1f5f9;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1.25rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 0.9rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            font-size: 0.88rem;
+        }
+        th {
+            font-weight: 600;
+            color: #2dd4bf;
+            background: rgba(13, 148, 136, 0.08);
+        }
+        @media (max-width: 900px) {
+            .chart-grid { grid-template-columns: 1fr; }
+            .bmc-grid { grid-template-columns: 1fr; display: flex; flex-direction: column; }
+        }
+    </style>
+</head>
+<body class="longsighted-theme">
+    <div class="main-content">
+
+    <main class="container" style="padding: 2rem 5%; max-width: 1400px; margin: 0 auto;">
+        <header class="page-header">
+            <h1>Market &amp; Competitor Intelligence</h1>
+            <p class="text-secondary">Comprehensive strategic analysis of the UK ophthalmic market, NHS backlogs, competitor benchmarks, and clinic business models.</p>
+        </header>
+
+        <div class="ep-tabs">
+            <button class="nav-btn active-tab" onclick="showMasterTab('market-dynamics', this)"><i class="fa fa-line-chart mr-1"></i> Market Dynamics &amp; NHS</button>
+            <button class="nav-btn" onclick="showMasterTab('competitor-matrix', this)"><i class="fa fa-table mr-1"></i> Competitor Benchmarks</button>
+            <button class="nav-btn" onclick="showMasterTab('clinic-bmcs', this)"><i class="fa fa-th-large mr-1"></i> Clinic Business Models (BMC)</button>
+            <button class="nav-btn" onclick="showMasterTab('win-strategies', this)"><i class="fa fa-crosshairs mr-1"></i> Strategic Positioning</button>
+        </div>
+
+        <!-- ==========================================
+             TAB 1: MARKET DYNAMICS & NHS BACKLOG
+             ========================================== -->
+        <section id="market-dynamics" class="tab-section active">
+            <div class="grid-4" style="margin-bottom: 2rem;">
+                <div class="stat-card card">
+                    <div class="stat-label">Total UK Eye Market</div>
+                    <div class="stat-value">£1.55B</div>
+                    <p class="text-secondary" style="font-size: 0.8rem; margin-top: 4px;">Growing at 6.8% CAGR</p>
+                </div>
+                <div class="stat-card card">
+                    <div class="stat-label">NHS Cataracts / Year</div>
+                    <div class="stat-value">500,000+</div>
+                    <p class="text-secondary" style="font-size: 0.8rem; margin-top: 4px;">45%+ outsourced to independent sector</p>
+                </div>
+                <div class="stat-card card">
+                    <div class="stat-label">Average NHS Wait</div>
+                    <div class="stat-value">16–20 Wks</div>
+                    <p class="text-secondary" style="font-size: 0.8rem; margin-top: 4px;">Routine cataract to 1st eye surgery</p>
+                </div>
+                <div class="stat-card card">
+                    <div class="stat-label">Private Cataracts / Yr</div>
+                    <div class="stat-value">80,875</div>
+                    <p class="text-secondary" style="font-size: 0.8rem; margin-top: 4px;">61.4% Self-Pay · 38.6% PMI</p>
+                </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="chart-grid">
+                <div class="chart-wrapper">
+                    <h3><i class="fa fa-bar-chart mr-2 text-teal"></i> Private Cataract Admissions (UK Growth)</h3>
+                    <div class="chart-container">
+                        <canvas id="cataractChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-wrapper">
+                    <h3><i class="fa fa-line-chart mr-2 text-teal"></i> Self-Pay vs. PMI Funding Split (%)</h3>
+                    <div class="chart-container">
+                        <canvas id="fundingChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Macro Drivers -->
+            <div class="grid-3" style="margin-top: 2rem;">
+                <div class="card">
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <i data-lucide="trending-up" class="icon-accent" style="width: 22px; height: 22px;"></i>
+                        <h4 style="margin: 0;">Self-Pay Acceleration</h4>
+                    </div>
+                    <p class="text-secondary" style="font-size: 0.88rem; line-height: 1.5;">
+                        Patients are increasingly unwilling to accept a 16–20 week NHS delay for basic monofocal lenses when private self-pay offers immediate treatment and premium lens options.
+                    </p>
+                </div>
+                <div class="card">
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <i data-lucide="eye" class="icon-accent" style="width: 22px; height: 22px;"></i>
+                        <h4 style="margin: 0;">Premium IOL Demand</h4>
+                    </div>
+                    <p class="text-secondary" style="font-size: 0.88rem; line-height: 1.5;">
+                        Surging consumer demand for EDOF and Trifocal lenses to achieve spectacle independence. NHS exclusively funds standard monofocal lenses, creating a natural upgrade pathway.
+                    </p>
+                </div>
+                <div class="card">
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <i data-lucide="shield-alert" class="icon-accent" style="width: 22px; height: 22px;"></i>
+                        <h4 style="margin: 0;">NHS Tariff Erosion</h4>
+                    </div>
+                    <p class="text-secondary" style="font-size: 0.88rem; line-height: 1.5;">
+                        High-volume NHS tariff models (SpaMedica, CHEC) face margin pressure from NHS tariff cuts. EyePros's premium self-pay model is immune to tariff restructuring.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             TAB 2: COMPETITOR BENCHMARKS & PRICING
+             ========================================== -->
+        <section id="competitor-matrix" class="tab-section">
+            <div class="card" style="margin-bottom: 2rem;">
+                <h3 style="margin-bottom: 1rem;"><i class="fa fa-table mr-2 text-teal"></i> Regional &amp; National Competitor Matrix</h3>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Provider</th>
+                                <th>Core Model</th>
+                                <th>Standard Cataract</th>
+                                <th>Premium IOL</th>
+                                <th>Wait Time</th>
+                                <th>Consultant Model</th>
+                                <th>Key Weakness</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>EyePros</strong></td>
+                                <td><span class="badge">Boutique Consultant</span></td>
+                                <td>£2,650</td>
+                                <td>£3,400</td>
+                                <td>1–2 Weeks</td>
+                                <td>Named Consultant Throughout</td>
+                                <td>Single surgical hub (scaling)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Optical Express</strong></td>
+                                <td>High-Street Retail Chain</td>
+                                <td>£2,495</td>
+                                <td>£3,995</td>
+                                <td>2–3 Weeks</td>
+                                <td>Optometrist-led assessment, brief surgeon intro</td>
+                                <td>Aggressive sales pressure, impersonal</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ramsay (Woodthorpe)</strong></td>
+                                <td>Private Hospital Group</td>
+                                <td>£2,850</td>
+                                <td>£3,800</td>
+                                <td>3–5 Weeks</td>
+                                <td>Traditional Independent Consultant</td>
+                                <td>General hospital environment, slow booking</td>
+                            </tr>
+                            <tr>
+                                <td><strong>SpaMedica</strong></td>
+                                <td>NHS Outsourcing Factory</td>
+                                <td>NHS Only</td>
+                                <td>Not Offered</td>
+                                <td>4–8 Weeks</td>
+                                <td>High-volume surgical lists</td>
+                                <td>No premium lenses, NHS only</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Optegra</strong></td>
+                                <td>National Eye Hospital Chain</td>
+                                <td>£2,795</td>
+                                <td>£3,895</td>
+                                <td>2–4 Weeks</td>
+                                <td>Hospital-based consultant rota</td>
+                                <td>Higher price point, corporate feel</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Stoneygate Eye Hospital</strong></td>
+                                <td>Regional Specialist Hospital</td>
+                                <td>£2,750</td>
+                                <td>£3,650</td>
+                                <td>2–3 Weeks</td>
+                                <td>Named Consultant</td>
+                                <td>Leicester focused, higher price</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Deep-Dive Competitor Cards -->
+            <div class="grid-2">
+                <div class="card">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h3 style="margin: 0;">Optical Express</h3>
+                        <span class="badge" style="background: rgba(239, 68, 68, 0.15); color: #f87171; border-color: rgba(239, 68, 68, 0.3);">Primary Threat</span>
+                    </div>
+                    <p class="text-secondary" style="font-size: 0.88rem;">130 UK locations. Market leader in refractive volume with massive marketing spend.</p>
+                    <div class="dim-box mt-3">
+                        <strong style="color: #2dd4bf; font-size: 0.85rem;">EyePros Competitive Edge:</strong>
+                        <p style="font-size: 0.85rem; margin-top: 4px;">
+                            Optical Express uses high-pressure retail sales and brief surgeon contact. EyePros wins on genuine consultant continuity, medical depth, and unhurried trust.
+                        </p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h3 style="margin: 0;">Ramsay Health Care (Woodthorpe)</h3>
+                        <span class="badge">Hospital Competitor</span>
+                    </div>
+                    <p class="text-secondary" style="font-size: 0.88rem;">Established private hospital provider in Nottingham with broad consultant networks.</p>
+                    <div class="dim-box mt-3">
+                        <strong style="color: #2dd4bf; font-size: 0.85rem;">EyePros Competitive Edge:</strong>
+                        <p style="font-size: 0.85rem; margin-top: 4px;">
+                            Ramsay treats ophthalmology as one of dozens of surgical lines. EyePros provides dedicated ophthalmic equipment, faster booking, and an eye-dedicated facility.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             TAB 3: CLINIC BUSINESS MODEL CANVASES
+             ========================================== -->
+        <section id="clinic-bmcs" class="tab-section">
+            <div class="card mb-4">
+                <h3><i class="fa fa-th mr-2 text-teal"></i> Business Model Canvas (BMC) Comparisons</h3>
+                <p class="text-secondary" style="font-size: 0.9rem;">Select a provider to inspect their complete 9-box operational and commercial architecture.</p>
+                <div class="clinic-toggles mt-3">
+                    <button class="clinic-btn active" onclick="switchClinic('eyepros', this)">EyePros (Target Model)</button>
+                    <button class="clinic-btn" onclick="switchClinic('spamedica', this)">SpaMedica</button>
+                    <button class="clinic-btn" onclick="switchClinic('optegra', this)">Optegra</button>
+                    <button class="clinic-btn" onclick="switchClinic('optical-express', this)">Optical Express</button>
+                    <button class="clinic-btn" onclick="switchClinic('moorfields', this)">Moorfields Private</button>
+                </div>
+            </div>
+
+            <!-- EyePros BMC -->
+            <div id="clinic-eyepros" class="clinic-detail active">
+                <h3 class="text-teal mb-3"><i class="fa fa-eye mr-2"></i> EyePros — Premium Consultant-Led Model</h3>
+                <div class="bmc-grid">
+                    <div class="bmc-cell bmc-kp"><h4>Key Partners</h4><p>Independent Optometrists, Local Optical Committees (LOCs), PMI Insurers (AXA, Bupa), Diagnostic &amp; IOL Vendors (Zeiss, Alcon)</p></div>
+                    <div class="bmc-cell bmc-ka"><h4>Key Activities</h4><p>Consultant consultations, premium cataract &amp; refractive surgery, MIGS glaucoma care, optometrist CPD events</p></div>
+                    <div class="bmc-cell bmc-kr"><h4>Key Resources</h4><p>Mr Ahmad Elsahn (dual subspecialist), Kingfisher House surgical hub, Vector Leasing tech suite</p></div>
+                    <div class="bmc-cell bmc-vp"><h4>Value Proposition</h4><p>Boutique, consultant-led eye care. Same surgeon throughout, radical pricing transparency, and dedicated co-management for optometrists.</p></div>
+                    <div class="bmc-cell bmc-cr"><h4>Customer Relationships</h4><p>Unhurried, empathetic clinical consultations; guaranteed patient return to referring practice</p></div>
+                    <div class="bmc-cell bmc-ch"><h4>Channels</h4><p>Optometrist referral network (234 independent practices), GP pathways, localized search, B2B corporate wellbeing</p></div>
+                    <div class="bmc-cell bmc-cs"><h4>Customer Segments</h4><p>Self-pay cataract &amp; glaucoma patients, PMI policyholders, presbyopic professionals</p></div>
+                    <div class="bmc-cell bmc-cost"><h4>Cost Structure</h4><p>Kingfisher House facility lease, surgical equipment lease, consultant &amp; clinical nurse staffing</p></div>
+                    <div class="bmc-cell bmc-rev"><h4>Revenue Streams</h4><p>65% Self-Pay Cataract &amp; Glaucoma, 30% Private Medical Insurance (PMI), 5% Corporate &amp; Diagnostics</p></div>
+                </div>
+            </div>
+
+            <!-- SpaMedica BMC -->
+            <div id="clinic-spamedica" class="clinic-detail">
+                <h3 class="text-teal mb-3"><i class="fa fa-hospital-o mr-2"></i> SpaMedica — High-Volume NHS Factory</h3>
+                <div class="bmc-grid">
+                    <div class="bmc-cell bmc-kp"><h4>Key Partners</h4><p>NHS Integrated Care Boards (ICBs), NHS Trusts, High-Street Optometrists, Private Equity</p></div>
+                    <div class="bmc-cell bmc-ka"><h4>Key Activities</h4><p>High-volume standard monofocal cataract surgery, YAG capsulotomy</p></div>
+                    <div class="bmc-cell bmc-kr"><h4>Key Resources</h4><p>60+ UK surgical centres, specialized theatre teams, patient transport fleet</p></div>
+                    <div class="bmc-cell bmc-vp"><h4>Value Proposition</h4><p>Free NHS cataract treatment, fast access within 4–8 weeks, free patient transport, standardised outcomes.</p></div>
+                    <div class="bmc-cell bmc-cr"><h4>Customer Relationships</h4><p>Transactional, high-volume, automated throughput</p></div>
+                    <div class="bmc-cell bmc-ch"><h4>Channels</h4><p>NHS e-Referral Service (e-RS), Community Optometrists, NHS contracts</p></div>
+                    <div class="bmc-cell bmc-cs"><h4>Customer Segments</h4><p>NHS cataract patients (elderly demographic seeking free treatment)</p></div>
+                    <div class="bmc-cell bmc-cost"><h4>Cost Structure</h4><p>High fixed facility costs, transport fleet logistics, clinical nurse staffing</p></div>
+                    <div class="bmc-cell bmc-rev"><h4>Revenue Streams</h4><p>99% NHS National Tariff reimbursement</p></div>
+                </div>
+            </div>
+
+            <!-- Optegra BMC -->
+            <div id="clinic-optegra" class="clinic-detail">
+                <h3 class="text-teal mb-3"><i class="fa fa-hospital-o mr-2"></i> Optegra — National Chain Eye Hospital</h3>
+                <div class="bmc-grid">
+                    <div class="bmc-cell bmc-kp"><h4>Key Partners</h4><p>Vision Express, Corporate Health Plans, EssilorLuxottica</p></div>
+                    <div class="bmc-cell bmc-ka"><h4>Key Activities</h4><p>Refractive lens exchange, laser eye surgery, private cataracts</p></div>
+                    <div class="bmc-cell bmc-kr"><h4>Key Resources</h4><p>20 dedicated eye hospitals, DRUID digital screening tech</p></div>
+                    <div class="bmc-cell bmc-vp"><h4>Value Proposition</h4><p>Dedicated specialist eye hospital network with full refractive and cataract capabilities.</p></div>
+                    <div class="bmc-cell bmc-cr"><h4>Customer Relationships</h4><p>Consultative, premium service</p></div>
+                    <div class="bmc-cell bmc-ch"><h4>Channels</h4><p>Vision Express partnership, direct consumer search, PMI panels</p></div>
+                    <div class="bmc-cell bmc-cs"><h4>Customer Segments</h4><p>Self-pay refractive seekers, insured patients, private cataracts</p></div>
+                    <div class="bmc-cell bmc-cost"><h4>Cost Structure</h4><p>Hospital real estate, national brand marketing, high tech maintenance</p></div>
+                    <div class="bmc-cell bmc-rev"><h4>Revenue Streams</h4><p>Self-Pay (Refractive &amp; Cataract), PMI, NHS waiting list overflow</p></div>
+                </div>
+            </div>
+
+            <!-- Optical Express BMC -->
+            <div id="clinic-optical-express" class="clinic-detail">
+                <h3 class="text-teal mb-3"><i class="fa fa-glasses mr-2"></i> Optical Express — High-Street Retail Chain</h3>
+                <div class="bmc-grid">
+                    <div class="bmc-cell bmc-kp"><h4>Key Partners</h4><p>Excimer laser vendors, digital marketing &amp; media agencies</p></div>
+                    <div class="bmc-cell bmc-ka"><h4>Key Activities</h4><p>Laser eye surgery (LASIK/PRK), lens replacement, optical retail</p></div>
+                    <div class="bmc-cell bmc-kr"><h4>Key Resources</h4><p>130 retail high-street locations, centralized tele-sales engine</p></div>
+                    <div class="bmc-cell bmc-vp"><h4>Value Proposition</h4><p>High-street accessible, heavily advertised refractive correction and finance packages.</p></div>
+                    <div class="bmc-cell bmc-cr"><h4>Customer Relationships</h4><p>Retail-driven, sales-target oriented</p></div>
+                    <div class="bmc-cell bmc-ch"><h4>Channels</h4><p>High-street shopping centre stores, heavy social/digital advertising</p></div>
+                    <div class="bmc-cell bmc-cs"><h4>Customer Segments</h4><p>Young adults (LASIK), over-50s presbyopes</p></div>
+                    <div class="bmc-cell bmc-cost"><h4>Cost Structure</h4><p>High-street shopping centre leases, massive digital ad budget</p></div>
+                    <div class="bmc-cell bmc-rev"><h4>Revenue Streams</h4><p>100% Self-Pay refractive and optical retail</p></div>
+                </div>
+            </div>
+
+            <!-- Moorfields Private BMC -->
+            <div id="clinic-moorfields" class="clinic-detail">
+                <h3 class="text-teal mb-3"><i class="fa fa-university mr-2"></i> Moorfields Private — Academic Tertiary Brand</h3>
+                <div class="bmc-grid">
+                    <div class="bmc-cell bmc-kp"><h4>Key Partners</h4><p>Moorfields Eye Hospital NHS Trust, UCL Institute of Ophthalmology</p></div>
+                    <div class="bmc-cell bmc-ka"><h4>Key Activities</h4><p>Complex surgical care, tertiary retinal/glaucoma referrals, clinical trials</p></div>
+                    <div class="bmc-cell bmc-kr"><h4>Key Resources</h4><p>World-leading academic consultants, international clinical reputation</p></div>
+                    <div class="bmc-cell bmc-vp"><h4>Value Proposition</h4><p>The ultimate clinical authority in complex and tertiary eye pathology.</p></div>
+                    <div class="bmc-cell bmc-cr"><h4>Customer Relationships</h4><p>Clinical, academic, highly specialized</p></div>
+                    <div class="bmc-cell bmc-ch"><h4>Channels</h4><p>Consultant peer referrals, international embassies, high-tier PMI</p></div>
+                    <div class="bmc-cell bmc-cs"><h4>Customer Segments</h4><p>Complex ocular pathology, international VIPs, premium PMI</p></div>
+                    <div class="bmc-cell bmc-cost"><h4>Cost Structure</h4><p>London real estate, academic consultant fees, research infrastructure</p></div>
+                    <div class="bmc-cell bmc-rev"><h4>Revenue Streams</h4><p>PMI (dominant), International Self-Pay, Research grants</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             TAB 4: STRATEGIC POSITIONING & WIN STRATEGIES
+             ========================================== -->
+        <section id="win-strategies" class="tab-section">
+            <div class="grid-2" style="margin-bottom: 2rem;">
+                <div class="card">
+                    <h3 style="margin-bottom: 0.75rem;"><i data-lucide="target" class="icon-accent" style="width: 20px; height: 20px; display: inline-block; vertical-align: middle; margin-right: 6px;"></i> EyePros Core Battleground</h3>
+                    <p class="text-secondary" style="font-size: 0.9rem; line-height: 1.6;">
+                        EyePros does not compete with SpaMedica on NHS volume, nor with Optical Express on discount retail advertising. We win by dominating the <strong>high-trust, consultant-led self-pay segment</strong> in the East Midlands.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 style="margin-bottom: 0.75rem;"><i data-lucide="check-circle" class="icon-accent" style="width: 20px; height: 20px; display: inline-block; vertical-align: middle; margin-right: 6px;"></i> The 4 Non-Negotiable Win Pillars</h3>
+                    <ul class="text-secondary" style="font-size: 0.88rem; display: flex; flex-direction: column; gap: 6px; margin-left: 1.2rem;">
+                        <li><strong>1. Named Consultant Continuity:</strong> No junior rotas or handoffs.</li>
+                        <li><strong>2. 5-Day Outcome Letter SLA:</strong> Rapid reporting back to referrers.</li>
+                        <li><strong>3. Guaranteed Patient Return:</strong> Never poaching optical sales.</li>
+                        <li><strong>4. Dual Subspecialty:</strong> Glaucoma MIGS + Premium Cataract in one place.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 style="margin-bottom: 1rem;"><i class="fa fa-shield mr-2 text-teal"></i> Head-to-Head Win Strategies</h3>
+                <div class="grid-3">
+                    <div class="dim-box">
+                        <h4 style="color: #2dd4bf; margin-top: 0;">Vs. Optical Express</h4>
+                        <p style="font-size: 0.85rem; color: #cbd5e1;"><strong>Their weakness:</strong> Optometrists do the sales pitch; the surgeon appears for 90 seconds on surgery day.</p>
+                        <p style="font-size: 0.85rem; color: #2dd4bf; margin-top: 6px;"><strong>Our pitch:</strong> "At EyePros, Mr Elsahn conducts your full 45-minute clinical assessment and performs your surgery."</p>
+                    </div>
+                    <div class="dim-box">
+                        <h4 style="color: #2dd4bf; margin-top: 0;">Vs. Ramsay Woodthorpe</h4>
+                        <p style="font-size: 0.85rem; color: #cbd5e1;"><strong>Their weakness:</strong> General hospital bureaucracy, slow booking lines, multi-specialty delays.</p>
+                        <p style="font-size: 0.85rem; color: #2dd4bf; margin-top: 6px;"><strong>Our pitch:</strong> "A dedicated boutique eye facility with appointments within 7–10 days and direct clinical access."</p>
+                    </div>
+                    <div class="dim-box">
+                        <h4 style="color: #2dd4bf; margin-top: 0;">Vs. SpaMedica</h4>
+                        <p style="font-size: 0.85rem; color: #cbd5e1;"><strong>Their weakness:</strong> Monofocal standard lenses only; no presbyopia or astigmatism correction options.</p>
+                        <p style="font-size: 0.85rem; color: #2dd4bf; margin-top: 6px;"><strong>Our pitch:</strong> "Tailored premium IOLs (Toric, EDOF, Trifocal) to restore clear spectacle-free distance and reading vision."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        lucide.createIcons();
+
+        function showMasterTab(tabId, btn) {
+            document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.ep-tabs .nav-btn').forEach(b => b.classList.remove('active-tab'));
+            document.getElementById(tabId).classList.add('active');
+            if(btn) btn.classList.add('active-tab');
+            lucide.createIcons();
+        }
+
+        function switchClinic(clinicId, btn) {
+            document.querySelectorAll('.clinic-detail').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.clinic-toggles .clinic-btn').forEach(b => b.classList.remove('active'));
+            const target = document.getElementById('clinic-' + clinicId);
+            if (target) target.classList.add('active');
+            if (btn) btn.classList.add('active');
+        }
+
+        // Initialize Chart.js
+        document.addEventListener("DOMContentLoaded", () => {
+            // Bar Chart: Cataract Admissions
+            const ctxBar = document.getElementById('cataractChart');
+            if (ctxBar) {
+                new Chart(ctxBar.getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: ['2019', '2020', '2021', '2022', '2023', '2024', '2025 (Est)'],
+                        datasets: [{
+                            label: 'Private Cataract Procedures',
+                            data: [42000, 28000, 51000, 64000, 73500, 80875, 89000],
+                            backgroundColor: '#0d9488',
+                            borderRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        scales: {
+                            y: {
+                                grid: { color: 'rgba(255,255,255,0.06)' },
+                                ticks: { color: '#94a3b8' },
+                                beginAtZero: true
+                            },
+                            x: {
+                                grid: { display: false },
+                                ticks: { color: '#94a3b8' }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Line Chart: Funding split
+            const ctxLine = document.getElementById('fundingChart');
+            if (ctxLine) {
+                new Chart(ctxLine.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: ['2019', '2020', '2021', '2022', '2023', '2024', '2025'],
+                        datasets: [
+                            {
+                                label: 'Self-Pay (%)',
+                                data: [45.0, 48.2, 51.5, 55.0, 58.3, 60.1, 61.4],
+                                borderColor: '#2dd4bf',
+                                backgroundColor: 'rgba(45, 212, 191, 0.1)',
+                                tension: 0.35,
+                                borderWidth: 3,
+                                fill: true
+                            },
+                            {
+                                label: 'PMI (%)',
+                                data: [55.0, 51.8, 48.5, 45.0, 41.7, 39.9, 38.6],
+                                borderColor: '#a78bfa',
+                                backgroundColor: 'transparent',
+                                tension: 0.35,
+                                borderWidth: 3
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                labels: { color: '#cbd5e1' }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                grid: { color: 'rgba(255,255,255,0.06)' },
+                                ticks: {
+                                    color: '#94a3b8',
+                                    callback: function(value) { return value + '%' }
+                                },
+                                min: 30,
+                                max: 70
+                            },
+                            x: {
+                                grid: { display: false },
+                                ticks: { color: '#94a3b8' }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+
+    <footer class="ep-footer" style="margin-top: 3rem;">
+        <h3>BACK IN FOCUS</h3>
+        <p>EyePros Strategic Intelligence Platform · v3.0 · 2026</p>
+        <p class="conf-notice">DATA CLASSIFICATION: CONFIDENTIAL — BOARD &amp; MANAGEMENT USE ONLY</p>
+    </footer>
+
+    </div><!-- /.main-content -->
+    <script src="js/sidebar.js"></script>
+</body>
+</html>

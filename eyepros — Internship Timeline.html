@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EyePros × Takoua — Interactive Internship Timeline</title>
+    
+    <!-- Bootstrap & Font Awesome -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- DrDoctor Design System Stylesheet -->
+    <link rel="stylesheet" href="css/drdoctor-eyepros.css">
+    
+    <style>
+        /* Sticky Phase Navigation Bar */
+        .timeline-sticky-bar {
+            position: sticky;
+            top: 76px;
+            z-index: 900;
+            background: rgba(251, 249, 245, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--drd-border);
+            padding: 12px 0;
+            transition: all 0.2s ease;
+        }
+
+        /* Progress Bar */
+        .timeline-progress-track {
+            height: 4px;
+            width: 100%;
+            background: var(--drd-border);
+            border-radius: 999px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+        .timeline-progress-fill {
+            height: 100%;
+            width: 30.4%; /* W7 of 23 */
+            background: var(--drd-teal);
+            border-radius: 999px;
+            transition: width 0.3s ease;
+        }
+
+        /* Vertical Spine Layout */
+        .timeline-spine-wrapper {
+            position: relative;
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 40px 0 80px 0;
+        }
+
+        .timeline-central-spine {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 28px;
+            width: 2px;
+            background: var(--drd-border);
+            z-index: 1;
+        }
+
+        @media (min-width: 768px) {
+            .timeline-central-spine {
+                left: 32px;
+            }
+        }
+
+        /* Phase Gate Headers */
+        .phase-gate-block {
+            position: relative;
+            z-index: 2;
+            margin: 48px 0 24px 0;
+        }
+        .phase-gate-block:first-child {
+            margin-top: 0;
+        }
+
+        .phase-gate-banner {
+            background: #ffffff;
+            border: 1px solid var(--drd-border);
+            border-radius: var(--drd-radius-lg);
+            padding: 20px 24px;
+            box-shadow: var(--drd-shadow-sm);
+            margin-left: 64px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        @media (min-width: 768px) {
+            .phase-gate-banner {
+                margin-left: 72px;
+            }
+        }
+
+        .phase-gate-banner.active-phase {
+            border-color: var(--drd-teal);
+            border-left: 4px solid var(--drd-teal);
+            box-shadow: var(--drd-shadow);
+            background: linear-gradient(90deg, var(--drd-teal-light) 0%, #ffffff 40%);
+        }
+
+        /* Milestone Node Item */
+        .milestone-node-item {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .milestone-node-item:hover .milestone-card-summary {
+            border-color: var(--drd-teal);
+            transform: translateX(4px);
+            box-shadow: var(--drd-shadow-sm);
+        }
+
+        .milestone-node-item.selected .milestone-card-summary {
+            border-color: var(--drd-teal-dark);
+            border-left: 3px solid var(--drd-teal-dark);
+            background: #ffffff;
+            box-shadow: var(--drd-shadow);
+        }
+
+        /* Spine Node Dots */
+        .spine-dot-marker {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 2px solid var(--drd-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 14px;
+            margin-left: 17px;
+            z-index: 3;
+            transition: all 0.2s ease;
+        }
+
+        @media (min-width: 768px) {
+            .spine-dot-marker {
+                margin-left: 21px;
+                width: 24px;
+                height: 24px;
+            }
+        }
+
+        .spine-dot-marker.completed {
+            background: var(--drd-teal);
+            border-color: var(--drd-teal);
+            color: #ffffff;
+        }
+        .spine-dot-marker.completed::after {
+            content: '✓';
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .spine-dot-marker.current {
+            background: var(--drd-teal-dark);
+            border-color: var(--drd-teal);
+            box-shadow: 0 0 0 5px rgba(13, 148, 136, 0.2);
+            animation: pulse-glow 2s infinite;
+        }
+
+        .spine-dot-marker.upcoming {
+            background: #ffffff;
+            border-color: #cbd5e1;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.25); }
+            50% { box-shadow: 0 0 0 7px rgba(13, 148, 136, 0.1); }
+        }
+
+        /* Milestone Card Summary */
+        .milestone-card-summary {
+            background: #ffffff;
+            border: 1px solid var(--drd-border);
+            border-radius: var(--drd-radius-md);
+            padding: 16px 20px;
+            margin-left: 26px;
+            flex-grow: 1;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        /* Stream Badges */
+        .stream-tag {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 2px 8px;
+            border-radius: var(--drd-radius-sm);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .tag-school { background: #fdf2f0; color: #991b1b; border: 1px solid #fca5a5; }
+        .tag-people { background: #f0fdfa; color: #115e59; border: 1px solid #5eead4; }
+        .tag-research { background: #f5f3ff; color: #5b21b6; border: 1px solid #c4b5fd; }
+        .tag-social { background: #f0f9ff; color: #075985; border: 1px solid #7dd3fc; }
+        .tag-brand { background: #fefce8; color: #854d0e; border: 1px solid #fde047; }
+        .tag-playbook { background: #f0fdf4; color: #166534; border: 1px solid #86efac; }
+
+        /* Slide-Over Contextual Detail Drawer */
+        .drd-drawer-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(18, 16, 22, 0.4);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .drd-drawer-backdrop.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .drd-detail-drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            max-width: 560px;
+            background: #ffffff;
+            border-left: 1px solid var(--drd-border);
+            box-shadow: -8px 0 32px rgba(18, 16, 22, 0.15);
+            z-index: 2010;
+            transform: translateX(100%);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .drd-drawer-backdrop.active .drd-detail-drawer {
+            transform: translateX(0);
+        }
+
+        .drawer-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--drd-border);
+            background: var(--drd-bg);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .drawer-body {
+            padding: 28px 24px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .drawer-footer {
+            padding: 16px 24px;
+            border-top: 1px solid var(--drd-border);
+            background: var(--drd-bg);
+            position: sticky;
+            bottom: 0;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .drawer-section-title {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--drd-ink-subtle);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .drawer-card-box {
+            background: var(--drd-surface-muted);
+            border: 1px solid var(--drd-border);
+            border-radius: var(--drd-radius-md);
+            padding: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- DrDoctor Floating Capsule Navigation injected dynamically by js/drdoctor-nav.js -->
+
+    <main id="main-content">
+
+        <!-- Page Hero -->
+        <section class="drd-hero" style="padding-top: 120px; padding-bottom: 30px;">
+            <div class="drd-container">
+                <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-2">
+                    <div>
+                        <span class="drd-badge drd-badge-teal mb-2">
+                            <i class="fa fa-calendar-check-o"></i> 15 JULY – 18 DECEMBER 2026 · 23 WEEKS
+                        </span>
+                        <h1 class="drd-hero-title mb-1">
+                            The EyePros Internship Roadmap
+                        </h1>
+                        <p class="drd-hero-lead mb-0 text-left" style="max-width: 800px; margin-left:0;">
+                            A continuous, progressive timeline of real work across the Double Diamond progression. <span class="text-dark font-weight-bold">Click any milestone to inspect objectives, activities, and deliverables.</span>
+                        </p>
+                    </div>
+
+                    <div class="d-flex flex-wrap align-items-center gap-2">
+                        <button onclick="exportMonthlyReport()" class="drd-btn drd-btn-secondary">
+                            <i data-lucide="download" width="16" height="16"></i> Export Report
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sticky Phase Progress & Stream Filter Bar -->
+        <div class="timeline-sticky-bar" id="timelineStickyBar">
+            <div class="drd-container">
+                <!-- Progress Line -->
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <span class="font-mono text-xs text-muted font-weight-bold">INTERNSHIP PROGRESS: WEEK 7 OF 23 (30%)</span>
+                    <span class="drd-badge drd-badge-teal" style="font-size: 0.65rem;">
+                        <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--drd-teal-dark);margin-right:4px;"></span>
+                        TODAY · 24–28 AUG (W7)
+                    </span>
+                </div>
+                <div class="timeline-progress-track">
+                    <div class="timeline-progress-fill"></div>
+                </div>
+
+                <!-- Phase Quick-Jump Scrubber & Stream Filters -->
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 pt-1">
+                    <!-- Phase Jumps -->
+                    <div class="d-flex flex-wrap items-center gap-1 font-mono text-xs">
+                        <span class="text-muted mr-1">Phases:</span>
+                        <button class="btn btn-xs btn-outline-secondary" onclick="scrollToPhase('phase-1')">1. Discover (W1-4)</button>
+                        <button class="btn btn-xs font-weight-bold" onclick="scrollToPhase('phase-2')" style="background:var(--drd-teal-light); border-color:var(--drd-teal-border); color:var(--drd-teal-dark);">2. Define (W5-8) · NOW</button>
+                        <button class="btn btn-xs btn-outline-secondary" onclick="scrollToPhase('phase-3')">3. Develop (W9-20)</button>
+                        <button class="btn btn-xs btn-outline-secondary" onclick="scrollToPhase('phase-4')">4. Deliver (W21-23)</button>
+                    </div>
+
+                    <!-- Stream Filter Pills -->
+                    <div class="d-flex flex-wrap items-center gap-1">
+                        <button class="drd-btn drd-btn-secondary active" onclick="filterStream('all')" id="filter-all" style="padding:4px 10px; font-size:0.72rem;">All Streams</button>
+                        <button class="drd-btn drd-btn-secondary" onclick="filterStream('people')" id="filter-people" style="padding:4px 10px; font-size:0.72rem;">People &amp; Visits</button>
+                        <button class="drd-btn drd-btn-secondary" onclick="filterStream('research')" id="filter-research" style="padding:4px 10px; font-size:0.72rem;">Research</button>
+                        <button class="drd-btn drd-btn-secondary" onclick="filterStream('brand')" id="filter-brand" style="padding:4px 10px; font-size:0.72rem;">Brand</button>
+                        <button class="drd-btn drd-btn-secondary" onclick="filterStream('playbook')" id="filter-playbook" style="padding:4px 10px; font-size:0.72rem;">Playbook</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Continuous Vertical Timeline Spine -->
+        <section class="drd-section" style="padding-top: 20px;">
+            <div class="drd-container">
+                <div class="timeline-spine-wrapper">
+                    <!-- The Central Spine Guide -->
+                    <div class="timeline-central-spine"></div>
+
+                    <!-- Dynamic Milestones injected by JavaScript -->
+                    <div id="verticalTimelineContainer"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide-Over Contextual Detail Drawer (Inspector) -->
+        <div class="drd-drawer-backdrop" id="drawerBackdrop" onclick="closeDrawer(event)">
+            <div class="drd-detail-drawer" id="detailDrawer" onclick="event.stopPropagation()">
+                <!-- Drawer Header -->
+                <div class="drawer-header">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <span class="stream-tag" id="drawerStreamTag">STREAM</span>
+                        <button class="btn btn-sm text-muted" onclick="closeDrawer()" aria-label="Close drawer" style="font-size:1.4rem; line-height:1; padding:0 6px;">&times;</button>
+                    </div>
+                    <h3 class="mb-1 text-dark" id="drawerTitle" style="font-size: 1.35rem;">Milestone Title</h3>
+                    <div class="d-flex align-items-center gap-2 font-mono text-xs text-muted" id="drawerMetaRow">
+                        <span id="drawerDates">15–19 JUL · WEEK 1</span>
+                        <span>·</span>
+                        <span id="drawerStatusBadge" class="badge badge-light border">Completed</span>
+                    </div>
+                </div>
+
+                <!-- Drawer Body -->
+                <div class="drawer-body">
+                    <!-- Objective -->
+                    <div>
+                        <div class="drawer-section-title">
+                            <i data-lucide="target" width="14" height="14"></i> Strategic Objective
+                        </div>
+                        <div class="drawer-card-box">
+                            <p class="mb-0 text-sm text-dark font-weight-bold" id="drawerObjective">Objective description goes here.</p>
+                        </div>
+                    </div>
+
+                    <!-- Key Activities Checklist -->
+                    <div>
+                        <div class="drawer-section-title">
+                            <i data-lucide="check-square" width="14" height="14"></i> Key Activities Conducted
+                        </div>
+                        <ul class="text-sm text-muted pl-3 mb-0 space-y-2" id="drawerActivitiesList">
+                            <!-- Activities -->
+                        </ul>
+                    </div>
+
+                    <!-- Expected Output / Deliverables -->
+                    <div>
+                        <div class="drawer-section-title">
+                            <i data-lucide="package" width="14" height="14"></i> Key Output / Deliverable
+                        </div>
+                        <div class="p-3 rounded border" style="background: var(--drd-teal-light); border-color: var(--drd-teal-border);" id="drawerDeliverableBox">
+                            <span class="text-xs font-mono text-teal-dark font-bold d-block mb-1">PRODUCED ARTIFACT</span>
+                            <span class="text-sm text-dark font-weight-bold" id="drawerDeliverableText">Artifact description</span>
+                        </div>
+                    </div>
+
+                    <!-- Key People / Stakeholders -->
+                    <div>
+                        <div class="drawer-section-title">
+                            <i data-lucide="users" width="14" height="14"></i> Stakeholders &amp; Clinical Lead
+                        </div>
+                        <p class="text-sm text-muted mb-0" id="drawerStakeholders">Mr Ahmad Elsahn, Optometrist Steve, Hyper Island.</p>
+                    </div>
+
+                    <!-- Progress Notes -->
+                    <div id="drawerNotesSection">
+                        <div class="drawer-section-title">
+                            <i data-lucide="file-text" width="14" height="14"></i> Strategic Notes &amp; Status
+                        </div>
+                        <div class="drawer-card-box">
+                            <p class="mb-0 text-xs text-muted font-mono" id="drawerNotes">Status notes</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Drawer Footer with Prev / Next Navigation -->
+                <div class="drawer-footer">
+                    <button class="drd-btn drd-btn-secondary" id="drawerPrevBtn" onclick="navigateMilestone(-1)" style="padding: 6px 14px; font-size: 0.8rem;">
+                        &larr; Previous
+                    </button>
+                    <span class="font-mono text-xs text-muted" id="drawerIndexIndicator">1 of 12</span>
+                    <button class="drd-btn drd-btn-secondary" id="drawerNextBtn" onclick="navigateMilestone(1)" style="padding: 6px 14px; font-size: 0.8rem;">
+                        Next &rarr;
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Multi-Column Editorial Footer -->
+        <footer class="drd-footer">
+            <div class="drd-container">
+                <div class="drd-footer-grid">
+                    <div class="drd-footer-col">
+                        <div class="drd-brand mb-2">
+                            <div class="drd-brand-mark">👁</div>
+                            <span>EyePros Playbook</span>
+                        </div>
+                        <p class="text-muted text-sm pr-md-4">
+                            Strategic intelligence platform and clinical referral engine for the EyePros ophthalmology partnership in the East Midlands.
+                        </p>
+                    </div>
+
+                    <div class="drd-footer-col">
+                        <h5>Navigation</h5>
+                        <ul class="drd-footer-links">
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="patient-pathways.html">Patient Pathways</a></li>
+                            <li><a href="market-numbers.html">Market &amp; Numbers</a></li>
+                            <li><a href="business-plan.html">Business Plan EyePros</a></li>
+                            <li><a href="timeline.html">Internship Timeline</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="drd-footer-col">
+                        <h5>Key Archetypes</h5>
+                        <ul class="drd-footer-links">
+                            <li><a href="patient-pathways.html">Cataract Volume &amp; IOL</a></li>
+                            <li><a href="patient-pathways.html">Glaucoma &amp; MIGS</a></li>
+                            <li><a href="patient-pathways.html">Laser &amp; Refractive</a></li>
+                            <li><a href="patient-pathways.html">Dry Eye &amp; EyeSpa</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="drd-footer-col">
+                        <h5>Connect</h5>
+                        <ul class="drd-footer-links">
+                            <li><a href="https://www.linkedin.com/in/takoua-selmi/" target="_blank"><i class="fa fa-linkedin mr-1"></i> LinkedIn Profile</a></li>
+                            <li><a href="https://takouaselmi.lovable.app/portfolio.html" target="_blank"><i class="fa fa-globe mr-1"></i> Digital Portfolio</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="drd-footer-bottom">
+                    <span>&copy; 2026 EyePros Strategic Intelligence · All rights reserved.</span>
+                    <span class="font-mono text-xs">Curated by Takoua Selmi</span>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- Scripts -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/drdoctor-nav.js"></script>
+
+    <script>
+      lucide.createIcons();
+
+      /* ── The Authoritative 23-Week Internship Dataset ── */
+      const PHASES_DATA = [
+        {
+          id: 'phase-1',
+          name: 'Phase 1: Discover',
+          weeks: 'Weeks 1–4 · 15 July – 9 August 2026',
+          status: 'completed',
+          desc: 'Orientation with Mr Ahmad Elsahn and Hyper Island. Mapping the NHS secondary ophthalmology landscape and regional market demand.',
+          milestones: [
+            {
+              id: 'm1',
+              week: 'Week 1 · 15–19 Jul',
+              title: 'Internship Launch & Orientation',
+              stream: 'school',
+              streamLabel: 'School & Alignment',
+              status: 'completed',
+              summary: 'Initial project framing, Hyper Island learning outcomes, and briefing with Mr Ahmad Elsahn.',
+              objective: 'Establish governance, working rhythms, and align academic learning goals with EyePros clinical strategy.',
+              activities: [
+                'Alignment session with Clinical Director Mr Ahmad Elsahn',
+                'Hyper Island internship contract and learning contract finalization',
+                'Setup of intelligence repository and initial research tools'
+              ],
+              deliverable: 'Internship charter and research roadmap',
+              stakeholders: 'Takoua Selmi, Mr Ahmad Elsahn, Hyper Island Industry Leader',
+              notes: 'Successfully established weekly Friday reporting cadence.'
+            },
+            {
+              id: 'm2',
+              week: 'Weeks 2–3 · 22 Jul – 2 Aug',
+              title: 'NHS Backlog & National Demand Audit',
+              stream: 'research',
+              streamLabel: 'Market Research',
+              status: 'completed',
+              summary: 'Deep-dive analysis of 450,000 annual cataract procedures, 700k glaucoma diagnoses, and 7.11m NHS backlog.',
+              objective: 'Quantify the macroeconomic and clinical demand tailwinds driving self-pay private conversion in the East Midlands.',
+              activities: [
+                'Synthesis of NHS England RTT data for Nottinghamshire and Derbyshire',
+                'PHIN private healthcare audit of regional cataract growth (+12.4%)',
+                'Mapping 5 competitor tiers across Midlands private providers'
+              ],
+              deliverable: 'Macro Demand & Market Benchmarks Report',
+              stakeholders: 'Mr Ahmad Elsahn',
+              notes: 'Identified 26-week NHS hospital queues as the primary driver for private optometrist referrals.'
+            },
+            {
+              id: 'm3',
+              week: 'Week 4 · 5–9 Aug',
+              title: 'Regional Stakeholder & LOC Mapping',
+              stream: 'research',
+              streamLabel: 'Market Research',
+              status: 'completed',
+              summary: 'Mapping Nottinghamshire & Derbyshire Local Optical Committees (LOCs) and 470 primary care practices.',
+              objective: 'Map the territory universe of independent, group, and chain optometry practices.',
+              activities: [
+                'Geographic segmentation of 234 independent practices across 3 counties',
+                'Identification of 28 regional practice group owners (D.I. Blow, Henry Smith)',
+                'Preparation of interview and shadowing scripts for the UK field visit'
+              ],
+              deliverable: '470 Practice Territory Directory & Segmentation Model',
+              stakeholders: 'Ahmad Elsahn, Steve (Optom Liaison)',
+              notes: 'Clear territory priority: Notts (58), Leics (115), Derbys (61).'
+            }
+          ]
+        },
+        {
+          id: 'phase-2',
+          name: 'Phase 2: Define (CURRENT)',
+          weeks: 'Weeks 5–8 · 10 August – 4 September 2026',
+          status: 'active',
+          desc: 'UK clinical shadowing, high-street optometry practice visits, survey distribution, Ahmad clinical video production, and Playbook v1 drafting.',
+          milestones: [
+            {
+              id: 'm4',
+              week: 'Week 5 · 10–15 Aug',
+              title: 'UK Clinical Visit & Practice Shadowing',
+              stream: 'people',
+              streamLabel: 'People & Field Visits',
+              status: 'completed',
+              summary: '6 intense days in Nottingham & Mansfield: NHS hospital list shadowing, BMI The Park surgery filming, and optometrist visits with Steve.',
+              objective: 'Immerse in clinical workflows, observe patient consultations directly with Ahmad, and test referral friction with practicing optometrists.',
+              activities: [
+                'Sunday 10 Aug: Arrival & NHS clinic shadow at Sherwood Forest Hospitals',
+                'Monday 11 Aug: Full day NHS hospital eye service list with Ahmad',
+                'Tuesday 12 Aug: Private surgical list at BMI The Park & surgery B-roll filming',
+                'Wednesday 13 Aug: Field visits to Nottingham optometrists with Steve',
+                'Thursday 14 Aug: Optom survey question testing & Ahmad interview shoot',
+                'Friday 15 Aug: Strategic debrief and Playbook deliverable scoping'
+              ],
+              deliverable: 'UK Visit Log, Video Assets & Field Observation Synthesis',
+              stakeholders: 'Mr Ahmad Elsahn, Steve, Sherwood Forest NHS Team, Regional Optometrists',
+              notes: 'Proved that optometrists care most about named consultant continuity and rapid clinic letters.'
+            },
+            {
+              id: 'm5',
+              week: 'Week 6 · 17–23 Aug',
+              title: 'Optometrist Survey Rollout & Brand Foundation',
+              stream: 'brand',
+              streamLabel: 'Brand Strategy',
+              status: 'completed',
+              summary: 'Survey distribution to 470 practice universe and drafting the "Back in Focus" brand positioning foundation.',
+              objective: 'Collect primary quantitative data on optometrist referral habits while structuring brand tone of voice.',
+              activities: [
+                'Distribution of digital optometrist questionnaire',
+                'Development of Brand Foundation: Vision, Mission, and Core Brand Pillars',
+                'Positioning Mr Ahmad Elsahn as the clinical PR anchor'
+              ],
+              deliverable: 'Brand Foundation Document & Live Survey Engine',
+              stakeholders: 'Takoua Selmi, Ahmad Elsahn',
+              notes: 'Survey focus: what makes an optometrist switch private referral destination.'
+            },
+            {
+              id: 'm6',
+              week: 'Week 7 · 24–28 Aug (TODAY)',
+              title: 'Survey Synthesis & Playbook v1 Architecture',
+              stream: 'playbook',
+              streamLabel: 'The Playbook',
+              status: 'active',
+              summary: 'Synthesizing survey responses, finalizing the 5 Clinical Archetypes, and assembling the 6 core pillars in the Playbook web app.',
+              objective: 'Deliver the core architecture and strategic draft of the EyePros Strategic Playbook.',
+              activities: [
+                'Data synthesis of optometrist friction points and preferred letter formats',
+                'Refining the 5 Clinical Archetypes (Cataract, Glaucoma, Laser, EyeSpa, Valeda)',
+                'DrDoctor-inspired full UX restructuring of the interactive web platform'
+              ],
+              deliverable: 'EyePros Strategic Playbook v1.0 & Interactive Dashboard',
+              stakeholders: 'Takoua Selmi, Ahmad Elsahn',
+              notes: 'Current focus: finalizing seamless progressive disclosure timeline.'
+            },
+            {
+              id: 'm7',
+              week: 'Week 8 · 31 Aug – 4 Sep',
+              title: 'Mid-Term Reflection & Strategy Review',
+              stream: 'school',
+              streamLabel: 'School & Alignment',
+              status: 'upcoming',
+              summary: 'Hyper Island Month 2 academic reflection and formal strategy review meeting with Ahmad.',
+              objective: 'Review Phase 1 & 2 outputs against business goals and adjust Phase 3 development roadmap.',
+              activities: [
+                'Submission of Month 2 internship learning log to Hyper Island',
+                'Comprehensive Playbook demonstration to clinical director',
+                'Finalizing field visit targets for Phase 3'
+              ],
+              deliverable: 'Mid-Term Evaluation Report & Phase 3 Work Plan',
+              stakeholders: 'Takoua Selmi, Ahmad Elsahn, Academic Supervisor',
+              notes: 'Scheduled for end of Week 8.'
+            }
+          ]
+        },
+        {
+          id: 'phase-3',
+          name: 'Phase 3: Develop',
+          weeks: 'Weeks 9–20 · 7 September – 27 November 2026',
+          status: 'upcoming',
+          desc: 'Rollout of optometrist field conversion engine, EyeSpa & Valeda marketing campaigns, 19 personas completion, and HubSpot CRM setup.',
+          milestones: [
+            {
+              id: 'm8',
+              week: 'Weeks 9–12 · Sep – Oct',
+              title: 'EyeSpa & Valeda Photobiomodulation Campaigns',
+              stream: 'social',
+              streamLabel: 'Social Media & Content',
+              status: 'upcoming',
+              summary: 'Content marketing campaign targeting dry eye sufferers and intermediate dry AMD patients across Nottingham and Derby.',
+              objective: 'Build consumer pull-demand for high-margin wellness packages with near-zero regional competition.',
+              activities: [
+                'Social video reels featuring Ahmad explaining Valeda light therapy',
+                'Dry Eye awareness campaign for screen workers and contact lens dropouts',
+                'Educational brochures distributed to partner optometrist waiting areas'
+              ],
+              deliverable: 'Omnichannel Patient Acquisition Campaign Assets',
+              stakeholders: 'Ahmad Elsahn, Clinic Marketing Team',
+              notes: 'Tied to World Sight Day (8 Oct) campaign triggers.'
+            },
+            {
+              id: 'm9',
+              week: 'Weeks 13–16 · Oct – Nov',
+              title: 'Commercial Operations & 6-Stage Referral Pipeline',
+              stream: 'people',
+              streamLabel: 'Field Operations',
+              status: 'upcoming',
+              summary: 'Executing the 18 visits/week cadence across Nottinghamshire, Leicestershire, and Derbyshire independent groups.',
+              objective: 'Convert 4–6 new practices per month into regular active referrers.',
+              activities: [
+                'Conducting structured first visits with lead practice owners',
+                'Hosting accredited CPD evening for optometrists with Ahmad Elsahn',
+                'Deploying 8-field practice visit workflow in HubSpot CRM Starter'
+              ],
+              deliverable: 'Live 6-Stage Practice Conversion CRM & Pipeline Scorecard',
+              stakeholders: 'Steve, Ahmad Elsahn, 470 Practice Owners',
+              notes: 'KPI target: 70% results / 30% work scorecard weighting.'
+            },
+            {
+              id: 'm10',
+              week: 'Weeks 17–20 · Nov',
+              title: 'Visiting Surgeon Model (PracticePartners)',
+              stream: 'brand',
+              streamLabel: 'Business Model',
+              status: 'upcoming',
+              summary: 'Structuring the commercial asset-sharing model to lease Kingfisher House surgical theatre during off-hours.',
+              objective: 'Maximize facility utilization and generate secondary recurring theatre rental revenue.',
+              activities: [
+                'Financial modeling of session rental tariffs vs variable consumable costs',
+                'Governance protocols for visiting accredited ophthalmic surgeons',
+                'Drafting surgeon partner onboarding guide'
+              ],
+              deliverable: 'PracticePartners Commercial Framework & Tariff Schedule',
+              stakeholders: 'Ahmad Elsahn, Hospital Operations Lead',
+              notes: 'Complements core EyePros surgical volume.'
+            }
+          ]
+        },
+        {
+          id: 'phase-4',
+          name: 'Phase 4: Deliver',
+          weeks: 'Weeks 21–23 · 30 November – 18 December 2026',
+          status: 'upcoming',
+          desc: 'Final assembly of the 7 core Playbook deliverables, master handover to Mr Ahmad Elsahn and clinic leadership, and graduation portfolio.',
+          milestones: [
+            {
+              id: 'm11',
+              week: 'Weeks 21–22 · Dec',
+              title: 'Final Playbook Assembly & 7 Deliverables',
+              stream: 'playbook',
+              streamLabel: 'The Playbook',
+              status: 'upcoming',
+              summary: 'Complete packaging of Brand Foundation, Clinical Archetypes, Competitor Matrix, Commercial Funnel, CRM Setup, Content Library, and Strategy Fit.',
+              objective: 'Deliver an institutional-grade strategic operating asset ready for long-term clinical execution.',
+              activities: [
+                'Full documentation audit and cross-link validation',
+                'Exporting executive strategy summaries for investors and board',
+                'Finalizing staff and liaison onboarding manuals'
+              ],
+              deliverable: 'EyePros Master Strategic Playbook (Print & Digital)',
+              stakeholders: 'Takoua Selmi, Ahmad Elsahn',
+              notes: 'The definitive output of the 23-week internship.'
+            },
+            {
+              id: 'm12',
+              week: 'Week 23 · 14–18 Dec',
+              title: 'Executive Handover & Graduation',
+              stream: 'school',
+              streamLabel: 'School & Graduation',
+              status: 'upcoming',
+              summary: 'Final presentation to EyePros clinical leadership and submission of master graduation portfolio to Hyper Island.',
+              objective: 'Celebrate achievements, transition operational ownership to the clinical team, and conclude internship.',
+              activities: [
+                'Formal executive presentation to Ahmad and key partners',
+                'Knowledge transfer sessions with marketing and liaison team',
+                'Hyper Island master degree defense and portfolio submission'
+              ],
+              deliverable: 'Graduation Portfolio & Strategic Handover Sign-off',
+              stakeholders: 'Takoua Selmi, Ahmad Elsahn, Hyper Island Faculty',
+              notes: 'Target Handover Date: 18 December 2026.'
+            }
+          ]
+        }
+      ];
+
+      /* Flat list of all milestones for sequential navigation */
+      let ALL_MILESTONES = [];
+      PHASES_DATA.forEach(phase => {
+        phase.milestones.forEach(m => {
+          ALL_MILESTONES.push({ ...m, phaseName: phase.name, phaseId: phase.id });
+        });
+      });
+
+      let currentSelectedId = 'm6'; // Default selected is W7 (NOW)
+
+      /* Render the vertical timeline spine */
+      function renderVerticalTimeline(filter = 'all') {
+        const container = document.getElementById('verticalTimelineContainer');
+        container.innerHTML = '';
+
+        PHASES_DATA.forEach(phase => {
+          // Check if phase has any visible milestones under current filter
+          const visibleMilestones = phase.milestones.filter(m => filter === 'all' || m.stream === filter);
+          if (visibleMilestones.length === 0) return;
+
+          // Phase Gate Header
+          const phaseHeader = document.createElement('div');
+          phaseHeader.className = 'phase-gate-block';
+          phaseHeader.id = phase.id;
+          phaseHeader.innerHTML = `
+            <div class="phase-gate-banner ${phase.status === 'active' ? 'active-phase' : ''}">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="font-mono text-xs font-bold ${phase.status === 'active' ? 'text-teal' : 'text-muted'} uppercase">${phase.name}</span>
+                <span class="badge ${phase.status === 'completed' ? 'badge-success' : phase.status === 'active' ? 'badge-info' : 'badge-light border'}" style="font-size:0.65rem;">
+                  ${phase.status === 'completed' ? 'Completed' : phase.status === 'active' ? 'Current Phase' : 'Upcoming'}
+                </span>
+              </div>
+              <h4 class="mb-0 text-sm font-bold text-dark">${phase.weeks}</h4>
+              <p class="text-xs text-muted mb-0 mt-1">${phase.desc}</p>
+            </div>
+          `;
+          container.appendChild(phaseHeader);
+
+          // Milestones in this phase
+          visibleMilestones.forEach(m => {
+            const isSelected = m.id === currentSelectedId;
+            const nodeEl = document.createElement('div');
+            nodeEl.className = `milestone-node-item ${isSelected ? 'selected' : ''}`;
+            nodeEl.id = `node-${m.id}`;
+            nodeEl.onclick = () => selectMilestone(m.id);
+
+            // Stream tag class
+            let tagClass = 'tag-people';
+            if (m.stream === 'school') tagClass = 'tag-school';
+            else if (m.stream === 'research') tagClass = 'tag-research';
+            else if (m.stream === 'social') tagClass = 'tag-social';
+            else if (m.stream === 'brand') tagClass = 'tag-brand';
+            else if (m.stream === 'playbook') tagClass = 'tag-playbook';
+
+            nodeEl.innerHTML = `
+              <!-- Dot Marker -->
+              <div class="spine-dot-marker ${m.status}" title="${m.status}"></div>
+
+              <!-- Summary Card -->
+              <div class="milestone-card-summary">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <span class="stream-tag ${tagClass}">${m.streamLabel}</span>
+                  <span class="font-mono text-xs text-muted font-weight-bold">${m.week}</span>
+                </div>
+                <h5 class="mb-1 text-sm font-bold text-dark">${m.title}</h5>
+                <p class="text-xs text-muted mb-0">${m.summary}</p>
+                <div class="d-flex justify-content-between align-items-center mt-2 pt-1 border-top" style="border-color: rgba(0,0,0,0.05) !important;">
+                  <span class="text-xs text-teal font-weight-bold" style="font-size:0.75rem;">Inspect Details &rarr;</span>
+                  <span class="badge ${m.status === 'completed' ? 'badge-light text-success border' : m.status === 'active' ? 'badge-info' : 'badge-light text-muted border'}" style="font-size:0.65rem;">
+                    ${m.status === 'completed' ? '✓ Done' : m.status === 'active' ? '● Active' : 'Planned'}
+                  </span>
+                </div>
+              </div>
+            `;
+            container.appendChild(nodeEl);
+          });
+        });
+      }
+
+      /* Open detail drawer for a milestone */
+      function selectMilestone(id) {
+        currentSelectedId = id;
+        const m = ALL_MILESTONES.find(item => item.id === id);
+        if (!m) return;
+
+        // Highlight node in spine
+        document.querySelectorAll('.milestone-node-item').forEach(el => el.classList.remove('selected'));
+        const activeNode = document.getElementById(`node-${id}`);
+        if (activeNode) activeNode.classList.add('selected');
+
+        // Populate Drawer
+        document.getElementById('drawerTitle').textContent = m.title;
+        document.getElementById('drawerDates').textContent = `${m.week} · ${m.phaseName}`;
+
+        const streamTag = document.getElementById('drawerStreamTag');
+        streamTag.textContent = m.streamLabel;
+        streamTag.className = `stream-tag tag-${m.stream}`;
+
+        const statusBadge = document.getElementById('drawerStatusBadge');
+        statusBadge.textContent = m.status === 'completed' ? '✓ Completed' : m.status === 'active' ? '● Current Active Milestone' : 'Planned Milestone';
+        statusBadge.className = `badge ${m.status === 'completed' ? 'badge-success' : m.status === 'active' ? 'badge-info' : 'badge-light border'}`;
+
+        document.getElementById('drawerObjective').textContent = m.objective || m.summary;
+
+        const actList = document.getElementById('drawerActivitiesList');
+        actList.innerHTML = (m.activities || []).map(act => `<li>${act}</li>`).join('');
+
+        document.getElementById('drawerDeliverableText').textContent = m.deliverable || 'Documented outcome in Playbook';
+        document.getElementById('drawerStakeholders').textContent = m.stakeholders || 'Mr Ahmad Elsahn';
+        document.getElementById('drawerNotes').textContent = m.notes || 'No critical dependencies.';
+
+        // Update Index Indicator (e.g. 6 of 12)
+        const idx = ALL_MILESTONES.findIndex(item => item.id === id);
+        document.getElementById('drawerIndexIndicator').textContent = `${idx + 1} of ${ALL_MILESTONES.length}`;
+
+        // Open Drawer
+        document.getElementById('drawerBackdrop').classList.add('active');
+        lucide.createIcons();
+      }
+
+      function closeDrawer() {
+        document.getElementById('drawerBackdrop').classList.remove('active');
+      }
+
+      function navigateMilestone(direction) {
+        const currentIdx = ALL_MILESTONES.findIndex(item => item.id === currentSelectedId);
+        const nextIdx = currentIdx + direction;
+        if (nextIdx >= 0 && nextIdx < ALL_MILESTONES.length) {
+          selectMilestone(ALL_MILESTONES[nextIdx].id);
+        }
+      }
+
+      function scrollToPhase(phaseId) {
+        const target = document.getElementById(phaseId);
+        if (target) {
+          const top = target.getBoundingClientRect().top + window.scrollY - 140;
+          window.scrollTo({ top: top, behavior: 'smooth' });
+        }
+      }
+
+      function filterStream(streamKey) {
+        document.querySelectorAll('.drd-btn').forEach(btn => btn.classList.remove('active'));
+        const btn = document.getElementById(`filter-${streamKey}`);
+        if (btn) btn.classList.add('active');
+        renderVerticalTimeline(streamKey);
+      }
+
+      function exportMonthlyReport() {
+        let txt = "EYEPROS INTERNSHIP STRATEGIC PROGRESS REPORT\n";
+        txt += "Curator: Takoua Selmi · 15 July – 18 December 2026\n";
+        txt += "=========================================================\n\n";
+
+        PHASES_DATA.forEach(p => {
+          txt += `[${p.name.toUpperCase()}] (${p.weeks})\n`;
+          txt += `Goal: ${p.desc}\n\n`;
+          p.milestones.forEach(m => {
+            txt += `* ${m.week} [${m.status.toUpperCase()}]: ${m.title}\n`;
+            txt += `  - Objective: ${m.objective}\n`;
+            txt += `  - Deliverable: ${m.deliverable}\n`;
+            txt += `  - Stakeholders: ${m.stakeholders}\n\n`;
+          });
+          txt += "---------------------------------------------------------\n\n";
+        });
+
+        const blob = new Blob([txt], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `EyePros_Internship_Roadmap_W7.txt`;
+        a.click();
+      }
+
+      // Keyboard navigation handler (Esc to close, Left/Right for prev/next)
+      document.addEventListener('keydown', (e) => {
+        const backdrop = document.getElementById('drawerBackdrop');
+        if (backdrop.classList.contains('active')) {
+          if (e.key === 'Escape') {
+            closeDrawer();
+          } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+            navigateMilestone(1);
+          } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+            navigateMilestone(-1);
+          }
+        }
+      });
+
+      // Initial Render
+      renderVerticalTimeline('all');
+    </script>
+</body>
+</html>

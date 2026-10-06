@@ -34,23 +34,13 @@ const initPlaybook = () => {
     });
   });
 
-  // Group ScrollSpy — Maps section IDs to the 6 header group links
+  // Group ScrollSpy — Maps section IDs to the home sections
   const sectionGroupMap = {
-    'banner': 'navGroupOverview',
-    'intro': 'navGroupOverview',
-    'structure': 'navGroupSystem',
-    'acronyms': 'navGroupSystem',
-    'sources': 'navGroupSystem',
-    'intel-carousel': 'navGroupMarket',
-    'numbers': 'navGroupMarket',
-    'competitors': 'navGroupMarket',
-    'watchlist': 'navGroupMarket',
-    'archetypes': 'navGroupStrategy',
-    'strategy': 'navGroupStrategy',
-    'interviews': 'navGroupWorkbench',
-    'timeline': 'navGroupWorkbench',
-    'events-calendar': 'navGroupResources',
-    'what-i-know': 'navGroupResources'
+    'banner': 'banner',
+    'events-calendar': 'events-calendar',
+    'intel-carousel': 'intel-carousel',
+    'acronyms': 'acronyms',
+    'sources': 'sources'
   };
 
   const groupLinks = document.querySelectorAll('.nav-group-link');
@@ -88,41 +78,45 @@ const initPlaybook = () => {
   }
 
   // ==========================================================================
-  // 3. DATE-DRIVEN LOGIC & LIVE COUNTDOWN
+  // 3. INTERNSHIP ELAPSED TIMER & REMAINING DAYS
   // ==========================================================================
-  const INTERNSHIP_START = new Date("2026-07-15T22:00:00+02:00");
+  const INTERNSHIP_START = new Date("2026-07-01T00:00:00+01:00"); // July 1, 2026 (BST)
+  const INTERNSHIP_END   = new Date("2026-12-18T23:59:59+00:00"); // Dec 18, 2026
 
   function updateCountdown() {
     const now = new Date();
-    const diffMs = INTERNSHIP_START - now;
     const widget = document.getElementById('countdownWidget');
     if (!widget) return;
 
-    if (diffMs <= 0) {
-      widget.innerHTML = `
-        <div style="font-weight: 700; color: #0d9488; text-align: center; font-size: 1.05rem; padding: 6px 0;">ACTIVE IN SESSION</div>
-        <div class="font-size-xs text-muted text-center">Day One officially active!</div>
-      `;
-      return;
-    }
-
-    const totalSecs  = Math.floor(diffMs / 1000);
+    // Elapsed time since July 1
+    const elapsedMs = Math.max(0, now - INTERNSHIP_START);
+    const totalSecs  = Math.floor(elapsedMs / 1000);
     const totalMins  = Math.floor(totalSecs / 60);
     const totalHours = Math.floor(totalMins / 60);
     const days       = Math.floor(totalHours / 24);
-    const secsRemaining = totalSecs % 60;
-    const minsRemaining = totalMins % 60;
     const hrsRemaining  = totalHours % 24;
+    const minsRemaining = totalMins % 60;
+    const secsRemaining = totalSecs % 60;
 
     const daysEl = document.getElementById('countdownDays');
-    const hrsEl = document.getElementById('countdownHours');
+    const hrsEl  = document.getElementById('countdownHours');
     const minsEl = document.getElementById('countdownMins');
-    const secEl = document.getElementById('countdownSecs');
+    const secEl  = document.getElementById('countdownSecs');
 
     if (daysEl) daysEl.textContent  = String(days).padStart(2, '0');
-    if (hrsEl) hrsEl.textContent = String(hrsRemaining).padStart(2, '0');
+    if (hrsEl)  hrsEl.textContent   = String(hrsRemaining).padStart(2, '0');
     if (minsEl) minsEl.textContent  = String(minsRemaining).padStart(2, '0');
-    if (secEl) secEl.textContent = String(secsRemaining).padStart(2, '0');
+    if (secEl)  secEl.textContent   = String(secsRemaining).padStart(2, '0');
+
+    // Days remaining until Dec 18
+    const footerEl = document.getElementById('countdownFooter');
+    if (footerEl) {
+      const remainingMs = Math.max(0, INTERNSHIP_END - now);
+      const daysLeft = Math.ceil(remainingMs / (1000 * 60 * 60 * 24));
+      footerEl.textContent = daysLeft > 0
+        ? daysLeft + ' day' + (daysLeft !== 1 ? 's' : '') + ' left until 18 December'
+        : 'Internship completed 🎓';
+    }
   }
 
   updateCountdown();
@@ -379,6 +373,40 @@ const initPlaybook = () => {
     });
   });
 
+  // Instant search input for Acronym Explorer
+  const globalSearchInput = document.getElementById('globalSearch');
+  const clearSearchBtn = document.getElementById('clearSearchBtn');
+  const searchResultsStats = document.getElementById('searchResultsStats');
+
+  if (globalSearchInput) {
+    globalSearchInput.addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      const cards = acronymsGrid ? acronymsGrid.querySelectorAll('.acronym-card') : [];
+      let matchCount = 0;
+
+      cards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        if (!q || text.includes(q)) {
+          card.style.display = 'block';
+          matchCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      if (searchResultsStats) {
+        searchResultsStats.textContent = q ? `Found ${matchCount} matching term${matchCount === 1 ? '' : 's'}` : '';
+      }
+    });
+
+    if (clearSearchBtn) {
+      clearSearchBtn.addEventListener('click', () => {
+        globalSearchInput.value = '';
+        globalSearchInput.dispatchEvent(new Event('input'));
+      });
+    }
+  }
+
   // ==========================================================================
   // 7. PATIENT ARCHETYPE SYSTEM
   // ==========================================================================
@@ -632,41 +660,403 @@ if (document.readyState === 'loading') {
 }
 
 /* ==========================================================================
-   OPHTHALMOLOGY INTELLIGENCE CAROUSEL (SWR Feed Engine)
+   OPHTHALMOLOGY INTELLIGENCE CAROUSEL (Real RSS Feed Engine v4)
+   Fetches verified articles from NHS Digital, BJO, Nature Eye, GOV.UK
    ========================================================================== */
 (function () {
-  const newsItems = [
-    { tag: 'NHS POLICY', title: 'NHS Outpatient Backlogs Driver for Self-Pay Ophthalmology', summary: 'Outpatient backlog tracking shows continuous demand for independent sector cataract procedures in the Midlands.', date: 'Just Now', source: 'Health Policy Journal' },
-    { tag: 'COMMISSIONING', title: 'Nottinghamshire ICB Reviews Community Eyecare Pathways', summary: 'Commissioning framework highlights collaborative opportunities for Tier 2 independent surgical providers.', date: 'Today', source: 'NHS Commissioning' },
-    { tag: 'TECHNOLOGY', title: 'Photobiomodulation Valeda System Clinical Results', summary: 'Multi-center clinical trials validate light therapy for slowing progression in Dry AMD patients.', date: 'Yesterday', source: 'Ophthalmology Times' },
-    { tag: 'SURGICAL', title: 'MIGS Micro-Stent Adoption Accelerates in UK', summary: 'Minimally Invasive Glaucoma Surgery expands across private clinics as patients seek drop-free pressure management.', date: '2 days ago', source: 'Eye News UK' }
+  'use strict';
+
+  /* ---- RSS Feed Sources (Ophthalmology Only) ---- */
+  const RSS_SOURCES = [
+    {
+      name: 'British Journal of Ophthalmology',
+      logo: 'BJO',
+      feedUrl: 'https://bjo.bmj.com/rss/current.xml',
+      filterCat: 'clinical',
+      category: 'Clinical Research',
+      region: 'Global',
+      priority: 'clinical-update',
+      tag: 'RESEARCH'
+    },
+    {
+      name: 'Nature Eye (RCOphth)',
+      logo: 'EYE',
+      feedUrl: 'https://www.nature.com/eye.rss',
+      filterCat: 'clinical',
+      category: 'Ophthalmology Journal',
+      region: 'Global',
+      priority: 'clinical-update',
+      tag: 'JOURNAL'
+    },
+    {
+      name: 'GOV.UK Ophthalmology',
+      logo: 'GOV',
+      feedUrl: 'https://www.gov.uk/search/all.atom?keywords=ophthalmology',
+      filterCat: 'nhs',
+      category: 'Policy & Regulation',
+      region: 'UK National',
+      priority: 'strategic',
+      tag: 'POLICY'
+    },
+    {
+      name: 'SpaMedica',
+      logo: 'SM',
+      feedUrl: 'https://www.spamedica.co.uk/feed',
+      filterCat: 'competitors',
+      category: 'Competitor Intel',
+      region: 'UK National',
+      priority: 'market-move',
+      tag: 'COMPETITOR'
+    },
+    {
+      name: 'BMJ Open Ophthalmology',
+      logo: 'BMJ',
+      feedUrl: 'https://bmjopenophth.bmj.com/rss/current.xml',
+      filterCat: 'clinical',
+      category: 'Clinical & Tech',
+      region: 'Global',
+      priority: 'clinical-update',
+      tag: 'CLINICAL'
+    }
   ];
 
+  const PROXY_BASE = 'https://api.rss2json.com/v1/api.json?rss_url=';
+  const CACHE_KEY = 'ls_rss_feed_cache';
+  const CACHE_TTL = 3600000; // 1 hour
+
+  /* ---- State ---- */
+  let activeFilter = 'all';
+  let liveFeedItems = [];
+  let scrollPos = 0;
+  let autoplayTimer = null;
+  let isHovered = false;
+
+  /* ---- Helper: relative time from date string ---- */
+  function getRelativeTimeFromDate(dateStr) {
+    const pubDate = new Date(dateStr);
+    const now = new Date();
+    const diffMs = now - pubDate;
+    const diffHours = Math.floor(diffMs / 3600000);
+    const diffDays = Math.floor(diffMs / 86400000);
+
+    if (diffHours < 1) return 'Just now';
+    if (diffHours < 24) return `${diffHours} hrs ago`;
+    if (diffDays === 1) return 'Yesterday';
+    if (diffDays < 7) return `${diffDays} days ago`;
+    if (diffDays < 14) return '1 week ago';
+    if (diffDays < 60) return `${Math.floor(diffDays / 7)} weeks ago`;
+    return pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+  }
+
+  function formatDate(dateStr) {
+    const d = new Date(dateStr);
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+  }
+
+  function stripHtml(html) {
+    const tmp = document.createElement('div');
+    tmp.innerHTML = html || '';
+    return tmp.textContent || tmp.innerText || '';
+  }
+
+  function truncate(str, maxLen) {
+    if (!str || str.length <= maxLen) return str;
+    return str.substring(0, maxLen).replace(/\s+\S*$/, '') + '…';
+  }
+
+  /* ---- Fetch a single RSS feed via proxy ---- */
+  async function fetchFeed(source) {
+    try {
+      const url = PROXY_BASE + encodeURIComponent(source.feedUrl);
+      const resp = await fetch(url);
+      if (!resp.ok) return [];
+      const data = await resp.json();
+      if (data.status !== 'ok' || !data.items) return [];
+
+      return data.items.slice(0, 6).map((item, idx) => ({
+        id: `${source.logo.toLowerCase()}-${idx}-${Date.now()}`,
+        filterCat: source.filterCat,
+        priority: source.priority,
+        tag: source.tag,
+        source: source.name,
+        sourceLogo: source.logo,
+        title: stripHtml(item.title),
+        summary: truncate(stripHtml(item.description || item.content || ''), 220),
+        detail: stripHtml(item.content || item.description || ''),
+        category: source.category,
+        region: source.region,
+        date: formatDate(item.pubDate),
+        relativeTime: getRelativeTimeFromDate(item.pubDate),
+        url: item.link || '#',
+        pubDate: new Date(item.pubDate),
+        isNew: (Date.now() - new Date(item.pubDate).getTime()) < 86400000 * 2
+      }));
+    } catch (err) {
+      console.warn(`[RSS] Failed to fetch ${source.name}:`, err.message);
+      return [];
+    }
+  }
+
+  /* ---- Fetch all feeds in parallel ---- */
+  async function fetchAllFeeds() {
+    // Check cache first
+    try {
+      const cached = JSON.parse(localStorage.getItem(CACHE_KEY));
+      if (cached && (Date.now() - cached.timestamp) < CACHE_TTL) {
+        console.log('[RSS] Serving from cache');
+        return cached.items;
+      }
+    } catch (e) {}
+
+    const results = await Promise.allSettled(RSS_SOURCES.map(s => fetchFeed(s)));
+    let allItems = [];
+    results.forEach(r => {
+      if (r.status === 'fulfilled') allItems = allItems.concat(r.value);
+    });
+
+    // Sort by publication date (newest first)
+    allItems.sort((a, b) => b.pubDate - a.pubDate);
+
+    // Cache
+    try {
+      localStorage.setItem(CACHE_KEY, JSON.stringify({
+        timestamp: Date.now(),
+        items: allItems
+      }));
+    } catch (e) {}
+
+    return allItems;
+  }
+
+  /* ---- Build a single card's HTML ---- */
+  function buildCard(item) {
+    const newRibbon = item.isNew
+      ? '<div class="ophi-new-ribbon">NEW</div>'
+      : '';
+
+    return `
+      <div class="ophi-card${item.isNew ? ' new-item-highlight' : ''}" data-cat="${item.filterCat}">
+        ${newRibbon}
+
+        <!-- Top accent color bar -->
+        <div class="ophi-card-accent"></div>
+
+        <!-- Card body -->
+        <div class="ophi-card-body">
+
+          <!-- Source row + time -->
+          <div class="ophi-card-top">
+            <div class="ophi-source-row">
+              <span class="ophi-source-logo">${item.sourceLogo}</span>
+              <span class="ophi-source-name">${item.source}</span>
+            </div>
+            <span class="ophi-relative-time">${item.relativeTime}</span>
+          </div>
+
+          <!-- Priority tag -->
+          <div class="ophi-card-meta">
+            <span class="ophi-priority-tag ${item.priority}">${item.tag}</span>
+          </div>
+
+          <!-- Headline -->
+          <h4 class="ophi-headline">${item.title}</h4>
+
+          <!-- Summary -->
+          <p class="ophi-summary">${item.summary}</p>
+
+        </div>
+
+        <!-- Footer -->
+        <div class="ophi-card-footer">
+          <div class="ophi-badge-row">
+            <span class="ophi-category-badge">${item.category}</span>
+            <span class="ophi-region-badge">${item.region}</span>
+          </div>
+          <div class="ophi-cta-row">
+            <span class="ophi-pub-date">${item.date}</span>
+            <span style="display:inline-flex;align-items:center;gap:6px;">
+              ${item.url && item.url !== '#'
+                ? `<a class="ophi-cta-btn" href="${item.url}" target="_blank" rel="noopener">Read <i class="fa fa-external-link"></i></a>`
+                : `<span class="ophi-cta-btn" style="opacity:0.45;cursor:default">Source <i class="fa fa-check"></i></span>`
+              }
+            </span>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  /* ---- Filter and Render Carousel ---- */
   function renderCarousel() {
     const track = document.getElementById('ophiCarouselTrack');
     if (!track) return;
 
-    let html = '';
-    newsItems.forEach(item => {
-      html += `
-        <div class="ophi-card glass-card p-4 mr-3" style="flex: 0 0 300px;">
-          <span class="badge badge-accent mb-2">${item.tag}</span>
-          <h4 class="font-size-sm font-weight-bold mb-2">${item.title}</h4>
-          <p class="font-size-xs text-secondary mb-3">${item.summary}</p>
-          <div class="d-flex justify-content-between font-size-xs text-muted">
-            <span><i class="fa fa-clock-o"></i> ${item.date}</span>
-            <span><i class="fa fa-rss"></i> ${item.source}</span>
-          </div>
+    const displayedItems = activeFilter === 'all'
+      ? liveFeedItems
+      : liveFeedItems.filter(item => item.filterCat === activeFilter);
+
+    const countAllEl = document.getElementById('count-all');
+    if (countAllEl) countAllEl.textContent = liveFeedItems.length;
+
+    if (displayedItems.length === 0) {
+      track.innerHTML = `
+        <div style="padding: 40px; text-align: center; width: 100%; color: var(--ls-muted);">
+          <i class="fa fa-info-circle" style="font-size: 2rem; color: var(--ls-gold); margin-bottom: 12px;"></i>
+          <p>No articles in this category. Switch to "All Intel" to view all updates.</p>
         </div>
       `;
+      return;
+    }
+
+    track.innerHTML = displayedItems.map(item => buildCard(item)).join('');
+    scrollPos = 0;
+    updateTrackScroll(track);
+  }
+
+  /* ---- Scrolling helpers ---- */
+  function getCardWidth() {
+    const card = document.querySelector('.ophi-card');
+    return card ? card.offsetWidth + 16 : 340;
+  }
+
+  function updateTrackScroll(track) {
+    if (!track) track = document.getElementById('ophiCarouselTrack');
+    if (!track) return;
+    track.style.transform = `translateX(-${scrollPos}px)`;
+  }
+
+  function scrollRight() {
+    const track = document.getElementById('ophiCarouselTrack');
+    const viewport = document.querySelector('.ophi-carousel-viewport');
+    if (!track || !viewport) return;
+    const maxScroll = track.scrollWidth - viewport.offsetWidth;
+    scrollPos = Math.min(scrollPos + getCardWidth(), maxScroll);
+    updateTrackScroll(track);
+  }
+
+  function scrollLeft() {
+    scrollPos = Math.max(scrollPos - getCardWidth(), 0);
+    updateTrackScroll();
+  }
+
+  /* ---- Autoplay ---- */
+  function startAutoplay() {
+    stopAutoplay();
+    autoplayTimer = setInterval(() => {
+      if (isHovered) return;
+      const track = document.getElementById('ophiCarouselTrack');
+      const viewport = document.querySelector('.ophi-carousel-viewport');
+      if (!track || !viewport) return;
+      const maxScroll = track.scrollWidth - viewport.offsetWidth;
+      if (scrollPos >= maxScroll - 10) {
+        scrollPos = 0;
+      } else {
+        scrollPos += getCardWidth();
+      }
+      updateTrackScroll(track);
+    }, 5000);
+  }
+
+  function stopAutoplay() {
+    if (autoplayTimer) clearInterval(autoplayTimer);
+  }
+
+  /* ---- Setup Controls ---- */
+  function setupControls() {
+    const leftBtn = document.querySelector('.ophi-arrow-left');
+    const rightBtn = document.querySelector('.ophi-arrow-right');
+    if (leftBtn) leftBtn.addEventListener('click', () => { scrollLeft(); stopAutoplay(); startAutoplay(); });
+    if (rightBtn) rightBtn.addEventListener('click', () => { scrollRight(); stopAutoplay(); startAutoplay(); });
+
+    const viewport = document.querySelector('.ophi-carousel-viewport');
+    if (viewport) {
+      viewport.addEventListener('mouseenter', () => { isHovered = true; });
+      viewport.addEventListener('mouseleave', () => { isHovered = false; });
+    }
+
+    // Filter buttons
+    const filterBar = document.getElementById('ophiFilterBar');
+    if (filterBar) {
+      filterBar.addEventListener('click', (e) => {
+        const btn = e.target.closest('.ophi-filter-btn');
+        if (!btn) return;
+        filterBar.querySelectorAll('.ophi-filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeFilter = btn.dataset.filter;
+        renderCarousel();
+        stopAutoplay();
+        startAutoplay();
+      });
+    }
+  }
+
+  /* ---- Refresh trigger ---- */
+  function triggerFeedRefresh(isUserClick) {
+    const statusEl = document.getElementById('ophiStatusBar');
+    const refreshBtn = document.querySelector('.gcal-refresh-btn');
+
+    if (refreshBtn) refreshBtn.classList.add('spinning');
+
+    if (statusEl) {
+      const badge = statusEl.querySelector('.gcal-live-badge');
+      if (badge) {
+        badge.className = 'gcal-live-badge status-checking';
+        badge.innerHTML = '<i class="fa fa-circle-o-notch fa-spin"></i> Fetching live RSS feeds…';
+      }
+    }
+
+    // Clear cache on manual refresh
+    if (isUserClick) {
+      localStorage.removeItem(CACHE_KEY);
+    }
+
+    fetchAllFeeds().then(items => {
+      liveFeedItems = items;
+      renderCarousel();
+
+      if (refreshBtn) refreshBtn.classList.remove('spinning');
+
+      if (statusEl) {
+        const badge = statusEl.querySelector('.gcal-live-badge');
+        if (badge) {
+          const now = new Date();
+          const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+          badge.className = 'gcal-live-badge status-updated';
+          badge.innerHTML = `<i class="fa fa-check-circle text-teal"></i> Live — ${liveFeedItems.length} verified articles synced at ${timeStr}`;
+        }
+      }
+    }).catch(err => {
+      console.error('[RSS] Feed refresh failed:', err);
+      if (statusEl) {
+        const badge = statusEl.querySelector('.gcal-live-badge');
+        if (badge) {
+          badge.className = 'gcal-live-badge';
+          badge.innerHTML = '<i class="fa fa-exclamation-circle" style="color:#ef4444"></i> Feed unavailable — check connection';
+        }
+      }
     });
-    track.innerHTML = html;
+  }
+
+  /* ---- Initialize ---- */
+  function initIntelFeed() {
+    setupControls();
+    triggerFeedRefresh(false);
+    startAutoplay();
+
+    // Manual refresh button
+    const refreshBtn = document.querySelector('.gcal-refresh-btn');
+    if (refreshBtn) {
+      refreshBtn.addEventListener('click', () => triggerFeedRefresh(true));
+    }
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', renderCarousel);
+    document.addEventListener('DOMContentLoaded', initIntelFeed);
   } else {
-    renderCarousel();
+    initIntelFeed();
   }
 })();
 
@@ -807,6 +1197,19 @@ if (document.readyState === 'loading') {
     if (searchEl) searchEl.addEventListener('input', applyFilters);
 
     applyFilters();
+
+    /* Update events calendar sync status badge */
+    setTimeout(function () {
+      const statusEl = document.getElementById('gcalSyncStatus');
+      if (statusEl) {
+        const badge = statusEl.querySelector('.gcal-live-badge');
+        if (badge) {
+          badge.classList.remove('status-checking');
+          badge.classList.add('status-updated');
+          badge.innerHTML = '<i class="fa fa-check-circle"></i> Live — ' + gcalEvents.length + ' events loaded';
+        }
+      }
+    }, 1500);
   };
 
   if (document.readyState === 'loading') {

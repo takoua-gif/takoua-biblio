@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stakeholder Ecosystem - EyePros</title>
+    <link rel="stylesheet" href="eyepros-design-system.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .page-header {
+            text-align: center;
+            padding: 4rem 2rem 2rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--obsidian);
+            margin-bottom: 1rem;
+        }
+        
+        .page-header p {
+            color: var(--granite);
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .ecosystem-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+
+        .tier-section {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border-left: 6px solid var(--sage);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .tier-section:hover {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .tier-1 { border-left-color: var(--obsidian); }
+        .tier-2 { border-left-color: var(--clay); }
+        .tier-3 { border-left-color: var(--sage); }
+        .tier-4 { border-left-color: var(--sand); }
+
+        .tier-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--sand);
+        }
+
+        .tier-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .tier-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            background-color: var(--linen);
+            border-radius: 50%;
+            color: var(--obsidian);
+        }
+
+        .tier-1 .tier-icon { background-color: var(--obsidian); color: var(--white); }
+        .tier-2 .tier-icon { background-color: var(--clay); color: var(--white); }
+        .tier-3 .tier-icon { background-color: var(--sage); color: var(--white); }
+
+        .tier-title {
+            font-size: 1.5rem;
+            color: var(--obsidian);
+            margin: 0 0 0.25rem 0;
+            font-family: var(--font-heading);
+        }
+
+        .tier-desc {
+            color: var(--granite);
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        .stakeholders-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .stakeholder-card {
+            background-color: var(--linen);
+            border: 1px solid var(--sand);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            height: 100%;
+        }
+
+        .stakeholder-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
+            border-color: var(--clay);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .stakeholder-info {
+            flex: 1;
+        }
+
+        .stakeholder-name {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            color: var(--obsidian);
+            font-size: 1.15rem;
+            margin: 0 0 0.35rem 0;
+        }
+
+        .stakeholder-type {
+            font-size: 0.75rem;
+            color: var(--clay);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .priority-badge {
+            font-size: 0.7rem;
+            padding: 0.35rem 0.6rem;
+            border-radius: 12px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .priority-critical { background-color: #fee2e2; color: #991b1b; }
+        .priority-high { background-color: #ffedd5; color: #9a3412; }
+        .priority-med { background-color: #fef3c7; color: #92400e; }
+        .priority-low { background-color: #e0f2fe; color: #075985; }
+
+        .card-body {
+            flex-grow: 1;
+        }
+        
+        .card-body p {
+            font-size: 0.95rem;
+            color: var(--granite);
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .card-actions {
+            margin-top: auto;
+            padding-top: 1rem;
+            border-top: 1px dashed var(--sand);
+        }
+
+        .card-actions h4 {
+            font-size: 0.75rem;
+            color: var(--obsidian);
+            margin: 0 0 0.75rem 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+        
+        .card-actions ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.85rem;
+            color: var(--granite);
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+        
+        .card-actions ul li {
+            position: relative;
+            padding-left: 1.25rem;
+        }
+        
+        .card-actions ul li i[data-lucide] {
+            position: absolute;
+            left: 0;
+            top: 0.15rem;
+            width: 12px;
+            height: 12px;
+            color: var(--clay);
+        }
+    </style>
+</head>
+<body class="longsighted-theme">
+<div class="main-content">
+
+    <main>
+        <header class="page-header">
+            <h1>Stakeholder Ecosystem Map</h1>
+            <p>A strategic overview of key relationships, priorities, and engagement actions for the successful launch and scale of the EyePros platform.</p>
+        </header>
+
+        <div class="ecosystem-container">
+            
+            <!-- Tier 1: Core -->
+            <section class="tier-section tier-1">
+                <div class="tier-header">
+                    <div class="tier-title-wrap">
+                        <div class="tier-icon"><i data-lucide="target"></i></div>
+                        <div>
+                            <h2 class="tier-title">Tier 1: Core Ecosystem</h2>
+                            <p class="tier-desc">The internal and foundational pillars driving the clinic's day-to-step operations and clinical excellence.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="stakeholders-grid">
+                    <div class="stakeholder-card">
+                        <div class="card-header">
+                            <div class="stakeholder-info">
+                                <h3 class="stakeholder-name">Mr Ahmad Elsahn</h3>
+                                <p class="stakeholder-type"><i data-lucide="user"></i> Clinical Director</p>
+                            </div>
+                            <span class="priority-badge priority-critical">Critical</span>
+                        </div>
+                        <div class="card-body">
+                            <p>Lead Consultant Ophthalmologist and Glaucoma + Cataract Specialist. The primary clinical authority guiding medical protocols.</p>
+                        </div>
+                        <div class="card-actions">
+                            <h4><i data-lucide="activity"></i> Pre-Launch Actions</h4>
+                            <ul>
+                                <li><i data-lucide="check"></i> Finalize clinical pathways</li>
+                                <li><i data-lucide="check"></i> Sign off on operational SOPs</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="stakeholder-card">
+                        <div class="card-header">
+                            <div class="stakeholder-info">
+                                <h3 class="stakeholder-name">EyePros Clinical Team</h3>
+                                <p class="stakeholder-type"><i class="lucide-users"></i> Internal Staff</p>
+                            </div>
+                            <span class="priority-badge priority-critical">Critical</span>
+                        </div>
+                        <div class="card-body">
+                            <p>Nurses, technicians, and support staff delivering front-line patient care and operating diagnostic equipment.</p>
+                        </div>
+                        <div class="card-actions">
+                            <h4><i data-lucide="activity"></i> Pre-Launch Actions</h4>
+                            <ul>
+                                <li><i data-lucide="check"></i> Complete systems training</li>
+                                <li><i data-lucide="check"></i> Dry-run patient flow simulations</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="stakeholder-card">
+                        <div class="card-header">
+                            <div class="stakeholder-info">
+                                <h3 class="stakeholder-name">Kingfisher House Facility</h3>
+                                <p class="stakeholder-type"><i data-lucide="building"></i> Infrastructure</p>
+                            </div>
+                            <span class="priority-badge priority-high">High</span>
+                        </div>
+                        <div class="card-body">
+                            <p>The physical location housing the clinic. Requires rigorous maintenance, compliance, and premium patient environment setup.</p>
+                        </div>
+                        <div class="card-actions">
+                            <h4><i data-lucide="activity"></i> Pre-Launch Actions</h4>
+                            <ul>
+                                <li><i data-lucide="check"></i> CQC readiness physical audit</li>
+                                <li><i data-lucide="check"></i> Finalize branding and signage</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tier 2: Strategic Partners -->
+            <section class="tier-section tier-2">
+                <div class="tier-header">
+                    <div class="tier-title-wrap">
+                        <div class="tier-icon"><i data-lucide="handshake"></i></div>
+                        <div>
+                            <h2 class="tier-title">Tier 2: Strategic Partners</h2>
+                            <p class="tier-desc">Direct business collaborators and primary referral sources essential for revenue and patient acquisition.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="stakeholders-grid">
+                    <div class="stakeholder-card">
+                        <div class="card-header">
+                            <div class="stakeholder-info">
+                                <h3 class="stakeholder-name">Key Optometrists</h3>
+                                <p class="stakeholder-type"><i data-lucide="eye"></i> Referrers</p>
+                            </div>
+                            <span class="priority-badge priority-high">High</span>
+                        </div>
+                        <div class="card-body">
+                            <p>E.g., Anjali Sheringham-Sheridan. High-quality independent, evidence-based referrers who highly value detailed outcome letters.</p>
+                        </div>
+                        <div class="card-actions">
+                            <h4><i data-lucide="activity"></i> Pre-Launch Actions</h4>
+                            <ul>
+                                <li><i data-lucide="check"></i> Host CPD educational events</li>
+                                <li><i data-lucide="check"></i> Establish secure referral channels</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="stakeholder-card">
+                        <div class="card-header">
+                            <div class="stakeholder-info">
+                                <h3 class="stakeholder-name">NHS ICB</h3>
+                                <p class="stakeholder-type"><i data-lucide="building-2"></i> Public Sector</p>
+                            </div>
+                            <span class="priority-badge priority-high">High</span>
+                        </div>
+                        <div class="card-body">
+                            <p>Integrated Care Board. Critical for potential shared-care contracts and seamless eRS (e-Referral Service) integration.</p>
+                        </div>
+                        <div class="card-actions">
+                            <h4><i data-lucide="activity"></i> Pre-Launch Actions</h4>
+                            <ul>
+                                <li><i data-lucide="check"></i> Initiate contract discussions</li>
+                                <li><i data-lucide="check"></i> eRS technical integration tests</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="stakeholder-card">
+                        <div class="card-header">
+                            <div class="stakeholder-info">
+                                <h3 class="stakeholder-name">PMIs (Bupa, AXA, Aviva)</h3>
+                                <p class="stakeholder-type"><i data-lucide="shield"></i> Insurance</p>
+                            </div>
+                            <span class="priority-badge priority-high">High</span>
+                        </div>
+                        <div class="card-body">
+                            <p>Private Medical Insurers providing patient coverage. Require formal recognition and fee schedule negotiations.</p>
+                        </div>
+                        <div class="card-actions">
+                            <h4><i data-lucide="activity"></i> Pre-Launch Actions</h4>
+                            <ul>
+                                <li><i data-lucide="check"></i> Secure facility recognition</li>
+                                <li><i data-lucide="check"></i> Finalize billing workflows</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="stakeholder-card">
+                        <div class="card-header">
+                            <div class="stakeholder-info">
+                                <h3 class="stakeholder-name">Chrysalis Finance</h3>
+                                <p class="stakeholder-type"><i data-lucide="credit-card"></i> Patient Finance</p>
+                            </div>
+                            <span class="priority-badge priority-med">Medium</span>
+                        </div>
+                        <div class="card-body">
+                            <p>Enables 0% APR patient financing options, drastically improving conversion rates for premium self-pay procedures.</p>
+                        </div>
+                        <div class="card-actions">
+                            <h4><i data-lucide="activity"></i> Pre-Launch Actions</h4>
+                            <ul>
+                                <li><i data-lucide="check"></i> Integrate portal on website</li>
+                                <li><i data-lucide="check"></i> Train staff on finance FAQs</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="stakeholder-card">
+                        <div class="card-header">
+                            <div class="stakeholder-info">
+                                <h3 class="stakeholder-name">Katherine Morrison</h3>
+                                <p class="stakeholder-type"><i data-lucide="briefcase"></i> Corporate Wellness</p>
+                            </div>
+                            <span class="priority-badge priority-med">Medium</span>
+                        </div>
+                        <div class="card-body">
+                            <p>Corporate Wellness Director managing executive eye health programmes. A lucrative B2B recurring revenue channel.</p>
+                        </div>
+                        <div class="card-actions">
+                            <h4><i data-lucide="activity"></i> Pre-Launch Actions</h4>
+                            <ul>
+                                <li><i data-lucide="check"></i> Draft corporate package proposals</li>
+                                <li><i data-lucide="check"></i> Schedule initial site tours</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tier 3: Ecosystem -->
+            <section class="tier-section tier-3">
+                <div class="tier-header">
+                    <div class="tier-title-wrap">
+                        <div class="tier-icon"><i data-lucide="network"></i></div>
+                        <div>
+                            <h2 class="tier-title">Tier 3: Ecosystem</h2>
+                            <p class="tier-desc">Regulatory bodies and secondary networks that support, supply, or govern the operating environment.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="stakeholders-grid">
+                    <div class="stakeholder-card">
+                        <div class="card-header">
+                            <div class="stakeholder-info">
+                                <h3 class="stakeholder-name">Local GPs (Dr Simon)</h3>
+                                <p class="stakeholder-type"><i data-lucide="stethoscope"></i> Primary Care</p>
+                            </div>
+                            <span class="priority-badge priority-high">High</span>
+                        </div>
+                        <div class="card-body">
+                            <p>Controls primary care referral pathways. Needs clear guidance on urgent access and streamlined communication.</p>
+                        </div>
+                        <div class="card-actions">
+                            <h4><i data-lucide="activity"></i> Pre-Launch Actions</h4>
+                            <ul>
+                                <li><i data-lucide="check"></i> Distribute referral guidelines</li>
+                                <li><i data-lucide="check"></i> Establish direct contact lines</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="stakeholder-card">
+                        <div class="card-header">
+                            <div class="stakeholder-info">
+                                <h3 class="stakeholder-name">CQC Regulators</h3>
+                                <p class="stakeholder-type"><i data-lucide="scale"></i> Governance</p>
+                            </div>
+                            <span class="priority-badge priority-critical">Critical</span>
+                        </div>
+                        <div class="card-body">
+                            <p>Care Quality Commission. Mandates regulatory compliance and overall inspection readiness for the facility to operate.</p>
+                        </div>
+                        <div class="card-actions">
+                            <h4><i data-lucide="activity"></i> Pre-Launch Actions</h4>
+                            <ul>
+                                <li><i data-lucide="check"></i> Complete registration process</li>
+                                <li><i data-lucide="check"></i> Prepare evidence binders</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="stakeholder-card">
+                        <div class="card-header">
+                            <div class="stakeholder-info">
+                                <h3 class="stakeholder-name">LOC/LMC Networks</h3>
+                                <p class="stakeholder-type"><i data-lucide="users-2"></i> Local Committees</p>
+                            </div>
+                            <span class="priority-badge priority-med">Medium</span>
+                        </div>
+                        <div class="card-body">
+                            <p>Local Optical and Medical Committees. Essential for community integration and standardized local pathways.</p>
+                        </div>
+                        <div class="card-actions">
+                            <h4><i data-lucide="activity"></i> Pre-Launch Actions</h4>
+                            <ul>
+                                <li><i data-lucide="check"></i> Attend local committee meetings</li>
+                                <li><i data-lucide="check"></i> Present service offerings</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="stakeholder-card">
+                        <div class="card-header">
+                            <div class="stakeholder-info">
+                                <h3 class="stakeholder-name">Equipment Suppliers</h3>
+                                <p class="stakeholder-type"><i data-lucide="package"></i> Vendor Partners</p>
+                            </div>
+                            <span class="priority-badge priority-med">Medium</span>
+                        </div>
+                        <div class="card-body">
+                            <p>Major manufacturers like Alcon and Zeiss providing state-of-the-art diagnostic and surgical equipment.</p>
+                        </div>
+                        <div class="card-actions">
+                            <h4><i data-lucide="activity"></i> Pre-Launch Actions</h4>
+                            <ul>
+                                <li><i data-lucide="check"></i> Finalize installation timelines</li>
+                                <li><i data-lucide="check"></i> Arrange preventative maintenance</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tier 4: Extended -->
+            <section class="tier-section tier-4">
+                <div class="tier-header">
+                    <div class="tier-title-wrap">
+                        <div class="tier-icon"><i data-lucide="globe"></i></div>
+                        <div>
+                            <h2 class="tier-title">Tier 4: Extended Network</h2>
+                            <p class="tier-desc">Broader community, academic, and media entities influencing brand reputation and long-term positioning.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="stakeholders-grid">
+                    <div class="stakeholder-card">
+                        <div class="card-header">
+                            <div class="stakeholder-info">
+                                <h3 class="stakeholder-name">Professional Bodies</h3>
+                                <p class="stakeholder-type"><i data-lucide="award"></i> Accreditation</p>
+                            </div>
+                            <span class="priority-badge priority-low">Low</span>
+                        </div>
+                        <div class="card-body">
+                            <p>RCOphth and GOC. Ensure overarching professional standards, ongoing education, and ethical guidelines are met.</p>
+                        </div>
+                        <div class="card-actions">
+                            <h4><i data-lucide="activity"></i> Pre-Launch Actions</h4>
+                            <ul>
+                                <li><i data-lucide="check"></i> Ensure clinician registrations</li>
+                                <li><i data-lucide="check"></i> Align with best practice guidelines</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="stakeholder-card">
+                        <div class="card-header">
+                            <div class="stakeholder-info">
+                                <h3 class="stakeholder-name">University Research</h3>
+                                <p class="stakeholder-type"><i data-lucide="graduation-cap"></i> Academic</p>
+                            </div>
+                            <span class="priority-badge priority-low">Low</span>
+                        </div>
+                        <div class="card-body">
+                            <p>Local academic institutions for potential clinical trials, publishing opportunities, and raising institutional prestige.</p>
+                        </div>
+                        <div class="card-actions">
+                            <h4><i data-lucide="activity"></i> Pre-Launch Actions</h4>
+                            <ul>
+                                <li><i data-lucide="check"></i> Identify potential research areas</li>
+                                <li><i data-lucide="check"></i> Soft outreach to department heads</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="stakeholder-card">
+                        <div class="card-header">
+                            <div class="stakeholder-info">
+                                <h3 class="stakeholder-name">Media & PR</h3>
+                                <p class="stakeholder-type"><i data-lucide="megaphone"></i> Communications</p>
+                            </div>
+                            <span class="priority-badge priority-med">Medium</span>
+                        </div>
+                        <div class="card-body">
+                            <p>Local press and health journalists. Critical for the initial launch announcement and ongoing reputation management.</p>
+                        </div>
+                        <div class="card-actions">
+                            <h4><i data-lucide="activity"></i> Pre-Launch Actions</h4>
+                            <ul>
+                                <li><i data-lucide="check"></i> Draft launch press release</li>
+                                <li><i data-lucide="check"></i> Build local media contact list</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="stakeholder-card">
+                        <div class="card-header">
+                            <div class="stakeholder-info">
+                                <h3 class="stakeholder-name">Community Groups</h3>
+                                <p class="stakeholder-type"><i data-lucide="heart"></i> Public Relations</p>
+                            </div>
+                            <span class="priority-badge priority-low">Low</span>
+                        </div>
+                        <div class="card-body">
+                            <p>Local patient advocacy and support groups. Fosters goodwill and grassroots word-of-mouth recommendations.</p>
+                        </div>
+                        <div class="card-actions">
+                            <h4><i data-lucide="activity"></i> Pre-Launch Actions</h4>
+                            <ul>
+                                <li><i data-lucide="check"></i> Plan community health webinar</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 EyePros Strategic Intelligence. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+<footer class="ep-footer">
+    <h3>BACK IN FOCUS</h3>
+    <p>EyePros Strategic Intelligence Platform · v3.0 · 2026</p>
+    <p class="conf-notice">DATA CLASSIFICATION: CONFIDENTIAL — BOARD & MANAGEMENT USE ONLY</p>
+</footer>
+</div><!-- /.main-content -->
+<script src="js/sidebar.js"></script>
+</body>
+</html>

@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Longsighted · Patient Pathways &amp; Clinical Archetypes</title>
+  <meta name="description" content="5 EyePros clinical patient pathways — Cataract, Glaucoma MIGS, Laser Refractive, Dry Eye EyeSpa, and Valeda Photobiomodulation. Led by Mr Ahmad Elsahn.">
+  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/longsighted.css">
+
+  <style>
+    /* ── Page header */
+    .ls-page-hero {
+      background: var(--ls-ink);
+      color: var(--ls-white);
+      padding: 100px 0 72px;
+    }
+
+    /* ── Archetype selector (sticky sidebar / top tabs) */
+    .ls-archetypes-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 0;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .ls-archetypes-layout { grid-template-columns: 1fr; }
+    }
+
+    /* Selector panel */
+    .ls-archetype-selector {
+      position: sticky;
+      top: calc(var(--nav-h) + 24px);
+      padding-right: 32px;
+    }
+
+    @media (max-width: 900px) {
+      .ls-archetype-selector {
+        position: static;
+        padding-right: 0;
+        padding-bottom: 32px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+    }
+
+    .ls-archetype-btn {
+      display: block;
+      width: 100%;
+      text-align: left;
+      background: var(--ls-white);
+      border: 1.5px solid var(--ls-border);
+      border-radius: var(--radius-lg);
+      padding: 16px 18px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: all var(--dur-fast) var(--ease-out);
+      font-family: var(--font-body);
+    }
+
+    @media (max-width: 900px) {
+      .ls-archetype-btn { width: auto; margin-bottom: 0; }
+    }
+
+    .ls-archetype-btn:hover {
+      border-color: rgba(0,0,0,0.15);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .ls-archetype-btn.active {
+      background: var(--ls-ink);
+      border-color: var(--ls-ink);
+      color: var(--ls-white);
+      box-shadow: var(--shadow-md);
+    }
+
+    .ls-archetype-btn.active .arch-label { color: rgba(255,255,255,0.55); }
+    .ls-archetype-btn.active .arch-name  { color: var(--ls-white); }
+
+    .arch-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ls-subtle);
+      margin-bottom: 4px;
+    }
+
+    .arch-name {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--ls-ink);
+      line-height: 1.2;
+    }
+
+    /* Content panel */
+    .ls-archetype-content { display: none; }
+    .ls-archetype-content.active { display: block; }
+
+    /* Journey steps */
+    .ls-journey-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 32px;
+    }
+
+    .ls-journey-step {
+      background: var(--ls-cream);
+      border: 1px solid var(--ls-border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      position: relative;
+    }
+
+    .ls-journey-step-num {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--ls-gold);
+      opacity: 0.3;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .ls-journey-step-title {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--ls-ink);
+      margin-bottom: 6px;
+    }
+
+    /* Pricing card */
+    .ls-price-badge {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 4px;
+      margin-top: 16px;
+    }
+
+    .ls-price-from { font-size: 0.75rem; color: var(--ls-subtle); }
+    .ls-price-amount {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--ls-ink);
+    }
+
+    .ls-price-per { font-size: 0.75rem; color: var(--ls-subtle); }
+  </style>
+</head>
+<body>
+
+  <!-- NAV injected by js/ls-nav.js -->
+
+  <!-- ── Page Hero -->
+  <section class="ls-page-hero" style="position:relative; overflow:hidden;">
+    <!-- Background image -->
+    <div style="position:absolute;inset:0;z-index:0;">
+      <img src="images/cataract-surgery.jpg" alt="EyePros surgical team" style="width:100%;height:100%;object-fit:cover;opacity:0.15;filter:saturate(0.4);">
+      <div style="position:absolute;inset:0;background:linear-gradient(120deg,var(--ls-ink) 40%,rgba(27,43,92,0.7) 100%);"></div>
+    </div>
+
+    <div class="ls-container" style="position:relative;z-index:1;">
+
+      <div class="ls-reveal">
+        <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;font-size:0.8rem;color:rgba(255,255,255,0.5);margin-bottom:24px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">
+          <i class="fa fa-arrow-left"></i> Home
+        </a>
+        <div class="ls-eyebrow" style="color:var(--ls-gold); margin-bottom:12px;">Clinical Architecture</div>
+        <h1 class="ls-hero-title" style="max-width:700px;">Patient Pathways &amp;<br>Clinical Archetypes</h1>
+        <p style="color:rgba(255,255,255,0.6); font-size:1.1rem; line-height:1.65; max-width:600px; margin-top:20px;">
+          Five high-conversion clinical service lines designed to bypass 26-week NHS hospital queues.
+          Named consultant surgery led by <strong style="color:var(--ls-gold);">Mr Ahmad Elsahn</strong>,
+          Sherwood Forest Hospitals NHS FT.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Archetypes section -->
+  <section class="ls-section ls-bg-white">
+    <div class="ls-container">
+      <div class="ls-archetypes-layout">
+
+        <!-- Selector -->
+        <nav class="ls-archetype-selector" aria-label="Patient pathways">
+          <div class="ls-label" style="margin-bottom:12px; display:block;">Select pathway</div>
+
+          <button class="ls-archetype-btn active" data-archetype="cataract">
+            <div class="arch-label">Archetype 1 · Volume Driver</div>
+            <div class="arch-name">Cataract &amp; Premium IOL Surgery</div>
+          </button>
+
+          <button class="ls-archetype-btn" data-archetype="glaucoma">
+            <div class="arch-label">Archetype 2 · Specialist</div>
+            <div class="arch-name">Glaucoma &amp; MIGS Micro-Stent</div>
+          </button>
+
+          <button class="ls-archetype-btn" data-archetype="refractive">
+            <div class="arch-label">Archetype 3 · Premium</div>
+            <div class="arch-name">Laser &amp; Refractive Surgery</div>
+          </button>
+
+          <button class="ls-archetype-btn" data-archetype="dryeye">
+            <div class="arch-label">Archetype 4 · Recurring</div>
+            <div class="arch-name">Dry Eye &amp; EyeSpa Clinic</div>
+          </button>
+
+          <button class="ls-archetype-btn" data-archetype="valeda">
+            <div class="arch-label">Archetype 5 · Innovation</div>
+            <div class="arch-name">Valeda Photobiomodulation (AMD)</div>
+          </button>
+        </nav>
+
+        <!-- Content panels -->
+        <div class="ls-archetype-panel">
+
+          <!-- 1. Cataract -->
+          <div class="ls-archetype-content active" id="panel-cataract">
+            <!-- Archetype image -->
+            <div style="width:100%; height:240px; border-radius:var(--radius-xl); overflow:hidden; margin-bottom:28px;">
+              <img src="images/cataract-surgery.jpg" alt="Cataract surgery at EyePros" style="width:100%; height:100%; object-fit:cover; object-position:center 40%;">
+            </div>
+            <div class="ls-eyebrow" style="margin-bottom:10px;">Archetype 1 · Volume Driver</div>
+            <h2 class="ls-section-title" style="font-size:2.2rem;">Cataract &amp; Premium IOL Surgery</h2>
+            <p class="ls-body" style="max-width:640px; margin-top:16px;">
+              The highest-volume private ophthalmology service, converting NHS-delayed patients into rapid self-pay surgery with premium lens upgrades. Monofocal, Toric, and EDOF IOLs for freedom from glasses.
+            </p>
+
+            <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:24px;">
+              <div class="ls-pill ls-pill-navy"><i class="fa fa-clock-o" style="margin-right:4px;"></i>Procedure: 20–30 min per eye</div>
+              <div class="ls-pill ls-pill-gold">High conversion rate</div>
+              <div class="ls-pill">Bilateral or unilateral</div>
+            </div>
+
+            <div class="ls-price-badge">
+              <span class="ls-price-from">from</span>
+              <span class="ls-price-amount">£2,750</span>
+              <span class="ls-price-per">/ eye</span>
+            </div>
+
+            <div class="ls-journey-grid">
+              <div class="ls-journey-step">
+                <div class="ls-journey-step-num">01</div>
+                <div class="ls-journey-step-title">Optometrist Referral</div>
+                <p class="ls-body-sm">Optometrist identifies lens opacity. Refers via eReferral or direct EyePros pathway.</p>
+              </div>
+              <div class="ls-journey-step">
+                <div class="ls-journey-step-num">02</div>
+                <div class="ls-journey-step-title">Biometry &amp; Consultation</div>
+                <p class="ls-body-sm">Precise IOL power calculation. Ahmad discusses lens options: Monofocal, Toric or EDOF.</p>
+              </div>
+              <div class="ls-journey-step">
+                <div class="ls-journey-step-num">03</div>
+                <div class="ls-journey-step-title">Day Case Surgery</div>
+                <p class="ls-body-sm">Local anaesthetic phacoemulsification. 20–30 minutes. Patient walks out same day.</p>
+              </div>
+              <div class="ls-journey-step">
+                <div class="ls-journey-step-num">04</div>
+                <div class="ls-journey-step-title">Post-op Optometrist</div>
+                <p class="ls-body-sm">Referring optometrist handles 1-week and 1-month reviews. Strengthens relationship cycle.</p>
+              </div>
+            </div>
+
+            <div class="ls-card ls-card-sm" style="margin-top:28px; background:var(--ls-gold-light); border-color:var(--ls-gold-border);">
+              <div class="ls-eyebrow" style="color:var(--ls-gold-hover); margin-bottom:8px;">Key Differentiator</div>
+              <p class="ls-body-sm">EyePros offers <strong>EDOF lenses</strong> (Tecnis Symfony, Clareon PanOptix) rarely available on NHS. Premium lens upgrades represent the core margin opportunity at £500–£1,200 above standard IOL pricing.</p>
+            </div>
+          </div>
+
+          <!-- 2. Glaucoma -->
+          <div class="ls-archetype-content" id="panel-glaucoma">
+            <!-- Archetype image -->
+            <div style="width:100%; height:240px; border-radius:var(--radius-xl); overflow:hidden; margin-bottom:28px;">
+              <img src="images/oct-scan.jpg" alt="Glaucoma diagnostic imaging and MIGS surgery" style="width:100%; height:100%; object-fit:cover; object-position:center 30%;">
+            </div>
+            <div class="ls-eyebrow" style="margin-bottom:10px;">Archetype 2 · Specialist Niche</div>
+            <h2 class="ls-section-title" style="font-size:2.2rem;">Glaucoma &amp; MIGS Micro-Stent</h2>
+            <p class="ls-body" style="max-width:640px; margin-top:16px;">
+              Ahmad Elsahn's clinical specialty. Micro-Invasive Glaucoma Surgery (MIGS) offers a less invasive alternative to trabeculectomy with faster recovery. Reduces lifelong drop burden and IOP.
+            </p>
+
+            <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:24px;">
+              <div class="ls-pill ls-pill-navy">Ahmad's Primary Specialty</div>
+              <div class="ls-pill ls-pill-gold">Lifetime subscription model</div>
+              <div class="ls-pill">Combined with cataract</div>
+            </div>
+
+            <div class="ls-price-badge">
+              <span class="ls-price-from">from</span>
+              <span class="ls-price-amount">£3,500</span>
+              <span class="ls-price-per">/ eye</span>
+            </div>
+
+            <div class="ls-journey-grid">
+              <div class="ls-journey-step">
+                <div class="ls-journey-step-num">01</div>
+                <div class="ls-journey-step-title">Optom Suspects Glaucoma</div>
+                <p class="ls-body-sm">Elevated IOP, cupped disc, or visual field loss triggers urgent referral.</p>
+              </div>
+              <div class="ls-journey-step">
+                <div class="ls-journey-step-num">02</div>
+                <div class="ls-journey-step-title">Specialist Assessment</div>
+                <p class="ls-body-sm">OCT optic nerve, Humphrey visual fields, gonioscopy. Ahmad determines surgical candidacy.</p>
+              </div>
+              <div class="ls-journey-step">
+                <div class="ls-journey-step-num">03</div>
+                <div class="ls-journey-step-title">MIGS Stent Implantation</div>
+                <p class="ls-body-sm">iStent inject W or Hydrus microstent placed via corneal incision. Often combined with cataract extraction.</p>
+              </div>
+              <div class="ls-journey-step">
+                <div class="ls-journey-step-num">04</div>
+                <div class="ls-journey-step-title">Long-term Monitoring</div>
+                <p class="ls-body-sm">Annual IOP checks and visual field monitoring. Glaucoma subscription plan (£45/month) ties optometrists in as partners.</p>
+              </div>
+            </div>
+
+            <div class="ls-card ls-card-sm" style="margin-top:28px; background:var(--ls-navy-light); border-color:rgba(27,43,92,0.15);">
+              <div class="ls-eyebrow" style="color:var(--ls-navy); margin-bottom:8px;">Subscription Opportunity</div>
+              <p class="ls-body-sm">Glaucoma's chronic nature makes it ideal for <strong>annual monitoring packages</strong>. At £45/month, a patient enrolled for 10 years generates £5,400 in subscription revenue — dwarfing the initial surgical fee.</p>
+            </div>
+          </div>
+
+          <!-- 3. Refractive -->
+          <div class="ls-archetype-content" id="panel-refractive">
+            <!-- Archetype image -->
+            <div style="width:100%; height:240px; border-radius:var(--radius-xl); overflow:hidden; margin-bottom:28px;">
+              <img src="images/laser-surgery.jpg" alt="Laser refractive eye surgery" style="width:100%; height:100%; object-fit:cover; object-position:center 30%;">
+            </div>
+            <div class="ls-eyebrow" style="margin-bottom:10px;">Archetype 3 · Premium Elective</div>
+            <h2 class="ls-section-title" style="font-size:2.2rem;">Laser &amp; Refractive Surgery</h2>
+            <p class="ls-body" style="max-width:640px; margin-top:16px;">
+              LASIK, LASEK, SMILE, and implantable collamer lens (ICL) procedures for myopia, hyperopia, and astigmatism correction. High elective spend and younger demographic.
+            </p>
+
+            <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:24px;">
+              <div class="ls-pill ls-pill-navy">High elective spend</div>
+              <div class="ls-pill ls-pill-gold">20–45 age demographic</div>
+              <div class="ls-pill">Strong social referral</div>
+            </div>
+
+            <div class="ls-price-badge">
+              <span class="ls-price-from">from</span>
+              <span class="ls-price-amount">£1,995</span>
+              <span class="ls-price-per">/ eye</span>
+            </div>
+
+            <div class="ls-journey-grid">
+              <div class="ls-journey-step">
+                <div class="ls-journey-step-num">01</div>
+                <div class="ls-journey-step-title">Suitability Screening</div>
+                <p class="ls-body-sm">Corneal topography, pachymetry, refraction stability assessment. Determines LASIK vs ICL candidacy.</p>
+              </div>
+              <div class="ls-journey-step">
+                <div class="ls-journey-step-num">02</div>
+                <div class="ls-journey-step-title">Treatment Planning</div>
+                <p class="ls-body-sm">Wavefront-guided laser plan or ICL sizing. Ahmad discusses vision goals and realistic outcomes.</p>
+              </div>
+              <div class="ls-journey-step">
+                <div class="ls-journey-step-num">03</div>
+                <div class="ls-journey-step-title">Laser or Lens Procedure</div>
+                <p class="ls-body-sm">SMILE or LASIK: 10 min per eye. ICL: surgical implantation under local anaesthetic.</p>
+              </div>
+              <div class="ls-journey-step">
+                <div class="ls-journey-step-num">04</div>
+                <div class="ls-journey-step-title">Recovery &amp; Enhancement</div>
+                <p class="ls-body-sm">Optometrist review at 1 week and 1 month. Enhancement procedure included in package price.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Dry Eye -->
+          <div class="ls-archetype-content" id="panel-dryeye">
+            <!-- Archetype image -->
+            <div style="width:100%; height:240px; border-radius:var(--radius-xl); overflow:hidden; margin-bottom:28px;">
+              <img src="images/dry-eye-spa.jpg" alt="EyeSpa dry eye treatment" style="width:100%; height:100%; object-fit:cover; object-position:center 20%;">
+            </div>
+            <div class="ls-eyebrow" style="margin-bottom:10px;">Archetype 4 · Recurring Revenue</div>
+            <h2 class="ls-section-title" style="font-size:2.2rem;">Dry Eye &amp; EyeSpa Clinic</h2>
+            <p class="ls-body" style="max-width:640px; margin-top:16px;">
+              Medical-grade dry eye treatment addressing meibomian gland dysfunction (MGD), evaporative dry eye, and digital eye strain. The EyeSpa package combines IPL, LipiFlow, and BlephEx therapies.
+            </p>
+
+            <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:24px;">
+              <div class="ls-pill ls-pill-navy">High repeat attendance</div>
+              <div class="ls-pill ls-pill-gold">Optometrist anchor service</div>
+              <div class="ls-pill">Wide demographic appeal</div>
+            </div>
+
+            <div class="ls-price-badge">
+              <span class="ls-price-from">from</span>
+              <span class="ls-price-amount">£350</span>
+              <span class="ls-price-per">/ session</span>
+            </div>
+
+            <div class="ls-journey-grid">
+              <div class="ls-journey-step">
+                <div class="ls-journey-step-num">01</div>
+                <div class="ls-journey-step-title">TFOS-Based Assessment</div>
+                <p class="ls-body-sm">DEQAS dry eye questionnaire, TBUT, Schirmer test, meibography imaging.</p>
+              </div>
+              <div class="ls-journey-step">
+                <div class="ls-journey-step-num">02</div>
+                <div class="ls-journey-step-title">EyeSpa Treatment</div>
+                <p class="ls-body-sm">IPL (intense pulsed light) for MGD. LipiFlow thermal pulsation. BlephEx lid margin debridement.</p>
+              </div>
+              <div class="ls-journey-step">
+                <div class="ls-journey-step-num">03</div>
+                <div class="ls-journey-step-title">Maintenance Plan</div>
+                <p class="ls-body-sm">Quarterly IPL sessions, prescribed lubricants, and self-massage training.</p>
+              </div>
+              <div class="ls-journey-step">
+                <div class="ls-journey-step-num">04</div>
+                <div class="ls-journey-step-title">Optometrist Integration</div>
+                <p class="ls-body-sm">Optometrists co-manage with shared protocol. Strong relationship anchor — soft referral channel.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. Valeda -->
+          <div class="ls-archetype-content" id="panel-valeda">
+            <!-- Archetype image -->
+            <div style="width:100%; height:240px; border-radius:var(--radius-xl); overflow:hidden; margin-bottom:28px;">
+              <img src="images/patient-exam.jpg" alt="Valeda photobiomodulation therapy for dry AMD" style="width:100%; height:100%; object-fit:cover; object-position:center 30%;">
+            </div>
+            <div class="ls-eyebrow" style="margin-bottom:10px;">Archetype 5 · Innovation Pioneer</div>
+            <h2 class="ls-section-title" style="font-size:2.2rem;">Valeda Photobiomodulation (Dry AMD)</h2>
+            <p class="ls-body" style="max-width:640px; margin-top:16px;">
+              EyePros is among a small number of UK centres offering Valeda® light therapy — the first CE-marked photobiomodulation device for dry Age-related Macular Degeneration. Addresses an unmet clinical need with no pharmacological alternative.
+            </p>
+
+            <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:24px;">
+              <div class="ls-pill ls-pill-dark">Unique regional offer</div>
+              <div class="ls-pill ls-pill-gold">No NHS equivalent</div>
+              <div class="ls-pill">High patient motivation</div>
+            </div>
+
+            <div class="ls-price-badge">
+              <span class="ls-price-from">from</span>
+              <span class="ls-price-amount">£1,200</span>
+              <span class="ls-price-per">/ course</span>
+            </div>
+
+            <div class="ls-journey-grid">
+              <div class="ls-journey-step">
+                <div class="ls-journey-step-num">01</div>
+                <div class="ls-journey-step-title">OCT Confirmation</div>
+                <p class="ls-body-sm">Drusen mapping, retinal thickness measurement. Confirms dry AMD (non-exudative) diagnosis.</p>
+              </div>
+              <div class="ls-journey-step">
+                <div class="ls-journey-step-num">02</div>
+                <div class="ls-journey-step-title">Eligibility Check</div>
+                <p class="ls-body-sm">Intermediate dry AMD confirmed. No wet AMD in either eye. Patient counselled on evidence level.</p>
+              </div>
+              <div class="ls-journey-step">
+                <div class="ls-journey-step-num">03</div>
+                <div class="ls-journey-step-title">Valeda Treatment Course</div>
+                <p class="ls-body-sm">9 sessions over 3 weeks. Non-invasive 3-minute light exposure. No discomfort or side effects.</p>
+              </div>
+              <div class="ls-journey-step">
+                <div class="ls-journey-step-num">04</div>
+                <div class="ls-journey-step-title">Annual Retreatment</div>
+                <p class="ls-body-sm">Clinical data supports annual re-courses. Long-term patient relationship with highest CLV in portfolio.</p>
+              </div>
+            </div>
+
+            <div class="ls-card ls-card-sm" style="margin-top:28px; background:var(--ls-ink); border-color:transparent; color:white;">
+              <div class="ls-eyebrow" style="color:var(--ls-gold); margin-bottom:8px;">Strategic Note</div>
+              <p style="font-size:var(--text-sm); color:rgba(255,255,255,0.7); line-height:1.6;">
+                Valeda is a <strong style="color:white;">first-mover differentiator</strong> in the Midlands. With 700k+ people living with AMD in the UK and NHS offering no disease-modifying treatment, this pathway commands premium pricing and exceptional patient loyalty.
+              </p>
+            </div>
+          </div>
+
+        </div><!-- /.ls-archetype-panel -->
+      </div><!-- /.ls-archetypes-layout -->
+    </div>
+  </section>
+
+  <!-- ── Footer -->
+  <footer class="ls-footer">
+    <div class="ls-container">
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:20px; padding-bottom:32px; border-bottom:1px solid rgba(255,255,255,0.1);">
+        <img src="images/longsighted-logo-horizontal-white.png" alt="Longsighted" style="height:44px; width:auto;" onerror="this.src='images/longsighted-logo.png';">
+        <nav style="display:flex; flex-wrap:wrap; gap:20px;">
+          <a href="index.html" style="color:rgba(255,255,255,0.5); font-size:var(--text-sm); transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Home</a>
+          <a href="market-numbers.html" style="color:rgba(255,255,255,0.5); font-size:var(--text-sm); transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Market &amp; Numbers</a>
+          <a href="business-plan.html" style="color:rgba(255,255,255,0.5); font-size:var(--text-sm); transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Business Plan Eyepros</a>
+          <a href="timeline.html" style="color:rgba(255,255,255,0.5); font-size:var(--text-sm); transition:color 0.2s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Timeline</a>
+        </nav>
+      </div>
+      <div class="ls-footer-bottom">
+        <span>&copy; 2026 EyePros Strategic Intelligence · Longsighted by Takoua</span>
+        <span>Mr Ahmad Elsahn · Sherwood Forest Hospitals NHS FT</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/ls-nav.js"></script>
+  <script>
+    document.querySelectorAll('.ls-archetype-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const target = this.dataset.archetype;
+        document.querySelectorAll('.ls-archetype-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.ls-archetype-content').forEach(c => c.classList.remove('active'));
+        this.classList.add('active');
+        const panel = document.getElementById('panel-' + target);
+        if (panel) {
+          panel.classList.add('active');
+          if (window.innerWidth < 900) {
+            panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
