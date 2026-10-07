@@ -12,6 +12,7 @@
     { label: 'Market & Numbers',  href: 'market-numbers.html' },
     { label: 'Market & Landscape', href: 'market-landscape.html' },
     { label: 'Business Plan Eyepros', href: 'business-plan.html' },
+    { label: 'Pitch Deck Slides', href: 'business-plan-deck.html' },
     { label: 'Timeline',          href: 'timeline.html' },
   ];
 

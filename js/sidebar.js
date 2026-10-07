@@ -31,6 +31,7 @@
             <a class="sidebar-link" href="market-numbers.html" data-page="market-numbers"><i class="fa fa-bar-chart"></i> 3. Market &amp; Numbers</a>
             <a class="sidebar-link" href="market-landscape.html" data-page="market-landscape"><i class="fa fa-globe"></i> 3b. Market &amp; Landscape</a>
             <a class="sidebar-link" href="business-plan.html" data-page="business-plan"><i class="fa fa-briefcase"></i> 4. Business Plan EyePros</a>
+            <a class="sidebar-link" href="business-plan-deck.html" data-page="business-plan-deck"><i class="fa fa-television"></i> 4b. Pitch Deck Slides</a>
             <a class="sidebar-link" href="timeline.html" data-page="timeline"><i class="fa fa-calendar-check-o"></i> 5. Timeline</a>
             <a class="sidebar-link" href="index.html#sources" data-page="sources"><i class="fa fa-link"></i> 6. Sources</a>
           </div>
@@ -72,6 +73,7 @@
     'market-numbers.html': 'market-numbers',
     'market-landscape.html': 'market-landscape',
     'business-plan.html': 'business-plan',
+    'business-plan-deck.html': 'business-plan-deck',
     'timeline.html': 'timeline',
     'eyepros — internship timeline.html': 'timeline',
     'eyepros — persona boards.html': 'business-plan',

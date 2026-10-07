@@ -28,3 +28,14 @@ part*.py
 scratch_frames/
 index-old-backup.html
 
+
+# Slide build scripts
+*deck*.py
+*presentation*.py
+*slides*.py
+make_*.py
+build_*.py
+pptx_base.py
+scratch_*.py
+export_*.py
+compile_*.py

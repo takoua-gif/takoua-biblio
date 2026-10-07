@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EyePros · Business Plan Deck (Corrected October 2026)</title>
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <link rel="shortcut icon" href="images/favicon.ico">
+  <style>
+    :root {
+      --teal-bg: #2d5a52;
+      --teal-dark: #1f3f39;
+      --teal-accent: #0d9488;
+      --white: #ffffff;
+      --cream: #faf8f4;
+      --text-dark: #1e293b;
+      --text-muted: #64748b;
+      --gold: #b8975a;
+      --card-border: #dae6e2;
+      --row-alt: #f5f9f8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #11111a;
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .top-toolbar {
+      background: rgba(13, 13, 26, 0.95);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 10px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      color: white;
+    }
+    .top-toolbar a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+    .top-toolbar a:hover { color: white; }
+    .toolbar-actions { display: flex; align-items: center; gap: 12px; }
+    .btn-action {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-action:hover { background: var(--teal-accent); border-color: var(--teal-accent); }
+    .btn-action.gold { background: var(--gold); border-color: var(--gold); color: #0d0d1a; font-weight: 700; }
+    .deck-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .slide-wrapper {
+      width: 100%;
+      max-width: 1180px;
+      aspect-ratio: 16 / 9;
+      background: var(--teal-bg);
+      border-radius: 16px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+      position: relative;
+      overflow: hidden;
+      display: none;
+      padding: 34px 44px;
+      color: white;
+    }
+    .slide-wrapper.active {
+      display: flex;
+      flex-direction: column;
+      animation: fadeIn 0.2s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.99); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .circle-deco {
+      position: absolute; right: -80px; top: -80px; width: 420px; height: 420px;
+      border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.08); pointer-events: none;
+    }
+    .circle-deco-2 {
+      position: absolute; right: -30px; top: -30px; width: 300px; height: 300px;
+      border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.08); pointer-events: none;
+    }
+    .slide-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 18px; position: relative; z-index: 2;
+    }
+    .slide-title { font-size: 1.85rem; font-weight: 800; color: white; letter-spacing: -0.02em; line-height: 1.15; }
+    .slide-subtitle { font-size: 0.92rem; color: rgba(210, 235, 230, 0.9); margin-top: 4px; }
+    .slide-badge {
+      background: var(--teal-dark); border: 1px solid rgba(80, 135, 125, 0.8);
+      padding: 4px 14px; border-radius: 8px; font-size: 0.75rem; font-weight: 700; color: white; white-space: nowrap;
+    }
+    .slide-content { flex: 1; position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: center; }
+    .s-card {
+      background: var(--white); border: 1px solid var(--card-border);
+      border-radius: 12px; padding: 16px 18px; color: var(--text-dark);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    }
+    .s-card h3 { font-size: 1rem; font-weight: 700; color: var(--teal-dark); margin-bottom: 6px; }
+    .s-card p { font-size: 0.8rem; line-height: 1.5; color: var(--text-dark); }
+    .s-card .metric-val { font-size: 1.7rem; font-weight: 800; color: var(--teal-dark); margin-bottom: 4px; line-height: 1; }
+    .s-card .metric-sub { font-size: 0.74rem; color: var(--text-muted); line-height: 1.4; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .s-table-container {
+      background: white; border-radius: 10px; overflow: hidden;
+      border: 1px solid var(--card-border); width: 100%;
+    }
+    table { width: 100%; border-collapse: collapse; text-align: left; }
+    th, td { padding: 7px 11px; font-size: 0.72rem; border-bottom: 1px solid var(--card-border); }
+    th { background: var(--teal-dark); color: white; font-weight: 700; }
+    tr:nth-child(even) td { background: var(--row-alt); }
+    tr:last-child td { border-bottom: none; }
+    .slide-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-top: auto; padding-top: 10px; font-size: 0.72rem;
+      color: rgba(180, 210, 205, 0.8); position: relative; z-index: 2;
+    }
+    .controller-bar {
+      margin-top: 16px; display: flex; align-items: center; gap: 16px;
+      background: rgba(13, 13, 26, 0.9); padding: 8px 24px;
+      border-radius: 9999px; border: 1px solid rgba(255, 255, 255, 0.15); color: white;
+    }
+    .btn-nav {
+      background: none; border: none; color: white; font-size: 1.1rem;
+      cursor: pointer; width: 32px; height: 32px; display: flex;
+      align-items: center; justify-content: center; border-radius: 50%; transition: background 0.2s;
+    }
+    .btn-nav:hover { background: rgba(255, 255, 255, 0.15); }
+    .slide-counter {
+      font-size: 0.85rem; font-weight: 600; color: rgba(255, 255, 255, 0.8);
+      min-width: 100px; text-align: center;
+    }
+    @media print {
+      body { background: white !important; }
+      .top-toolbar, .controller-bar { display: none !important; }
+      .deck-container { padding: 0 !important; }
+      .slide-wrapper {
+        display: flex !important; page-break-after: always;
+        border-radius: 0 !important; box-shadow: none !important;
+        max-width: 100% !important; height: 100vh !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Toolbar -->
+  <div class="top-toolbar">
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <a href="index.html"><i class="fa fa-arrow-left"></i> Home</a>
+      <span style="color: rgba(255,255,255,0.2);">|</span>
+      <span style="font-weight: 700; font-size: 0.9rem; letter-spacing: -0.01em;">EyePros Business Plan Slides · Corrected Oct 2026</span>
+    </div>
+    <div class="toolbar-actions">
+      <button class="btn-action" onclick="toggleFullscreen()"><i class="fa fa-arrows-alt"></i> Fullscreen</button>
+      <button class="btn-action" onclick="window.print()"><i class="fa fa-print"></i> Export PDF</button>
+      <a href="EyePros_Business_Plan_Corrected.pptx" download class="btn-action gold"><i class="fa fa-download"></i> Download PPTX</a>
+    </div>
+  </div>
+
+  <!-- Deck Container -->
+  <div class="deck-container">
+
+  <div class="slide-wrapper active" id="slide-1">
+    <div class="circle-deco"></div><div class="circle-deco-2"></div>
+    <div class="slide-header">
+      <div></div>
+      <div class="slide-badge">October 2026</div>
+    </div>
+    <div class="slide-content" style="justify-content: center; padding-left: 20px;">
+      <h1 style="font-size: 3.2rem; font-weight: 800; color: white; line-height: 1.1; margin-bottom: 12px;">EyePros<br>Business Plan</h1>
+      <p style="font-size: 1.35rem; color: #d2ebe6; margin-bottom: 40px;">Back in Focus: Consultant-Led Private Eye Clinic</p>
+      <div style="background: var(--teal-dark); border: 1px solid rgba(80, 135, 125, 0.8); display: inline-block; padding: 10px 22px; border-radius: 10px; color: white; font-size: 0.95rem; font-weight: 600; width: fit-content;">
+        Presented by: Takoua Selmi &middot; Growth & Business Developer
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Kingfisher House, 19 Abbeyfield Road, Nottingham NG7 2SZ</div>
+      <div>www.eyepros.co.uk</div>
+    </div>
+  </div>
+
+  <div class="slide-wrapper" id="slide-2">
+    <div class="circle-deco"></div>
+    <div class="slide-header">
+      <div>
+        <h2 class="slide-title">List of Contents</h2>
+        <p class="slide-subtitle">Strategic roadmap, commercial model and investment proposal</p>
+      </div>
+      <div class="slide-badge">October 2026</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2" style="gap: 16px;">
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <div class="s-card" style="padding: 12px 18px; font-weight: 700; color: var(--teal-dark);"><strong>1</strong> &nbsp; About EyePros</div>
+          <div class="s-card" style="padding: 12px 18px; font-weight: 700; color: var(--teal-dark);"><strong>2</strong> &nbsp; The Problem</div>
+          <div class="s-card" style="padding: 12px 18px; font-weight: 700; color: var(--teal-dark);"><strong>3</strong> &nbsp; Traction & Services</div>
+          <div class="s-card" style="padding: 12px 18px; font-weight: 700; color: var(--teal-dark);"><strong>4</strong> &nbsp; Pricing & Strategy</div>
+          <div class="s-card" style="padding: 12px 18px; font-weight: 700; color: var(--teal-dark);"><strong>5</strong> &nbsp; Market Sizing</div>
+          <div class="s-card" style="padding: 12px 18px; font-weight: 700; color: var(--teal-dark);"><strong>6</strong> &nbsp; Competitors & Customers</div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <div class="s-card" style="padding: 12px 18px; font-weight: 700; color: var(--teal-dark);"><strong>7</strong> &nbsp; Business Model Canvas</div>
+          <div class="s-card" style="padding: 12px 18px; font-weight: 700; color: var(--teal-dark);"><strong>8</strong> &nbsp; Financial Summary (Corrected P&L)</div>
+          <div class="s-card" style="padding: 12px 18px; font-weight: 700; color: var(--teal-dark);"><strong>9</strong> &nbsp; Investment & Funding</div>
+          <div class="s-card" style="padding: 12px 18px; font-weight: 700; color: var(--teal-dark);"><strong>10</strong> &nbsp; Launch & Roadmap</div>
+          <div class="s-card" style="padding: 12px 18px; font-weight: 700; color: var(--teal-dark);"><strong>11</strong> &nbsp; Team & Regulatory</div>
+          <div class="s-card" style="padding: 12px 18px; font-weight: 700; color: var(--teal-dark);"><strong>12</strong> &nbsp; Sources & References</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Slide 02 / 30</div>
+      <div>www.eyepros.co.uk</div>
+    </div>
+  </div>
+
+  <div class="slide-wrapper" id="slide-3">
+    <div class="circle-deco"></div>
+    <div class="slide-header">
+      <div>
+        <h2 class="slide-title">Who We Are</h2>
+        <p class="slide-subtitle">Executive summary and founding clinical vision</p>
+      </div>
+      <div class="slide-badge">October 2026</div>
+    </div>
+    <div class="slide-content">
+      <div class="s-card" style="margin-bottom: 16px;">
+        <h3>EyePros Overview (ELSAHN LTD &middot; Companies House 07909477)</h3>
+        <p>EyePros is a high-growth private ophthalmology practice led by two consultant ophthalmic surgeons (Mr Ahmad Elsahn & Ms Yasmine Abdalla).</p>
+        <p style="margin-top: 6px;">&bull; <strong>FY2026 Actual Revenue:</strong> &pound;230,309 at 94.9% gross margin on current outpatient caseload.<br>
+        &bull; <strong>Strategic Objective:</strong> Bring surgery in-house at Kingfisher House, Nottingham &mdash; eliminating third-party hospital list fees and saving <strong>~&pound;1,575 per eye</strong> vs The Park Hospital.<br>
+        &bull; <strong>Practice Philosophy:</strong> Uncompromising named-consultant continuity across all 7 core subspecialties in an unhurried, boutique clinical environment.</p>
+      </div>
+      <div class="grid-2">
+        <div class="s-card">
+          <h3>Our Vision</h3>
+          <p>To become the premier consultant-led ophthalmic clinic group in the Midlands and the UK, defining the gold standard for clinical excellence, transparent pricing, and subspecialty depth.</p>
+        </div>
+        <div class="s-card">
+          <h3>Our Mission</h3>
+          <p>Deliver unhurried, named-surgeon continuity from initial consultation through surgery to discharge. Combine all 7 ophthalmic disciplines under one roof with transparent pricing and compassionate, boutique care. <em>&ldquo;See What's Possible.&rdquo;</em></p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Slide 03 / 30</div>
+      <div>www.eyepros.co.uk</div>
+    </div>
+  </div>
+
+  <div class="slide-wrapper" id="slide-4">
+    <div class="circle-deco"></div>
+    <div class="slide-header">
+      <div>
+        <h2 class="slide-title">The Problem</h2>
+        <p class="slide-subtitle">NHS eye care is overwhelmed &mdash; patients urgently need private alternatives</p>
+      </div>
+      <div class="slide-badge">October 2026</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-4" style="margin-bottom: 16px;">
+        <div class="s-card" style="text-align: center;">
+          <div class="metric-val">6,600</div>
+          <div class="metric-sub">Patients on NUH waiting list</div>
+        </div>
+        <div class="s-card" style="text-align: center;">
+          <div class="metric-val">69%</div>
+          <div class="metric-sub">Treated within 18 wks (target 92%)</div>
+        </div>
+        <div class="s-card" style="text-align: center;">
+          <div class="metric-val">16–32 wks</div>
+          <div class="metric-sub">Average wait (80% treated in 32 wks)</div>
+        </div>
+        <div class="s-card" style="text-align: center;">
+          <div class="metric-val">16%–20%</div>
+          <div class="metric-sub">NHS tariff cuts driving rationing</div>
+        </div>
+      </div>
+      <div class="s-card">
+        <h3>The Regional Market Failure</h3>
+        <p>&bull; <strong>High-Volume Corporate Chains:</strong> Offer &lsquo;factory&rsquo; cataract surgery: 10-minute slots, rotating locums, and zero premium lens options.<br>
+        &bull; <strong>Private Acute General Hospitals:</strong> Treat ophthalmology as an afterthought with rotating surgeons, shared general theatres, and high facility fees.<br>
+        &bull; <strong>NHS ICB Rationing:</strong> Dry eye treatments, blepharoplasty, and MIGS are largely defunded under Procedures of Limited Clinical Value (PoLCV).<br>
+        &bull; <strong>THE OPPORTUNITY:</strong> Nobody in the East Midlands offers named-surgeon continuity + all 7 subspecialties + a boutique, dedicated eye facility.</p>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Slide 04 / 30 &middot; Sources: NHS England RTT & My Planned Care (Oct 2026)</div>
+      <div>www.eyepros.co.uk</div>
+    </div>
+  </div>
+
+  <div class="slide-wrapper" id="slide-5">
+    <div class="circle-deco"></div>
+    <div class="slide-header">
+      <div>
+        <h2 class="slide-title">We're Already Treating Patients</h2>
+        <p class="slide-subtitle">Proven clinical traction and immediate commercial foundation</p>
+      </div>
+      <div class="slide-badge">October 2026</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-4" style="margin-bottom: 16px;">
+        <div class="s-card" style="text-align: center;">
+          <div class="metric-val">&pound;230K</div>
+          <div class="metric-sub">FY2026 Actual Revenue (94.9% GM)</div>
+        </div>
+        <div class="s-card" style="text-align: center;">
+          <div class="metric-val">~3–5 /wk</div>
+          <div class="metric-sub">Cataract/RLE eyes at The Park Hospital</div>
+        </div>
+        <div class="s-card" style="text-align: center;">
+          <div class="metric-val">&pound;156K</div>
+          <div class="metric-sub">Direct surgical income in FY2026</div>
+        </div>
+        <div class="s-card" style="text-align: center;">
+          <div class="metric-val">2</div>
+          <div class="metric-sub">Consultant ophthalmic surgeons</div>
+        </div>
+      </div>
+      <div class="s-card">
+        <h3>Commercial Foundation Already Live</h3>
+        <p>&check; <strong>Insurer Accreditations:</strong> Fully recognised by Bupa, AXA Health, Aviva, Vitality, and WPA for direct billing.<br>
+        &check; <strong>Optometrist Referral Engine:</strong> Syndesis digital referral portal active with local independent and mini-chain optometrists.<br>
+        &check; <strong>Patient Finance:</strong> 0% APR patient financing live over 10&ndash;12 months, removing payment friction for self-pay procedures.<br>
+        &check; <strong>Proven Demand:</strong> Established patient base with 5-star clinical feedback and active word-of-mouth referral loops.<br>
+        &check; <strong>Turnkey Transition:</strong> Existing patient volume ready to transition directly into Kingfisher House on day one of commissioning.</p>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Slide 05 / 30</div>
+      <div>www.eyepros.co.uk</div>
+    </div>
+  </div>
+
+  <div class="slide-wrapper" id="slide-6">
+    <div class="circle-deco"></div>
+    <div class="slide-header">
+      <div>
+        <h2 class="slide-title">Services We Offer</h2>
+        <p class="slide-subtitle">Full-spectrum consultant care across 8 ophthalmic disciplines</p>
+      </div>
+      <div class="slide-badge">October 2026</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-4" style="gap: 12px; margin-bottom: 12px;">
+        <div class="s-card"><h3>Cataract Surgery</h3><p>Micro-incision phaco, Toric, EDOF, Trifocal, Monofocal-Plus lenses.</p></div>
+        <div class="s-card"><h3>Refractive Surgery</h3><p>Femto-LASIK (WaveLight FS200/EX500), LASEK/PRK, SMILE, ICL, RLE.</p></div>
+        <div class="s-card"><h3>Glaucoma & MIGS</h3><p>SLT laser (first-line), iStent Inject W, PreserFlo, Hydrus, trabeculectomy.</p></div>
+        <div class="s-card"><h3>Medical Retina</h3><p>Same-week Anti-VEGF (Eylea, Vabysmo), wet AMD, DMO, RVO, PVD triage.</p></div>
+      </div>
+      <div class="grid-4" style="gap: 12px;">
+        <div class="s-card"><h3>Oculoplastics</h3><p>Upper/lower blepharoplasty, ptosis repair, ectropion/entropion, chalazion.</p></div>
+        <div class="s-card"><h3>EyeSpa Dry Eye</h3><p>IPL therapy (C-Suite), LipiFlow, meibomian expression, LenzClub.</p></div>
+        <div class="s-card"><h3>Cornea & Uveitis</h3><p>Complex corneal disease, keratoconus cross-linking (CXL), uveitis care.</p></div>
+        <div class="s-card"><h3>Vitreo-Retinal</h3><p>Epiretinal membrane peel, macular hole repair, retinal detachment.</p></div>
+      </div>
+    </div>
+    <div class="slide-footer"><div>Slide 06 / 30</div><div>www.eyepros.co.uk</div></div>
+  </div>
+
+  <div class="slide-wrapper" id="slide-7">
+    <div class="circle-deco"></div>
+    <div class="slide-header">
+      <div>
+        <h2 class="slide-title">Transparent Fixed Pricing</h2>
+        <p class="slide-subtitle">Confirmed EyePros Price List (2 September 2026) vs. Regional Competitors</p>
+      </div>
+      <div class="slide-badge">October 2026</div>
+    </div>
+    <div class="slide-content">
+      <div class="s-table-container">
+        <table>
+          <thead>
+            <tr><th>Procedure</th><th>Code</th><th>EyePros Price</th><th>Competitor Range</th><th>What's Included & Key Revenue Feature</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Standard Cataract (Monofocal)</strong></td><td>CAT-STD</td><td><strong>&pound;2,250</strong></td><td>&pound;2,500 – &pound;3,450</td><td>Surgeon + facility + ZEISS CT LUCIA IOL + drops + 3-month review</td></tr>
+            <tr><td><strong>Premium Cataract (Toric/EDOF/Trifocal)</strong></td><td>CAT-PREM</td><td><strong>&pound;4,000</strong></td><td>&pound;4,500 – &pound;6,000</td><td>Premium lens + all scans + unlimited post-op care</td></tr>
+            <tr><td><strong>Femto-LASIK (WaveLight Suite)</strong></td><td>REF-LASIK</td><td><strong>&pound;2,000</strong></td><td>&pound;1,795 – &pound;2,995</td><td>FS200 + EX500 suite, all pre/post-op care included</td></tr>
+            <tr><td><strong>LASEK / PRK (Surface Laser)</strong></td><td>REF-LASEK</td><td><strong>&pound;1,750</strong></td><td>&ndash;</td><td>100% self-pay, advanced surface ablation option</td></tr>
+            <tr><td><strong>SLT Glaucoma Laser</strong></td><td>GLA-SLT</td><td><strong>&pound;995</strong></td><td>&pound;800 – &pound;1,200</td><td>First-line drop alternative; IOP monitoring included</td></tr>
+            <tr><td><strong>MIGS Add-on (with Cataract)</strong></td><td>GLA-MIGS</td><td><strong>+&pound;2,500</strong></td><td>Limited availability</td><td>iStent Inject W / PreserFlo / Hydrus implant</td></tr>
+            <tr><td><strong>Anti-VEGF Intravitreal Injection</strong></td><td>RET-IVT</td><td><strong>&pound;995 – &pound;1,795</strong></td><td>&pound;1,000 – &pound;1,500</td><td>Eylea / Vabysmo; recurring 3&ndash;6 injections/year</td></tr>
+            <tr><td><strong>YAG Capsulotomy</strong></td><td>LAS-YAG</td><td><strong>&pound;595 – &pound;895</strong></td><td>&pound;600 – &pound;900</td><td>Quick outpatient laser; high procedure margin</td></tr>
+            <tr><td><strong>EyeSpa Dry Eye Course</strong></td><td>DRY-IPL</td><td><strong>&pound;450 – &pound;850</strong></td><td>Limited availability</td><td>Diagnostic workup &pound;95&ndash;&pound;250; C-Suite IPL course &pound;1,395</td></tr>
+            <tr><td><strong>Initial Assessment & Diagnostics</strong></td><td>CON-INIT</td><td><strong>&pound;95 – &pound;250</strong></td><td>&pound;250 – &pound;350</td><td>OCT, biometry, corneal topography, visual fields</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="slide-footer"><div>Slide 07 / 30 &middot; Confirmed price schedule</div><div>www.eyepros.co.uk</div></div>
+  </div>
+
+  <div class="slide-wrapper" id="slide-8">
+    <div class="circle-deco"></div>
+    <div class="slide-header">
+      <div>
+        <h2 class="slide-title">Red Ocean vs Blue Ocean</h2>
+        <p class="slide-subtitle">Strategic positioning: making the corporate volume competition irrelevant</p>
+      </div>
+      <div class="slide-badge">October 2026</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="s-card" style="border-left: 4px solid #ef4444;">
+          <h3 style="color: #b91c1c;">RED OCEAN &middot; Volume Factory Market</h3>
+          <p>&bull; <strong>10-min appointment slots</strong>, 30+ eyes per day assembly line.<br>
+          &bull; <strong>Rotating locum surgeons</strong> &mdash; different doctor every consultation.<br>
+          &bull; <strong>1&ndash;2 specialties only</strong> (cataract OR high-street laser, never both).<br>
+          &bull; <strong>Race to the bottom</strong> competing on low-margin NHS contracts.<br>
+          &bull; <strong>Monofocal-only</strong> &mdash; no premium lens upsell or lifestyle care.<br>
+          &bull; <em>Who's here: Optical Express (&pound;146.5M), Optegra (&pound;99.8M), SpaMedica, Newmedica.</em></p>
+        </div>
+        <div class="s-card" style="border-left: 4px solid var(--teal-accent);">
+          <h3 style="color: var(--teal-accent);">BLUE OCEAN &middot; Consultant-Led Boutique</h3>
+          <p>&bull; <strong>Named consultant surgeon</strong> from initial scan to discharge.<br>
+          &bull; <strong>All 7&ndash;8 eye subspecialties</strong> under one roof, one trusted brand.<br>
+          &bull; <strong>30&ndash;45 min unhurried visits</strong> with personal bedside manner.<br>
+          &bull; <strong>In-house ultra-clean theatre</strong> + dedicated WaveLight laser suite.<br>
+          &bull; <strong>EyeSpa dry eye clinic</strong> as a standalone wellness concept.<br>
+          &bull; <strong>Recurring subscriptions:</strong> LenzClub & SightPlan (~&pound;134K Y3).<br>
+          &bull; <em>Who's here: Nobody in the East Midlands. This is EyePros' category to own.</em></p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer"><div>Slide 08 / 30</div><div>www.eyepros.co.uk</div></div>
+  </div>
+
+  <div class="slide-wrapper" id="slide-9">
+    <div class="circle-deco"></div>
+    <div class="slide-header">
+      <div>
+        <h2 class="slide-title">Market Opportunity</h2>
+        <p class="slide-subtitle">Total addressable, serviceable, and obtainable market sizing</p>
+      </div>
+      <div class="slide-badge">October 2026</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-4" style="margin-bottom: 14px;">
+        <div class="s-card" style="text-align: center;">
+          <div class="metric-val">&pound;750M</div><div class="metric-sub">UK TAM (excl. NHS tenders)</div>
+        </div>
+        <div class="s-card" style="text-align: center;">
+          <div class="metric-val">&pound;125M</div><div class="metric-sub">Midlands SAM (16.4% pop)</div>
+        </div>
+        <div class="s-card" style="text-align: center;">
+          <div class="metric-val">&pound;56M</div><div class="metric-sub">East Midlands Catchment</div>
+        </div>
+        <div class="s-card" style="text-align: center;">
+          <div class="metric-val">&pound;2.44M</div><div class="metric-sub">EyePros SOM (Year 3 target)</div>
+        </div>
+      </div>
+      <div class="s-table-container">
+        <table>
+          <thead>
+            <tr><th>Specialty</th><th>UK TAM (GB)</th><th>Midlands SAM</th><th>East Midlands Catchment</th><th>Key Growth Driver</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Cataract Surgery (Self-Pay + PMI)</strong></td><td>&pound;200M – &pound;280M</td><td>&pound;33M – &pound;46M</td><td>&pound;15M – &pound;21M</td><td>Premium lens upsell; 0% copay allowed on NHS</td></tr>
+            <tr><td><strong>Refractive Surgery (Laser/ICL/RLE)</strong></td><td>&pound;120M – &pound;180M</td><td>&pound;20M – &pound;30M</td><td>&pound;9M – &pound;14M</td><td>100% self-pay; WaveLight suite from go-live</td></tr>
+            <tr><td><strong>Medical Retina (Private Injections)</strong></td><td>&pound;50M – &pound;80M</td><td>&pound;8M – &pound;13M</td><td>&pound;4M – &pound;6M</td><td>Private anti-VEGF bypasses severe NHS hospital queues</td></tr>
+            <tr><td><strong>Glaucoma & Laser (MIGS/SLT)</strong></td><td>&pound;30M – &pound;50M</td><td>&pound;5M – &pound;8M</td><td>&pound;2M – &pound;4M</td><td>NICE-recommended SLT & micro-stents</td></tr>
+            <tr><td><strong>Dry Eye & Oculoplastics</strong></td><td>&pound;60M – &pound;100M</td><td>&pound;10M – &pound;16M</td><td>&pound;5M – &pound;7M</td><td>Complete NHS rationing drives 100% self-pay</td></tr>
+            <tr><td><strong>SUBTOTAL (5 Core Specialties)</strong></td><td><strong>&pound;460M – &pound;690M</strong></td><td><strong>&pound;76M – &pound;113M</strong></td><td><strong>&pound;35M – &pound;52M</strong></td><td>Core addressable clinical disciplines</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="slide-footer"><div>Slide 09 / 30 &middot; Sources: LaingBuisson & ONS</div><div>www.eyepros.co.uk</div></div>
+  </div>
+
+  <div class="slide-wrapper" id="slide-10">
+    <div class="circle-deco"></div>
+    <div class="slide-header">
+      <div>
+        <h2 class="slide-title">Competitive Landscape</h2>
+        <p class="slide-subtitle">Benchmarking major market participants and local competitors (Updated Oct 2026)</p>
+      </div>
+      <div class="slide-badge">October 2026</div>
+    </div>
+    <div class="slide-content">
+      <div class="s-table-container" style="margin-bottom: 12px;">
+        <table>
+          <thead>
+            <tr><th>Competitor</th><th>Revenue</th><th>Clinics</th><th>Their Gap = EyePros Opportunity</th><th>Local Pricing (Verified)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Optical Express</strong></td><td>&pound;146.5M</td><td>~130</td><td>Laser factory model; no retina, glaucoma, MIGS, or oculoplastics</td><td>Monofocal: &pound;2,500</td></tr>
+            <tr><td><strong>Optegra (EssilorLuxottica)</strong></td><td>&pound;99.8M</td><td>70+</td><td>Acquired Oct 2025; rotating surgeons; limited dry eye care</td><td>Nottingham Monofocal: &pound;2,995</td></tr>
+            <tr><td><strong>SpaMedica (Veonet)</strong></td><td>Group</td><td>50+</td><td>High-volume NHS cataract factory; zero premium IOLs; no subspecialties</td><td>NHS only (0% private)</td></tr>
+            <tr><td><strong>Newmedica (Specsavers JV)</strong></td><td>Group</td><td>Major</td><td>Community NHS provider; monofocal only; no refractive laser or EyeSpa</td><td>NHS contracts primary</td></tr>
+            <tr><td><strong>Spire Nottingham</strong></td><td>Hospital</td><td>1</td><td>General acute hospital; eye care is a sideline; rotating surgeons</td><td>Monofocal: &pound;3,405 all-in</td></tr>
+            <tr><td><strong>Nuffield Leicester</strong></td><td>Hospital</td><td>1</td><td>High facility fees; no dedicated eye suite; lack of named surgeon continuity</td><td>Monofocal: &pound;3,450 all-in</td></tr>
+            <tr><td><strong>NHS — NUH</strong></td><td>Public</td><td>1</td><td>6,600 waiting; 16-wk average wait (32 wks 80th%); 69% 18-wk compliance</td><td>Free (Severe rationing)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="s-card" style="padding: 10px 16px;">
+        <p style="font-size: 0.78rem;"><strong>EyePros Positioning:</strong> In-house surgical theatre enables &pound;2,250 standard cataract and &pound;4,000 premium cataract with named consultant continuity, undercutting private acute hospitals (&pound;3,400+) while delivering ~60% EBITDA margins.</p>
+      </div>
+    </div>
+    <div class="slide-footer"><div>Slide 10 / 30</div><div>www.eyepros.co.uk</div></div>
+  </div>
+
+  <div class="slide-wrapper" id="slide-11">
+    <div class="circle-deco"></div>
+    <div class="slide-header">
+      <div>
+        <h2 class="slide-title">6 Patient Segments</h2>
+        <p class="slide-subtitle">Diverse demographic drivers and high average transaction value</p>
+      </div>
+      <div class="slide-badge">October 2026</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-3" style="gap: 12px; margin-bottom: 12px;">
+        <div class="s-card"><h3>Premium Cataract (&pound;2,000–&pound;4,000)</h3><p>55&ndash;80 yrs, retired professionals & active drivers seeking spectacle freedom via Toric, EDOF & Trifocal lenses.</p></div>
+        <div class="s-card"><h3>Young Professionals (&pound;1,750–&pound;2,450)</h3><p>25&ndash;40 yrs, corporate executives seeking LASIK/SMILE/ICL to eliminate contact lens fatigue and sports limits.</p></div>
+        <div class="s-card"><h3>Chronic Eye Disease (&pound;650–&pound;1,650)</h3><p>50+ yrs, Glaucoma & AMD patients needing urgent time-critical anti-VEGF injections and laser pressure control.</p></div>
+      </div>
+      <div class="grid-3" style="gap: 12px;">
+        <div class="s-card"><h3>Dry Eye & Cosmetic (&pound;450–&pound;3,600)</h3><p>30&ndash;65 yrs, screen workers seeking LipiFlow/IPL relief + upper/lower blepharoplasty aesthetic rejuvenation.</p></div>
+        <div class="s-card"><h3>PMI Policyholders (Tariff Rates)</h3><p>Bupa, AXA Health, Aviva corporate and personal insured clients bypassing 16&ndash;32 week NHS surgical waiting lists.</p></div>
+        <div class="s-card"><h3>University Students (&pound;1,650–&pound;2,200)</h3><p>18&ndash;25 yrs, Univ of Nottingham & Trent students taking up 0% APR monthly financing for laser vision correction.</p></div>
+      </div>
+    </div>
+    <div class="slide-footer"><div>Slide 11 / 30</div><div>www.eyepros.co.uk</div></div>
+  </div>
+
+  <div class="slide-wrapper" id="slide-12">
+    <div class="circle-deco"></div>
+    <div class="slide-header">
+      <div>
+        <h2 class="slide-title">How Patients Arrive & Pay</h2>
+        <p class="slide-subtitle">Dual funnel model: clinical referrals drive volume, self-pay drives margins</p>
+      </div>
+      <div class="slide-badge">October 2026</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="s-card">
+          <h3>HOW PATIENTS ARRIVE (ACQUISITION)</h3>
+          <p><strong>~25% Optometry & GP Referrals (Synergy Network):</strong><br>
+          Formal shared-care agreements across 450 regional practices. 1-click Syndesis digital referral portal. Optometrist post-op review fee (&pound;45&ndash;&pound;60).</p>
+          <p style="margin-top: 8px;"><strong>~60% Direct to Patient (Digital Marketing & DTC):</strong><br>
+          Targeted Google PPC, SEO ranking for local conditions, patient video testimonials, and transparent online fixed pricing.</p>
+          <p style="margin-top: 8px;"><strong>~15% Surgeon Access & Corporate Partnerships:</strong><br>
+          Independent visiting consultant surgeons bringing private lists; corporate wellness screening schemes.</p>
+        </div>
+        <div class="s-card">
+          <h3>WHO PAYS (REVENUE REALIZATION)</h3>
+          <p><strong>~60% Self-Pay (Direct Consumer Funding):</strong><br>
+          Direct card payment, bank transfer, and 0% APR patient financing over 10&ndash;36 months (&pound;99&ndash;&pound;160/month).</p>
+          <p style="margin-top: 8px;"><strong>~25% Private Medical Insurance (PMI):</strong><br>
+          Accredited direct billing with Bupa, AXA Health, Aviva, Vitality, and WPA for cataract, glaucoma, and retinal care.</p>
+          <p style="margin-top: 8px;"><strong>~15% Subscription Care Plans:</strong><br>
+          LenzClub (lens care membership) & SightPlan (annual chronic monitoring) generating ~&pound;134K recurring revenue by Year 3.</p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer"><div>Slide 12 / 30</div><div>www.eyepros.co.uk</div></div>
+  </div>
+
+  <div class="slide-wrapper" id="slide-13">
+    <div class="circle-deco"></div>
+    <div class="slide-header">
+      <div>
+        <h2 class="slide-title">Business Model Canvas</h2>
+        <p class="slide-subtitle">Structured Osterwalder operational model with verified cost structures</p>
+      </div>
+      <div class="slide-badge">October 2026</div>
+    </div>
+    <div class="slide-content">
+      <div class="s-table-container">
+        <table>
+          <thead>
+            <tr><th>Key Partners</th><th>Key Activities & Resources</th><th>Value Proposition</th><th>Customer Relationships & Channels</th><th>Customer Segments</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>&bull; Zeiss (equipment)<br>&bull; Alcon (laser lease)<br>&bull; Optometrists (450)<br>&bull; Insurers (Bupa/AXA)<br>&bull; Vector Finance<br>&bull; Apollo QS fit-out</td>
+              <td><strong>ACTIVITIES:</strong><br>&bull; In-house surgery<br>&bull; Consultations<br>&bull; Synergy optom liaison<br><strong>RESOURCES:</strong><br>&bull; 2 Consultant founders<br>&bull; Kingfisher House facility<br>&bull; WaveLight & Zeiss suites</td>
+              <td>&bull; Named surgeon continuity<br>&bull; All 7 eye subspecialties<br>&bull; 30-min unhurried visits<br>&bull; Transparent pricing<br>&bull; 0% patient finance<br>&bull; In-house surgery suite<br>&bull; Prices below chains</td>
+              <td><strong>RELATIONSHIPS:</strong><br>&bull; Named surgeon bond<br>&bull; Syndesis portal<br>&bull; LenzClub care plans<br><strong>CHANNELS:</strong><br>&bull; Synergy optom network<br>&bull; Web / Google Ads<br>&bull; PMI insurer panels</td>
+              <td>&bull; NHS queue bypassers<br>&bull; Self-pay cataract/lens<br>&bull; Young refractive laser<br>&bull; PMI-insured patients<br>&bull; Optometrist referrals<br>&bull; Visiting surgeons</td>
+            </tr>
+            <tr>
+              <td colspan="2"><strong>COST STRUCTURE (Annual Run-Rate):</strong><br>&bull; Staff Payroll: &pound;283K/yr (8 core operational & theatre roles)<br>&bull; Facility Rent: &pound;47K/yr (Kingfisher House, 15-month rent-free, Year 8 break)<br>&bull; Alcon Laser Lease: &pound;111K/yr (&pound;9,277/mo x 60 mo operating expense)<br>&bull; Consumables & IOLs: Scaled per procedure under Zeiss agreement</td>
+              <td colspan="3"><strong>REVENUE STREAMS:</strong><br>&bull; Surgical Fees: Standard cataract &pound;2,250 | Premium cataract &pound;4,000 | Femto-LASIK &pound;2,000<br>&bull; Medical Treatments: Anti-VEGF &pound;995&ndash;&pound;1,795 | SLT laser &pound;995 | YAG &pound;595&ndash;&pound;895<br>&bull; Outpatient Fees: Initial assessment &pound;95&ndash;&pound;250 | Diagnostics &pound;95&ndash;&pound;195<br>&bull; Subscriptions: LenzClub & SightPlan recurring memberships (~&pound;134K Y3)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="slide-footer"><div>Slide 13 / 30</div><div>www.eyepros.co.uk</div></div>
+  </div>
+
+  <div class="slide-wrapper" id="slide-14">
+    <div class="circle-deco"></div>
+    <div class="slide-header">
+      <div>
+        <h2 class="slide-title">5-Year P&L Financial Model</h2>
+        <p class="slide-subtitle">Corrected Base Case from EyePros_PnL_Financial_Model_corrected.xlsx & Feasibility Study (&pound;'000)</p>
+      </div>
+      <div class="slide-badge">October 2026</div>
+    </div>
+    <div class="slide-content">
+      <div class="s-table-container" style="margin-bottom: 8px;">
+        <table>
+          <thead>
+            <tr><th>Financial Metric (&pound;'000)</th><th>Year 1</th><th>Year 2</th><th>Year 3</th><th>Year 4</th><th>Year 5</th><th>Verification & Context</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Revenue (Total Sales)</strong></td><td>&pound;931</td><td>&pound;1,747</td><td>&pound;2,439</td><td>&pound;2,818</td><td>&pound;3,093</td><td>Feasibility study model reaches &pound;3.00M Y3 & &pound;3.69M Y5</td></tr>
+            <tr><td><strong>Operating Profit (EBITDA)</strong></td><td>&pound;212</td><td>&pound;610</td><td>&pound;1,157</td><td>&pound;1,284</td><td>&pound;1,435</td><td>After staff (&pound;283K), rent, consumables & Alcon laser lease</td></tr>
+            <tr><td><strong>EBITDA Margin (%)</strong></td><td>22.8%</td><td>34.9%</td><td>47.4%</td><td>45.6%</td><td>46.4%</td><td>Feasibility study margin reaches 59.6% Y3 (at &pound;1.79M EBITDA)</td></tr>
+            <tr><td><strong>Depreciation</strong></td><td>(&pound;114)</td><td>(&pound;114)</td><td>(&pound;114)</td><td>(&pound;114)</td><td>(&pound;114)</td><td>Equipment and fit-out written down over 7&ndash;10 useful years</td></tr>
+            <tr><td><strong>Interest on Loan (Corrected)</strong></td><td>(&pound;113)</td><td>(&pound;101)</td><td>(&pound;87)</td><td>(&pound;71)</td><td>(&pound;53)</td><td>Recalculated on &pound;1.2M @ 9.5% with 6-month interest-only period</td></tr>
+            <tr><td><strong>Profit Before Tax (Corrected)</strong></td><td>(&pound;15)</td><td>&pound;395</td><td>&pound;956</td><td>&pound;1,099</td><td>&pound;1,268</td><td>Operating profit less depreciation and interest (pre-tax)</td></tr>
+            <tr><td><strong>Loan Repayments</strong></td><td>(&pound;181)</td><td>(&pound;248)</td><td>(&pound;248)</td><td>(&pound;248)</td><td>(&pound;248)</td><td>6 months interest-only (&pound;10K/mo), then &pound;20,679/mo amortising</td></tr>
+            <tr><td><strong>Cash Left (Free Cash Flow)</strong></td><td>&pound;31</td><td>&pound;362</td><td>&pound;909</td><td>&pound;1,036</td><td>&pound;1,187</td><td>Real net cash generated after operating costs and loan payments</td></tr>
+            <tr><td><strong>Cumulative Cash Generated</strong></td><td>&pound;31</td><td>&pound;393</td><td>&pound;1,302</td><td>&pound;2,338</td><td>&pound;3,525</td><td>Cumulative cash reserves reach &pound;3.5M+ by Year 5</td></tr>
+            <tr><td><strong>Debt Service Cover (DSCR)</strong></td><td>1.17x</td><td>2.46x</td><td>4.67x</td><td>5.18x</td><td>5.79x</td><td>Operating profit covers debt service (Lender minimum: 1.25x)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="s-card" style="padding: 6px 14px;">
+        <p style="font-size: 0.72rem;"><strong>Model Analysis:</strong> Year 1 has small pre-tax loss (&pound;15K) but positive cash (&pound;31K) via 6-mo interest-only. Year 2 delivers immediate profitability (&pound;395K PBT). Breakeven requires only 45&ndash;50% of modelled Y3 volume. With &pound;900K PracticePartners prepayment, debt service drops to &pound;51K/yr and cover clears 22x.</p>
+      </div>
+    </div>
+    <div class="slide-footer"><div>Slide 14 / 30 &middot; Base case financial model</div><div>www.eyepros.co.uk</div></div>
+  </div>
+
+  <div class="slide-wrapper" id="slide-15">
+    <div class="circle-deco"></div>
+    <div class="slide-header">
+      <div>
+        <h2 class="slide-title">Kingfisher House: Sources & Uses</h2>
+        <p class="slide-subtitle">Fully costed capital requirement and verified funding structure</p>
+      </div>
+      <div class="slide-badge">October 2026</div>
+    </div>
+    <div class="slide-content">
+      <div class="s-table-container" style="margin-bottom: 8px;">
+        <table>
+          <thead>
+            <tr><th>Uses of Funds (What We're Spending)</th><th>Amount</th><th>Sources of Funds (Where Money Comes From)</th><th>Amount</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Fit-out, Plan B (QS-optimised, including VAT)</td><td>&pound;752,630</td><td>Senior Loan Facility (Vector Finance, 84 mo @ 9.5%)</td><td>&pound;1,200,000</td></tr>
+            <tr><td>Outpatient diagnostic equipment (Day-one draw)</td><td>&pound;135,000</td><td>Director Subordinated Reserve (Standby equity cushion)</td><td>&pound;200,000</td></tr>
+            <tr><td>ZEISS Upfront Placement (repaid via consumables)</td><td>&pound;51,964</td><td>PracticePartners Equity (Planned Year 2 prepayment)</td><td>&pound;900,000</td></tr>
+            <tr><td>Professional fees, CQC, branding & recruitment</td><td>&pound;79,867</td><td>Trading Cash Flow (Funds Year 2 phased equipment)</td><td>&pound;65,000</td></tr>
+            <tr><td>Working Capital Reserve (6-month liquidity buffer)</td><td>&pound;120,000</td><td></td><td></td></tr>
+            <tr><td>Contingency (Unforeseen capital buffer)</td><td>&pound;60,000</td><td></td><td></td></tr>
+            <tr><td><strong>TOTAL DAY-ONE CAPITAL REQUIREMENT</strong></td><td><strong>&pound;1,199,461</strong></td><td><strong>TOTAL AVAILABLE FUNDING & RESERVES</strong></td><td><strong>&pound;2,365,000</strong></td></tr>
+            <tr><td><strong>HEADROOM UNDER &pound;1.2M CEILING</strong></td><td><strong>&pound;539</strong></td><td><strong>SENIOR DEBT DRAW AT CLOSING</strong></td><td><strong>&pound;1,199,461</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="s-card" style="padding: 6px 14px;">
+        <p style="font-size: 0.72rem;"><strong>Off-Balance Sheet Operating Leases:</strong> (1) Alcon WaveLight Refractive Laser Suite (FS200 + EX500 + Sightmap) leased at &pound;9,276.73/mo x 60 months (&pound;556K operating cost, no CapEx). (2) ZEISS phaco, lenses and consumables paid per procedure. (3) 15-year building lease at &pound;47K/yr with 15 months rent-free and Year 8 tenant break.</p>
+      </div>
+    </div>
+    <div class="slide-footer"><div>Slide 15 / 30 &middot; Sources & uses of funds</div><div>www.eyepros.co.uk</div></div>
+  </div>
+
+  <div class="slide-wrapper" id="slide-16">
+    <div class="circle-deco"></div>
+    <div class="slide-header">
+      <div>
+        <h2 class="slide-title">Synergy by EyePros</h2>
+        <p class="slide-subtitle">The high-converting optometrist referral engine powering 60% of revenue</p>
+      </div>
+      <div class="slide-badge">October 2026</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="s-card">
+          <h3>The 7-Step Shared-Care Referral Pathway</h3>
+          <p><strong>1. Optometrist Identifies Patient:</strong> Practice detects cataract, glaucoma, dry eye or refractive need.<br>
+          <strong>2. 1-Click Digital Referral:</strong> Optom refers via Syndesis portal (GOS18 & DICOM integration).<br>
+          <strong>3. Rapid Acknowledgement:</strong> EyePros clinical coordination team acknowledges within 24 hours.<br>
+          <strong>4. Named Consultant Surgery:</strong> Patient sees their named consultant at Kingfisher House.<br>
+          <strong>5. 48-Hour Discharge Report:</strong> Comprehensive surgical summary transmitted back to optom.<br>
+          <strong>6. 4-Week Post-Op Shared Care Review:</strong> Optometrist performs check and receives &pound;45&ndash;&pound;60 fee.<br>
+          <strong>7. Patient Returned for Lifelong Care:</strong> Optometrist retains annual sight test & spectacle sales.</p>
+        </div>
+        <div class="s-card">
+          <h3>Catchment Optical Network</h3>
+          <p><strong>450 PRACTICES IN PRIMARY CATCHMENT:</strong><br>
+          &bull; Nottinghamshire: 154 practices (immediate primary territory)<br>
+          &bull; Leicestershire: 186 practices<br>
+          &bull; Derbyshire: 110 practices</p>
+          <p style="margin-top: 8px;"><strong>COMMERCIAL MILESTONES:</strong><br>
+          &bull; Target: Sign 4 practices per month, ramping to 6/month.<br>
+          &bull; 20 active referring practices in Year 1, growing to 45+ by Year 3.<br>
+          &bull; High-touch liaison: accredited CPD evenings, direct WhatsApp consultant hotline, and co-branded patient leaflets.</p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer"><div>Slide 16 / 30</div><div>www.eyepros.co.uk</div></div>
+  </div>
+
+  <div class="slide-wrapper" id="slide-17">
+    <div class="circle-deco"></div>
+    <div class="slide-header">
+      <div>
+        <h2 class="slide-title">Launch Phases</h2>
+        <p class="slide-subtitle">Disciplined 4-stage operational and clinical delivery plan</p>
+      </div>
+      <div class="slide-badge">October 2026</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-4">
+        <div class="s-card">
+          <div class="metric-val" style="font-size: 1.2rem;">Month 0–1</div>
+          <h3 style="color: var(--teal-accent);">MOBILISE</h3>
+          <p>&bull; Finalise 15-yr lease heads of terms<br>&bull; Vector Finance facility drawdown 1<br>&bull; Issue competitive fit-out tender<br>&bull; Confirm QS Plan B contract (&pound;752K)<br>&bull; Pre-commitment spend: ~&pound;30K</p>
+        </div>
+        <div class="s-card">
+          <div class="metric-val" style="font-size: 1.2rem;">Month 1–6</div>
+          <h3 style="color: var(--teal-accent);">BUILD</h3>
+          <p>&bull; Fit-out on site (14&ndash;16 weeks)<br>&bull; Submit CQC registration (M3)<br>&bull; Install ZEISS diagnostics & phaco (M5)<br>&bull; Deliver Alcon WaveLight suite (M6)<br>&bull; Park Hospital surgery continues</p>
+        </div>
+        <div class="s-card">
+          <div class="metric-val" style="font-size: 1.2rem;">Month 6–7</div>
+          <h3 style="color: var(--teal-accent);">COMMISSION</h3>
+          <p>&bull; HTM 03-01 ventilation validation<br>&bull; Ultra-clean theatre commissioning<br>&bull; Secure CQC registration decision<br>&bull; Hospital Manager & core team in post<br>&bull; PracticePartners units issued</p>
+        </div>
+        <div class="s-card">
+          <div class="metric-val" style="font-size: 1.2rem;">Month 7–12</div>
+          <h3 style="color: var(--teal-accent);">GO LIVE</h3>
+          <p>&bull; Kingfisher House theatre opens<br>&bull; Laser suite & EyeSpa operational<br>&bull; Park surgery tapers to in-house<br>&bull; VisioNOW & oculoplastics launch<br>&bull; Ramp to full commercial capacity</p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer"><div>Slide 17 / 30</div><div>www.eyepros.co.uk</div></div>
+  </div>
+
+  <div class="slide-wrapper" id="slide-18">
+    <div class="circle-deco"></div>
+    <div class="slide-header">
+      <div>
+        <h2 class="slide-title">Kingfisher House Nottingham</h2>
+        <p class="slide-subtitle">19 Abbeyfield Road, Nottingham NG7 2SZ &mdash; Purpose-built surgical destination</p>
+      </div>
+      <div class="slide-badge">October 2026</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="s-card">
+          <h3>Facility & Property Specifications</h3>
+          <p>&bull; <strong>Location:</strong> 19 Abbeyfield Road, Nottingham NG7 2SZ (prime ring-road accessibility).<br>
+          &bull; <strong>Size:</strong> 323 m&sup2; (3,477 sq ft) detached commercial building.<br>
+          &bull; <strong>Parking:</strong> 16 dedicated on-site patient and consultant parking bays.<br>
+          &bull; <strong>Planning:</strong> Class E(e) medical use (no change-of-use needed).<br>
+          &bull; <strong>Lease:</strong> 15-year lease, 15-month rent-free period, tenant break at Year 8.<br>
+          &bull; <strong>Rent:</strong> &pound;47,000 per year (business rates &pound;17,881; rateable value &pound;32,750).<br>
+          &bull; <strong>Prestige:</strong> Standalone private entrance guarantees patient discretion, avoiding hospital stigma.</p>
+        </div>
+        <div class="s-card">
+          <h3>Clinical Capabilities & Capacity</h3>
+          <p>&bull; <strong>Operating Theatre:</strong> Ultra-clean laminar flow ventilation (HTM 03-01).<br>
+          &bull; <strong>Laser Vision Suite:</strong> Alcon WaveLight FS200 femtosecond + EX500 excimer.<br>
+          &bull; <strong>Outpatient Rooms:</strong> 3 Consulting rooms with ZEISS OCT, biometry & topography.<br>
+          &bull; <strong>EyeSpa Suite:</strong> Dedicated C-Suite dry eye clinic (IPL & LipiFlow).<br>
+          &bull; <strong>Recovery:</strong> Pre-op lounge and luxury post-op recovery bays.<br>
+          &bull; <strong>Operating Capacity:</strong> 16 eyes/day x 5 days = 80 eyes/week. Year 3 forecast uses only ~18% of capacity.<br>
+          &bull; <strong>Catchment:</strong> 2.2 million residents within a 30&ndash;45 minute drive.</p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer"><div>Slide 18 / 30</div><div>www.eyepros.co.uk</div></div>
+  </div>
+
+  <div class="slide-wrapper" id="slide-19">
+    <div class="circle-deco"></div>
+    <div class="slide-header">
+      <div>
+        <h2 class="slide-title">5-Year Revenue Trajectory</h2>
+        <p class="slide-subtitle">Predictable growth from construction transition to multi-million operating scale</p>
+      </div>
+      <div class="slide-badge">October 2026</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-4" style="grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 12px;">
+        <div class="s-card" style="text-align: center;">
+          <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted);">Year 1</div>
+          <div class="metric-val" style="font-size: 1.35rem;">&pound;857K–&pound;931K</div>
+          <div class="metric-sub">Construction year. Park surgery continues. Positive cash &pound;31K.</div>
+        </div>
+        <div class="s-card" style="text-align: center;">
+          <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted);">Year 2</div>
+          <div class="metric-val" style="font-size: 1.35rem;">&pound;1.75M–&pound;2.28M</div>
+          <div class="metric-sub">Kingfisher fully open. In-house savings trigger EBITDA surge to &pound;1.15M.</div>
+        </div>
+        <div class="s-card" style="text-align: center;">
+          <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted);">Year 3</div>
+          <div class="metric-val" style="font-size: 1.35rem;">&pound;2.44M–&pound;3.00M</div>
+          <div class="metric-sub">Steady-state scale. WaveLight laser suite & PracticePartners ramped.</div>
+        </div>
+        <div class="s-card" style="text-align: center;">
+          <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted);">Year 4</div>
+          <div class="metric-val" style="font-size: 1.35rem;">&pound;2.82M–&pound;3.37M</div>
+          <div class="metric-sub">Mature operations. High cash flow generation (&gt;&pound;1.0M free cash flow).</div>
+        </div>
+        <div class="s-card" style="text-align: center;">
+          <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted);">Year 5</div>
+          <div class="metric-val" style="font-size: 1.35rem;">&pound;3.09M–&pound;3.69M</div>
+          <div class="metric-sub">Peak efficiency. Cumulative cash reaches &pound;3.5M+. Secondary site ready.</div>
+        </div>
+      </div>
+      <div class="s-card" style="padding: 10px 16px;">
+        <p style="font-size: 0.76rem;"><strong>Financial Highlights:</strong> Operating profit (EBITDA) margin expands from 16.2%&ndash;22.8% in Year 1 to 59.6%&ndash;63.8% in steady state. Cumulative free cash flow reaches &pound;3.5M+ by Year 5. Payback is achieved in approximately 2.2 years after tax.</p>
+      </div>
+    </div>
+    <div class="slide-footer"><div>Slide 19 / 30</div><div>www.eyepros.co.uk</div></div>
+  </div>
+
+  <div class="slide-wrapper" id="slide-20">
+    <div class="circle-deco"></div>
+    <div class="slide-header">
+      <div>
+        <h2 class="slide-title">15-Year Strategic Roadmap</h2>
+        <p class="slide-subtitle">Long-term institutional value creation: from local pioneer to national brand</p>
+      </div>
+      <div class="slide-badge">October 2026</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-4">
+        <div class="s-card">
+          <div class="metric-val" style="font-size: 1.15rem;">Year 1–2</div>
+          <h3 style="color: var(--teal-accent);">ESTABLISH</h3>
+          <p style="font-weight: 700; color: var(--teal-dark); margin-bottom: 4px;">&pound;857K &rarr; &pound;2.28M</p>
+          <p>&bull; Launch Kingfisher House<br>&bull; CQC & PMI accreditation<br>&bull; Build to 30+ optom referrers<br>&bull; Achieve operating breakeven (M18)<br>&bull; Establish boutique reputation</p>
+        </div>
+        <div class="s-card">
+          <div class="metric-val" style="font-size: 1.15rem;">Year 3–5</div>
+          <h3 style="color: var(--teal-accent);">GROW</h3>
+          <p style="font-weight: 700; color: var(--teal-dark); margin-bottom: 4px;">&pound;2.44M &rarr; &pound;3.69M</p>
+          <p>&bull; Full WaveLight laser suite running<br>&bull; PracticePartners 20-unit programme<br>&bull; EyeSpa standalone expansion<br>&bull; Cumulative cash flow &pound;3.5M+<br>&bull; Self-fund secondary clinic equity</p>
+        </div>
+        <div class="s-card">
+          <div class="metric-val" style="font-size: 1.15rem;">Year 6–10</div>
+          <h3 style="color: var(--teal-accent);">EXPAND</h3>
+          <p style="font-weight: 700; color: var(--teal-dark); margin-bottom: 4px;">&pound;8M &rarr; &pound;20M</p>
+          <p>&bull; 3&ndash;5 clinics across Midlands (Leicester, Derby, Birmingham)<br>&bull; Centralised admin & booking hub<br>&bull; EyePros Clinical Training Academy<br>&bull; Midlands' undisputed leader</p>
+        </div>
+        <div class="s-card">
+          <div class="metric-val" style="font-size: 1.15rem;">Year 11–15</div>
+          <h3 style="color: var(--teal-accent);">SCALE</h3>
+          <p style="font-weight: 700; color: var(--teal-dark); margin-bottom: 4px;">&pound;20M &rarr; &pound;50M+</p>
+          <p>&bull; 8&ndash;12 surgical clinics nationally<br>&bull; Institutional Private Equity or IPO<br>&bull; Proprietary AI diagnostic platform<br>&bull; National benchmark in eye surgery</p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer"><div>Slide 20 / 30</div><div>www.eyepros.co.uk</div></div>
+  </div>
+
+  <div class="slide-wrapper" id="slide-21">
+    <div class="circle-deco"></div>
+    <div class="slide-header">
+      <div>
+        <h2 class="slide-title">15-Year Milestones Matrix</h2>
+        <p class="slide-subtitle">Projected operational evolution, regional footprint, and strategic focus</p>
+      </div>
+      <div class="slide-badge">October 2026</div>
+    </div>
+    <div class="slide-content">
+      <div class="s-table-container">
+        <table>
+          <thead>
+            <tr><th>Phase / Year</th><th>Revenue</th><th>Sites</th><th>Key Clinical & Infrastructure Milestone</th><th>Strategic Focus</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Year 1</strong></td><td>&pound;857K &ndash; &pound;931K</td><td>1</td><td>Kingfisher House fit-out & launch. CQC registration. Taper from Park Hospital.</td><td>Establish Base</td></tr>
+            <tr><td><strong>Year 2</strong></td><td>&pound;1.75M &ndash; &pound;2.28M</td><td>1</td><td>Full in-house operations. VisioNOW and oculoplastics launched. Prepayment ready.</td><td>Optimise Flow</td></tr>
+            <tr><td><strong>Year 3</strong></td><td>&pound;2.44M &ndash; &pound;3.00M</td><td>1–2</td><td>Full operating capacity reached. Dedicated WaveLight laser suite mature.</td><td>Diversify Services</td></tr>
+            <tr><td><strong>Year 4–5</strong></td><td>&pound;2.8M &ndash; &pound;3.7M</td><td>2</td><td>Launch 2nd site (Leicester / Derby hub). PracticePartners programme expanded.</td><td>Regional Expansion</td></tr>
+            <tr><td><strong>Year 6–7</strong></td><td>&pound;8M &ndash; &pound;12M</td><td>3</td><td>3rd surgical hospital. Centralised scheduling, billing, and back-office operations.</td><td>Market Dominance</td></tr>
+            <tr><td><strong>Year 8–10</strong></td><td>&pound;12M &ndash; &pound;20M</td><td>4–5</td><td>Undisputed Midlands market leader. EyePros Clinical Fellowship Training Academy.</td><td>Clinical Leadership</td></tr>
+            <tr><td><strong>Year 11–12</strong></td><td>&pound;20M &ndash; &pound;30M</td><td>6–8</td><td>Expand beyond Midlands into South East and North West. Institutional PE funding.</td><td>National Footprint</td></tr>
+            <tr><td><strong>Year 13–15</strong></td><td>&pound;30M &ndash; &pound;50M+</td><td>8–12</td><td>National healthcare brand. Automated AI diagnostic review network across clinics.</td><td>Scale & Liquidity</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="slide-footer"><div>Slide 21 / 30</div><div>www.eyepros.co.uk</div></div>
+  </div>
+
+  <div class="slide-wrapper" id="slide-22">
+    <div class="circle-deco"></div>
+    <div class="slide-header">
+      <div>
+        <h2 class="slide-title">How We Measure Success</h2>
+        <p class="slide-subtitle">Key performance indicators across clinical conversion, growth, and quality</p>
+      </div>
+      <div class="slide-badge">October 2026</div>
+    </div>
+    <div class="slide-content">
+      <div class="s-table-container">
+        <table>
+          <thead>
+            <tr><th>Key Performance Indicator (KPI)</th><th>Target</th><th>Stretch Target</th><th>Strategic Objective & Revenue Impact</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>New practices signed to shared-care</strong></td><td>&ge; 4 per month</td><td>&ge; 6 per month</td><td>Builds long-term referring optometrist foundation</td></tr>
+            <tr><td><strong>Active referring optical practices</strong></td><td>&ge; 20 ongoing</td><td>&ge; 35 ongoing</td><td>Ensures consistent, recurring monthly patient volume</td></tr>
+            <tr><td><strong>Cataract surgery conversions</strong></td><td>&ge; 25 per month</td><td>&ge; 40 per month</td><td>Core procedure volume driving operating theatre utilization</td></tr>
+            <tr><td><strong>Glaucoma / MIGS surgical conversions</strong></td><td>&ge; 8 per month</td><td>&ge; 14 per month</td><td>High-margin procedure preserving long-term eye health</td></tr>
+            <tr><td><strong>Laser vision correction (LVC) cases</strong></td><td>&ge; 4 per month</td><td>&ge; 8 per month</td><td>100% self-pay cash revenue from WaveLight laser suite</td></tr>
+            <tr><td><strong>Initial consultation to surgery conversion</strong></td><td>&ge; 35% &ndash; 40%</td><td>&ge; 48%</td><td>Reflects clinical trust and unhurried consultation quality</td></tr>
+            <tr><td><strong>New private consultations</strong></td><td>&ge; 16 per week</td><td>&ge; 24 per week</td><td>Top-of-funnel diagnostic and surgical pipeline volume</td></tr>
+            <tr><td><strong>New EyeSpa dry eye treatment courses</strong></td><td>&ge; 3 per week</td><td>&ge; 6 per week</td><td>Outpatient cash flow + pre-op biometry optimization</td></tr>
+            <tr><td><strong>Patient satisfaction (Net Promoter Score)</strong></td><td>&ge; 92%</td><td>&ge; 98%</td><td>Generates organic word-of-mouth and 5-star online reviews</td></tr>
+            <tr><td><strong>Post-op report transmitted to optometrist</strong></td><td>Within 48 hours</td><td>Within 24 hours</td><td>Deepens optometrist loyalty and clinical shared-care trust</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="slide-footer"><div>Slide 22 / 30</div><div>www.eyepros.co.uk</div></div>
+  </div>
+
+  <div class="slide-wrapper" id="slide-23">
+    <div class="circle-deco"></div>
+    <div class="slide-header">
+      <div>
+        <h2 class="slide-title">Compliance & Accreditation</h2>
+        <p class="slide-subtitle">Stringent clinical governance, statutory health standards, and insurer approvals</p>
+      </div>
+      <div class="slide-badge">October 2026</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2" style="gap: 12px;">
+        <div class="s-card" style="padding: 12px 16px;">
+          <h3>CQC Registration &middot; Month 3–6</h3>
+          <p>Regulated activities: TDDI, Surgical Procedures, and Diagnostic Screening. Full-time Hospital Manager appointed as registered manager.</p>
+        </div>
+        <div class="s-card" style="padding: 12px 16px;">
+          <h3>Theatre Ventilation (HTM 03-01)</h3>
+          <p>&ge; 25 air changes per hour (ACH), G4 + F7 filtration cascade, +5 Pa positive pressure. Independent validation gated prior to opening.</p>
+        </div>
+        <div class="s-card" style="padding: 12px 16px;">
+          <h3>Medical Gas Pipeline (HTM 02-01)</h3>
+          <p>MGPS with active Anaesthetic Gas Scavenging System (AGSS) supporting local anaesthetic and sedation lists to NHS hospital trust standards.</p>
+        </div>
+        <div class="s-card" style="padding: 12px 16px;">
+          <h3>Private Medical Insurer (PMI)</h3>
+          <p>Direct settlement recognition active with Bupa, AXA Health, Aviva, Vitality, and WPA. Facility re-accreditation submitted for Kingfisher.</p>
+        </div>
+        <div class="s-card" style="padding: 12px 16px;">
+          <h3>PHIN & CMA Compliance</h3>
+          <p>Full compliance with the Competition and Markets Authority (CMA) Private Healthcare Order for clinical outcomes and fee transparency.</p>
+        </div>
+        <div class="s-card" style="padding: 12px 16px;">
+          <h3>GMC Professional Governance</h3>
+          <p>Both consultant directors hold active GMC Specialist Registration, annual clinical appraisals, and continuous medical revalidation.</p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer"><div>Slide 23 / 30</div><div>www.eyepros.co.uk</div></div>
+  </div>
+
+  <div class="slide-wrapper" id="slide-24">
+    <div class="circle-deco"></div>
+    <div class="slide-header">
+      <div>
+        <h2 class="slide-title">Key Risks & Mitigation</h2>
+        <p class="slide-subtitle">Comprehensive risk register and five-layer financial and operational protection stack</p>
+      </div>
+      <div class="slide-badge">October 2026</div>
+    </div>
+    <div class="slide-content">
+      <div class="s-table-container">
+        <table>
+          <thead>
+            <tr><th>Risk Description</th><th>Likelihood (L)</th><th>Impact (I)</th><th>Score</th><th>Mitigation Strategy & Built-in Protection</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>PracticePartners regulatory position</strong></td><td>3</td><td>5</td><td><strong>15</strong></td><td>Written legal advice before any unit is offered. Senior debt is 4.9x covered without it.</td></tr>
+            <tr><td><strong>PracticePartners raise late / short</strong></td><td>3</td><td>5</td><td><strong>15</strong></td><td>Reserves bridge Year 1. Prepayment is optional; loan is fully serviceable from cash flow.</td></tr>
+            <tr><td><strong>Fit-out costs exceed &pound;752K budget</strong></td><td>3</td><td>4</td><td><strong>12</strong></td><td>Fixed-price contract under QS Plan B. &pound;60K contingency + &pound;200K director reserve.</td></tr>
+            <tr><td><strong>CQC registration or review delay</strong></td><td>3</td><td>4</td><td><strong>12</strong></td><td>Apply 16 weeks ahead via specialist consultant. Park Hospital surgery continues.</td></tr>
+            <tr><td><strong>Day-one spend exceeds &pound;1.2M ceiling</strong></td><td>3</td><td>3</td><td><strong>9</strong></td><td>&pound;65,000 of equipment phased to Year 2 cash flow. Headroom of &pound;539 maintained.</td></tr>
+            <tr><td><strong>Year 1 cover shortfall (0.77x)</strong></td><td>3</td><td>3</td><td><strong>9</strong></td><td>6-mo interest-only. &pound;380K protection stack (working capital + contingency + standby).</td></tr>
+            <tr><td><strong>Dependence on two consultant surgeons</strong></td><td>2</td><td>4</td><td><strong>8</strong></td><td>PracticePartners panel of independent surgeons + locum panel. Broad clinical capacity.</td></tr>
+            <tr><td><strong>ZEISS Annual Minimum Value shortfall</strong></td><td>2</td><td>3</td><td><strong>6</strong></td><td>Forecast volume easily clears minimum threshold in every year. Six-monthly reviews.</td></tr>
+            <tr><td><strong>Senior facility interest rate rise</strong></td><td>2</td><td>3</td><td><strong>6</strong></td><td>Stress-tested at 11.5% (+2%). Year 1 cover remains safe at 1.06x; Year 3 cover at 4.40x.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="slide-footer"><div>Slide 24 / 30 &middot; Section 19 Risk Register</div><div>www.eyepros.co.uk</div></div>
+  </div>
+
+  <div class="slide-wrapper" id="slide-25">
+    <div class="circle-deco"></div>
+    <div class="slide-header">
+      <div>
+        <h2 class="slide-title">What Happens Next</h2>
+        <p class="slide-subtitle">Execution roadmap: from completed research to commercial launch</p>
+      </div>
+      <div class="slide-badge">October 2026</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-4">
+        <div class="s-card">
+          <div class="metric-val" style="font-size: 1.1rem; color: #15803d;">Phase 1</div>
+          <h3 style="color: #15803d;">RESEARCH &middot; DONE</h3>
+          <p>&check; Verified TAM/SAM/SOM<br>&check; Competitor pricing map<br>&check; Business Model Canvas<br>&check; QS Plan B cost model<br>&check; Corrected 5-Year P&L<br>&check; Feasibility study complete</p>
+        </div>
+        <div class="s-card">
+          <div class="metric-val" style="font-size: 1.1rem; color: var(--teal-accent);">Phase 2</div>
+          <h3 style="color: var(--teal-accent);">FINANCIALS</h3>
+          <p>&bull; Finalise &pound;1.2M term sheet<br>&bull; 15-year lease execution<br>&bull; Legal sign-off on partners<br>&bull; Architect final drawings<br>&bull; Landlord alterations license<br>&bull; Sign Zeiss & Alcon leases</p>
+        </div>
+        <div class="s-card">
+          <div class="metric-val" style="font-size: 1.1rem; color: var(--gold);">Phase 3</div>
+          <h3 style="color: var(--gold);">REGULATORY</h3>
+          <p>&bull; CQC application (Month 3)<br>&bull; Fit-out on site (14&ndash;16 wks)<br>&bull; HTM 03-01 air validation<br>&bull; Equipment delivery M5&ndash;6<br>&bull; Recruit Hospital Manager<br>&bull; Clinical commissioning</p>
+        </div>
+        <div class="s-card">
+          <div class="metric-val" style="font-size: 1.1rem; color: var(--teal-dark);">Phase 4</div>
+          <h3 style="color: var(--teal-dark);">LAUNCH</h3>
+          <p>&bull; Kingfisher grand opening<br>&bull; Surgery go-live M7<br>&bull; Taper from Park Hospital<br>&bull; B2B marketing campaign<br>&bull; Scale optoms to 30+<br>&bull; Year 2 debt prepayment</p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer"><div>Slide 25 / 30</div><div>www.eyepros.co.uk</div></div>
+  </div>
+
+  <div class="slide-wrapper" id="slide-26">
+    <div class="circle-deco"></div>
+    <div class="slide-header">
+      <div>
+        <h2 class="slide-title">Two Options on the Table</h2>
+        <p class="slide-subtitle">Strategic capital appraisal: senior debt leverage vs. consultant equity partnership</p>
+      </div>
+      <div class="slide-badge">October 2026</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="s-card" style="border-left: 4px solid var(--teal-accent);">
+          <h3 style="color: var(--teal-accent);">OPTION A: Senior Debt Facility (Recommended)</h3>
+          <p><strong>Structure:</strong> &pound;1,200,000 loan &middot; 84 months &middot; 9.5% APR indicative &middot; 6-mo interest-only.</p>
+          <p style="margin-top: 6px;"><strong>Key Advantages:</strong><br>
+          &check; Founders retain 100% equity ownership and complete strategic control.<br>
+          &check; Fast execution through established commercial finance relationship.<br>
+          &check; Predictable repayments (&pound;20,679/mo) covered 4.9x by Year 2 trading cash flow.<br>
+          &check; Debt is fully extinguished by Year 7 (or Year 2 with prepayment).<br>
+          <strong>Bottom Line:</strong> Keeps 100% of a business generating &pound;3.5M+ cumulative cash.</p>
+        </div>
+        <div class="s-card" style="border-left: 4px solid var(--gold);">
+          <h3 style="color: var(--gold);">OPTION B: Consultant Equity Partnership</h3>
+          <p><strong>Structure:</strong> Sell minority equity shares to visiting ophthalmic surgeons.</p>
+          <p style="margin-top: 6px;"><strong>Key Considerations:</strong><br>
+          &check; Zero monthly debt repayment obligations during early trading ramp.<br>
+          &check; Participating consultant investors bring established local surgical caseloads.<br>
+          &cross; Permanent equity dilution: founders surrender permanent ownership and dividends.<br>
+          &cross; Complex clinical governance with conflicting partner opinions on spend.<br>
+          <strong>Bottom Line:</strong> PracticePartners hybrid gives equity prepay without operational dilution.</p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer"><div>Slide 26 / 30</div><div>www.eyepros.co.uk</div></div>
+  </div>
+
+  <div class="slide-wrapper" id="slide-27">
+    <div class="circle-deco"></div>
+    <div class="slide-header">
+      <div>
+        <h2 class="slide-title">We Already Have Patients. Now We Need to Scale.</h2>
+        <p class="slide-subtitle">Summary of existing commercial traction and transformational in-house economics</p>
+      </div>
+      <div class="slide-badge">October 2026</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="s-card">
+          <h3>What We Have Already Proven</h3>
+          <p>&check; <strong>&pound;230,309 FY2026 actual revenue</strong> operating at 94.9% gross margin.<br>
+          &check; <strong>~3&ndash;5 cataract & RLE eyes/week</strong> operating at The Park Hospital.<br>
+          &check; <strong>&pound;156K direct surgical income</strong> generated from existing caseload alone.<br>
+          &check; <strong>5-star patient outcomes</strong> with active B2B referral relationships.<br>
+          &check; <strong>Full PMI accreditation</strong> with Bupa, AXA, Aviva, Vitality, and WPA.<br>
+          &check; <strong>In-house transition saves ~&pound;1,575 per eye</strong> on day one, multiplying profit.</p>
+        </div>
+        <div class="s-card">
+          <h3>The Scale Trajectory</h3>
+          <p><strong>Revenue Progression:</strong><br>
+          &bull; Year 1: &pound;857K &ndash; &pound;931K (Construction year; positive cash &pound;31K)<br>
+          &bull; Year 2: &pound;1.75M &ndash; &pound;2.28M (In-house launch; EBITDA surges to &pound;1.15M)<br>
+          &bull; Year 3: &pound;2.44M &ndash; &pound;3.00M (Mature scale; EBITDA &pound;1.79M @ 59.6% margin)<br>
+          &bull; Year 5: &pound;3.09M &ndash; &pound;3.69M (&pound;2.35M EBITDA; &pound;3.5M+ cumulative cash)<br>
+          <strong>Investment Highlights:</strong> Payback in ~2.2 years after tax; Project IRR &gt;60%.</p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer"><div>Slide 27 / 30</div><div>www.eyepros.co.uk</div></div>
+  </div>
+
+  <div class="slide-wrapper" id="slide-28">
+    <div class="circle-deco"></div>
+    <div class="slide-header">
+      <div>
+        <h2 class="slide-title">Case Study: Funding EyePros</h2>
+        <p class="slide-subtitle">Logical appraisal decision tree leading to senior debt financing</p>
+      </div>
+      <div class="slide-badge">October 2026</div>
+    </div>
+    <div class="slide-content">
+      <div class="s-table-container">
+        <table>
+          <thead>
+            <tr><th>Decision Stage</th><th>Strategic Question</th><th>Evaluation & Fact Base</th><th>Optimal Strategic Decision</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Stage 1: Self-Funding</strong></td><td>Can the founders self-fund &pound;1.2M?</td><td>Founders have &pound;200K standby committed, not &pound;1.2M.</td><td>Must secure external facility.</td></tr>
+            <tr><td><strong>Stage 2: Capital Type</strong></td><td>Borrow debt or sell equity shares?</td><td>Equity permanently dilutes profits; debt leaves 100% control.</td><td>Explore debt financing.</td></tr>
+            <tr><td><strong>Stage 3: Affordability</strong></td><td>Can trading cash flow service debt?</td><td>Year 2 EBITDA of &pound;1.15M covers debt service (&pound;235K) 4.9 times.</td><td>Debt is highly affordable.</td></tr>
+            <tr><td><strong>Stage 4: Security & Assets</strong></td><td>Are there tangible assets to secure loan?</td><td>Building fit-out (&pound;752K) + equipment creates &pound;1.1M+ in assets.</td><td>Meets commercial security.</td></tr>
+            <tr><td><strong>Stage 5: Equity Partnership</strong></td><td>Do we want consultant investors?</td><td>PracticePartners offers &pound;900K prepay without operational dilution.</td><td>Hybrid model: Debt + Prepay.</td></tr>
+            <tr><td><strong>FINAL OUTCOME</strong></td><td>Which funding route maximises value?</td><td>Vector Finance &pound;1.2M facility preserves 100% founder ownership of a &pound;3.5M+ cash business.</td><td><strong>PROCEED WITH SENIOR DEBT</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="slide-footer"><div>Slide 28 / 30</div><div>www.eyepros.co.uk</div></div>
+  </div>
+
+  <div class="slide-wrapper" id="slide-29">
+    <div class="circle-deco"></div>
+    <div class="slide-header">
+      <div>
+        <h2 class="slide-title">Sources & References</h2>
+        <p class="slide-subtitle">Authoritative evidence base backing all clinical, financial and market assertions</p>
+      </div>
+      <div class="slide-badge">October 2026</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="s-card">
+          <h3>EYEPROS INTERNAL & VERIFIED DOCUMENTS</h3>
+          <p>&bull; <strong>Feasibility Study:</strong> Kingfisher House Surgical Facility (Sept 2026)<br>
+          &bull; <strong>Corrected Financial Model:</strong> EyePros_PnL_Financial_Model_corrected.xlsx<br>
+          &bull; <strong>Statutory Accounts:</strong> Companies House 07909477 (FY2026, filed)<br>
+          &bull; <strong>Fit-Out Cost Plan:</strong> QS Value Engineering Report (Plan B, &pound;752,630 incl VAT)<br>
+          &bull; <strong>ZEISS Agreement:</strong> Supplier Equipment Agreement V4.9 (2026)<br>
+          &bull; <strong>Alcon Laser Lease:</strong> Alcon Quotation Q-312056 (3 July 2026)<br>
+          &bull; <strong>Property Terms:</strong> FHP Property Consultants (15-yr lease, 15-mo rent free)<br>
+          &bull; <strong>Confirmed Price List:</strong> EyePros Price Schedule (2 Sept 2026)<br>
+          &bull; <strong>Staffing Plan:</strong> EyePros Staffing Schedule (8 roles, &pound;283K payroll)</p>
+        </div>
+        <div class="s-card">
+          <h3>EXTERNAL & PUBLIC STATISTICAL SOURCES</h3>
+          <p>&bull; <strong>Competitor Filings:</strong> Optical Express (&pound;146.5M), Optegra (&pound;99.8M)<br>
+          &bull; <strong>Competitor Pricing:</strong> Spire (&pound;3,405), Nuffield (&pound;3,450), Optical Express (&pound;2,500)<br>
+          &bull; <strong>NHS Waiting List Data:</strong> NHS England RTT & My Planned Care (Oct 2026)<br>
+          &bull; <strong>NHS National Tariff:</strong> 2025/26 National Tariff Payment Guidelines<br>
+          &bull; <strong>Private Healthcare Review:</strong> LaingBuisson Healthcare Market Review<br>
+          &bull; <strong>Demographic Data:</strong> ONS Mid-Year Population Estimates (Midlands 16.4%)<br>
+          &bull; <strong>Clinical Guidelines:</strong> NICE NG81 (Glaucoma), TA155 (Anti-VEGF Retina)<br>
+          &bull; <strong>Dry Eye Clinical Data:</strong> TFOS DEWS II Global Dry Eye Workshop Reports<br>
+          &bull; <strong>Banking Benchmarks:</strong> UK Commercial Finance Guidance (Allica, Shawbrook)</p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer"><div>Slide 29 / 30</div><div>www.eyepros.co.uk</div></div>
+  </div>
+
+  <div class="slide-wrapper" id="slide-30">
+    <div class="circle-deco"></div><div class="circle-deco-2"></div>
+    <div class="slide-header">
+      <div></div>
+      <div class="slide-badge">October 2026</div>
+    </div>
+    <div class="slide-content" style="justify-content: center; padding-left: 20px;">
+      <h1 style="font-size: 3.5rem; font-weight: 800; color: white; line-height: 1.1; margin-bottom: 12px;">Thank You</h1>
+      <p style="font-size: 1.35rem; color: #d2ebe6; margin-bottom: 32px;">EyePros &mdash; Back in Focus Consultant-Led Private Eye Clinic</p>
+      <div style="background: var(--teal-dark); border: 1px solid rgba(80, 135, 125, 0.8); padding: 18px 24px; border-radius: 12px; color: white; width: fit-content;">
+        <p style="font-weight: 700; font-size: 1.05rem;">Presented by: Takoua Selmi &middot; Growth & Business Developer</p>
+        <p style="font-size: 0.9rem; color: #d2ebe6; margin-top: 4px;">Kingfisher House, 19 Abbeyfield Road, Nottingham NG7 2SZ</p>
+        <p style="font-size: 0.9rem; color: var(--gold); margin-top: 4px;">Website: www.eyepros.co.uk &nbsp;&bull;&nbsp; Email: contact@eyepros.co.uk</p>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div>Slide 30 / 30</div>
+      <div>www.eyepros.co.uk</div>
+    </div>
+  </div>
+
+  </div>
+
+  <!-- Controller Bar -->
+  <div style="display: flex; justify-content: center; padding-bottom: 24px;">
+    <div class="controller-bar">
+      <button class="btn-nav" onclick="prevSlide()" title="Previous slide (Left Arrow)"><i class="fa fa-chevron-left"></i></button>
+      <div class="slide-counter" id="counterText">Slide 1 / 30</div>
+      <button class="btn-nav" onclick="nextSlide()" title="Next slide (Right Arrow)"><i class="fa fa-chevron-right"></i></button>
+    </div>
+  </div>
+
+  <script>
+    let currentSlide = 1;
+    const totalSlides = document.querySelectorAll('.slide-wrapper').length;
+
+    function showSlide(n) {
+      const slides = document.querySelectorAll('.slide-wrapper');
+      if (n > totalSlides) currentSlide = 1;
+      else if (n < 1) currentSlide = totalSlides;
+      else currentSlide = n;
+
+      slides.forEach((s, idx) => {
+        s.classList.toggle('active', idx + 1 === currentSlide);
+      });
+
+      document.getElementById('counterText').textContent = `Slide ${currentSlide} / ${totalSlides}`;
+    }
+
+    function nextSlide() { showSlide(currentSlide + 1); }
+    function prevSlide() { showSlide(currentSlide - 1); }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+      else if (e.key === 'ArrowLeft') prevSlide();
+    });
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+      }
+    }
+  </script>
+</body>
+</html>
