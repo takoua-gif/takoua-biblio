@@ -1035,7 +1035,12 @@ h4{font-size:1.05rem;font-weight:600}
         <h3 style="margin-bottom:8px">Register Your Practice</h3>
         <p class="text-med mb-24" style="font-size:.88rem">Complete this short form to request the Shared Care Agreement v2.2 or book an intro call with Mr Elsahn.</p>
         
-        <form id="partnerForm" onsubmit="event.preventDefault(); document.getElementById('formSuccess').style.display='block'; this.style.display='none';">
+        <form id="partnerForm" action="https://formsubmit.co/practice@eyepros.co.uk" method="POST">
+          <!-- FormSubmit Configuration -->
+          <input type="hidden" name="_subject" value="New Synergy Partnership Registration">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_captcha" value="false">
+          
           <div class="form-row">
             <div class="form-group">
               <label for="fullName">Your Full Name *</label>
@@ -1080,13 +1085,13 @@ h4{font-size:1.05rem;font-weight:600}
             <textarea id="notes" name="notes" rows="3" placeholder="Any specific requirements, e.g. GOS 18 workflow, booking a consultant visit..."></textarea>
           </div>
 
-          <button type="submit" class="btn btn-primary" style="width:100%">Register Practice for Shared Care</button>
-          <p style="font-size:.78rem;color:var(--text-light);margin-top:12px;text-align:center">We respect clinical privacy. Your details are used solely to arrange your onboarding.</p>
+          <button type="submit" id="submitBtn" class="btn btn-primary" style="width:100%">Register Practice for Shared Care</button>
+          <p style="font-size:.78rem;color:var(--text-light);margin-top:12px;text-align:center">Submissions are sent directly to practice@eyepros.co.uk.</p>
         </form>
 
         <div id="formSuccess" style="display:none;background:var(--teal-light);border:1px solid rgba(13,148,136,.3);padding:24px;border-radius:var(--radius);text-align:center">
-          <h4 style="color:var(--teal);margin-bottom:6px">Registration Request Received</h4>
-          <p style="font-size:.9rem;color:var(--text-med)">Thank you. Our Practice Manager will email the Shared Care Agreement v2.2 and schedule your clinical discussion within 24 hours.</p>
+          <h4 style="color:var(--teal);margin-bottom:6px">Registration Sent to practice@eyepros.co.uk</h4>
+          <p style="font-size:.9rem;color:var(--text-med)">Thank you. Our Practice Manager has received your details and will email the Shared Care Agreement v2.2 within 24 hours.</p>
         </div>
       </div>
 
@@ -1216,6 +1221,38 @@ document.querySelectorAll('.faq-q').forEach(function(button) {
     item.classList.toggle('open');
   });
 });
+
+// Partner form submission to practice@eyepros.co.uk
+var partnerForm = document.getElementById('partnerForm');
+if (partnerForm) {
+  partnerForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var submitBtn = document.getElementById('submitBtn');
+    submitBtn.innerText = 'Sending Registration...';
+    submitBtn.disabled = true;
+
+    var formData = new FormData(partnerForm);
+    var payload = {};
+    formData.forEach(function(value, key) { payload[key] = value; });
+
+    fetch('https://formsubmit.co/ajax/practice@eyepros.co.uk', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+    .then(function(res) {
+      partnerForm.style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+    })
+    .catch(function(err) {
+      // Direct form submit fallback
+      partnerForm.submit();
+    });
+  });
+}
 </script>
 
 </body>
