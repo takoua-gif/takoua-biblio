@@ -9,12 +9,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg-page: #080E1E;
-  --bg-section-alt: #050914;
-  --bg-surface: #0E182E;
-  --bg-surface-elevated: #142240;
-  --bg-subtle: #0B1325;
-  --nav-bg: rgba(8, 14, 30, 0.92);
+  --bg-page: #1C192E;
+  --bg-section-alt: #141222;
+  --bg-surface: #242038;
+  --bg-surface-elevated: #2D2845;
+  --bg-subtle: #181628;
+  --nav-bg: rgba(28, 25, 46, 0.94);
   --border: rgba(255, 255, 255, 0.10);
   --border-light: rgba(255, 255, 255, 0.06);
   --border-glow: rgba(20, 184, 166, 0.4);
@@ -64,7 +64,9 @@ h4{font-size:1.02rem;font-weight:600}
 /* Nav */
 .nav{position:sticky;top:0;left:0;right:0;z-index:1000;background:var(--nav-bg);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
 .nav-inner{max-width:var(--max-w);margin:0 auto;padding:0 24px;height:70px;display:flex;align-items:center;justify-content:space-between}
-.nav-brand img{height:32px;width:auto;display:block}
+.nav-brand{display:flex;align-items:center}
+.logo-box{height:42px;width:175px;overflow:hidden;display:flex;align-items:center;justify-content:center;border-radius:6px}
+.logo-box img{width:175px;height:175px;object-fit:cover;object-position:center;display:block}
 .nav-links{display:flex;align-items:center;gap:6px;list-style:none}
 .nav-links a{color:var(--text-body);font-size:.9rem;font-weight:500;padding:8px 14px;border-radius:var(--radius-sm);transition:all .2s var(--ease)}
 .nav-links a:hover{color:var(--text-heading);background:var(--bg-surface-elevated)}
@@ -186,7 +188,9 @@ h4{font-size:1.02rem;font-weight:600}
 <nav class="nav">
   <div class="nav-inner">
     <a href="#" class="nav-brand">
-      <img src="https://takoua-gif.github.io/takoua-biblio/images/synergy-logo-dark.png?v=3" alt="Synergy by EyePros">
+      <div class="logo-box">
+        <img src="https://takoua-gif.github.io/takoua-biblio/images/synergy-logo.jpg" alt="Synergy by EyePros">
+      </div>
     </a>
     <ul class="nav-links">
       <li><a href="#benefits">Benefits</a></li>
@@ -560,7 +564,9 @@ h4{font-size:1.02rem;font-weight:600}
   <div class="container">
     <div class="footer-inner">
       <a href="#" class="nav-brand">
-        <img src="https://takoua-gif.github.io/takoua-biblio/images/synergy-logo-dark.png?v=3" alt="Synergy by EyePros">
+        <div class="logo-box">
+          <img src="https://takoua-gif.github.io/takoua-biblio/images/synergy-logo.jpg" alt="Synergy by EyePros">
+        </div>
       </a>
       <div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap">
         <a href="https://takoua-gif.github.io/takoua-biblio/docs/EyePros_Shared_Care_Agreement_v2.2.pdf" download="EyePros_Shared_Care_Agreement_v2.2.pdf" style="color:var(--teal)">Download Agreement Document (PDF)</a>
