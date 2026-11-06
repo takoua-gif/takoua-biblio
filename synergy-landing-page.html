@@ -131,6 +131,27 @@ h4{font-size:1.02rem;font-weight:600}
 .journey-step h4{font-size:.95rem;margin-bottom:6px;color:var(--text-heading)}
 .journey-step p{font-size:.8rem;color:var(--text-body);line-height:1.5}
 
+/* Consultant Leadership */
+.consultant-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;box-shadow:var(--shadow-sm);transition:all .3s var(--ease);display:flex;flex-direction:column}
+.consultant-card:hover{border-color:var(--teal);box-shadow:var(--shadow-md);transform:translateY(-3px)}
+.consultant-header{display:flex;align-items:center;gap:20px;margin-bottom:20px}
+.consultant-photo{width:96px;height:96px;border-radius:14px;object-fit:cover;object-position:top center;border:2px solid rgba(20,184,166,.45);box-shadow:0 4px 12px rgba(0,0,0,.3);flex-shrink:0}
+.consultant-title-group h3{font-size:1.3rem;font-weight:800;color:var(--text-heading);margin-bottom:4px}
+.consultant-role{color:var(--teal);font-weight:600;font-size:.88rem;margin-bottom:8px}
+.consultant-credentials{display:flex;flex-wrap:wrap;gap:6px}
+.cred-badge{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#E2E8F0;font-size:.72rem;font-weight:600;padding:2px 8px;border-radius:4px;letter-spacing:.02em}
+.consultant-bio{font-size:.9rem;color:var(--text-body);line-height:1.6;margin-bottom:18px}
+.consultant-posts{list-style:none;display:flex;flex-direction:column;gap:10px;font-size:.84rem;color:var(--text-heading);border-top:1px solid var(--border-light);padding-top:16px;margin-top:auto}
+.consultant-posts li{display:flex;align-items:flex-start;gap:10px}
+.consultant-posts svg{width:16px;height:16px;color:var(--teal);flex-shrink:0;margin-top:3px}
+
+.gov-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:32px}
+.gov-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;transition:border-color .2s}
+.gov-card:hover{border-color:var(--teal)}
+.gov-card h4{font-size:.92rem;color:var(--text-heading);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.gov-card h4 svg{width:16px;height:16px;color:var(--teal);flex-shrink:0}
+.gov-card p{font-size:.82rem;color:var(--text-muted);line-height:1.5}
+
 /* Section: Simple Remuneration Cards */
 .fee-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:26px 20px;text-align:center;box-shadow:var(--shadow-sm);transition:all .25s var(--ease)}
 .fee-card:hover{border-color:var(--teal);transform:translateY(-2px)}
@@ -180,6 +201,7 @@ h4{font-size:1.02rem;font-weight:600}
   .hero-grid,.enquiry-layout{grid-template-columns:1fr;gap:32px}
   .journey-grid{grid-template-columns:repeat(3,1fr)}
   .grid-4{grid-template-columns:repeat(2,1fr)}
+  .gov-grid{grid-template-columns:repeat(2,1fr)}
   .agreement-banner{flex-direction:column;align-items:flex-start}
 }
 @media (max-width: 768px) {
@@ -188,7 +210,8 @@ h4{font-size:1.02rem;font-weight:600}
   .nav-links{display:none}
   .nav-toggle{display:block}
   .mobile-cta-bar{display:block}
-  .grid-2,.journey-grid,.grid-4,.form-row,.hero-trust-row{grid-template-columns:1fr}
+  .grid-2,.journey-grid,.grid-4,.gov-grid,.form-row,.hero-trust-row{grid-template-columns:1fr}
+  .consultant-header{flex-direction:column;align-items:flex-start;gap:14px}
   .hero-image{height:260px}
 }
 </style>
@@ -206,6 +229,7 @@ h4{font-size:1.02rem;font-weight:600}
     <ul class="nav-links">
       <li><a href="#benefits">Benefits</a></li>
       <li><a href="#journey">How It Works</a></li>
+      <li><a href="#consultants">Consultants</a></li>
       <li><a href="#remuneration">Fees</a></li>
       <li><a href="#agreement">Agreement</a></li>
       <li><a href="#faq">FAQ</a></li>
@@ -387,8 +411,108 @@ h4{font-size:1.02rem;font-weight:600}
   </div>
 </section>
 
+<!-- ═══ CONSULTANT LEADERSHIP ═══ -->
+<section id="consultants" class="section section-alt">
+  <div class="container">
+    <div class="text-center max-w-prose mx-auto mb-32">
+      <p class="eyebrow">CLINICAL LEADERSHIP &amp; GOVERNANCE</p>
+      <h2>Led by substantive NHS Consultant Ophthalmologists</h2>
+      <p class="mt-12" style="font-size:1rem;color:var(--text-body)">Direct named-surgeon continuity. You and your patient have direct contact with the operating consultant, underpinned by robust clinical governance and joint Clinical Director oversight.</p>
+    </div>
+
+    <div class="grid-2">
+      <!-- Mr Ahmad Elsahn -->
+      <div class="consultant-card">
+        <div class="consultant-header">
+          <img src="images/elsahn-headshot.jpg" alt="Mr Ahmad Elsahn" class="consultant-photo" loading="lazy">
+          <div class="consultant-title-group">
+            <h3>Mr Ahmad Elsahn</h3>
+            <p class="consultant-role">Clinical Director &amp; Consultant Ophthalmic Surgeon</p>
+            <div class="consultant-credentials">
+              <span class="cred-badge">MBBCh</span>
+              <span class="cred-badge">PhD</span>
+              <span class="cred-badge">FRCS (Glasg)</span>
+              <span class="cred-badge">FRCOphth</span>
+              <span class="cred-badge">FWCRS</span>
+              <span class="cred-badge">CertLRS</span>
+            </div>
+          </div>
+        </div>
+        <p class="consultant-bio">Specialist in complex and premium cataract surgery, laser vision correction, MIGS glaucoma surgery, and anterior segment reconstruction with over two decades of surgical experience across three continents.</p>
+        <ul class="consultant-posts">
+          <li>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+            <span>Head of Service for Ophthalmology, Sherwood Forest Hospitals NHS Foundation Trust</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+            <span>Honorary Assistant Professor of Ophthalmology, University of Nottingham</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+            <span>Joint Clinical Director leading Synergy clinical governance and surgical safety</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Ms Yasmine Abdalla -->
+      <div class="consultant-card">
+        <div class="consultant-header">
+          <img src="images/abdalla-headshot.jpg" alt="Ms Yasmine Abdalla" class="consultant-photo" loading="lazy">
+          <div class="consultant-title-group">
+            <h3>Ms Yasmine Abdalla</h3>
+            <p class="consultant-role">Clinical Director &amp; Consultant Ophthalmologist</p>
+            <div class="consultant-credentials">
+              <span class="cred-badge">MBChB</span>
+              <span class="cred-badge">MRCOphth</span>
+              <span class="cred-badge">FEBO</span>
+              <span class="cred-badge">CertLRS</span>
+              <span class="cred-badge">Retina Fellow</span>
+            </div>
+          </div>
+        </div>
+        <p class="consultant-bio">Specialist in medical retina, diabetic macular disease, retinal vascular conditions, uveitis, and intravitreal therapy. Oversees optometrist shared-care training, clinical protocols, and quality assurance.</p>
+        <ul class="consultant-posts">
+          <li>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+            <span>Substantive NHS Consultant Ophthalmologist, UHDB NHS Foundation Trust</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+            <span>Uveitis Service Lead &amp; Royal College Tutor, Royal Derby Hospital</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+            <span>Joint Clinical Director leading partner training and shared-care audit integration</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 4 Clinical Commitments -->
+    <div class="gov-grid">
+      <div class="gov-card">
+        <h4><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>Surgeon-Led Consent</h4>
+        <p>Consent is taken by, or under the direct supervision of, the operating consultant ophthalmologist.</p>
+      </div>
+      <div class="gov-card">
+        <h4><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>Named Consultant Contact</h4>
+        <p>Direct communication channel with operating surgeons for clinical queries and patient updates.</p>
+      </div>
+      <div class="gov-card">
+        <h4><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>Substantive NHS Standards</h4>
+        <p>All consultants hold active substantive NHS appointments with specialist fellowship credentials.</p>
+      </div>
+      <div class="gov-card">
+        <h4><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>NOD Audit Governance</h4>
+        <p>Full adherence to National Ophthalmology Database audit standards and RCOphth clinical guidelines.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ═══ SHARED-CARE FEES (SIMPLIFIED) ═══ -->
-<section id="remuneration" class="section section-alt">
+<section id="remuneration" class="section">
   <div class="container">
     <div class="text-center max-w-prose mx-auto mb-32">
       <p class="eyebrow">TRANSPARENT REMUNERATION</p>
@@ -441,7 +565,7 @@ h4{font-size:1.02rem;font-weight:600}
 </section>
 
 <!-- ═══ BECOME A PARTNER (FORM & CONTACT) ═══ -->
-<section id="partner-enquiry" class="section">
+<section id="partner-enquiry" class="section section-alt">
   <div class="container">
     <div class="text-center max-w-prose mx-auto mb-32">
       <p class="eyebrow">GET IN TOUCH</p>
@@ -556,7 +680,7 @@ h4{font-size:1.02rem;font-weight:600}
 </section>
 
 <!-- ═══ CONCISE FAQ ═══ -->
-<section id="faq" class="section section-alt">
+<section id="faq" class="section">
   <div class="container">
     <div class="text-center max-w-prose mx-auto mb-24">
       <p class="eyebrow">PRACTICAL QUESTIONS</p>
