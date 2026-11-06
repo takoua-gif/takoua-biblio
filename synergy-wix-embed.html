@@ -3,321 +3,289 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>EyePros Synergy | Shared Care Partnership</title>
+<title>Synergy by EyePros | Optometry Shared Care Partnership</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
 <style>
 :root {
   --navy: #0F2B4C;
-  --navy-light: #1A3A5C;
   --navy-dark: #0A1F38;
+  --navy-light: #1A3A5C;
+  --navy-muted: #244265;
   --teal: #0D9488;
   --teal-hover: #0B7B72;
   --teal-light: #F0FDFA;
-  --teal-10: rgba(13,148,136,.1);
-  --text-dark: #1E293B;
-  --text-med: #475569;
+  --teal-subtle: rgba(13,148,136,.08);
+  --cyan-accent: #0284C7;
+  --text-dark: #0F172A;
+  --text-med: #334155;
   --text-light: #64748B;
   --bg-white: #FFFFFF;
-  --bg-light: #F8FAFC;
+  --bg-slate: #F8FAFC;
   --bg-warm: #F1F5F9;
   --border: #E2E8F0;
-  --border-light: #F1F5F9;
-  --red-accent: #EF4444;
-  --red-light: #FEF2F2;
+  --border-light: #EDF2F7;
+  --red-accent: #DC2626;
+  --red-bg: #FEF2F2;
   --radius: 12px;
   --radius-sm: 8px;
   --radius-lg: 16px;
-  --shadow-sm: 0 1px 3px rgba(0,0,0,.06);
-  --shadow-md: 0 4px 16px rgba(0,0,0,.08);
-  --shadow-lg: 0 12px 40px rgba(0,0,0,.1);
-  --max-w: 1200px;
+  --shadow-sm: 0 1px 3px rgba(15,23,42,.06);
+  --shadow-md: 0 4px 16px rgba(15,23,42,.08);
+  --shadow-lg: 0 12px 36px rgba(15,23,42,.1);
+  --max-w: 1180px;
   --font: 'Inter',system-ui,-apple-system,sans-serif;
   --ease: cubic-bezier(.4,0,.2,1);
-  --ease-out: cubic-bezier(0,0,.2,1);
-  --ease-spring: cubic-bezier(.34,1.56,.64,1);
 }
+
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:80px}
-body{font-family:var(--font);font-size:16px;line-height:1.65;color:var(--text-dark);background:var(--bg-white);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:84px}
+body{font-family:var(--font);font-size:16px;line-height:1.68;color:var(--text-dark);background:var(--bg-white);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
 button{font-family:inherit;cursor:pointer}
 h1,h2,h3,h4{line-height:1.25;color:var(--navy)}
-h1{font-size:clamp(2.1rem,4.2vw,3.2rem);font-weight:800;letter-spacing:-.025em}
-h2{font-size:clamp(1.6rem,3vw,2.3rem);font-weight:700;letter-spacing:-.015em}
-h3{font-size:1.25rem;font-weight:700}
+h1{font-size:clamp(2.1rem,4.2vw,3.25rem);font-weight:800;letter-spacing:-.03em}
+h2{font-size:clamp(1.65rem,3vw,2.35rem);font-weight:700;letter-spacing:-.02em}
+h3{font-size:1.22rem;font-weight:700}
 h4{font-size:1.05rem;font-weight:600}
+
 .container{max-width:var(--max-w);margin:0 auto;padding:0 24px}
-.section{padding:80px 0}
-.section-alt{background:var(--bg-light)}
+.section{padding:72px 0}
+.section-slate{background:var(--bg-slate)}
 .section-navy{background:var(--navy);color:#fff}
-.section-navy h2,.section-navy h3,.section-navy h4{color:#fff}
-.section-navy .text-med{color:rgba(255,255,255,.75)}
-.eyebrow{font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:12px}
-.section-navy .eyebrow{color:rgba(255,255,255,.65)}
+.eyebrow{font-size:.74rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:12px}
 .text-med{color:var(--text-med)}
 .text-light{color:var(--text-light)}
 .text-center{text-align:center}
 .mx-auto{margin-left:auto;margin-right:auto}
-.max-w-prose{max-width:700px}
+.max-w-prose{max-width:680px}
 .mt-12{margin-top:12px}.mt-16{margin-top:16px}.mt-24{margin-top:24px}.mt-32{margin-top:32px}.mt-48{margin-top:48px}
 .mb-8{margin-bottom:8px}.mb-12{margin-bottom:12px}.mb-16{margin-bottom:16px}.mb-24{margin-bottom:24px}.mb-32{margin-bottom:32px}.mb-48{margin-bottom:48px}
-.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:28px}
-.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:32px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
 .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
 
-/* Nav */
-.nav{position:sticky;top:0;left:0;right:0;z-index:1000;background:rgba(15,43,76,.96);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.08)}
-.nav-inner{max-width:var(--max-w);margin:0 auto;padding:0 24px;height:68px;display:flex;align-items:center;justify-content:space-between}
-.nav-logo{font-size:1.2rem;font-weight:800;color:#fff;display:flex;align-items:center;gap:4px}
-.nav-logo .accent{color:var(--teal)}
-.nav-logo .tag{font-size:.7rem;font-weight:600;opacity:.6;margin-left:8px;letter-spacing:.08em;background:rgba(255,255,255,.1);padding:2px 8px;border-radius:4px}
+/* Navigation */
+.nav{position:sticky;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,.98);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:var(--max-w);margin:0 auto;padding:0 24px;height:72px;display:flex;align-items:center;justify-content:space-between}
+.nav-brand img{height:34px;width:auto;object-fit:contain}
 .nav-links{display:flex;align-items:center;gap:4px;list-style:none}
-.nav-links a{color:rgba(255,255,255,.75);font-size:.85rem;font-weight:500;padding:8px 12px;border-radius:var(--radius-sm);transition:all .25s var(--ease)}
-.nav-links a:hover{color:#fff}
-.nav-actions{display:flex;align-items:center;gap:12px}
+.nav-links a{color:var(--text-med);font-size:.875rem;font-weight:500;padding:8px 14px;border-radius:var(--radius-sm)}
+.nav-links a:hover{color:var(--navy);background:var(--bg-slate)}
 
 /* Buttons */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 26px;border-radius:var(--radius);font-size:.92rem;font-weight:600;border:none;transition:all .3s var(--ease);min-height:46px;text-align:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border-radius:var(--radius);font-size:.92rem;font-weight:600;border:none;min-height:46px;text-align:center}
 .btn:active{transform:scale(.98)}
-.btn-primary{background:var(--teal);color:#fff;box-shadow:0 2px 10px rgba(13,148,136,.25)}
-.btn-primary:hover{background:var(--teal-hover);transform:translateY(-2px);box-shadow:0 8px 20px rgba(13,148,136,.3)}
-.btn-secondary{background:transparent;color:var(--teal);border:2px solid var(--teal)}
-.btn-secondary:hover{background:var(--teal-light);transform:translateY(-2px)}
-.btn-outline-white{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.35)}
-.btn-outline-white:hover{background:rgba(255,255,255,.1);border-color:#fff;transform:translateY(-2px)}
+.btn-primary{background:var(--teal);color:#fff;box-shadow:0 2px 8px rgba(13,148,136,.25)}
+.btn-primary:hover{background:var(--teal-hover);box-shadow:0 6px 18px rgba(13,148,136,.32);transform:translateY(-1px)}
+.btn-outline{background:transparent;color:var(--navy);border:1.5px solid var(--border)}
 .btn-sm{padding:8px 16px;font-size:.84rem;min-height:38px}
 
 /* Hero */
-.hero{padding:80px 0 70px;background:linear-gradient(160deg,var(--navy-dark) 0%,var(--navy) 45%,var(--navy-light) 100%);color:#fff;position:relative;overflow:hidden}
-.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center;position:relative;z-index:1}
-.hero h1{color:#fff;margin-bottom:20px}
-.hero-sub{font-size:1.12rem;color:rgba(255,255,255,.8);margin-bottom:32px;line-height:1.75;max-width:580px}
-.hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:36px}
-.hero-chips{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.hero-chip{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:rgba(255,255,255,.06);color:rgba(255,255,255,.9);font-size:.82rem;font-weight:500;border-radius:var(--radius-sm);border:1px solid rgba(255,255,255,.1)}
-.hero-chip strong{color:#fff;display:block;font-size:.88rem;margin-bottom:2px}
-.hero-chip svg{width:18px;height:18px;flex-shrink:0;color:var(--teal);margin-top:2px}
-.hero-image{border-radius:var(--radius-lg);overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.1);height:440px}
+.hero{padding:60px 0 50px;background:linear-gradient(170deg,#FFFFFF 0%,var(--bg-slate) 100%);border-bottom:1px solid var(--border)}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+.hero h1{margin-bottom:20px;color:var(--navy)}
+.hero-sub{font-size:1.12rem;color:var(--text-med);margin-bottom:32px;line-height:1.75;max-width:580px}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:32px}
+.hero-trust-row{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.hero-trust-item{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius-sm);font-size:.83rem;color:var(--text-med)}
+.hero-trust-item svg{width:18px;height:18px;color:var(--teal);flex-shrink:0;margin-top:2px}
+.hero-trust-item strong{display:block;color:var(--navy);font-size:.88rem}
+.hero-image{border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-lg);border:1px solid var(--border);height:440px}
 .hero-image img{width:100%;height:100%;object-fit:cover}
 
-/* Credibility Bar */
-.cred-bar{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:24px 0;background:var(--bg-white)}
-.cred-bar-inner{display:flex;align-items:center;justify-content:space-around;gap:24px;flex-wrap:wrap}
-.cred-item{display:flex;align-items:center;gap:12px;font-size:.92rem;font-weight:600;color:var(--navy)}
-.cred-item svg{width:22px;height:22px;color:var(--teal);flex-shrink:0}
+/* Trust Strip */
+.trust-strip{padding:24px 0;background:var(--bg-white);border-bottom:1px solid var(--border)}
+.trust-strip-inner{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.trust-badge{display:flex;align-items:center;gap:10px;font-size:.88rem;font-weight:600;color:var(--navy)}
+.trust-badge svg{width:20px;height:20px;color:var(--teal);flex-shrink:0}
+.partner-logo-box{display:flex;align-items:center;gap:14px}
+.partner-logo-box span{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-light)}
+.partner-logo-box img{height:36px;width:auto;object-fit:contain}
 
-/* Partner Trust */
-.partner-section{padding:36px 0;border-bottom:1px solid var(--border);background:var(--bg-light)}
-.partner-label{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-light);margin-bottom:20px;text-align:center}
-.partner-logos{display:flex;align-items:center;justify-content:center;gap:40px}
-.partner-logo{height:54px;display:flex;align-items:center;justify-content:center}
-.partner-logo img{max-height:100%;max-width:140px;object-fit:contain}
+/* Section 2: Four Partnership Benefits */
+.benefit-card{background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;justify-content:space-between}
+.benefit-icon{width:46px;height:46px;border-radius:var(--radius);background:var(--teal-light);display:flex;align-items:center;justify-content:center;margin-bottom:20px;color:var(--teal)}
+.benefit-icon svg{width:24px;height:24px}
+.benefit-card h3{margin-bottom:10px;font-size:1.18rem}
+.benefit-card p{font-size:.9rem;color:var(--text-med);line-height:1.65}
+.benefit-ref{font-size:.78rem;font-weight:600;color:var(--teal);margin-top:14px;display:inline-block}
 
-/* Cards */
-.card{background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;transition:all .35s var(--ease);position:relative}
-.card:hover{border-color:var(--teal);box-shadow:var(--shadow-md);transform:translateY(-3px)}
+/* Section 3: Five-Stage Shared-Care Journey */
+.journey-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:40px}
+.journey-step{background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius);padding:24px 18px;display:flex;flex-direction:column;box-shadow:var(--shadow-sm);position:relative}
+.journey-step.optom{border-top:3px solid var(--teal)}
+.journey-step.eyepros{border-top:3px solid var(--navy)}
+.journey-num{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;font-size:.85rem;font-weight:700;margin-bottom:12px}
+.journey-step.optom .journey-num{background:var(--teal-light);color:var(--teal)}
+.journey-step.eyepros .journey-num{background:var(--bg-warm);color:var(--navy)}
+.journey-lead{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.journey-step.optom .journey-lead{color:var(--teal)}
+.journey-step.eyepros .journey-lead{color:var(--navy)}
+.journey-step h4{font-size:1rem;margin-bottom:8px;line-height:1.35}
+.journey-step p{font-size:.82rem;color:var(--text-med);line-height:1.55}
+.journey-callout{margin-top:32px;background:var(--teal-light);border:1px solid rgba(13,148,136,.2);padding:18px 24px;border-radius:var(--radius);display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
 
-/* The 3 Questions */
-.question-card{background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:var(--shadow-sm);transition:all .35s var(--ease)}
-.question-card:hover{border-color:var(--teal);box-shadow:var(--shadow-lg);transform:translateY(-4px)}
-.q-badge{align-self:flex-start;display:inline-flex;align-items:center;gap:6px;background:var(--navy);color:#fff;font-size:.75rem;font-weight:700;padding:4px 10px;border-radius:20px;margin-bottom:16px}
-.q-question{font-size:1.15rem;font-weight:700;color:var(--navy);margin-bottom:12px;line-height:1.4}
-.q-commitment{background:var(--teal-light);border-left:3px solid var(--teal);padding:10px 14px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin-bottom:14px}
-.q-commitment strong{color:var(--teal-hover);font-size:.85rem;display:block;text-transform:uppercase;letter-spacing:.05em}
-.q-commitment span{font-weight:600;color:var(--text-dark);font-size:.95rem}
-.q-detail{font-size:.9rem;color:var(--text-med);line-height:1.6}
+/* Section 4: Clinical Responsibilities & Governance */
+.resp-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:36px}
+.resp-card{background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;box-shadow:var(--shadow-sm)}
+.resp-card-header{display:flex;align-items:center;gap:12px;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--border-light)}
+.resp-card-header h3{font-size:1.15rem;margin:0}
+.resp-list{list-style:none;display:flex;flex-direction:column;gap:12px}
+.resp-list li{display:flex;align-items:flex-start;gap:10px;font-size:.88rem;color:var(--text-med);line-height:1.55}
+.resp-list svg{width:16px;height:16px;color:var(--teal);flex-shrink:0;margin-top:3px}
 
-/* Timeline */
-.timeline{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:40px}
-.timeline-card{background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius);padding:24px 18px;display:flex;flex-direction:column;box-shadow:var(--shadow-sm);transition:all .3s var(--ease)}
-.timeline-card:hover{border-color:var(--teal);transform:translateY(-3px);box-shadow:var(--shadow-md)}
-.timeline-step-num{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.95rem;margin-bottom:12px}
-.timeline-card.optom .timeline-step-num{background:var(--teal);color:#fff}
-.timeline-card.eyepros .timeline-step-num{background:var(--navy);color:#fff}
-.timeline-badge{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
-.timeline-card.optom .timeline-badge{color:var(--teal)}
-.timeline-card.eyepros .timeline-badge{color:var(--navy)}
-.timeline-card h4{font-size:1rem;margin-bottom:8px;line-height:1.3}
-.timeline-card p{font-size:.83rem;color:var(--text-med);line-height:1.55}
-.timeline-callout{margin-top:32px;background:var(--teal-light);border:1px solid rgba(13,148,136,.2);padding:18px 24px;border-radius:var(--radius);display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.helpline-card{margin-top:28px;background:linear-gradient(145deg,var(--navy-dark),var(--navy));color:#fff;border-radius:var(--radius-lg);padding:32px;display:grid;grid-template-columns:1.2fr .8fr;gap:28px;align-items:center}
+.helpline-info h4{color:#fff;font-size:1.15rem;margin-bottom:6px}
+.helpline-info p{color:rgba(255,255,255,.8);font-size:.88rem;line-height:1.6;margin:0}
+.helpline-action{text-align:right}
+.helpline-phone{font-size:1.8rem;font-weight:800;color:#fff;display:block}
+.helpline-opt{color:var(--teal);font-weight:600;font-size:1rem;display:block;margin-top:2px}
 
-/* Fee Table */
-.fee-table-wrap{background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);margin-top:28px}
+.red-flags-container{margin-top:28px;background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;box-shadow:var(--shadow-sm)}
+.red-flags-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;list-style:none;margin-top:14px}
+.red-flags-grid li{display:flex;align-items:center;gap:8px;font-size:.84rem;color:var(--text-dark);font-weight:500;background:var(--red-bg);padding:8px 12px;border-radius:var(--radius-sm)}
+.red-flags-grid svg{width:14px;height:14px;color:var(--red-accent);flex-shrink:0}
+
+/* Section 5: Five Procedure Categories */
+.proc-accordion{margin-top:36px;display:flex;flex-direction:column;gap:14px}
+.proc-item{background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm)}
+.proc-header{width:100%;padding:18px 24px;background:none;border:none;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.proc-title-group{display:flex;align-items:center;gap:14px}
+.proc-badge{background:var(--bg-slate);border:1px solid var(--border);font-size:.74rem;font-weight:700;color:var(--navy);padding:4px 10px;border-radius:4px}
+.proc-name{font-size:1.05rem;font-weight:700;color:var(--navy)}
+.proc-guidance{font-size:.82rem;color:var(--text-light)}
+.proc-content{padding:0 24px 20px;border-top:1px solid var(--border-light);background:var(--bg-slate)}
+.proc-table{width:100%;border-collapse:collapse;margin-top:14px;font-size:.86rem}
+.proc-table th{text-align:left;padding:8px 12px;color:var(--text-light);font-size:.76rem;text-transform:uppercase}
+.proc-table td{padding:10px 12px;background:var(--bg-white);border-top:1px solid var(--border-light);color:var(--text-dark);line-height:1.55}
+
+/* Section 6: Fee Table */
+.fee-table-wrap{background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);margin-top:32px}
 .fee-table{width:100%;border-collapse:collapse;font-size:.92rem}
 .fee-table thead{background:var(--navy);color:#fff}
 .fee-table th{padding:16px 20px;text-align:left;font-weight:700;font-size:.85rem}
 .fee-table td{padding:16px 20px;border-bottom:1px solid var(--border-light);vertical-align:middle}
 .fee-table tbody tr:last-child td{border-bottom:none}
-.fee-amount{font-size:1.15rem;font-weight:800;color:var(--teal);white-space:nowrap}
-.fee-sub{font-size:.78rem;color:var(--text-light);display:block;margin-top:2px}
+.fee-figure{font-size:1.15rem;font-weight:800;color:var(--teal);white-space:nowrap}
+.fee-note{font-size:.78rem;color:var(--text-light);display:block;margin-top:2px}
 .fee-safeguards{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:24px}
-.safeguard-card{background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius);padding:20px;display:flex;align-items:flex-start;gap:14px}
-.safeguard-card svg{width:22px;height:22px;color:var(--teal);flex-shrink:0;margin-top:2px}
+.safeguard-box{background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius);padding:20px;display:flex;align-items:flex-start;gap:14px}
+.safeguard-box svg{width:22px;height:22px;color:var(--teal);flex-shrink:0;margin-top:2px}
 
-/* Safety & Helpline */
-.safety-grid{display:grid;grid-template-columns:1fr 1.25fr;gap:32px;margin-top:32px}
-.helpline-box{background:linear-gradient(145deg,var(--navy-dark),var(--navy));color:#fff;border-radius:var(--radius-lg);padding:36px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:var(--shadow-lg)}
-.helpline-badge{display:inline-flex;align-items:center;gap:6px;background:var(--red-light);color:var(--red-accent);font-size:.75rem;font-weight:700;padding:4px 10px;border-radius:20px;margin-bottom:20px;align-self:flex-start}
-.helpline-num{font-size:2rem;font-weight:800;color:#fff;margin:12px 0 4px}
-.helpline-option{font-size:1.1rem;font-weight:600;color:var(--teal);margin-bottom:16px}
-.red-flags-box{background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;box-shadow:var(--shadow-sm)}
-.red-flags-list{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
-.red-flags-list li{display:flex;align-items:center;gap:10px;font-size:.88rem;color:var(--text-dark);font-weight:500}
-.red-flags-list svg{width:16px;height:16px;color:var(--red-accent);flex-shrink:0}
-.liability-banner{background:var(--bg-light);border:1px solid var(--border);border-left:4px solid var(--navy);padding:16px 20px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;font-size:.85rem;color:var(--text-med);line-height:1.6;margin-top:20px}
+/* Section 7: Syndesis */
+.support-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center}
+.support-features{list-style:none;display:flex;flex-direction:column;gap:16px;margin:24px 0}
+.support-features li{display:flex;align-items:flex-start;gap:12px;font-size:.9rem;color:var(--text-med)}
+.support-features svg{width:18px;height:18px;color:var(--teal);flex-shrink:0;margin-top:3px}
+.onboarding-flow{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:36px}
+.onboarding-card{background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius);padding:24px 20px;box-shadow:var(--shadow-sm)}
+.onboarding-badge{display:inline-block;padding:3px 10px;background:var(--bg-slate);border:1px solid var(--border);border-radius:20px;font-size:.75rem;font-weight:700;color:var(--navy);margin-bottom:12px}
 
-/* Syndesis */
-.syndesis-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
-.syndesis-features{list-style:none;display:flex;flex-direction:column;gap:16px;margin:28px 0 32px}
-.syndesis-features li{display:flex;align-items:flex-start;gap:14px;font-size:.92rem}
-.syndesis-features li svg{width:22px;height:22px;color:var(--teal);flex-shrink:0;margin-top:2px}
-.syndesis-ui{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:var(--radius-lg);padding:24px}
-.syndesis-case-item{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius-sm);padding:14px;margin-bottom:12px}
-
-/* Consultants */
-.consultant-card{background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:36px;box-shadow:var(--shadow-sm);transition:all .35s var(--ease)}
-.consultant-card:hover{border-color:var(--teal);box-shadow:var(--shadow-lg);transform:translateY(-3px)}
-.consultant-name{font-size:1.35rem;font-weight:800;color:var(--navy);margin-bottom:4px}
-.consultant-role{color:var(--teal);font-weight:600;font-size:.92rem;margin-bottom:14px}
-.consultant-credentials{font-size:.78rem;font-weight:700;color:var(--text-light);background:var(--bg-light);padding:6px 10px;border-radius:4px;display:inline-block;margin-bottom:16px}
-.consultant-posts{list-style:none;display:flex;flex-direction:column;gap:8px;font-size:.82rem;color:var(--navy);font-weight:500;border-top:1px solid var(--border-light);padding-top:14px}
-
-/* Scope & Locations */
-.treatment-group{background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;box-shadow:var(--shadow-sm)}
-.treatment-tag-list{display:flex;flex-wrap:wrap;gap:8px}
-.treatment-tag{background:var(--bg-light);border:1px solid var(--border);padding:6px 12px;border-radius:20px;font-size:.82rem;color:var(--text-dark);font-weight:500}
-.locations-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:36px}
-.location-item{background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center;box-shadow:var(--shadow-sm)}
-
-/* Governance */
-.standards-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:28px;margin-top:32px}
-.standards-table{width:100%;border-collapse:collapse;font-size:.88rem;background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden}
-.standards-table th{background:var(--navy);color:#fff;padding:14px 18px;text-align:left;font-size:.82rem}
-.standards-table td{padding:12px 18px;border-bottom:1px solid var(--border-light)}
-.standards-aside{background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px}
-.standards-aside ul{list-style:none;display:flex;flex-direction:column;gap:10px;font-size:.85rem;color:var(--text-med)}
-.standards-aside li{display:flex;align-items:flex-start;gap:10px}
-.standards-aside svg{width:16px;height:16px;color:var(--teal);flex-shrink:0;margin-top:3px}
-
-/* Onboarding & Form */
-.onboarding-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:48px}
-.onboarding-step{background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius);padding:24px}
-.onboarding-step-num{display:inline-block;width:32px;height:32px;border-radius:50%;background:var(--navy);color:#fff;text-align:center;line-height:32px;font-weight:700;font-size:.85rem;margin-bottom:12px}
-.form-layout{display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:start}
-.form-card{background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:36px;box-shadow:var(--shadow-sm)}
+/* Section 8: Form & Contact */
+.enquiry-layout{display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:start;margin-top:36px}
+.enquiry-card{background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:36px;box-shadow:var(--shadow-sm)}
 .form-group{margin-bottom:18px}
-.form-group label{display:block;font-size:.85rem;font-weight:600;color:var(--text-dark);margin-bottom:6px}
-.form-group input,.form-group select,.form-group textarea{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:.92rem}
+.form-group label{display:block;font-size:.84rem;font-weight:600;color:var(--text-dark);margin-bottom:6px}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:.92rem}
 .form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--teal)}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.contact-aside-box{background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;box-shadow:var(--shadow-sm)}
-.contact-item{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--border-light)}
+.contact-card{background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;box-shadow:var(--shadow-sm)}
+.contact-item{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--border-light)}
 .contact-item:last-child{border-bottom:none}
-.contact-item svg{width:22px;height:22px;color:var(--teal);flex-shrink:0}
+.contact-item svg{width:22px;height:22px;color:var(--teal);flex-shrink:0;margin-top:2px}
 
-/* Footer */
-.footer{background:var(--navy-dark);color:rgba(255,255,255,.7);padding:60px 0 30px;font-size:.85rem;border-top:1px solid rgba(255,255,255,.08)}
-.footer-grid{display:grid;grid-template-columns:1.5fr repeat(3,1fr);gap:40px;margin-bottom:40px}
-.footer-logo{font-size:1.2rem;font-weight:800;color:#fff;margin-bottom:12px}
-.footer-logo .accent{color:var(--teal)}
-.footer-links{list-style:none;display:flex;flex-direction:column;gap:8px}
-.footer-links a:hover{color:#fff}
-
-/* FAQ */
-.faq-list{max-width:840px;margin:32px auto 0;display:flex;flex-direction:column;gap:12px}
+/* Section 9: FAQ */
+.faq-list{max-width:820px;margin:32px auto 0;display:flex;flex-direction:column;gap:12px}
 .faq-item{background:var(--bg-white);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
 .faq-q{width:100%;padding:18px 24px;background:none;border:none;text-align:left;font-size:.95rem;font-weight:700;color:var(--navy);display:flex;align-items:center;justify-content:space-between;gap:16px}
-.faq-q svg{width:18px;height:18px;color:var(--teal);transition:transform .3s var(--ease)}
+.faq-q svg{width:18px;height:18px;color:var(--teal);transition:transform .25s var(--ease)}
 .faq-item.open .faq-q svg{transform:rotate(180deg)}
 .faq-a{display:none;padding:0 24px 20px;font-size:.9rem;color:var(--text-med);line-height:1.65}
 .faq-item.open .faq-a{display:block}
 
-/* Responsive */
+/* Footer */
+.footer{background:var(--navy-dark);color:rgba(255,255,255,.7);padding:50px 0 30px;font-size:.85rem;border-top:1px solid rgba(255,255,255,.08)}
+.footer-grid{display:grid;grid-template-columns:1.4fr repeat(2,1fr);gap:40px;margin-bottom:30px}
+.footer-brand{margin-bottom:18px}
+.footer-brand-badge{display:inline-flex;align-items:center;background:#fff;padding:6px 14px;border-radius:var(--radius-sm);box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.footer-brand-badge img{height:28px;width:auto;display:block}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:8px}
+.footer-links a:hover{color:#fff}
+
 @media (max-width: 1024px) {
-  .hero-grid,.syndesis-grid,.safety-grid,.form-layout,.standards-grid{grid-template-columns:1fr;gap:36px}
-  .timeline{grid-template-columns:repeat(3,1fr)}
-  .grid-4,.locations-bar{grid-template-columns:repeat(2,1fr)}
-  .footer-grid{grid-template-columns:1fr 1fr}
+  .hero-grid,.support-grid,.enquiry-layout,.helpline-card{grid-template-columns:1fr;gap:36px}
+  .journey-grid{grid-template-columns:repeat(3,1fr)}
+  .red-flags-grid{grid-template-columns:repeat(2,1fr)}
+  .helpline-action{text-align:left}
 }
 @media (max-width: 768px) {
   .section{padding:50px 0}
-  .hero{padding:50px 0 40px}
+  .hero{padding:40px 0}
   .nav-links{display:none}
-  .grid-2,.grid-3,.onboarding-steps,.fee-safeguards,.red-flags-list,.hero-chips{grid-template-columns:1fr}
-  .timeline{grid-template-columns:1fr}
-  .form-row,.locations-bar,.footer-grid{grid-template-columns:1fr}
+  .grid-2,.grid-3,.journey-grid,.resp-grid,.fee-safeguards,.onboarding-flow,.red-flags-grid,.hero-trust-row{grid-template-columns:1fr}
+  .form-row,.footer-grid{grid-template-columns:1fr}
   .hero-image{height:280px}
 }
 </style>
 </head>
 <body>
 
-<!-- ═══ NAVIGATION ═══ -->
 <nav class="nav">
   <div class="nav-inner">
-    <a href="#" class="nav-logo">Eye<span class="accent">Pros</span> <span class="tag">Synergy</span></a>
+    <a href="#" class="nav-brand">
+      <img src="https://takoua-gif.github.io/takoua-biblio/images/synergy-logo-light.jpg" alt="Synergy by EyePros">
+    </a>
     <ul class="nav-links">
-      <li><a href="#questions">Overview</a></li>
-      <li><a href="#how-it-works">How It Works</a></li>
+      <li><a href="#benefits">Benefits</a></li>
+      <li><a href="#journey">Journey</a></li>
+      <li><a href="#governance">Governance</a></li>
+      <li><a href="#procedures">Procedures</a></li>
       <li><a href="#remuneration">Fees</a></li>
-      <li><a href="#safety">Safety</a></li>
       <li><a href="#syndesis">Syndesis</a></li>
-      <li><a href="#consultants">Consultants</a></li>
-      <li><a href="#register">Register</a></li>
+      <li><a href="#faq">FAQ</a></li>
     </ul>
     <div class="nav-actions">
-      <a href="#register" class="btn btn-sm btn-primary">Register Practice</a>
+      <a href="#partner-enquiry" class="btn btn-sm btn-primary">Discuss becoming a Synergy partner</a>
     </div>
   </div>
 </nav>
 
 <main id="main">
 
-<!-- ═══ HERO ═══ -->
+<!-- ═══ SECTION 1: HERO ═══ -->
 <section class="hero">
   <div class="container">
     <div class="hero-grid">
       <div>
-        <p class="eyebrow">EYEPROS SYNERGY · SHARED CARE PARTNERSHIP</p>
-        <h1>Shared care built on trust. Keep the patients you've known for years.</h1>
-        <p class="hero-sub">Refer your cataract and refractive patients to NHS consultant ophthalmologists in the Midlands. You retain the 4-week postoperative review, receive structured discharge letters within 48 hours, and maintain direct access to the treating surgeon.</p>
+        <p class="eyebrow">EYEPROS SYNERGY · SHARED CARE AGREEMENT v2.2</p>
+        <h1>Specialist eye care. A connected care partnership.</h1>
+        <p class="hero-sub">A formal, clinically governed partnership for UK optometrists. Refer private ophthalmic surgical patients to NHS consultant ophthalmologists, retain the 4-week postoperative assessment, and receive transparent remuneration for your clinical care.</p>
         
         <div class="hero-ctas">
-          <a href="#register" class="btn btn-primary">Become a Synergy Partner</a>
-          <a href="tel:03337727277" class="btn btn-outline-white">Talk to Our Clinical Team</a>
+          <a href="#partner-enquiry" class="btn btn-primary">Discuss becoming a Synergy partner</a>
+          <a href="https://eyepros.openpims.net/syndesis" target="_blank" rel="noopener" class="btn btn-outline">Syndesis Portal Login</a>
         </div>
 
-        <div class="hero-chips">
-          <div class="hero-chip">
+        <div class="hero-trust-row">
+          <div class="hero-trust-item">
             <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-            <div>
-              <strong>48 Hours</strong>
-              Structured discharge letter via Syndesis
-            </div>
+            <div><strong>48-Hour Reporting</strong>Structured discharge letters via Syndesis</div>
           </div>
-          <div class="hero-chip">
+          <div class="hero-trust-item">
             <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-            <div>
-              <strong>Direct Access</strong>
-              Named escalation contact &amp; 24/7 helpline
-            </div>
+            <div><strong>Consultant Escalation</strong>Named contact &amp; 24/7 emergency line</div>
           </div>
-          <div class="hero-chip">
+          <div class="hero-trust-item">
             <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-            <div>
-              <strong>4-Week Review</strong>
-              Patient returns to your practice
-            </div>
+            <div><strong>Continuity of Care</strong>4-week postoperative review in practice</div>
           </div>
-          <div class="hero-chip">
+          <div class="hero-trust-item">
             <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-            <div>
-              <strong>Up to &pound;250 / Eye</strong>
-              Clinical shared care fee, non-volume linked
-            </div>
+            <div><strong>Shared-Care Fees</strong>Up to &pound;250 per eye, independent of volume</div>
           </div>
         </div>
       </div>
@@ -331,461 +299,544 @@ h4{font-size:1.05rem;font-weight:600}
   </div>
 </section>
 
-<!-- ═══ CREDIBILITY BAR ═══ -->
-<div class="cred-bar">
+<!-- ═══ TRUST STRIP ═══ -->
+<div class="trust-strip">
   <div class="container">
-    <div class="cred-bar-inner">
-      <div class="cred-item">
+    <div class="trust-strip-inner">
+      <div class="trust-badge">
         <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-        <span>NHS Consultant Ophthalmologists</span>
+        <span>NHS Consultant Ophthalmologist Oversight</span>
       </div>
-      <div class="cred-item">
+      <div class="trust-badge">
         <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
-        <span>20+ Years Clinical Experience</span>
+        <span>NICE-Aligned Clinical Protocols</span>
       </div>
-      <div class="cred-item">
-        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"/></svg>
-        <span>5,000+ Surgical Treatments</span>
-      </div>
-      <div class="cred-item">
-        <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
-        <span>Four Midlands Theatres</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══ PARTNER TRUST BAR ═══ -->
-<div class="partner-section">
-  <div class="container">
-    <p class="partner-label">TRUSTED BY INDEPENDENT OPTICAL PRACTICES ACROSS THE MIDLANDS</p>
-    <div class="partner-logos">
-      <div class="partner-logo">
+      <div class="partner-logo-box">
+        <span>Trusted By:</span>
         <img src="https://takoua-gif.github.io/takoua-biblio/images/partner-pinders.png" alt="Pinders Opticians">
       </div>
     </div>
   </div>
 </div>
 
-<!-- ═══ THE THREE QUESTIONS ═══ -->
-<section id="questions" class="section section-alt">
+<!-- ═══ SECTION 2: FOUR PARTNERSHIP BENEFITS ═══ -->
+<section id="benefits" class="section section-slate">
   <div class="container">
     <div class="text-center max-w-prose mx-auto mb-48">
-      <p class="eyebrow">THE THREE QUESTIONS THAT MATTER</p>
-      <h2>Every referral trusts someone else with a relationship you built.</h2>
-      <p class="text-med mt-16">You see this patient again long after surgery. How they are treated in between reflects on you. Synergy puts all three commitments in writing in our shared care agreement.</p>
+      <p class="eyebrow">PARTNERSHIP VALUE</p>
+      <h2>Four clinical benefits built into our agreement</h2>
+      <p class="text-med mt-16">The Synergy Shared Care Agreement v2.2 establishes clear clinical expectations and professional respect between your practice and our surgical centres.</p>
     </div>
 
-    <div class="grid-3">
-      <div class="question-card">
+    <div class="grid-2">
+      <div class="benefit-card">
         <div>
-          <span class="q-badge">Question 1</span>
-          <h3 class="q-question">Will I know what happened?</h3>
-          <div class="q-commitment">
-            <strong>In Writing</strong>
-            <span>Structured discharge letter within 48 hours</span>
+          <div class="benefit-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
           </div>
-          <p class="q-detail">Your letter arrives via Syndesis with procedure details, intraoperative findings, target refraction, postoperative medications, and specific guidance on what to monitor.</p>
+          <h3>Continuity of Care for Your Patients</h3>
+          <p>Following surgery, patients return to your practice for their scheduled 4-week postoperative assessment under our protocol, ensuring long-term continuity of care.</p>
         </div>
+        <span class="benefit-ref">Agreement Section 4.2 &amp; Procedure Schedule</span>
       </div>
 
-      <div class="question-card">
+      <div class="benefit-card">
         <div>
-          <span class="q-badge">Question 2</span>
-          <h3 class="q-question">Can I reach the surgeon if I am worried?</h3>
-          <div class="q-commitment">
-            <strong>In Writing</strong>
-            <span>Direct consultant access, not a switchboard</span>
+          <div class="benefit-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
           </div>
-          <p class="q-detail">Every case has a named escalation contact, plus direct access through our Urgent Clinical Helpline on 0333 77 272 77 (Option 5).</p>
+          <h3>Consultant Escalation &amp; 24/7 Helpline</h3>
+          <p>Every case is assigned a named escalation contact, and both you and your patient have direct access to our Urgent Clinical Helpline on 0333 77 272 77, Option 5.</p>
         </div>
+        <span class="benefit-ref">Agreement Section 3.3</span>
       </div>
 
-      <div class="question-card">
+      <div class="benefit-card">
         <div>
-          <span class="q-badge">Question 3</span>
-          <h3 class="q-question">Will my patient come back to me?</h3>
-          <div class="q-commitment">
-            <strong>In Writing</strong>
-            <span>Protected 4-week review &amp; clinical fee</span>
+          <div class="benefit-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
           </div>
-          <p class="q-detail">Patients return to your practice for their 4-week postoperative review, and you receive an un-tiered shared care fee (up to &pound;250 per eye) for your clinical chair time.</p>
+          <h3>Structured Reporting Within 48 Hours</h3>
+          <p>EyePros issues a structured discharge letter via Syndesis within 48 hours of surgery detailing procedure findings, target refraction, prescribed drops, and monitoring guidance.</p>
         </div>
+        <span class="benefit-ref">Agreement Section 3.3</span>
+      </div>
+
+      <div class="benefit-card">
+        <div>
+          <div class="benefit-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+          </div>
+          <h3>Transparent Remuneration Without Quotas</h3>
+          <p>Your clinical chair time, examination, and diagnostic scans are recognized through a transparent shared-care fee structure (up to &pound;250 per eye) with no volume tiers.</p>
+        </div>
+        <span class="benefit-ref">Agreement Section 7</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ 5-STEP PROCESS ═══ -->
-<section id="how-it-works" class="section">
+<!-- ═══ SECTION 3: FIVE-STAGE JOURNEY ═══ -->
+<section id="journey" class="section">
   <div class="container">
     <div class="text-center max-w-prose mx-auto mb-32">
-      <p class="eyebrow">HOW A PATIENT MOVES</p>
-      <h2>Defined responsibilities. Clear clinical timelines.</h2>
-      <p class="text-med mt-12">The exact 5-step shared care pathway agreed between your practice and EyePros.</p>
+      <p class="eyebrow">THE SHARED-CARE PATHWAY</p>
+      <h2>Five defined stages from assessment to discharge</h2>
+      <p class="text-med mt-12">Every stage of patient care has clearly designated clinical responsibilities and agreed timeframes.</p>
     </div>
 
-    <div class="timeline">
-      <div class="timeline-card optom">
-        <div class="timeline-step-num">1</div>
-        <span class="timeline-badge">Your Practice</span>
-        <h4>Assess</h4>
-        <p>Assess the patient, record clinical findings, and discuss standard and premium lens options so they make an informed choice.</p>
+    <div class="journey-grid">
+      <div class="journey-step optom">
+        <span class="journey-num">1</span>
+        <span class="journey-lead">Your Practice</span>
+        <h4>Pre-Referral Assessment</h4>
+        <p>Identify suitable candidates against NICE eligibility criteria. Discuss surgical options and lens choices so the patient makes an informed decision.</p>
       </div>
 
-      <div class="timeline-card optom">
-        <div class="timeline-step-num">2</div>
-        <span class="timeline-badge">Your Practice</span>
-        <h4>Refer</h4>
-        <p>Send referral through Syndesis. GOS 18, practice software, or bespoke secure messaging also work where criteria are met.</p>
+      <div class="journey-step optom">
+        <span class="journey-num">2</span>
+        <span class="journey-lead">Your Practice</span>
+        <h4>Secure Referral Submission</h4>
+        <p>Submit via the Syndesis platform (or GOS 18 / PMS). Upload relevant diagnostic findings, visual fields, and OCT scans (up to 64MB per file).</p>
       </div>
 
-      <div class="timeline-card eyepros">
-        <div class="timeline-step-num">3</div>
-        <span class="timeline-badge">EyePros</span>
-        <h4>Consent &amp; Treat</h4>
-        <p>Operating consultant personally leads consent and performs surgery, maintaining full clinical records and national audit submissions.</p>
+      <div class="journey-step eyepros">
+        <span class="journey-num">3</span>
+        <span class="journey-lead">EyePros Surgical</span>
+        <h4>Consent &amp; Treatment</h4>
+        <p>Operating consultant ophthalmologist personally leads surgical consent and performs the procedure. Records submitted to national audit databases (NOD).</p>
       </div>
 
-      <div class="timeline-card eyepros">
-        <div class="timeline-step-num">4</div>
-        <span class="timeline-badge">EyePros</span>
-        <h4>Report Back</h4>
-        <p>Receive discharge letter within 48 hours. Patient leaves theatre with written instructions and an emergency helpline number.</p>
+      <div class="journey-step eyepros">
+        <span class="journey-num">4</span>
+        <span class="journey-lead">EyePros Surgical</span>
+        <h4>48h Discharge Letter</h4>
+        <p>Structured discharge letter arrives via Syndesis within 48 hours. Patient leaves with written instructions and the 24/7 emergency helpline number.</p>
       </div>
 
-      <div class="timeline-card optom">
-        <div class="timeline-step-num">5</div>
-        <span class="timeline-badge">Your Practice</span>
-        <h4>Follow Up</h4>
-        <p>Carry out 4-week assessment and submit findings on Syndesis within 5 working days. Your shared care fee follows completed submission.</p>
+      <div class="journey-step optom">
+        <span class="journey-num">5</span>
+        <span class="journey-lead">Your Practice</span>
+        <h4>4-Week Review &amp; Fee</h4>
+        <p>Conduct the 4-week postoperative assessment in your practice. Submit findings via Syndesis within 5 working days to release your shared-care fee.</p>
       </div>
     </div>
 
-    <div class="timeline-callout">
+    <div class="journey-callout">
       <div>
-        <p><strong>Clinical Helpline Active Throughout:</strong> From referral to final discharge, reach us via your named contact or Urgent Helpline.</p>
+        <p><strong>Urgent Escalation Available Throughout:</strong> Both you and your patient have direct access to your named escalation contact and the EyePros Urgent Clinical Helpline on <strong>0333 77 272 77, Option 5</strong>.</p>
       </div>
-      <a href="tel:03337727277" class="btn btn-sm btn-primary">0333 77 272 77 (Opt 5)</a>
+      <a href="#partner-enquiry" class="btn btn-sm btn-primary">Discuss becoming a Synergy partner</a>
     </div>
   </div>
 </section>
 
-<!-- ═══ REMUNERATION TABLE ═══ -->
-<section id="remuneration" class="section section-alt">
+<!-- ═══ SECTION 4: GOVERNANCE ═══ -->
+<section id="governance" class="section section-slate">
   <div class="container">
     <div class="text-center max-w-prose mx-auto mb-32">
-      <p class="eyebrow">TRANSPARENT REMUNERATION</p>
-      <h2>The shared care fee pays for the clinical work you do</h2>
-      <p class="text-med mt-12">Clear fees paid directly to your practice upon submission of completed reviews.</p>
+      <p class="eyebrow">GOVERNANCE &amp; ACCOUNTABILITY</p>
+      <h2>Clearly defined clinical responsibilities</h2>
+    </div>
+
+    <div class="resp-grid">
+      <div class="resp-card">
+        <div class="resp-card-header"><h3>Responsibilities of EyePros</h3></div>
+        <ul class="resp-list">
+          <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg> Primary responsibility for surgical consent led by operating consultant ophthalmologists.</li>
+          <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg> Issue structured discharge letters via the portal within 48 hours of surgery.</li>
+          <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg> Retain full clinical responsibility for managing surgical complications, including further surgery.</li>
+        </ul>
+      </div>
+
+      <div class="resp-card">
+        <div class="resp-card-header"><h3>Responsibilities of Partner Optometrists</h3></div>
+        <ul class="resp-list">
+          <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg> Pre-referral assessment, shared decision-making, and documentation in practice records.</li>
+          <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg> Conduct 4-week postoperative reviews (exam, VA, IOP, OCT, escalation understanding).</li>
+          <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg> Submit reports via Syndesis within 5 working days of each assessment visit.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="red-flags-container">
+      <h4>Immediate Clinical Escalation Triggers (Agreement Section 4.3)</h4>
+      <p style="font-size:.84rem;color:var(--text-light)">Contact EyePros immediately upon identification of any of the following:</p>
+      <ul class="red-flags-grid">
+        <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg> Unexplained reduction in VA</li>
+        <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg> IOP &ge; 30 mmHg</li>
+        <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg> Signs of endophthalmitis</li>
+        <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg> Wound dehiscence</li>
+        <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg> Significant corneal oedema</li>
+        <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg> Choroidal haemorrhage</li>
+      </ul>
+    </div>
+
+    <div class="helpline-card">
+      <div class="helpline-info">
+        <h4>EyePros Urgent Clinical Helpline</h4>
+        <p>Direct consultant escalation available to optometrists and patients on <strong>0333 77 272 77, Option 5</strong>.</p>
+      </div>
+      <div class="helpline-action">
+        <span class="helpline-phone">0333 77 272 77</span>
+        <span class="helpline-opt">Select Option 5</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SECTION 5: FIVE PROCEDURES ═══ -->
+<section id="procedures" class="section">
+  <div class="container">
+    <div class="text-center max-w-prose mx-auto mb-32">
+      <p class="eyebrow">PROCEDURE SCHEDULE</p>
+      <h2>Five procedure categories covered by the agreement</h2>
+    </div>
+
+    <div class="proc-accordion">
+      <div class="proc-item">
+        <div class="proc-header">
+          <div class="proc-title-group">
+            <span class="proc-badge">Category 1</span>
+            <div><span class="proc-name">Cataract Surgery (Phacoemulsification &plusmn; IOL)</span><span class="proc-guidance"> · NICE NG77 (2017, updated 2023)</span></div>
+          </div>
+        </div>
+        <div class="proc-content">
+          <table class="proc-table">
+            <thead><tr><th>Optometrist Pre-Op Responsibility</th><th>Optometrist Post-Op Responsibility</th></tr></thead>
+            <tbody><tr><td>VA, IOP, refraction, examination, OCT, corneal topography.</td><td>4-week post-op assessment (exam, VA, IOP, OCT, escalation review, portal submission).</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="proc-item">
+        <div class="proc-header">
+          <div class="proc-title-group">
+            <span class="proc-badge">Category 2</span>
+            <div><span class="proc-name">YAG Laser Capsulotomy</span><span class="proc-guidance"> · NICE IPG492; Post-Cataract Pathway</span></div>
+          </div>
+        </div>
+        <div class="proc-content">
+          <table class="proc-table">
+            <thead><tr><th>Optometrist Pre-Op Responsibility</th><th>Optometrist Post-Op Responsibility</th></tr></thead>
+            <tbody><tr><td>Pre-referral VA &amp; symptom assessment.</td><td>4-week post-op assessment (exam, VA, IOP, OCT, escalation review, portal submission).</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="proc-item">
+        <div class="proc-header">
+          <div class="proc-title-group">
+            <span class="proc-badge">Category 3</span>
+            <div><span class="proc-name">Laser Eye Surgery (LASIK / LASEK / SMILE)</span><span class="proc-guidance"> · NICE IPG164; RCOphth Guidelines</span></div>
+          </div>
+        </div>
+        <div class="proc-content">
+          <table class="proc-table">
+            <thead><tr><th>Optometrist Pre-Op Responsibility</th><th>Optometrist Post-Op Responsibility</th></tr></thead>
+            <tbody><tr><td>VA, IOP, refraction, examination, OCT, corneal topography.</td><td>4-week post-op assessment (exam, VA, IOP, OCT, escalation review, portal submission).</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="proc-item">
+        <div class="proc-header">
+          <div class="proc-title-group">
+            <span class="proc-badge">Category 4</span>
+            <div><span class="proc-name">Lens Replacement Surgery (RLE / Phakic IOL)</span><span class="proc-guidance"> · NICE IPG190; ESCRS Guidelines</span></div>
+          </div>
+        </div>
+        <div class="proc-content">
+          <table class="proc-table">
+            <thead><tr><th>Optometrist Pre-Op Responsibility</th><th>Optometrist Post-Op Responsibility</th></tr></thead>
+            <tbody><tr><td>VA, IOP, refraction, examination, OCT, corneal topography.</td><td>4-week post-op assessment (exam, VA, IOP, OCT, escalation review, portal submission).</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="proc-item">
+        <div class="proc-header">
+          <div class="proc-title-group">
+            <span class="proc-badge">Category 5</span>
+            <div><span class="proc-name">Glaucoma Surgery &amp; Laser (SLT / MIGS / Trabeculectomy)</span><span class="proc-guidance"> · NICE NG81 (2022); EGS Guidelines</span></div>
+          </div>
+        </div>
+        <div class="proc-content">
+          <table class="proc-table">
+            <thead><tr><th>Optometrist Pre-Op Responsibility</th><th>Optometrist Post-Op Responsibility</th></tr></thead>
+            <tbody><tr><td>VA, IOP, visual fields, OCT.</td><td>4-week post-op assessment (exam, VA, IOP, OCT, escalation review, portal submission).</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SECTION 6: FEE TABLE ═══ -->
+<section id="remuneration" class="section section-slate">
+  <div class="container">
+    <div class="text-center max-w-prose mx-auto mb-32">
+      <p class="eyebrow">FINANCIAL AGREEMENT</p>
+      <h2>Transparent shared-care fee structure</h2>
+      <p class="text-med mt-12">Recognising clinical chair time and expertise under Agreement Section 7.</p>
     </div>
 
     <div class="fee-table-wrap">
       <table class="fee-table">
         <thead>
-          <tr>
-            <th style="width:38%">Patient Funding Route</th>
-            <th style="width:28%">Shared Care Fee</th>
-            <th style="width:34%">When It Applies &amp; Terms</th>
-          </tr>
+          <tr><th>Patient Funding Type</th><th>Shared Care Fee</th><th>Conditions Mandated by Agreement</th></tr>
         </thead>
         <tbody>
           <tr>
-            <td><strong>Self-pay &amp; finance</strong><span class="fee-sub">Cataract &amp; Lens Replacement</span></td>
-            <td><span class="fee-amount">Up to &pound;250</span><span class="fee-sub">Per eye</span></td>
-            <td>Paid on completed pre and post-op care submitted through Syndesis</td>
+            <td><strong>Self-Pay &amp; Patient Finance</strong><span class="fee-note">Cataract &amp; Lens Replacement Surgery</span></td>
+            <td><span class="fee-figure">Up to &pound;250 per eye</span></td>
+            <td>Flat fee regardless of referral volume. Payable upon completed pre &amp; post-operative care submission via our Syndesis portal.</td>
           </tr>
           <tr>
-            <td><strong>Private medical insurance</strong><span class="fee-sub">Bupa, AXA, Aviva, Vitality, WPA</span></td>
-            <td><span class="fee-amount">Up to &pound;100</span><span class="fee-sub">Per procedure</span></td>
-            <td>Subject to insurer fee schedules; confirmed at referral</td>
+            <td><strong>Private Medical Insurance (PMI)</strong><span class="fee-note">Covered surgical episodes</span></td>
+            <td><span class="fee-figure">Up to &pound;100 per procedure</span></td>
+            <td>Subject to individual insurer fee schedules. Exact amount confirmed at point of referral.</td>
           </tr>
           <tr>
-            <td><strong>Self-pay &amp; finance: MIGS</strong><span class="fee-sub">Minimally Invasive Glaucoma Surgery</span></td>
-            <td><span class="fee-amount">Up to &pound;100</span><span class="fee-sub">Per procedure</span></td>
-            <td>Paid on completed pre and post-op care submitted through Syndesis</td>
+            <td><strong>Self-Pay &amp; Finance &mdash; MIGS</strong><span class="fee-note">Minimally Invasive Glaucoma Surgery</span></td>
+            <td><span class="fee-figure">Up to &pound;100 per procedure</span></td>
+            <td>Payable upon completed pre &amp; post-operative care submission via our Syndesis portal.</td>
           </tr>
           <tr>
-            <td><strong>Self-pay &amp; finance: YAG / SLT</strong><span class="fee-sub">Capsulotomy, Iridotomy &amp; SLT</span></td>
-            <td><span class="fee-amount">Up to &pound;90</span><span class="fee-sub">Per eye</span></td>
-            <td>Paid on completed pre and post-op care submitted through Syndesis</td>
+            <td><strong>Self-Pay &amp; Finance &mdash; Laser</strong><span class="fee-note">YAG Capsulotomy, YAG Iridotomy &amp; SLT</span></td>
+            <td><span class="fee-figure">Up to &pound;90 per eye</span></td>
+            <td>Payable upon completed pre &amp; post-operative care submission via our Syndesis portal.</td>
           </tr>
         </tbody>
       </table>
     </div>
 
     <div class="fee-safeguards">
-      <div class="safeguard-card">
+      <div class="safeguard-box">
         <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1.323l3.954 1.582 1.599-.8a1 1 0 01.894 1.79l-1.233.616 1.738 5.42a1 1 0 01-.285 1.05A3.989 3.989 0 0115 15a3.989 3.989 0 01-2.667-1.019 1 1 0 01-.285-1.05l1.715-5.349L11 6.477V16h2a1 1 0 110 2H7a1 1 0 110-2h2V6.477L6.237 7.582l1.715 5.349a1 1 0 01-.285 1.05A3.989 3.989 0 015 15a3.989 3.989 0 01-2.667-1.019 1 1 0 01-.285-1.05l1.738-5.42-1.233-.617a1 1 0 01.894-1.788l1.599.799L9 4.323V3a1 1 0 011-1z" clip-rule="evenodd"/></svg>
         <div>
-          <h4>No tiers, and not linked to volume</h4>
-          <p>The fee does not change with the number of patients you refer. Clinical independence remains protected.</p>
+          <h4>Flat Fee Regardless of Volume</h4>
+          <p>Shared-care fees never change with referral volume. Clinical independence remains protected.</p>
         </div>
       </div>
-      <div class="safeguard-card">
+      <div class="safeguard-box">
         <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg>
         <div>
-          <h4>The patient's choice comes first</h4>
-          <p>Patients keep a genuine choice about referral, and neither practice nor surgeon will ever pressure surgery.</p>
+          <h4>Informed Patient Choice</h4>
+          <p>Patients retain complete choice over referral. Neither party may apply undue pressure to proceed with surgery.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ SAFETY & HELPLINE ═══ -->
-<section id="safety" class="section">
+<!-- ═══ SECTION 7: SYNDESIS & SUPPORT ═══ -->
+<section id="syndesis" class="section">
   <div class="container">
-    <div class="text-center max-w-prose mx-auto mb-32">
-      <p class="eyebrow">CLINICAL SAFETY &amp; ESCALATION</p>
-      <h2>Trust matters most when you are worried about a patient</h2>
-    </div>
-
-    <div class="safety-grid">
-      <div class="helpline-box">
-        <div>
-          <span class="helpline-badge">&#9679; Urgent Clinical Line</span>
-          <h3>Urgent Clinical Helpline</h3>
-          <div class="helpline-num">0333 77 272 77</div>
-          <div class="helpline-option">Select Option 5</div>
-          <p style="font-size:.88rem;color:rgba(255,255,255,.8);line-height:1.6">Available to both you and your patient. Named escalation contact for every case.</p>
-        </div>
-        <div style="margin-top:20px">
-          <a href="tel:03337727277" class="btn btn-primary" style="width:100%">Call Helpline (Opt 5)</a>
-        </div>
-      </div>
-
-      <div class="red-flags-box">
-        <h3>Call us straight away if you find:</h3>
-        <ul class="red-flags-list">
-          <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg> Unexplained reduction in VA</li>
-          <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg> Significant corneal oedema</li>
-          <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg> IOP of 30 mmHg or above</li>
-          <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg> Choroidal haemorrhage</li>
-          <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg> Signs of endophthalmitis</li>
-          <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg> Wound dehiscence</li>
-        </ul>
-        <div class="liability-banner">
-          <strong>Responsibility split:</strong> EyePros manages surgical complications, including further surgery. You conduct the post-op reviews and consult us before managing findings outside expected course.
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ SYNDESIS ═══ -->
-<section id="syndesis" class="section section-navy">
-  <div class="container">
-    <div class="syndesis-grid">
+    <div class="support-grid">
       <div>
-        <p class="eyebrow">PORTAL &amp; ADMIN</p>
-        <h2>One portal for the admin, and a named person to call</h2>
-        <p class="text-med mt-16"><strong>Syndesis</strong> is our secure portal for partner practices. Send referrals, review discharge letters, and submit 4-week postoperative findings in minutes.</p>
-
-        <ul class="syndesis-features">
-          <li>
-            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-            <div><strong>Training for your whole team:</strong> Onboarding and refresher training whenever needed.</div>
-          </li>
-          <li>
-            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-            <div><strong>Dedicated clinical liaison:</strong> One point of contact for clinical or administrative questions.</div>
-          </li>
-          <li>
-            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-            <div><strong>Protocols kept up to date:</strong> Procedure-specific post-op protocols aligned with national guidance.</div>
-          </li>
-          <li>
-            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-            <div><strong>Annual activity report:</strong> Summary of your practice's shared care volume and outcomes.</div>
-          </li>
-        </ul>
-
-        <div style="display:flex;gap:14px;flex-wrap:wrap">
-          <a href="#register" class="btn btn-primary">Register Your Practice</a>
-        </div>
-      </div>
-
-      <div>
-        <div class="syndesis-ui">
-          <div style="font-weight:700;color:#fff;margin-bottom:14px">Syndesis Clinical Portal — Live Overview</div>
-          <div class="syndesis-case-item">
-            <div style="font-weight:600;color:#fff;display:flex;justify-content:space-between">
-              <span>Cataract Surgery (Toric IOL)</span>
-              <span style="color:var(--teal)">48h Letter Ready</span>
-            </div>
-            <div style="font-size:.78rem;color:rgba(255,255,255,.6);margin-top:4px">Mr Ahmad Elsahn · Refraction: Plano target</div>
-          </div>
-          <div class="syndesis-case-item">
-            <div style="font-weight:600;color:#fff;display:flex;justify-content:space-between">
-              <span>Post-Op 4-Week Review</span>
-              <span style="color:#FBBF24">Review Due in 4 Days</span>
-            </div>
-            <div style="font-size:.78rem;color:rgba(255,255,255,.6);margin-top:4px">Form ready for submission</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ CONSULTANTS ═══ -->
-<section id="consultants" class="section">
-  <div class="container">
-    <div class="text-center max-w-prose mx-auto mb-48">
-      <p class="eyebrow">CLINICAL LEADERSHIP</p>
-      <h2>Your patient is treated by the surgeon they know and choose</h2>
-    </div>
-
-    <div class="grid-2">
-      <div class="consultant-card">
-        <h3 class="consultant-name">Mr Ahmad Elsahn</h3>
-        <p class="consultant-role">Clinical Director &amp; Consultant Ophthalmic Surgeon</p>
-        <span class="consultant-credentials">MBBCh PhD FRCS FRCOphth FHEA FWCRS CertLRS</span>
-        <p class="consultant-bio">Specialist in cataract surgery, premium IOLs, laser vision correction, MIGS glaucoma surgery, and anterior segment reconstruction with 20+ years of surgical experience.</p>
-        <ul class="consultant-posts">
-          <li>Head of Service for Ophthalmology, Sherwood Forest Hospitals NHS Foundation Trust</li>
-          <li>Honorary Assistant Professor of Ophthalmology, University of Nottingham</li>
-        </ul>
-      </div>
-
-      <div class="consultant-card">
-        <h3 class="consultant-name">Ms Yasmine Abdalla</h3>
-        <p class="consultant-role">Clinical Director &amp; Consultant Ophthalmologist</p>
-        <span class="consultant-credentials">MBBS FRCOphth</span>
-        <p class="consultant-bio">Jointly responsible for clinical governance and patient pathways across the Synergy network. Specialist in medical retina, diabetic eye disease, AMD diagnostics, and uveitis.</p>
-        <ul class="consultant-posts">
-          <li>Specialist Fellowship Trained in Medical Retina &amp; Uveitis</li>
-          <li>Substantive NHS Consultant Ophthalmologist</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- 4 Midlands Theatres -->
-    <div style="margin-top:48px">
-      <h3 class="text-center" style="font-size:1.15rem;margin-bottom:20px">Four Midlands Theatres</h3>
-      <div class="locations-bar">
-        <div class="location-item"><h4>Loughborough</h4><p>EyePros Clinic</p></div>
-        <div class="location-item"><h4>Nottingham</h4><p>The Park Hospital</p></div>
-        <div class="location-item"><h4>Leicester</h4><p>Optimax Theatre Suite</p></div>
-        <div class="location-item"><h4>Derby</h4><p>Derby Private Health</p></div>
-      </div>
-      <p class="text-center text-light mt-12" style="font-size:.8rem">Cataract surgery performed under local or general anaesthetic.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ REGISTRATION FORM ═══ -->
-<section id="register" class="section section-alt">
-  <div class="container">
-    <div class="text-center max-w-prose mx-auto mb-32">
-      <p class="eyebrow">BECOME A PARTNER</p>
-      <h2>Joining takes three steps. Trust starts with a conversation.</h2>
-      <p class="text-med mt-12">No upfront costs. No minimum referral quotas.</p>
-    </div>
-
-    <div class="onboarding-steps">
-      <div class="onboarding-step">
-        <span class="onboarding-step-num">1</span>
-        <h4>Talk to us</h4>
-        <p>Arrange an informal discussion with a consultant ophthalmologist or clinic management team.</p>
-      </div>
-      <div class="onboarding-step">
-        <span class="onboarding-step-num">2</span>
-        <h4>Read and sign</h4>
-        <p>Review and execute the Shared Care Agreement v2.2.</p>
-      </div>
-      <div class="onboarding-step">
-        <span class="onboarding-step-num">3</span>
-        <h4>Get set up</h4>
-        <p>Your team receives onboarding training, Syndesis access, protocols, and practice brochures.</p>
-      </div>
-    </div>
-
-    <div class="form-layout">
-      <div class="form-card">
-        <h3 style="margin-bottom:8px">Register Your Practice</h3>
-        <p class="text-med mb-24" style="font-size:.88rem">Request Shared Care Agreement v2.2 or book an intro call.</p>
+        <p class="eyebrow">PORTAL &amp; OPERATIONAL SUPPORT</p>
+        <h2>Syndesis referral platform &amp; ongoing practice support</h2>
+        <p class="text-med mt-16">Secure cloud portal powered by Panacea360 (`eyepros.openpims.net/syndesis`) dedicated to referral management and clinical reporting.</p>
         
+        <ul class="support-features">
+          <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg> <div><strong>Referral Submission:</strong> Supports GOS 18, PMS export, and scan uploads up to 64MB.</div></li>
+          <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg> <div><strong>Two-Way Direct Messaging:</strong> Case-level communication with the EyePros team inside Syndesis.</div></li>
+          <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg> <div><strong>Clinical Liaison:</strong> Dedicated contact for clinical and administrative queries (Section 3.4).</div></li>
+          <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg> <div><strong>Annual Outcome Summary:</strong> Practice-level summary report for clinical audit (Section 8).</div></li>
+        </ul>
+
+        <a href="https://eyepros.openpims.net/syndesis" target="_blank" rel="noopener" class="btn btn-outline">Access Syndesis Platform</a>
+      </div>
+
+      <div>
+        <img src="https://takoua-gif.github.io/takoua-biblio/images/oct-scan.jpg" alt="Diagnostic imaging on Syndesis" style="border-radius:var(--radius-lg);box-shadow:var(--shadow-md)" loading="lazy">
+      </div>
+    </div>
+
+    <div class="onboarding-flow">
+      <div class="onboarding-card">
+        <span class="onboarding-badge">Step 1</span>
+        <h4>Clinical Discussion</h4>
+        <p>Explore the framework and discuss pathways with our clinical management team.</p>
+      </div>
+      <div class="onboarding-card">
+        <span class="onboarding-badge">Step 2</span>
+        <h4>Agreement Execution</h4>
+        <p>Formal review and execution of Agreement v2.2 by practice and EyePros leads.</p>
+      </div>
+      <div class="onboarding-card">
+        <span class="onboarding-badge">Step 3</span>
+        <h4>Account Setup &amp; Training</h4>
+        <p>Syndesis portal login created, staff onboarding delivered, protocols provided.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SECTION 8: BECOME A SYNERGY PARTNER ═══ -->
+<section id="partner-enquiry" class="section section-slate">
+  <div class="container">
+    <div class="text-center max-w-prose mx-auto mb-32">
+      <p class="eyebrow">GET IN TOUCH</p>
+      <h2>Discuss becoming a Synergy partner</h2>
+      <p class="text-med mt-12">Submit an enquiry to request Shared Care Agreement v2.2 or speak with our clinical management team.</p>
+    </div>
+
+    <div class="enquiry-layout">
+      <div class="enquiry-card">
+        <h3 style="margin-bottom:6px">Partner Enquiry Form</h3>
+        <p class="text-med mb-24" style="font-size:.88rem">Directly reviewed by our clinical management team.</p>
+
         <form id="partnerForm" action="https://formsubmit.co/practice@eyepros.co.uk" method="POST">
-          <input type="hidden" name="_subject" value="New Synergy Partnership Registration">
+          <input type="hidden" name="_subject" value="New Synergy Partner Enquiry (Agreement v2.2)">
           <input type="hidden" name="_template" value="table">
           <input type="hidden" name="_captcha" value="false">
-          
+
           <div class="form-row">
             <div class="form-group">
-              <label for="fullName">Your Full Name *</label>
+              <label for="fullName">Full Name *</label>
               <input type="text" id="fullName" name="fullName" required placeholder="e.g. Sarah Jenkins MCOptom">
             </div>
             <div class="form-group">
               <label for="practiceName">Practice Name *</label>
-              <input type="text" id="practiceName" name="practiceName" required placeholder="e.g. Jenkins Optical">
+              <input type="text" id="practiceName" name="practiceName" required placeholder="e.g. Jenkins Opticians">
             </div>
           </div>
+
           <div class="form-row">
             <div class="form-group">
               <label for="email">Practice Email *</label>
               <input type="email" id="email" name="email" required placeholder="name@practice.co.uk">
             </div>
             <div class="form-group">
-              <label for="phone">Phone Number *</label>
+              <label for="phone">Telephone Number *</label>
               <input type="tel" id="phone" name="phone" required placeholder="0115 123 4567">
             </div>
           </div>
+
           <div class="form-row">
             <div class="form-group">
               <label for="postcode">Practice Postcode *</label>
               <input type="text" id="postcode" name="postcode" required placeholder="e.g. NG1 1AA">
             </div>
             <div class="form-group">
-              <label for="role">Professional Role *</label>
+              <label for="role">Your Role *</label>
               <select id="role" name="role" required>
-                <option value="">Select role</option>
-                <option value="owner">Practice Owner / Director</option>
+                <option value="">Select your role</option>
+                <option value="owner">Practice Owner / Partner</option>
                 <option value="optom">Optometrist</option>
                 <option value="manager">Practice Manager</option>
                 <option value="locum">Locum Optometrist</option>
               </select>
             </div>
           </div>
+
           <div class="form-group">
-            <label for="notes">Questions or comments (optional)</label>
-            <textarea id="notes" name="notes" rows="3" placeholder="Any clinical questions or preferred call time..."></textarea>
+            <label for="message">Clinical Questions or Preferred Time to Discuss (Optional)</label>
+            <textarea id="message" name="message" rows="3" placeholder="Tell us about your practice or specific questions regarding Agreement v2.2..."></textarea>
           </div>
-          <button type="submit" id="submitBtn" class="btn btn-primary" style="width:100%">Register Practice for Shared Care</button>
-          <p style="font-size:.78rem;color:var(--text-light);margin-top:12px;text-align:center">Submissions are sent directly to practice@eyepros.co.uk.</p>
+
+          <button type="submit" id="submitBtn" class="btn btn-primary" style="width:100%">Discuss becoming a Synergy partner</button>
+          <p style="font-size:.76rem;color:var(--text-light);margin-top:12px;text-align:center">Enquiries sent directly to practice@eyepros.co.uk under UK GDPR.</p>
         </form>
 
         <div id="formSuccess" style="display:none;background:var(--teal-light);border:1px solid rgba(13,148,136,.3);padding:24px;border-radius:var(--radius);text-align:center">
-          <h4 style="color:var(--teal);margin-bottom:6px">Registration Sent to practice@eyepros.co.uk</h4>
-          <p style="font-size:.9rem;color:var(--text-med)">Thank you. Our Practice Manager has received your details and will email the Shared Care Agreement v2.2 within 24 hours.</p>
+          <h4 style="color:var(--teal);margin-bottom:6px">Enquiry Sent to practice@eyepros.co.uk</h4>
+          <p style="font-size:.9rem;color:var(--text-med)">Thank you. Our Practice Manager will provide Shared Care Agreement v2.2 within one business day.</p>
         </div>
       </div>
 
-      <div class="contact-aside-box">
-        <h3 style="margin-bottom:8px">Clinical Management Contacts</h3>
-        <p class="text-med mb-24" style="font-size:.88rem">Prefer a direct conversation? Contact us directly:</p>
+      <div class="contact-card">
+        <h3 style="margin-bottom:8px">Contact Clinical Management</h3>
+        <p class="text-med mb-24" style="font-size:.88rem">Available to answer questions regarding our clinical framework:</p>
 
         <div class="contact-item">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
           <div>
-            <span style="font-size:.78rem;font-weight:700;text-transform:uppercase;color:var(--text-light);display:block">Practice Manager Email</span>
-            <a href="mailto:practice@eyepros.co.uk" style="font-size:1rem;font-weight:700;color:var(--teal)">practice@eyepros.co.uk</a>
+            <span class="contact-lbl">Practice Manager Email</span>
+            <a href="mailto:practice@eyepros.co.uk" class="contact-val" style="color:var(--teal)">practice@eyepros.co.uk</a>
           </div>
         </div>
 
         <div class="contact-item">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
           <div>
-            <span style="font-size:.78rem;font-weight:700;text-transform:uppercase;color:var(--text-light);display:block">Telephone</span>
-            <a href="tel:03337727277" style="font-size:1rem;font-weight:700;color:var(--navy)">0333 77 272 77</a>
+            <span class="contact-lbl">General Inquiries</span>
+            <a href="mailto:info@eyepros.co.uk" class="contact-val">info@eyepros.co.uk</a>
           </div>
         </div>
 
         <div class="contact-item">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
           <div>
-            <span style="font-size:.78rem;font-weight:700;text-transform:uppercase;color:var(--text-light);display:block">Urgent Clinical Helpline</span>
-            <span style="font-size:1rem;font-weight:700;color:var(--red-accent)">0333 77 272 77 (Option 5)</span>
+            <span class="contact-lbl">Telephone</span>
+            <a href="tel:03337727277" class="contact-val">0333 77 272 77</a>
           </div>
         </div>
+
+        <div class="contact-item">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+          <div>
+            <span class="contact-lbl">Urgent Clinical Helpline</span>
+            <span class="contact-val" style="color:var(--red-accent)">0333 77 272 77 (Option 5)</span>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 2a8 8 0 100 16 8 8 0 000-16zm1 11H9v-2h2v2zm0-4H9V5h2v4z" clip-rule="evenodd"/></svg>
+          <div>
+            <span class="contact-lbl">Syndesis Portal</span>
+            <a href="https://eyepros.openpims.net/syndesis" target="_blank" rel="noopener" class="contact-val" style="font-size:.85rem;color:var(--cyan-accent);word-break:break-all">eyepros.openpims.net/syndesis</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SECTION 9: CONCISE PRACTICAL FAQ ═══ -->
+<section id="faq" class="section">
+  <div class="container">
+    <div class="text-center max-w-prose mx-auto mb-32">
+      <p class="eyebrow">PRACTICAL QUESTIONS</p>
+      <h2>Frequently asked questions by optical practices</h2>
+    </div>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q"><span>Who is eligible to join the Synergy partnership?</span><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg></button>
+        <div class="faq-a">Any UK optometry practice with General Optical Council (GOC) registered optometrists in good standing holding valid professional indemnity insurance (Agreement Section 4.5 &amp; 6).</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q"><span>Are there minimum referral quotas or volume targets?</span><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg></button>
+        <div class="faq-a">No. The shared-care fee is a flat fee per eye/procedure regardless of referral volume. Partners refer patients solely based on clinical indication and informed patient choice (Agreement Section 7).</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q"><span>When and how is the shared-care fee paid?</span><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg></button>
+        <div class="faq-a">Shared-care fees (up to &pound;250 per eye for self-pay cataract) are payable upon completed submission of pre- and post-operative care reports via the Syndesis portal within 5 working days of the 4-week assessment (Agreement Section 4.4 &amp; 7).</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q"><span>Who manages and takes responsibility for surgical complications?</span><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg></button>
+        <div class="faq-a">EyePros retains full responsibility for managing all surgical complications identified during or after surgery, including any further surgical intervention. Partners escalate immediately via the Urgent Clinical Helpline (Agreement Section 3.3 &amp; 6).</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q"><span>How do I reach the surgical team if I have an urgent clinical concern?</span><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg></button>
+        <div class="faq-a">A named escalation contact is provided for every patient case. Additionally, the EyePros Urgent Clinical Helpline is available on 0333 77 272 77, Option 5, accessible to both the optometrist and patient (Agreement Section 3.3).</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q"><span>How can either party terminate the partnership agreement?</span><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg></button>
+        <div class="faq-a">Either party may terminate the agreement by giving six weeks' written notice, calculated from the date of the last referral, allowing sufficient time for completion of outstanding 4-week assessments (Agreement Section 9).</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q"><span>Who conducts surgical consent?</span><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg></button>
+        <div class="faq-a">EyePros holds primary responsibility for surgical consent under the operating consultant ophthalmologist (GMC 2020; Montgomery v Lanarkshire 2015). The Partner supports informed decision-making at referral (Agreement Section 5.1).</div>
       </div>
     </div>
   </div>
@@ -798,38 +849,58 @@ h4{font-size:1.05rem;font-weight:600}
   <div class="container">
     <div class="footer-grid">
       <div>
-        <div class="footer-logo">Eye<span class="accent">Pros</span> Synergy</div>
-        <p style="max-width:320px;line-height:1.6">The NHS consultant-led shared care partnership for independent UK optometrists.</p>
-        <p style="margin-top:12px;font-size:.8rem;color:rgba(255,255,255,.5)">Shared Care Agreement v2.2</p>
+        <div class="footer-brand">
+          <span class="footer-brand-badge">
+            <img src="https://takoua-gif.github.io/takoua-biblio/images/synergy-logo-light.jpg" alt="Synergy by EyePros">
+          </span>
+        </div>
+        <p style="max-width:320px;line-height:1.6">A connected care partnership for independent UK optometrists and optical practices.</p>
+        <p style="margin-top:12px;font-size:.8rem;color:rgba(255,255,255,.5)">Shared Care Agreement v2.2 (August 2026)</p>
       </div>
 
       <div>
         <h4 style="color:#fff;font-size:.9rem;margin-bottom:14px">Direct Contact</h4>
         <ul class="footer-links">
           <li><a href="mailto:practice@eyepros.co.uk">practice@eyepros.co.uk</a></li>
+          <li><a href="mailto:info@eyepros.co.uk">info@eyepros.co.uk</a></li>
           <li><a href="tel:03337727277">0333 77 272 77</a></li>
-          <li><span style="color:#F87171">Urgent: 0333 77 272 77 (Opt 5)</span></li>
+          <li><span style="color:#F87171">Urgent Helpline: 0333 77 272 77 (Opt 5)</span></li>
         </ul>
       </div>
 
       <div>
-        <h4 style="color:#fff;font-size:.9rem;margin-bottom:14px">Locations</h4>
-        <p style="font-size:.83rem">Loughborough, Nottingham, Leicester &amp; Derby</p>
+        <h4 style="color:#fff;font-size:.9rem;margin-bottom:14px">Platform</h4>
+        <ul class="footer-links">
+          <li><a href="https://eyepros.openpims.net/syndesis" target="_blank" rel="noopener">Syndesis Portal Login</a></li>
+          <li><a href="#partner-enquiry">Discuss Partnership</a></li>
+          <li><a href="https://www.eyepros.co.uk" target="_blank" rel="noopener">www.eyepros.co.uk</a></li>
+        </ul>
       </div>
     </div>
-    <div style="padding-top:20px;border-top:1px solid rgba(255,255,255,.08);font-size:.8rem;text-align:center">
-      &copy; 2026 EyePros Clinics. All rights reserved.
+
+    <div class="footer-bottom">
+      <div>&copy; 2026 EyePros Clinics. Shared Care Programme. Governed by the laws of England and Wales.</div>
+      <div>Clinical Oversight: Mr Ahmad Elsahn &amp; Ms Yasmine Abdalla</div>
     </div>
   </div>
 </footer>
 
 <script>
+// FAQ Accordion
+document.querySelectorAll('.faq-q').forEach(function(button) {
+  button.addEventListener('click', function() {
+    var item = this.parentElement;
+    item.classList.toggle('open');
+  });
+});
+
+// Enquiry form submission to practice@eyepros.co.uk
 var partnerForm = document.getElementById('partnerForm');
 if (partnerForm) {
   partnerForm.addEventListener('submit', function(e) {
     e.preventDefault();
     var submitBtn = document.getElementById('submitBtn');
-    submitBtn.innerText = 'Sending Registration...';
+    submitBtn.innerText = 'Submitting Enquiry...';
     submitBtn.disabled = true;
 
     var formData = new FormData(partnerForm);
@@ -854,5 +925,6 @@ if (partnerForm) {
   });
 }
 </script>
+
 </body>
 </html>
