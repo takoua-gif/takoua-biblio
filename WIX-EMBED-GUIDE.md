@@ -136,3 +136,53 @@ git push origin main
 - **4-Card Fee Schedule**: Cataract (£250/eye), PMI (£100/procedure), MIGS (£100/procedure), and Laser (£90/eye).
 - **Direct Consultant Escalation**: Dedicated urgent line `0333 77 272 77 (Option 5)` and Syndesis portal integration.
 - **Interactive FAQ Accordion**: Instant answers to optometrist questions without page reload.
+
+---
+
+## 8. Web Integrator Note: Single-Page In-Page Navigation (No Extra HTML Pages Needed)
+
+If your website developer or integrator asks:
+> *"For the website links they are not working, you must send me the other pages html code to add it too, there must be other pages created for the links to point to how can we plan this?"*
+
+Here is the exact technical explanation and reassurance to share with them:
+
+### 1. Single-Page Architecture
+The **Synergy by EyePros** partnership portal is intentionally engineered as a **single-page landing page**. **There are NO separate HTML pages.** All links in the navigation bar, hero buttons, and footer are **in-page anchor links** pointing to sections on the exact same page:
+
+| Navbar / Button Link | Target Section on Same Page |
+| :--- | :--- |
+| `href="#hero"` / Brand Logo | Hero Header banner at the top |
+| `href="#benefits"` | Key Partnership Benefits section |
+| `href="#journey"` | Optometrist & Patient Journey workflow |
+| `href="#consultants"` | Consultant Profiles (Ahmad Elsahn & Yasmine Abdalla) |
+| `href="#remuneration"` | Transparent Remuneration Fee table |
+| `href="#agreement"` | Partnership Agreement & Terms overview |
+| `href="#faq"` | Frequently Asked Questions accordion |
+| `href="#partner-enquiry"` / "Become Partner" | Partner Enquiry Form |
+
+### 2. Built-in Offset & Mobile Menu
+- **Fixed Sticky Header Offset**: Anchors include CSS `scroll-margin-top` (85px on desktop, 70px on mobile) and a JavaScript offset calculation, ensuring section headings never hide underneath the sticky top navbar.
+- **Mobile Hamburger Menu**: On mobile screens, the navigation menu collapses into a `☰` toggle button that automatically expands and closes when a section link is tapped.
+- **Cross-Frame Wix Message**: For iframe embeddings where the parent Wix window handles scrolling, every link click broadcasts a `postMessage` to the parent window:
+  ```javascript
+  window.parent.postMessage({
+    type: 'synergyScroll',
+    action: 'scroll',
+    target: '#benefits',
+    offsetTop: 820
+  }, '*');
+  ```
+
+### 3. Optional Wix Velo Code (If Parent Page Scrolling is Preferred)
+If the integrator is embedding via Wix Velo / HTML component and wants the parent Wix window to coordinate scrolling, they can optionally add this 4-line handler to their Wix page code:
+```javascript
+$w.onReady(function () {
+  $w("#html1").onMessage((event) => {
+    if (event.data && event.data.type === 'synergyScroll') {
+      // Handles smooth scrolling in outer Wix page if needed
+      console.log("Synergy scroll to:", event.data.target);
+    }
+  });
+});
+```
+If using **"Embed a Site"** (Option A in Section 2), no extra code is required; in-page smooth scrolling works automatically.
