@@ -131,7 +131,7 @@ git push origin main
 ## 7. Features Included in this Embed
 
 - **Upright Synergy Dark Logo**: Matches the page background `#1C192E` with crisp inline base64 fallback.
-- **Consultant Leadership Restored**: Complete cards with professional portraits for Clinical Directors **Mr Ahmad Elsahn** and **Ms Yasmine Abdalla**, subspecialties, and NHS appointments.
+- **Consultant Leadership Restored**: Complete cards with professional portraits for Managing Director **Mr Ahmad Elsahn** and Clinical Director **Ms Yasmine Abdalla**, subspecialties, and NHS appointments.
 - **Simplified Agreement CTA**: Single clean button &mdash; **"Request a copy of the Partnership Agreement"** &mdash; that smoothly navigates to the enquiry form.
 - **4-Card Fee Schedule**: Cataract (£250/eye), PMI (£100/procedure), MIGS (£100/procedure), and Laser (£90/eye).
 - **Direct Consultant Escalation**: Dedicated urgent line `0333 77 272 77 (Option 5)` and Syndesis portal integration.
