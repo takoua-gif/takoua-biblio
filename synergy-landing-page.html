@@ -875,14 +875,17 @@ if (navToggle && navLinks) {
   });
 }
 
-// In-page smooth scrolling with navbar offset and Wix cross-frame message
+// In-page smooth scrolling with navbar offset, scrollIntoView and Wix cross-frame message
 function scrollToSection(targetId) {
   if (!targetId || targetId === '#') {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch(e) {}
+    try { if (document.body) document.body.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch(e) {}
     if (history.pushState) history.pushState(null, null, ' ');
     return;
   }
-  var target = document.querySelector(targetId);
+
+  var cleanId = targetId.replace(/^#/, '');
+  var target = document.getElementById(cleanId) || document.querySelector(targetId);
   if (!target) return;
 
   var nav = document.querySelector('.nav');
@@ -891,8 +894,19 @@ function scrollToSection(targetId) {
   var currentY = window.pageYOffset || document.documentElement.scrollTop || 0;
   var targetY = Math.max(0, targetRect.top + currentY - navHeight - 12);
 
-  window.scrollTo({ top: targetY, behavior: 'smooth' });
+  // 1. Scroll within the frame (works for standalone page or if iframe has scrollbar)
+  try {
+    window.scrollTo({ top: targetY, behavior: 'smooth' });
+  } catch(e) {}
 
+  // 2. scrollIntoView (CRITICAL: this instructs browser to scroll parent Wix window when iframe is full-height)
+  try {
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } catch(e) {
+    try { target.scrollIntoView(true); } catch(e2) {}
+  }
+
+  // 3. Post message to Wix parent window
   try {
     if (window.parent && window.parent !== window) {
       window.parent.postMessage({
@@ -905,11 +919,14 @@ function scrollToSection(targetId) {
     }
   } catch(err) {}
 
-  if (history.pushState) {
-    history.pushState(null, null, targetId);
-  } else {
-    window.location.hash = targetId;
-  }
+  // 4. Update hash
+  try {
+    if (history.pushState) {
+      history.pushState(null, null, targetId);
+    } else {
+      window.location.hash = targetId;
+    }
+  } catch(e) {}
 }
 
 document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
@@ -922,11 +939,17 @@ document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
   });
 });
 
-window.addEventListener('DOMContentLoaded', function() {
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.location.hash) {
+      setTimeout(function() { scrollToSection(window.location.hash); }, 250);
+    }
+  });
+} else {
   if (window.location.hash) {
     setTimeout(function() { scrollToSection(window.location.hash); }, 250);
   }
-});
+}
 
 // FAQ Accordion
 document.querySelectorAll('.faq-q').forEach(function(button) {
