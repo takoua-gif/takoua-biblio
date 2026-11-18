@@ -9,62 +9,62 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
 <style>
 :root {
-  /* ═══ EyePros Brand Palette (Refined: Lighter Blue, Vibrant Teal Green, Slightly Darker Canvas) ═══ */
-  --bg-page: #ECE8E1;         /* Slightly darker warm paper canvas for true frosted glass contrast */
-  --bg-page-soft: #FAF8F4;    /* EyePros Paper highlight */
-  --bg-section-alt: rgba(232, 228, 220, 0.60);
+  /* ═══ EyePros Balanced Palette (Calm, Low Contrast, Refined Medical Aesthetic) ═══ */
+  --bg-page: #F6F8F8;         /* Soft, luminous, clean medical canvas (No harsh grey/dirt) */
+  --bg-page-soft: #FFFFFF;    /* Clean card highlights */
+  --bg-section-alt: rgba(240, 245, 245, 0.45); /* Seamless, organic section transitions */
 
-  /* Lighter, Refined Blue (No longer dark/black; translucent & luminous) */
-  --ep-blue: #0284C7;         /* Luminous cerulean medical blue */
-  --ep-blue-hover: #0369A1;
-  --ep-blue-light: rgba(2, 132, 199, 0.12);
-  --ep-blue-glow: rgba(2, 132, 199, 0.32);
+  /* Refined EyePros Teal Green ("Tale Green" - calm, balanced, professional) */
+  --ep-teal: #1E7B70;         /* EyePros signature teal green, balanced saturation */
+  --ep-teal-dark: #15574F;    /* Accessible, comfortable dark teal for text */
+  --ep-teal-light: rgba(30, 123, 112, 0.07); /* Gentle pastel wash for badges and icons */
+  --ep-teal-glow: rgba(30, 123, 112, 0.18);  /* Subtle, soft ambient glow */
 
-  /* Oceanic Navy (Less dark, rich navy rather than pitch-black) */
-  --ep-navy: #162E4D;         /* Readable, deep oceanic navy */
-  --ep-navy-hover: #1F3F68;
-  --ep-navy-deep: #0F233D;
-  --ep-navy-translucent: rgba(22, 46, 77, 0.85);
+  /* Muted Ocean Slate-Blue (Harmonious with teal green, zero color clash) */
+  --ep-blue: #2B7A94;         /* Soft oceanic blue */
+  --ep-blue-hover: #216378;
+  --ep-blue-light: rgba(43, 122, 148, 0.07);
+  --ep-blue-glow: rgba(43, 122, 148, 0.18);
 
-  /* Vibrant EyePros Teal Green ("Tale Green" requested by user) */
-  --ep-teal: #0D9488;         /* EyePros signature vibrant teal green */
-  --ep-teal-dark: #0F766E;    /* High-contrast accessible teal for text */
-  --ep-teal-light: rgba(13, 148, 136, 0.14);
-  --ep-teal-glow: rgba(13, 148, 136, 0.35);
+  /* Slate Navy (Gentle, low-fatigue dark tone - not harsh jet black) */
+  --ep-navy: #1E2E3D;         /* Refined slate navy for clear, comfortable reading */
+  --ep-navy-hover: #273A4D;
+  --ep-navy-deep: #162432;
+  --ep-navy-translucent: rgba(30, 46, 61, 0.85);
 
   /* Sage & Warm Gold Accents */
-  --ep-sage: var(--ep-teal);  /* Mapped to vibrant Teal Green as requested */
+  --ep-sage: var(--ep-teal);
   --ep-sage-dark: var(--ep-teal-dark);
   --ep-sage-light: var(--ep-teal-light);
   --ep-sage-glow: var(--ep-teal-glow);
-  --ep-paper: #FAF8F4;        /* Paper tone preserved for highlights */
-  --ep-grey: #D5D1C8;         /* Crisp neutral border */
-  --ep-grey-light: #E4E0D7;
-  --ep-gold: #E0A34B;         /* Warm quality gold */
-  --ep-gold-light: rgba(224, 163, 75, 0.14);
+  --ep-paper: #FAF9F6;        /* Subtle warm paper highlight */
+  --ep-grey: #E2E8F0;         /* Soft, delicate neutral border */
+  --ep-grey-light: #F1F5F9;
+  --ep-gold: #D49238;         /* Soft warm quality gold */
+  --ep-gold-light: rgba(212, 146, 56, 0.10);
 
-  /* ═══ Authentic Frosted Glassmorphism (Translucent so you CAN see through it) ═══ */
-  --glass-surface: rgba(255, 255, 255, 0.72);
-  --glass-surface-hover: rgba(255, 255, 255, 0.88);
-  --glass-surface-tint: linear-gradient(135deg, rgba(255, 255, 255, 0.78) 0%, rgba(240, 248, 246, 0.65) 100%);
-  --glass-border: rgba(255, 255, 255, 0.85);
-  --glass-outline: rgba(13, 148, 136, 0.22);
-  --glass-outline-hover: rgba(13, 148, 136, 0.55);
+  /* ═══ Soft Frosted Glassmorphism (Delicate, seamless, comfortable) ═══ */
+  --glass-surface: rgba(255, 255, 255, 0.85);
+  --glass-surface-hover: rgba(255, 255, 255, 0.95);
+  --glass-surface-tint: linear-gradient(135deg, rgba(255, 255, 255, 0.90) 0%, rgba(246, 250, 249, 0.80) 100%);
+  --glass-border: rgba(226, 232, 240, 0.85);
+  --glass-outline: rgba(30, 123, 112, 0.10);
+  --glass-outline-hover: rgba(30, 123, 112, 0.25);
 
-  /* ═══ Typography (Crisp Ocean Navy on Luminous Background) ═══ */
+  /* ═══ Typography (Comfortable, low-contrast, highly legible) ═══ */
   --text-heading: var(--ep-navy);
-  --text-body: #2B3A4A;
-  --text-muted: #5A6A7A;
+  --text-body: #475569;       /* Gentle slate charcoal, eliminates harsh contrast */
+  --text-muted: #64748B;
 
   /* ═══ Measurements, Radii & Shadows ═══ */
   --radius: 14px;
   --radius-sm: 8px;
   --radius-lg: 20px;
   --radius-pill: 9999px;
-  --shadow-sm: 0 2px 10px rgba(22, 46, 77, 0.05);
-  --shadow-md: 0 8px 24px -4px rgba(22, 46, 77, 0.08);
-  --shadow-lg: 0 20px 48px -10px rgba(22, 46, 77, 0.12);
-  --shadow-glow: 0 4px 20px var(--ep-teal-glow);
+  --shadow-sm: 0 2px 8px rgba(30, 46, 61, 0.04);
+  --shadow-md: 0 8px 20px -4px rgba(30, 46, 61, 0.06);
+  --shadow-lg: 0 16px 36px -8px rgba(30, 46, 61, 0.08);
+  --shadow-glow: 0 4px 16px var(--ep-teal-glow);
   --max-w: 1140px;
   --font: 'Inter',system-ui,-apple-system,sans-serif;
   --ease: cubic-bezier(.4,0,.2,1);
@@ -92,7 +92,7 @@ h2{font-size:clamp(1.65rem,2.8vw,2.25rem);letter-spacing:-.02em}
 h3{font-size:1.2rem}
 h4{font-size:1.02rem;font-weight:600}
 
-/* ═══ Aurora Mesh Background (Vibrant Teal Green & Luminous Medical Blue on Soft Warm Canvas) ═══ */
+/* ═══ Aurora Mesh Background (Subtle Luminous Ambient Glow) ═══ */
 .aurora-bg {
   position: fixed;
   top: 0;
@@ -104,55 +104,55 @@ h4{font-size:1.02rem;font-weight:600}
   overflow: hidden;
   background-color: var(--bg-page);
   background-image:
-    radial-gradient(at 0% 0%, rgba(13, 148, 136, 0.22) 0px, transparent 55%),
-    radial-gradient(at 100% 10%, rgba(2, 132, 199, 0.20) 0px, transparent 50%),
-    radial-gradient(at 50% 50%, rgba(236, 232, 225, 0.6) 0px, transparent 75%);
+    radial-gradient(at 0% 0%, rgba(30, 123, 112, 0.08) 0px, transparent 55%),
+    radial-gradient(at 100% 10%, rgba(43, 122, 148, 0.07) 0px, transparent 50%),
+    radial-gradient(at 50% 50%, var(--bg-page) 0px, transparent 75%);
 }
 
 .aurora-blob {
   position: absolute;
   border-radius: 50%;
-  filter: blur(80px);
-  -webkit-filter: blur(80px);
-  opacity: 0.72;
+  filter: blur(120px);
+  -webkit-filter: blur(120px);
+  opacity: 0.45;
   will-change: transform;
 }
 
-/* Blob 1: EyePros Vibrant Teal Green (#0D9488) */
+/* Blob 1: Refined EyePros Teal Green */
 .aurora-blob-1 {
   width: 680px;
   height: 680px;
-  background: radial-gradient(circle, rgba(13, 148, 136, 0.40) 0%, rgba(13, 148, 136, 0.15) 60%, transparent 80%);
+  background: radial-gradient(circle, rgba(30, 123, 112, 0.18) 0%, rgba(30, 123, 112, 0.06) 60%, transparent 80%);
   top: -150px;
   left: -100px;
   animation: auroraFloat1 26s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
 }
 
-/* Blob 2: EyePros Luminous Blue (#0284C7 - less dark, luminous) */
+/* Blob 2: Muted Slate-Blue */
 .aurora-blob-2 {
   width: 750px;
   height: 750px;
-  background: radial-gradient(circle, rgba(2, 132, 199, 0.30) 0%, rgba(2, 132, 199, 0.08) 55%, transparent 75%);
+  background: radial-gradient(circle, rgba(43, 122, 148, 0.15) 0%, rgba(43, 122, 148, 0.04) 55%, transparent 75%);
   top: 25%;
   right: -150px;
   animation: auroraFloat2 32s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
 }
 
-/* Blob 3: EyePros Warm Gold (#E0A34B) */
+/* Blob 3: Soft Warm Gold Accent */
 .aurora-blob-3 {
   width: 580px;
   height: 580px;
-  background: radial-gradient(circle, rgba(224, 163, 75, 0.18) 0%, rgba(13, 148, 136, 0.10) 60%, transparent 80%);
+  background: radial-gradient(circle, rgba(212, 146, 56, 0.10) 0%, transparent 70%);
   bottom: 5%;
   left: 15%;
   animation: auroraFloat3 28s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
 }
 
-/* Blob 4: Soft Cyan/Teal Ambient Glow */
+/* Blob 4: Gentle Sage Illumination */
 .aurora-blob-4 {
   width: 540px;
   height: 540px;
-  background: radial-gradient(circle, rgba(20, 184, 166, 0.28) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(45, 150, 138, 0.14) 0%, transparent 70%);
   top: 60%;
   right: 20%;
   animation: auroraFloat4 24s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
@@ -161,7 +161,7 @@ h4{font-size:1.02rem;font-weight:600}
 .aurora-mesh-overlay {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 50% 20%, rgba(236, 232, 225, 0.35) 0%, rgba(236, 232, 225, 0.15) 100%);
+  background: radial-gradient(ellipse at 50% 20%, rgba(246, 248, 248, 0.4) 0%, rgba(246, 248, 248, 0.1) 100%);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
 }
@@ -300,16 +300,16 @@ h4{font-size:1.02rem;font-weight:600}
 }
 .btn:active{transform:scale(.98)}
 .btn-primary{
-  background:linear-gradient(135deg, var(--ep-teal) 0%, #0F766E 100%);
+  background:linear-gradient(135deg, var(--ep-teal) 0%, var(--ep-teal-dark) 100%);
   color:#FFFFFF;
-  border:1px solid rgba(255, 255, 255, 0.3);
-  box-shadow:0 4px 18px rgba(13, 148, 136, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  border:1px solid rgba(255, 255, 255, 0.25);
+  box-shadow:0 4px 14px rgba(30, 123, 112, 0.22);
 }
 .btn-primary:hover{
-  background:linear-gradient(135deg, var(--ep-blue) 0%, var(--ep-blue-hover) 100%);
+  background:linear-gradient(135deg, #248B7E 0%, var(--ep-teal) 100%);
   color:#FFFFFF;
-  border-color:rgba(255, 255, 255, 0.4);
-  box-shadow:0 6px 24px var(--ep-blue-glow);
+  border-color:rgba(255, 255, 255, 0.35);
+  box-shadow:0 6px 18px rgba(30, 123, 112, 0.30);
   transform:translateY(-1px);
 }
 .btn-outline{
@@ -558,8 +558,8 @@ h4{font-size:1.02rem;font-weight:600}
   border-radius:14px;
   object-fit:cover;
   object-position:top center;
-  border:2.5px solid var(--ep-sage);
-  box-shadow:0 6px 18px rgba(30, 27, 49, 0.12);
+  border:2px solid rgba(30, 123, 112, 0.25);
+  box-shadow:0 4px 14px rgba(30, 46, 61, 0.08);
   flex-shrink:0;
 }
 .consultant-title-group h3{font-size:1.3rem;font-weight:800;color:var(--text-heading);margin-bottom:4px}
@@ -613,7 +613,7 @@ h4{font-size:1.02rem;font-weight:600}
 
 /* ═══ Trusted By Section & Smooth Carousel ═══ */
 .section-trusted{
-  background:linear-gradient(180deg, rgba(236, 232, 225, 0.4) 0%, rgba(228, 224, 216, 0.7) 50%, rgba(236, 232, 225, 0.4) 100%);
+  background:linear-gradient(180deg, rgba(246, 248, 248, 0.5) 0%, rgba(240, 244, 244, 0.7) 50%, rgba(246, 248, 248, 0.5) 100%);
   border-top:1px solid var(--ep-grey);
   border-bottom:1px solid var(--ep-grey);
   position:relative;
@@ -666,8 +666,8 @@ h4{font-size:1.02rem;font-weight:600}
 }
 .partner-card.prominent{
   background:linear-gradient(135deg, #FFFFFF 0%, rgba(242, 248, 246, 0.7) 100%);
-  outline:1px solid rgba(143, 187, 181, 0.4);
-  box-shadow:0 6px 20px var(--ep-sage-light);
+  outline:1px solid rgba(30, 123, 112, 0.20);
+  box-shadow:0 4px 16px var(--ep-teal-light);
 }
 .partner-logo-pill{
   background:#FFFFFF;
@@ -818,18 +818,18 @@ h4{font-size:1.02rem;font-weight:600}
 /* ═══ Agreement Banner (Ink Navy Anchor) ═══ */
 .agreement-banner{
   margin-top:40px;
-  background:linear-gradient(135deg, rgba(18, 55, 90, 0.82) 0%, rgba(13, 148, 136, 0.78) 100%);
-  border:1.5px solid rgba(255, 255, 255, 0.35);
+  background:linear-gradient(135deg, #1C333A 0%, #15272C 100%);
+  border:1px solid rgba(255, 255, 255, 0.12);
   border-radius:var(--radius-lg);
   padding:36px;
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:28px;
-  box-shadow:0 16px 40px -10px rgba(13, 148, 136, 0.28), 0 0 30px rgba(2, 132, 199, 0.15);
+  box-shadow:0 10px 28px -6px rgba(20, 35, 40, 0.14);
   flex-wrap:wrap;
-  backdrop-filter:blur(20px);
-  -webkit-backdrop-filter:blur(20px);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
 }
 .agreement-banner h3{font-size:1.35rem;margin-bottom:8px;color:var(--ep-paper)}
 .agreement-banner p{font-size:.92rem;color:rgba(250, 248, 244, 0.85);margin:0;max-width:580px}
@@ -838,11 +838,11 @@ h4{font-size:1.02rem;font-weight:600}
   background:#FFFFFF;
   color:var(--ep-teal-dark);
   border:none;
-  box-shadow:0 4px 18px rgba(0, 0, 0, 0.12);
-  font-weight:700;
+  box-shadow:0 4px 14px rgba(0, 0, 0, 0.10);
+  font-weight:600;
 }
 .agreement-banner .btn-primary:hover{
-  background:var(--ep-paper);
+  background:#F1F5F9;
   color:var(--ep-navy);
   transform:translateY(-1px);
 }
