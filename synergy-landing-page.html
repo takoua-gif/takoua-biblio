@@ -877,49 +877,68 @@ if (navToggle && navLinks) {
 
 // In-page smooth scrolling with navbar offset, scrollIntoView and Wix cross-frame message
 function scrollToSection(targetId) {
-  if (!targetId || targetId === '#') {
+  var inIframe = false;
+  try { inIframe = (window.self !== window.top); } catch(e) { inIframe = true; }
+
+  if (!targetId || targetId === '#' || targetId === '#hero') {
     try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch(e) {}
     try { if (document.body) document.body.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch(e) {}
+    if (inIframe) {
+      try {
+        window.parent.postMessage({ type: 'synergyScroll', action: 'scroll', target: '#hero', offsetTop: 0 }, '*');
+        window.parent.postMessage({ type: 'scrollToSection', target: 'hero', offsetTop: 0 }, '*');
+      } catch(err) {}
+    }
     if (history.pushState) history.pushState(null, null, ' ');
     return;
   }
 
   var cleanId = targetId.replace(/^#/, '');
   var target = document.getElementById(cleanId) || document.querySelector(targetId);
-  if (!target) return;
+  if (!target) {
+    try { window.location.hash = targetId; } catch(e) {}
+    return;
+  }
 
   var nav = document.querySelector('.nav');
   var navHeight = nav ? nav.offsetHeight : 70;
   var targetRect = target.getBoundingClientRect();
   var currentY = window.pageYOffset || document.documentElement.scrollTop || 0;
-  var targetY = Math.max(0, targetRect.top + currentY - navHeight - 12);
+  var targetY = Math.max(0, Math.round(targetRect.top + currentY - navHeight - 12));
 
-  // 1. Scroll within the frame (works for standalone page or if iframe has scrollbar)
+  // 1. Scroll the current window/frame
   try {
     window.scrollTo({ top: targetY, behavior: 'smooth' });
-  } catch(e) {}
-
-  // 2. scrollIntoView (CRITICAL: this instructs browser to scroll parent Wix window when iframe is full-height)
-  try {
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   } catch(e) {
-    try { target.scrollIntoView(true); } catch(e2) {}
+    try { window.scrollTo(0, targetY); } catch(e2) {}
   }
 
-  // 3. Post message to Wix parent window
-  try {
-    if (window.parent && window.parent !== window) {
+  // 2. If inside iframe, bubble scroll to outer parent window and broadcast postMessage
+  if (inIframe) {
+    try {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } catch(e) {
+      try { target.scrollIntoView(true); } catch(e2) {}
+    }
+
+    try {
       window.parent.postMessage({
         type: 'synergyScroll',
         action: 'scroll',
         target: targetId,
         hash: targetId,
+        cleanId: cleanId,
         offsetTop: targetY
       }, '*');
-    }
-  } catch(err) {}
+      window.parent.postMessage({
+        type: 'scrollToSection',
+        target: cleanId,
+        offsetTop: targetY
+      }, '*');
+    } catch(err) {}
+  }
 
-  // 4. Update hash
+  // 3. Update URL hash without forcing abrupt browser jump
   try {
     if (history.pushState) {
       history.pushState(null, null, targetId);

@@ -173,16 +173,27 @@ The **Synergy by EyePros** partnership portal is intentionally engineered as a *
   }, '*');
   ```
 
-### 3. Optional Wix Velo Code (If Parent Page Scrolling is Preferred)
-If the integrator is embedding via Wix Velo / HTML component and wants the parent Wix window to coordinate scrolling, they can optionally add this 4-line handler to their Wix page code:
+### 3. Wix Velo Page Code (For Seamless Outer Page Scrolling in Wix)
+When embedding via Wix HTML Component (`#html1`), Wix isolates the embed in an iframe. To allow the outer Wix page to scroll smoothly whenever an optometrist taps a menu link inside the iframe, the integrator can paste this exact 10-line code into the Wix Page Code panel (Dev Mode):
+
 ```javascript
+import wixWindowFrontend from 'wix-window-frontend';
+
 $w.onReady(function () {
   $w("#html1").onMessage((event) => {
-    if (event.data && event.data.type === 'synergyScroll') {
-      // Handles smooth scrolling in outer Wix page if needed
-      console.log("Synergy scroll to:", event.data.target);
+    if (event.data && (event.data.type === 'synergyScroll' || event.data.type === 'scrollToSection')) {
+      // Calculate absolute scroll position on the Wix page
+      const iframeTop = $w("#html1").y || 0;
+      const targetY = iframeTop + (event.data.offsetTop || 0);
+      wixWindowFrontend.scrollTo(0, targetY, { scrollAnimation: true });
     }
   });
 });
 ```
-If using **"Embed a Site"** (Option A in Section 2), no extra code is required; in-page smooth scrolling works automatically.
+*(Note: Replace `#html1` with the actual ID of the HTML Component in the Wix Inspector toolbar if different).*
+
+### 4. Zero-Code Alternative (Embed a Site / 100vh)
+If the integrator prefers **NOT** to use Velo code at all:
+- In Wix, add an **"Embed a site"** element pointing directly to:
+  `https://takoua-gif.github.io/takoua-biblio/synergy-wix-embed.html`
+- Set the embed container to **Full Width** and height to **100vh** (or enable internal scroll). In this mode, the sticky navigation bar and smooth scrolling work 100% natively without any external JavaScript.
