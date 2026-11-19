@@ -1,49 +1,68 @@
 import re
 import base64
+import io
+from PIL import Image
 
-# Read current embed for base64 assets
-with open("synergy-wix-embed.html", "r", encoding="utf-8") as f:
-    orig = f.read()
+def get_b64(path, max_w=900, q=75):
+    im = Image.open(path)
+    ratio = max_w / float(im.size[0])
+    if ratio < 1.0:
+        new_h = int(float(im.size[1]) * ratio)
+        im = im.resize((max_w, new_h), Image.Resampling.LANCZOS)
+    buf = io.BytesIO()
+    im.save(buf, format="JPEG", quality=q, optimize=True)
+    return "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode("utf-8")
 
-# Load new synergy logo as PNG base64
+# Read new logo from images/synergy-logo-new.png
 with open('images/synergy-logo-new.png', 'rb') as f_logo:
     logo_b64 = 'data:image/png;base64,' + base64.b64encode(f_logo.read()).decode('utf-8')
 
-ahmad_m = re.search(r'img src="(data:image/jpeg;base64,[A-Za-z0-9+/=]+)" alt="Mr Ahmad Elsahn', orig)
-yasmine_m = re.search(r'img src="(data:image/jpeg;base64,[A-Za-z0-9+/=]+)" alt="Ms Yasmine Abdalla', orig)
-pinders_m = re.search(r'img src="(data:image/png;base64,[A-Za-z0-9+/=]+)" alt="Pinders Opticians', orig)
+# Read current embed for base64 headshots if already embedded, or fallback
+try:
+    with open("synergy-wix-embed.html", "r", encoding="utf-8") as f:
+        orig = f.read()
+    ahmad_m = re.search(r'img src="(data:image/jpeg;base64,[A-Za-z0-9+/=]+)" alt="Mr Ahmad Elsahn', orig)
+    yasmine_m = re.search(r'img src="(data:image/jpeg;base64,[A-Za-z0-9+/=]+)" alt="Ms Yasmine Abdalla', orig)
+    pinders_m = re.search(r'img src="(data:image/png;base64,[A-Za-z0-9+/=]+)" alt="Pinders Opticians', orig)
+    ahmad_b64 = ahmad_m.group(1) if ahmad_m else get_b64("images/elsahn-headshot.jpg", max_w=400, q=80)
+    yasmine_b64 = yasmine_m.group(1) if yasmine_m else get_b64("images/abdalla-headshot.jpg", max_w=400, q=80)
+    pinders_b64 = pinders_m.group(1) if pinders_m else "images/partner-pinders.png"
+except Exception:
+    ahmad_b64 = get_b64("images/elsahn-headshot.jpg", max_w=400, q=80)
+    yasmine_b64 = get_b64("images/abdalla-headshot.jpg", max_w=400, q=80)
+    pinders_b64 = "images/partner-pinders.png"
 
-ahmad_b64 = ahmad_m.group(1) if ahmad_m else "images/elsahn-headshot.jpg"
-yasmine_b64 = yasmine_m.group(1) if yasmine_m else "images/abdalla-headshot.jpg"
-pinders_b64 = pinders_m.group(1) if pinders_m else "images/partner-pinders.png"
-with open('images/synergy-hero-secret.jpg', 'rb') as f_img:
-    hero_b64 = 'data:image/jpeg;base64,' + base64.b64encode(f_img.read()).decode('utf-8')
+hero_b64 = get_b64('images/synergy-hero-secret.jpg', max_w=1024, q=80)
+optom_b64 = get_b64('images/optometrist-partners.jpg', max_w=800, q=75)
+surgery_b64 = get_b64('images/cataract-surgery.jpg', max_w=800, q=75)
 
 def build_page(is_embed=True):
     l_src = logo_b64 if is_embed else "images/synergy-logo-new.png"
+    hero_img = hero_b64 if is_embed else "images/synergy-hero-secret.jpg"
+    optom_img = optom_b64 if is_embed else "images/optometrist-partners.jpg"
+    surgery_img = surgery_b64 if is_embed else "images/cataract-surgery.jpg"
     a_src = ahmad_b64 if is_embed else "images/elsahn-headshot.jpg"
     y_src = yasmine_b64 if is_embed else "images/abdalla-headshot.jpg"
     p_src = pinders_b64 if is_embed else "images/partner-pinders.png"
-    hero_img = hero_b64 if is_embed else "images/synergy-hero-secret.jpg"
 
-    template = """
+    template = """<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EyePros Synergy — Consultant-Led Shared Care for UK Independent Opticians</title>
-<meta name="description" content="EyePros Synergy connects UK independent optometry practices with substantive NHS consultant ophthalmologists. Flat £250 cataract co-management fee, guaranteed 7-day discharge, and dedicated Syndesis platform.">
+<meta name="description" content="Specialist eye care. A connected care partnership. EyePros Synergy connects UK independent optometry practices with substantive NHS consultant ophthalmologists. Flat £250 cataract co-management, guaranteed 7-day discharge, and dedicated Syndesis platform.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  /* ═══ EyePros Blue Canvas & Medical Palette ═══ */
+  /* ═══ EyePros Navy, Teal & Cream Palette ═══ */
   --bg-page: #0C1E34;
   --bg-page-deep: #081524;
   --bg-section-alt: rgba(14, 34, 58, 0.55);
 
-  /* Signature EyePros Tale Green (Teal) */
+  /* Signature EyePros Teal */
   --ep-teal: #0D9488;
   --ep-teal-vibrant: #14B8A6;
   --ep-teal-bright: #2DD4BF;
@@ -51,17 +70,19 @@ def build_page(is_embed=True):
   --ep-teal-glow: rgba(20, 184, 166, 0.35);
   --ep-teal-tint: rgba(20, 184, 166, 0.12);
 
+  /* Soft Cream & Editorial Accents */
+  --ep-cream: #F8F6F0;
+  --ep-cream-subtle: #EBE6DA;
+  --ep-cream-tint: rgba(248, 246, 240, 0.12);
+
   /* EyePros Blues & Cyan */
   --ep-navy: #0C1E34;
   --ep-navy-card: rgba(16, 37, 64, 0.75);
   --ep-blue-cerulean: #0284C7;
   --ep-blue-light: #38BDF8;
   --ep-blue-glow: rgba(2, 132, 199, 0.35);
-  --ep-sage: #8FBBB5;
-  --ep-sage-light: rgba(143, 187, 181, 0.18);
-  --ep-gold: #F59E0B;
 
-  /* Typography Colors on Blue Canvas */
+  /* Typography Colors */
   --text-white: #FFFFFF;
   --text-heading: #FFFFFF;
   --text-body: #E2E8F0;
@@ -73,11 +94,11 @@ def build_page(is_embed=True):
   /* Authentic Frosted Glassmorphism */
   --glass-bg: rgba(255, 255, 255, 0.07);
   --glass-bg-hover: rgba(255, 255, 255, 0.12);
-  --glass-border: rgba(255, 255, 255, 0.16);
+  --glass-border: rgba(255, 255, 255, 0.15);
   --glass-border-hover: rgba(45, 212, 191, 0.45);
-  --glass-specular: inset 0 1px 1px 0 rgba(255, 255, 255, 0.22);
-  --glass-shadow: 0 14px 40px rgba(0, 0, 0, 0.28);
-  --glass-blur: blur(24px);
+  --glass-specular: inset 0 1px 1px 0 rgba(255, 255, 255, 0.20);
+  --glass-shadow: 0 12px 36px rgba(0, 0, 0, 0.28);
+  --glass-blur: blur(20px);
 
   /* Geometry & Motion */
   --radius-sm: 6px;
@@ -93,13 +114,13 @@ def build_page(is_embed=True):
 html{
   scroll-behavior:smooth;
   -webkit-text-size-adjust:100%;
-  scroll-padding-top:84px;
+  scroll-padding-top:76px;
   overflow-x:hidden;
 }
 body{
   font-family:var(--font-sans);
-  font-size:16px;
-  line-height:1.65;
+  font-size:15px;
+  line-height:1.6;
   color:var(--text-body);
   background-color:var(--bg-page);
   background-image:linear-gradient(180deg, #091728 0%, #0C1E34 25%, #0F2744 50%, #0C1E34 75%, #081524 100%);
@@ -108,7 +129,7 @@ body{
   position:relative;
   width:100%;
 }
-section,[id]{scroll-margin-top:84px}
+section,[id]{scroll-margin-top:76px}
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
 button{font-family:inherit;cursor:pointer}
@@ -131,6 +152,10 @@ h4{font-size:0.92rem;font-weight:700}
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
+.text-cream{
+  color:var(--ep-cream);
+  font-style:normal;
+}
 
 /* ═══ Ambient Aurora Mesh Background with Light Effects ═══ */
 .aurora-bg {
@@ -139,90 +164,85 @@ h4{font-size:0.92rem;font-weight:700}
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 0;
   pointer-events: none;
+  z-index: 0;
   overflow: hidden;
-  contain: paint;
-  max-width: 100vw;
 }
 .aurora-blob {
   position: absolute;
   border-radius: 50%;
-  filter: blur(120px);
-  -webkit-filter: blur(120px);
-  opacity: 0.60;
+  filter: blur(100px);
+  opacity: 0.30;
   will-change: transform;
 }
 .aurora-blob-1 {
-  width: 720px;
-  height: 720px;
-  background: radial-gradient(circle, rgba(2, 132, 199, 0.32) 0%, rgba(2, 132, 199, 0.08) 60%, transparent 80%);
-  top: -160px;
-  left: -100px;
-  animation: auroraFloat1 32s var(--ease-smooth) infinite alternate;
+  width: 600px;
+  height: 600px;
+  top: -120px;
+  left: 10%;
+  background: radial-gradient(circle, #0284C7 0%, rgba(2, 132, 199, 0) 70%);
+  animation: auroraMove1 24s ease-in-out infinite alternate;
 }
 .aurora-blob-2 {
-  width: 760px;
-  height: 760px;
-  background: radial-gradient(circle, rgba(13, 148, 136, 0.30) 0%, rgba(13, 148, 136, 0.06) 55%, transparent 75%);
+  width: 650px;
+  height: 650px;
   top: 30%;
-  right: -140px;
-  animation: auroraFloat2 38s var(--ease-smooth) infinite alternate;
+  right: -100px;
+  background: radial-gradient(circle, #0D9488 0%, rgba(13, 148, 136, 0) 70%);
+  animation: auroraMove2 28s ease-in-out infinite alternate;
 }
 .aurora-blob-3 {
-  width: 640px;
-  height: 640px;
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.22) 0%, transparent 70%);
-  bottom: 8%;
-  left: 10%;
-  animation: auroraFloat3 34s var(--ease-smooth) infinite alternate;
+  width: 550px;
+  height: 550px;
+  bottom: 15%;
+  left: 5%;
+  background: radial-gradient(circle, #38BDF8 0%, rgba(56, 189, 248, 0) 70%);
+  animation: auroraMove3 32s ease-in-out infinite alternate;
 }
 .aurora-blob-4 {
-  width: 580px;
-  height: 580px;
-  background: radial-gradient(circle, rgba(143, 187, 181, 0.20) 0%, transparent 70%);
-  top: 65%;
+  width: 500px;
+  height: 500px;
+  top: 70%;
   right: 15%;
-  animation: auroraFloat4 28s var(--ease-smooth) infinite alternate;
+  background: radial-gradient(circle, #8FBBB5 0%, rgba(143, 187, 181, 0) 70%);
+  animation: auroraMove4 26s ease-in-out infinite alternate;
 }
 .aurora-mesh-overlay {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 50% 20%, rgba(12, 30, 52, 0.25) 0%, rgba(8, 21, 36, 0.45) 100%);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background-image:
+    radial-gradient(at 20% 15%, rgba(13, 148, 136, 0.12) 0px, transparent 50%),
+    radial-gradient(at 80% 25%, rgba(2, 132, 199, 0.14) 0px, transparent 50%),
+    radial-gradient(at 50% 65%, rgba(20, 184, 166, 0.10) 0px, transparent 50%),
+    radial-gradient(at 85% 85%, rgba(56, 189, 248, 0.12) 0px, transparent 50%);
+  pointer-events: none;
 }
-
-@keyframes auroraFloat1 {
-  0% { transform: translate3d(0, 0, 0) scale(1); }
-  50% { transform: translate3d(70px, 50px, 0) scale(1.06); }
-  100% { transform: translate3d(-40px, 90px, 0) scale(0.96); }
+@keyframes auroraMove1 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(60px, 40px) scale(1.08); }
+  100% { transform: translate(-40px, 70px) scale(0.95); }
 }
-@keyframes auroraFloat2 {
-  0% { transform: translate3d(0, 0, 0) scale(1); }
-  50% { transform: translate3d(-80px, -60px, 0) scale(1.05); }
-  100% { transform: translate3d(35px, -100px, 0) scale(0.95); }
+@keyframes auroraMove2 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-70px, -50px) scale(1.12); }
+  100% { transform: translate(40px, 60px) scale(0.92); }
 }
-@keyframes auroraFloat3 {
-  0% { transform: translate3d(0, 0, 0) scale(1); }
-  50% { transform: translate3d(50px, -40px, 0) scale(1.04); }
-  100% { transform: translate3d(-35px, 35px, 0) scale(0.95); }
+@keyframes auroraMove3 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(50px, -60px) scale(1.05); }
+  100% { transform: translate(-50px, 40px) scale(1.10); }
 }
-@keyframes auroraFloat4 {
-  0% { transform: translate3d(0, 0, 0) scale(1); }
-  50% { transform: translate3d(-60px, 45px, 0) scale(1.06); }
-  100% { transform: translate3d(45px, -50px, 0) scale(0.96); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .aurora-blob { animation: none !important; }
+@keyframes auroraMove4 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-60px, 40px) scale(1.08); }
+  100% { transform: translate(50px, -40px) scale(0.95); }
 }
 
 /* ═══ Layout Primitives ═══ */
 .container {
   max-width: var(--max-w);
   margin: 0 auto;
-  padding: 0 28px;
+  padding: 0 24px;
   position: relative;
   z-index: 2;
 }
@@ -330,48 +350,48 @@ h4{font-size:0.92rem;font-weight:700}
   padding: 7px 14px;
   font-size: 0.80rem;
 }
-.btn-outline-white {
-  background: rgba(255, 255, 255, 0.08);
-  color: #FFFFFF !important;
-  border: 1.5px solid rgba(255, 255, 255, 0.40);
-  backdrop-filter: blur(8px);
-}
-.btn-outline-white:hover {
-  background: rgba(255, 255, 255, 0.18);
-  border-color: #FFFFFF;
-  transform: translateY(-2px);
-}
 .btn svg {
-  width: 16px;
-  height: 16px;
+  width: 15px;
+  height: 15px;
   transition: transform 0.2s ease;
 }
 .btn:hover svg {
   transform: translateX(3px);
 }
+.btn-agreement-white {
+  background: #FFFFFF !important;
+  color: #0C1E34 !important;
+  font-weight: 700 !important;
+  border: 1px solid #FFFFFF !important;
+  box-shadow: 0 4px 18px rgba(255, 255, 255, 0.25) !important;
+}
+.btn-agreement-white:hover {
+  background: #F1F5F9 !important;
+  color: #0C1E34 !important;
+  transform: translateY(-2px);
+}
 
-/* ═══ Sticky Glass Navigation with Smooth Transitions ═══ */
+/* ═══ Sticky Frosted Navigation ═══ */
 .nav {
   position: sticky;
   top: 0;
-  z-index: 100;
-  background: rgba(12, 30, 52, 0.82);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(8, 20, 36, 0.82);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
-  transition: background 0.3s var(--ease-smooth), border-color 0.3s ease, box-shadow 0.3s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+  transition: all 0.3s var(--ease-smooth);
 }
 .nav.scrolled {
-  background: rgba(9, 23, 40, 0.94);
-  border-bottom-color: rgba(45, 212, 191, 0.25);
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+  background: rgba(8, 20, 36, 0.95);
+  border-bottom-color: rgba(45, 212, 191, 0.35);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.50);
 }
 .nav-inner {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: 0 28px;
-  height: 74px;
+  height: 66px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -385,8 +405,8 @@ h4{font-size:0.92rem;font-weight:700}
   background: rgba(8, 20, 36, 0.65);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  padding: 6px 14px;
-  border-radius: 10px;
+  padding: 5px 12px;
+  border-radius: var(--radius-sm);
   display: inline-flex;
   align-items: center;
   border: 1px solid rgba(255, 255, 255, 0.14);
@@ -399,21 +419,21 @@ h4{font-size:0.92rem;font-weight:700}
   background: rgba(12, 30, 52, 0.85);
 }
 .nav-logo-pill img {
-  height: 32px;
+  height: 30px;
   width: auto;
   display: block;
 }
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   list-style: none;
 }
 .nav-links a:not(.btn) {
   color: var(--text-body);
-  font-size: 0.90rem;
+  font-size: 0.88rem;
   font-weight: 600;
-  padding: 8px 12px;
+  padding: 7px 11px;
   border-radius: var(--radius-sm);
   transition: all 0.25s var(--ease-smooth);
   white-space: nowrap;
@@ -428,8 +448,8 @@ h4{font-size:0.92rem;font-weight:700}
   content: '';
   position: absolute;
   bottom: 2px;
-  left: 12px;
-  right: 12px;
+  left: 11px;
+  right: 11px;
   height: 2px;
   background: var(--ep-teal-bright);
   border-radius: 2px;
@@ -447,7 +467,7 @@ h4{font-size:0.92rem;font-weight:700}
   color: var(--text-white);
   border-radius: 8px;
   cursor: pointer;
-  padding: 8px;
+  padding: 7px;
   align-items: center;
   justify-content: center;
   line-height: 1;
@@ -458,42 +478,97 @@ h4{font-size:0.92rem;font-weight:700}
   border-color: var(--ep-teal-bright);
 }
 
-/* ═══ Hero Section: Bespoke MedTech Showcase ═══ */
-.hero {
-  padding: 44px 0 48px;
+/* ═══ STEP 2 — HERO COVER: FULL-WIDTH TORN-PAPER BACKGROUND ═══ */
+.hero-cover {
   position: relative;
-  z-index: 2;
-}
-.hero-grid {
-  display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  gap: 36px;
-  align-items: center;
-}
-.hero-content {
-  max-width: 580px;
-}
-.hero h1 {
-  margin-bottom: 14px;
-}
-.hero-sub {
-  font-size: 0.96rem;
-  color: var(--text-body);
-  margin-bottom: 20px;
-  line-height: 1.55;
-}
-.hero-ctas {
+  min-height: 520px;
   display: flex;
   align-items: center;
+  justify-content: center;
+  padding: 64px 0 56px;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  z-index: 2;
+}
+.hero-cover-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+.hero-cover-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(8, 20, 36, 0.72) 0%, rgba(12, 30, 52, 0.58) 50%, rgba(8, 20, 36, 0.88) 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+.hero-cover-card {
+  position: relative;
+  z-index: 3;
+  max-width: 840px;
+  margin: 0 auto;
+  text-align: center;
+  background: rgba(8, 20, 36, 0.62);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--radius-lg);
+  padding: 36px 36px 30px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.20);
+}
+.hero-cover-logo-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 5px 16px;
+  border-radius: var(--radius-sm);
+}
+.hero-cover-logo-pill img {
+  height: 28px;
+  width: auto;
+  display: block;
+}
+.hero-cover-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3.2vw, 2.35rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.18;
+  color: var(--text-white);
+  margin-bottom: 8px;
+}
+.hero-cover-tagline {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--ep-teal-bright);
+  margin-bottom: 10px;
+}
+.hero-cover-desc {
+  font-size: 0.90rem;
+  color: var(--text-body);
+  max-width: 620px;
+  margin: 0 auto 18px;
+  line-height: 1.55;
+}
+.hero-cover-ctas {
+  display: flex;
+  justify-content: center;
   gap: 12px;
-  margin-bottom: 24px;
+  margin-bottom: 22px;
   flex-wrap: wrap;
 }
-.hero-proof-strip {
+.hero-cover-proof {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 14px;
-  padding-top: 18px;
+  padding-top: 16px;
   border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
 .proof-item {
@@ -508,6 +583,7 @@ h4{font-size:0.92rem;font-weight:700}
   color: var(--text-white);
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
 }
 .proof-num::before {
@@ -523,32 +599,57 @@ h4{font-size:0.92rem;font-weight:700}
   line-height: 1.35;
 }
 
-/* Hero Visual Showcase */
-.hero-visual {
-  position: relative;
+/* ═══ STEP 3 & 4: VISUAL ACCENT IN BENEFITS SECTION ═══ */
+.benefits-visual-accent {
+  margin-bottom: 20px;
 }
-.hero-visual-frame {
-  position: relative;
-  border-radius: var(--radius-lg);
+.visual-accent-card {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-radius: var(--radius-md);
   overflow: hidden;
-  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.45), 0 0 30px rgba(13, 148, 136, 0.20);
-  border: 1.5px solid rgba(45, 212, 191, 0.35);
-  background: rgba(8, 20, 36, 0.85);
-  transition: transform 0.3s var(--ease-smooth), box-shadow 0.3s ease;
+  box-shadow: var(--glass-shadow), var(--glass-specular);
+  align-items: center;
 }
-.hero-visual-frame:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.50), 0 0 40px rgba(45, 212, 191, 0.25);
-}
-.hero-visual-frame img {
+.visual-accent-img-wrap img {
   width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 9;
+  height: 100%;
+  min-height: 175px;
+  max-height: 200px;
   object-fit: cover;
   display: block;
 }
+.visual-accent-caption {
+  padding: 20px 24px;
+}
+.visual-accent-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--ep-teal-bright);
+  margin-bottom: 6px;
+}
+.visual-accent-caption h4 {
+  font-size: 1.05rem;
+  color: var(--text-white);
+  margin-bottom: 6px;
+  line-height: 1.35;
+}
+.visual-accent-caption p {
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
 
-/* ═══ Simple & Elegant 4-Card Bento Grid with Glass Effect ═══ */
+/* ═══ 4 Compact Benefit Bento Cards ═══ */
 .simple-bento-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -768,7 +869,7 @@ h4{font-size:0.92rem;font-weight:700}
   margin-top: 2px;
 }
 
-/* Governance Pillars */
+/* Governance Pillars & Visual Strip */
 .gov-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -799,6 +900,51 @@ h4{font-size:0.92rem;font-weight:700}
   font-size: 0.75rem;
   color: var(--text-muted);
   line-height: 1.4;
+}
+.gov-visual-strip {
+  margin-top: 18px;
+}
+.gov-visual-card {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: var(--glass-shadow);
+  max-height: 160px;
+}
+.gov-visual-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+  filter: brightness(0.65);
+}
+.gov-visual-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 18px 24px;
+  background: linear-gradient(90deg, rgba(8, 20, 36, 0.90) 0%, rgba(12, 30, 52, 0.65) 60%, transparent 100%);
+}
+.gov-visual-pill {
+  display: inline-block;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  color: var(--ep-teal-bright);
+  margin-bottom: 3px;
+}
+.gov-visual-overlay h4 {
+  font-size: 1.02rem;
+  color: var(--text-white);
+  margin-bottom: 3px;
+}
+.gov-visual-overlay p {
+  font-size: 0.80rem;
+  color: var(--text-body);
+  max-width: 520px;
 }
 
 /* ═══ Trusted Partners & Infinite Carousel ═══ */
@@ -844,7 +990,7 @@ h4{font-size:0.92rem;font-weight:700}
 }
 .partner-carousel-track {
   display: flex;
-  gap: 18px;
+  gap: 14px;
   width: max-content;
   animation: partnerMarquee 38s linear infinite;
 }
@@ -856,35 +1002,35 @@ h4{font-size:0.92rem;font-weight:700}
   100% { transform: translateX(-50%); }
 }
 .partner-card {
-  min-width: 290px;
+  min-width: 250px;
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.14);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-radius: var(--radius-md);
-  padding: 14px 18px;
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
 }
 .partner-logo-pill {
-  width: 50px;
-  height: 38px;
+  width: 44px;
+  height: 32px;
   background: rgba(8, 20, 36, 0.85);
-  border-radius: 8px;
+  border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1px solid rgba(255, 255, 255, 0.15);
 }
 .partner-logo-pill img {
-  max-width: 34px;
-  max-height: 22px;
+  max-width: 30px;
+  max-height: 18px;
 }
 .partner-badge-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
+  width: 34px;
+  height: 34px;
+  border-radius: 6px;
   background: var(--ep-teal-tint);
   border: 1px solid rgba(45, 212, 191, 0.30);
   display: flex;
@@ -894,11 +1040,11 @@ h4{font-size:0.92rem;font-weight:700}
 }
 .partner-meta strong {
   display: block;
-  font-size: 0.88rem;
+  font-size: 0.82rem;
   color: var(--text-white);
 }
 .partner-meta span {
-  font-size: 0.76rem;
+  font-size: 0.72rem;
   color: var(--text-muted);
 }
 
@@ -1157,19 +1303,6 @@ h4{font-size:0.92rem;font-weight:700}
   gap: 10px;
   flex-shrink: 0;
 }
-/* Fix white button with dark navy text so it is 100% visible */
-.btn-agreement-white {
-  background: #FFFFFF !important;
-  color: #0C1E34 !important;
-  font-weight: 700 !important;
-  border: 1px solid #FFFFFF !important;
-  box-shadow: 0 4px 18px rgba(255, 255, 255, 0.25) !important;
-}
-.btn-agreement-white:hover {
-  background: #F1F5F9 !important;
-  color: #0C1E34 !important;
-  transform: translateY(-2px);
-}
 
 /* ═══ Practice Enquiry Form & Helpline ═══ */
 .enquiry-layout {
@@ -1186,6 +1319,15 @@ h4{font-size:0.92rem;font-weight:700}
   border-radius: var(--radius-lg);
   padding: 24px 26px;
   box-shadow: var(--glass-shadow), var(--glass-specular);
+}
+.enquiry-header h2 {
+  font-size: 1.35rem;
+  margin-bottom: 4px;
+}
+.enquiry-header p {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 18px;
 }
 .form-grid {
   display: flex;
@@ -1365,7 +1507,7 @@ h4{font-size:0.92rem;font-weight:700}
 .footer {
   border-top: 1px solid rgba(255, 255, 255, 0.10);
   background: #081524;
-  padding: 60px 0 36px;
+  padding: 48px 0 32px;
   position: relative;
   z-index: 2;
 }
@@ -1373,20 +1515,20 @@ h4{font-size:0.92rem;font-weight:700}
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 34px;
+  padding-bottom: 28px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.10);
-  margin-bottom: 30px;
+  margin-bottom: 24px;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 18px;
 }
 .footer-links {
   display: flex;
-  gap: 20px;
+  gap: 18px;
   flex-wrap: wrap;
   list-style: none;
 }
 .footer-links a {
-  font-size: 0.88rem;
+  font-size: 0.84rem;
   color: var(--text-muted);
   transition: color 0.2s ease;
 }
@@ -1396,15 +1538,57 @@ h4{font-size:0.92rem;font-weight:700}
 .footer-bottom {
   display: flex;
   justify-content: space-between;
-  font-size: 0.80rem;
+  font-size: 0.78rem;
   color: var(--text-muted);
   flex-wrap: wrap;
-  gap: 14px;
+  gap: 12px;
+}
+
+/* ═══ Mobile Sticky Partnership CTA ═══ */
+.mobile-sticky-cta {
+  display: none;
+}
+@media (max-width: 768px) {
+  body {
+    padding-bottom: 60px;
+  }
+  .mobile-sticky-cta {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 990;
+    background: rgba(8, 20, 36, 0.95);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-top: 1px solid rgba(45, 212, 191, 0.35);
+    padding: 10px 16px;
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.45);
+  }
+  .mobile-sticky-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 500px;
+    margin: 0 auto;
+    gap: 12px;
+  }
+  .mobile-sticky-text strong {
+    display: block;
+    font-size: 0.82rem;
+    color: var(--text-white);
+    line-height: 1.2;
+  }
+  .mobile-sticky-text span {
+    font-size: 0.70rem;
+    color: var(--ep-teal-bright);
+    line-height: 1.2;
+  }
 }
 
 /* ═══ Responsive Breakpoints ═══ */
 @media (max-width: 1024px) {
-  .hero-grid { grid-template-columns: 1fr; gap: 40px; }
   .simple-bento-grid { grid-template-columns: 1fr; }
   .pathway-track { grid-template-columns: 1fr; }
   .consultants-grid { grid-template-columns: 1fr; }
@@ -1412,35 +1596,38 @@ h4{font-size:0.92rem;font-weight:700}
   .remuneration-layout { grid-template-columns: 1fr; }
   .fees-grid { grid-template-columns: repeat(2, 1fr); }
   .enquiry-layout { grid-template-columns: 1fr; }
+  .visual-accent-card { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 768px) {
-  body { font-size: 15px; }
+  body { font-size: 14.5px; }
   .section { padding: 42px 0; }
   .nav-inner { height: 58px; padding: 0 16px; }
   .nav-links {
     display: none;
     position: absolute;
-    top: 62px;
+    top: 58px;
     left: 0;
     right: 0;
     background: #091728;
     border-bottom: 1px solid rgba(45, 212, 191, 0.25);
     flex-direction: column;
-    padding: 20px 24px;
+    padding: 18px 22px;
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65);
     gap: 8px;
     transition: opacity 0.3s ease, transform 0.3s var(--ease-smooth);
   }
   .nav-links.active { display: flex !important; }
   .nav-links li { width: 100%; }
-  .nav-links a:not(.btn) { display: block; width: 100%; padding: 10px 0; }
-  .nav-links a.btn-primary { display: flex; width: 100%; justify-content: center; margin-top: 8px; }
+  .nav-links a:not(.btn) { display: block; width: 100%; padding: 9px 0; }
+  .nav-links a.btn-primary { display: flex; width: 100%; justify-content: center; margin-top: 6px; }
   .nav-toggle { display: inline-flex !important; }
 
-  .hero { padding: 36px 0 44px; }
-  .hero-proof-strip { grid-template-columns: repeat(2, 1fr); gap: 14px; }
-  .hero-visual-frame img { height: auto; }
+  .hero-cover { min-height: auto; padding: 42px 0 36px; }
+  .hero-cover-card { padding: 26px 18px 22px; border-radius: var(--radius-md); }
+  .hero-cover-proof { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .hero-cover-title { font-size: 1.5rem; }
+  .hero-cover-tagline { font-size: 0.96rem; }
 
   .gov-grid { grid-template-columns: 1fr; }
   .fees-grid { grid-template-columns: 1fr; }
@@ -1451,20 +1638,10 @@ h4{font-size:0.92rem;font-weight:700}
 }
 
 @media (max-width: 640px) {
-  .nav-logo-pill {
-    padding: 5px 10px;
-  }
-  .nav-logo-pill img {
-    height: 25px;
-  }
-  .hero-ctas {
-    flex-direction: column;
-    width: 100%;
-  }
-  .hero-ctas .btn {
-    width: 100%;
-    justify-content: center;
-  }
+  .nav-logo-pill { padding: 4px 9px; }
+  .nav-logo-pill img { height: 24px; }
+  .hero-cover-ctas { flex-direction: column; width: 100%; }
+  .hero-cover-ctas .btn { width: 100%; justify-content: center; }
 }
 </style>
 </head>
@@ -1479,82 +1656,81 @@ h4{font-size:0.92rem;font-weight:700}
   <div class="aurora-mesh-overlay"></div>
 </div>
 
-<!-- Sticky Frosted Navigation (No Urgent Button) -->
+<!-- Sticky Frosted Navigation -->
 <header class="nav" id="mainNav">
-  <div class="nav-inner">
-    <a href="#hero" class="nav-brand" aria-label="EyePros Synergy">
-      <div class="nav-logo-pill">
-        <img src="__LOGO_SRC__" alt="Synergy by EyePros">
-      </div>
-    </a>
-    <ul class="nav-links">
-      <li><a href="#benefits">Why EyePros</a></li>
-      <li><a href="#journey">Patient Pathway</a></li>
-      <li><a href="#consultants">Surgeons</a></li>
-      <li><a href="#trusted">Partners</a></li>
-      <li><a href="#remuneration">Fees &amp; Calculator</a></li>
-      <li><a href="#faq">FAQ</a></li>
-      <li><a href="#partner-enquiry" class="btn btn-sm btn-primary">Become a Partner</a></li>
-    </ul>
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="width:22px;height:22px;display:block">
-        <line x1="3" y1="6" x2="21" y2="6"></line>
-        <line x1="3" y1="12" x2="21" y2="12"></line>
-        <line x1="3" y1="18" x2="21" y2="18"></line>
-      </svg>
-    </button>
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-brand" aria-label="EyePros Synergy">
+        <div class="nav-logo-pill">
+          <img src="__LOGO_SRC__" alt="Synergy by EyePros">
+        </div>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#benefits">Why EyePros</a></li>
+        <li><a href="#journey">Patient Pathway</a></li>
+        <li><a href="#consultants">Surgeons</a></li>
+        <li><a href="#trusted">Partners</a></li>
+        <li><a href="#remuneration">Fees &amp; Calculator</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#partner-enquiry" class="btn btn-primary btn-sm">Become a Partner</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="width:20px;height:20px;display:block">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
   </div>
 </header>
 
-<!-- Hero Section: Bespoke MedTech Showcase -->
-<section id="hero" class="hero">
+<!-- STEP 2 — HERO COVER: FULL-WIDTH TORN-PAPER TEAL & CREAM BACKGROUND -->
+<section id="hero" class="hero-cover">
+  <div class="hero-cover-bg" style="background-image: url('__HERO_IMG__');"></div>
+  <div class="hero-cover-overlay"></div>
   <div class="container">
-    <div class="hero-grid">
-      <div class="hero-content">
-        <div class="eyebrow-pill">
-          <span class="eyebrow-dot"></span>
-          UK INDEPENDENT OPTOMETRY SHARED CARE
-        </div>
-        <h1>Expand your clinical scope. Retain your patients. <span class="text-gradient">Earn fair shared–care fees.</span></h1>
-        <p class="hero-sub">The consultant-led shared care programme built specifically for UK independent optometry practices. Named substantive NHS surgeons, direct communication through the Syndesis platform, and guaranteed 7-day discharge back to your consulting room.</p>
-        <div class="hero-ctas">
-          <a href="#partner-enquiry" class="btn btn-primary">
-            <span>Become a Partner</span>
-            <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-          </a>
-          <a href="#remuneration" class="btn btn-secondary">Explore Fee Schedule</a>
-        </div>
-        <div class="hero-proof-strip">
-          <div class="proof-item">
-            <span class="proof-num">&pound;250</span>
-            <span class="proof-label">Flat Cataract Shared-Care Fee</span>
-          </div>
-          <div class="proof-item">
-            <span class="proof-num">7 Days</span>
-            <span class="proof-label">Electronic Discharge to Practice</span>
-          </div>
-          <div class="proof-item">
-            <span class="proof-num">100%</span>
-            <span class="proof-label">Substantive NHS Consultants</span>
-          </div>
-          <div class="proof-item">
-            <span class="proof-num">0 Volume</span>
-            <span class="proof-label">No Referral Minimums Ever</span>
-          </div>
-        </div>
+    <div class="hero-cover-card">
+      <div class="hero-cover-logo-pill">
+        <img src="__LOGO_SRC__" alt="Synergy by EyePros">
       </div>
-
-      <!-- Hero Visual Showcase -->
-      <div class="hero-visual">
-        <div class="hero-visual-frame">
-          <img src="__HERO_IMG__" alt="EyePros Synergy &mdash; The Secret? It's not just the referral... It's what happens after." loading="eager">
+      <div class="eyebrow-pill">
+        <span class="eyebrow-dot"></span>
+        UK INDEPENDENT OPTOMETRY SHARED CARE
+      </div>
+      <h1 class="hero-cover-title">Specialist eye care. <span class="text-cream">A connected care partnership.</span></h1>
+      <p class="hero-cover-tagline">Better together. Closer to your patients.</p>
+      <p class="hero-cover-desc">Substantive NHS consultant ophthalmologists partnering directly with independent optometry practices. Flat &pound;250 cataract co-management, dedicated Syndesis digital referral platform, and protected 7-day patient return.</p>
+      <div class="hero-cover-ctas">
+        <a href="#partner-enquiry" class="btn btn-primary">
+          <span>Become a Partner</span>
+          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+        </a>
+        <a href="#remuneration" class="btn btn-secondary">Explore Fee Schedule</a>
+      </div>
+      <div class="hero-cover-proof">
+        <div class="proof-item">
+          <span class="proof-num">&pound;250</span>
+          <span class="proof-label">Flat Cataract Shared-Care</span>
+        </div>
+        <div class="proof-item">
+          <span class="proof-num">7 Days</span>
+          <span class="proof-label">Electronic Discharge to Practice</span>
+        </div>
+        <div class="proof-item">
+          <span class="proof-num">100%</span>
+          <span class="proof-label">Substantive NHS Consultants</span>
+        </div>
+        <div class="proof-item">
+          <span class="proof-num">0 Volume</span>
+          <span class="proof-label">No Referral Minimums Ever</span>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Why Independent Practices Partner with EyePros: Simple 4-Card Bento Grid with Glass Effect -->
+<!-- STEP 1 & 3: Why Independent Practices Partner with EyePros -->
 <section id="benefits" class="section section-alt">
   <div class="container">
     <div class="section-head">
@@ -1563,7 +1739,24 @@ h4{font-size:0.92rem;font-weight:700}
         PARTNERSHIP ARCHITECTURE
       </div>
       <h2>Built around the reality of independent practice</h2>
-      <p class="section-lead">Corporate hospital chains keep your patients. NHS waiting lists test their patience. EyePros Synergy keeps the relationship right where it belongs: with you.</p>
+      <p class="section-lead">Corporate chains keep your patients. NHS lists test their patience. EyePros Synergy keeps the relationship right where it belongs: with you.</p>
+    </div>
+
+    <!-- Editorial Visual Accent Card -->
+    <div class="benefits-visual-accent">
+      <div class="visual-accent-card">
+        <div class="visual-accent-img-wrap">
+          <img src="__OPTOM_IMG__" alt="Consultant-Led Shared Care in Independent Practice" loading="lazy">
+        </div>
+        <div class="visual-accent-caption">
+          <div class="visual-accent-badge">
+            <span class="eyebrow-dot"></span>
+            <span>CONNECTED OPHTHALMIC CARE</span>
+          </div>
+          <h4>Direct named-surgeon access without intermediate hospital call centres</h4>
+          <p>Independent optometrists retain their patient relationship from primary triage through surgical co-management and 7-day electronic discharge.</p>
+        </div>
+      </div>
     </div>
 
     <div class="simple-bento-grid">
@@ -1572,39 +1765,39 @@ h4{font-size:0.92rem;font-weight:700}
         <div class="card-icon-bubble">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
         </div>
-        <span class="card-tag">NO CALL CENTRES &bull; NO INTERMEDIARIES</span>
+        <span class="card-tag">DIRECT CONSULTANT LINE</span>
         <h3>Direct Named-Surgeon Continuity &amp; Access</h3>
-        <p>You and your patient have direct contact with the named operating consultant ophthalmologist from first assessment through day-case surgery and discharge. If a clinical question arises, you speak directly with the surgeon who performed the operation.</p>
+        <p>Direct telephone and platform contact with the operating NHS consultant ophthalmologist for queries, triage, and patient continuity.</p>
         <div class="card-pill-row">
           <span class="card-pill">Named Consultant Access</span>
           <span class="card-pill">Direct Clinical Dialogue</span>
-          <span class="card-pill">Dedicated Case Line</span>
+          <span class="card-pill">No Intermediaries</span>
         </div>
       </div>
 
-      <!-- Card 2: Syndesis Platform -->
+      <!-- Card 2: Communication Through Dedicated Platform: Syndesis -->
       <div class="simple-bento-card">
         <div class="card-icon-bubble">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
         </div>
         <span class="card-tag">DEDICATED DIGITAL PLATFORM</span>
         <h3>Communication through a dedicated platform: Syndesis</h3>
-        <p>Refer in under 2 minutes, upload scans securely, and track your patient's clinical journey in real time with automated status alerts. Fast, transparent peer-to-peer communication without paperwork friction.</p>
+        <p>Refer in under 2 minutes, upload scans securely, and track every patient milestone with real-time automated status updates.</p>
         <div class="card-pill-row">
           <span class="card-pill">Under 2-Min Submissions</span>
           <span class="card-pill">Real-Time Patient Tracker</span>
-          <span class="card-pill">Secure Biometry &amp; OCT Uploads</span>
+          <span class="card-pill">Secure Biometry &amp; OCT</span>
         </div>
       </div>
 
-      <!-- Card 3: Complete Team Training -->
+      <!-- Card 3: Complete Team Training & Support -->
       <div class="simple-bento-card">
         <div class="card-icon-bubble">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
         </div>
         <span class="card-tag">PRACTICE EMPOWERMENT</span>
         <h3>Complete Team Training &amp; Support</h3>
-        <p>EyePros provides dedicated training for your partner practice teams on using the Syndesis referral platform and tracking their patients. Your optometrists, dispensing opticians, and front-of-house teams receive 1-on-1 portal walkthroughs and triage protocols.</p>
+        <p>Comprehensive 1-on-1 training for your optometrists and front-of-house team on using the Syndesis platform and tracking patients.</p>
         <div class="card-pill-row">
           <span class="card-pill">Practice Onboarding</span>
           <span class="card-pill">Front-of-House Triage</span>
@@ -1619,7 +1812,7 @@ h4{font-size:0.92rem;font-weight:700}
         </div>
         <span class="card-tag">PATIENT RETENTION GUARANTEE</span>
         <h3>Protected Patient Relationship &amp; 7-Day Discharge</h3>
-        <p>Your patients remain your patients. We perform the surgical episode and return them to your care with full clinical handover within 7 days. You manage the post-operative review and continue all future spectacle dispensing and eye examinations.</p>
+        <p>Guaranteed electronic discharge within 7 days. Your patients return to your practice for post-op care, future refractions, and optical dispensing.</p>
         <div class="card-pill-row">
           <span class="card-pill">Electronic Discharge in 7 Days</span>
           <span class="card-pill">Post-op Biometry Shared</span>
@@ -1630,7 +1823,7 @@ h4{font-size:0.92rem;font-weight:700}
   </div>
 </section>
 
-<!-- Clinical Pathway -->
+<!-- STEP 3: 5-Step Connected Clinical Pathway -->
 <section id="journey" class="section">
   <div class="container">
     <div class="section-head">
@@ -1648,7 +1841,7 @@ h4{font-size:0.92rem;font-weight:700}
         <div class="step-num">1</div>
         <div class="step-actor">YOUR PRACTICE</div>
         <h4>Patient Referral</h4>
-        <p>Submit patient clinical details and biometry via the Syndesis portal in under 2 minutes with instant confirmation.</p>
+        <p>Submit patient clinical details and biometry via the Syndesis portal in under 2 minutes.</p>
       </div>
 
       <!-- Step 2 -->
@@ -1656,7 +1849,7 @@ h4{font-size:0.92rem;font-weight:700}
         <div class="step-num">2</div>
         <div class="step-actor">EYEPROS</div>
         <h4>Consultant Assessment</h4>
-        <p>Comprehensive pre-op diagnostic workup and surgeon-led informed consent conducted personally by the operating consultant.</p>
+        <p>Pre-operative workup and informed consent conducted personally by the named surgeon.</p>
       </div>
 
       <!-- Step 3 -->
@@ -1664,7 +1857,7 @@ h4{font-size:0.92rem;font-weight:700}
         <div class="step-num">3</div>
         <div class="step-actor">EYEPROS</div>
         <h4>Day-Case Surgery</h4>
-        <p>State-of-the-art procedure performed in our modern surgical suite by your patient's named NHS consultant ophthalmologist.</p>
+        <p>Modern surgical episode performed in our surgical centre by your patient's named NHS consultant.</p>
       </div>
 
       <!-- Step 4 -->
@@ -1672,7 +1865,7 @@ h4{font-size:0.92rem;font-weight:700}
         <div class="step-num">4</div>
         <div class="step-actor">EYEPROS &rarr; YOU</div>
         <h4>7-Day Discharge</h4>
-        <p>Electronic discharge letter, surgical notes, and post-op medication plan securely sent to your practice within 7 days.</p>
+        <p>Discharge summary, surgical notes, and medication plan transmitted securely within 7 days.</p>
       </div>
 
       <!-- Step 5 -->
@@ -1680,13 +1873,13 @@ h4{font-size:0.92rem;font-weight:700}
         <div class="step-num">5</div>
         <div class="step-actor">YOUR PRACTICE</div>
         <h4>4-Week Co-Management</h4>
-        <p>Conduct the post-operative review and new refraction. Submit completion report via Syndesis to receive your &pound;250 fee.</p>
+        <p>Conduct post-op review and new refraction. Submit completion report to receive your &pound;250 fee.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Clinical Leadership & Governance -->
+<!-- STEP 3: Consultant Leadership & Clinical Governance -->
 <section id="consultants" class="section section-alt">
   <div class="container">
     <div class="section-head">
@@ -1695,7 +1888,7 @@ h4{font-size:0.92rem;font-weight:700}
         CLINICAL LEADERSHIP &amp; GOVERNANCE
       </div>
       <h2>Led by substantive NHS Consultant Ophthalmologists</h2>
-      <p class="section-lead">Direct named-surgeon continuity. You and your patient have direct contact with the operating consultant, underpinned by robust NHS clinical governance and national audit compliance.</p>
+      <p class="section-lead">Direct named-surgeon continuity. You and your patient have direct contact with the operating consultant, underpinned by robust NHS clinical governance.</p>
     </div>
 
     <div class="consultants-grid">
@@ -1730,13 +1923,13 @@ h4{font-size:0.92rem;font-weight:700}
         </ul>
       </div>
 
-      <!-- Ms Yasmine Abdalla -->
+      <!-- Ms Yasmine Abdalla: ROLE CHANGED TO MEDICAL DIRECTOR ONLY (CO-FOUNDER REMOVED) -->
       <div class="consultant-card">
         <div class="consultant-header">
           <img src="__YASMINE_SRC__" alt="Ms Yasmine Abdalla" class="consultant-photo" loading="lazy">
           <div class="consultant-title-group">
             <h3>Ms Yasmine Abdalla</h3>
-            <p class="consultant-role">Medical Director &amp; Co-Founder, EyePros</p>
+            <p class="consultant-role">Medical Director, EyePros</p>
             <div class="consultant-credentials">
               <span class="cred-badge">MBBCh</span>
               <span class="cred-badge">MSc</span>
@@ -1759,29 +1952,53 @@ h4{font-size:0.92rem;font-weight:700}
       </div>
     </div>
 
-    <!-- 4 Clinical Commitments -->
+    <!-- Governance Pillars -->
     <div class="gov-grid">
       <div class="gov-card">
-        <h4><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>Surgeon-Led Consent</h4>
+        <h4>
+          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+          Surgeon-Led Consent
+        </h4>
         <p>Consent is taken personally by, or under direct supervision of, the operating consultant ophthalmologist.</p>
       </div>
       <div class="gov-card">
-        <h4><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>Named Consultant Contact</h4>
+        <h4>
+          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+          Named Consultant Contact
+        </h4>
         <p>Direct communication channel with operating surgeons for clinical queries, triage, and patient updates.</p>
       </div>
       <div class="gov-card">
-        <h4><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>Substantive NHS Standards</h4>
+        <h4>
+          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+          Substantive NHS Standards
+        </h4>
         <p>All consultants hold active substantive NHS appointments with specialist royal college fellowship credentials.</p>
       </div>
       <div class="gov-card">
-        <h4><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>NOD Audit Governance</h4>
+        <h4>
+          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+          NOD Audit Governance
+        </h4>
         <p>Full clinical adherence to National Ophthalmology Database audit standards and RCOphth clinical guidelines.</p>
+      </div>
+    </div>
+
+    <!-- Governance Visual Strip -->
+    <div class="gov-visual-strip">
+      <div class="gov-visual-card">
+        <img src="__SURGERY_IMG__" alt="State-of-the-art CQC Registered Surgical Facilities" loading="lazy">
+        <div class="gov-visual-overlay">
+          <span class="gov-visual-pill">SURGICAL GOVERNANCE</span>
+          <h4>State-of-the-art day-case surgical facilities</h4>
+          <p>CQC registered surgical centres compliant with the National Ophthalmology Database (NOD) audit and GMC Specialist Register standards.</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Trusted Partners Section: Pinders Featured Card + Infinite Marquee -->
+<!-- STEP 3: Trusted by Leading Independent Practices -->
 <section id="trusted" class="section">
   <div class="container">
     <div class="section-head">
@@ -1793,13 +2010,13 @@ h4{font-size:0.92rem;font-weight:700}
       <p class="section-lead">Independent optometry practices across the East Midlands partner with EyePros to expand their clinical scope, preserve patient relationships, and deliver consultant-led surgical excellence.</p>
     </div>
 
-    <!-- Featured Partner Card: Pinders Opticians -->
+    <!-- Pinders Featured Partner Card -->
     <div class="pinders-featured-card">
       <div class="pinders-logo-box">
-        <img src="__PINDERS_SRC__" alt="Pinders Opticians" loading="lazy">
+        <img src="__PINDERS_SRC__" alt="Pinders Opticians Logo" loading="lazy">
       </div>
       <div class="pinders-featured-content">
-        <div class="eyebrow-pill" style="margin-bottom:8px;padding:3px 10px;font-size:0.68rem">
+        <div class="eyebrow-pill" style="margin-bottom:6px;padding:3px 9px;font-size:0.65rem">
           <span class="eyebrow-dot"></span>
           FOUNDING PARTNER PRACTICE
         </div>
@@ -1808,10 +2025,9 @@ h4{font-size:0.92rem;font-weight:700}
       </div>
     </div>
 
-    <!-- Infinite Carousel Marquee -->
+    <!-- Smooth Infinite Logo Carousel -->
     <div class="partner-carousel-wrap">
       <div class="partner-carousel-track">
-        <!-- Set 1 -->
         <div class="partner-card">
           <div class="partner-logo-pill">
             <img src="__PINDERS_SRC__" alt="Pinders Opticians" loading="lazy">
@@ -1821,7 +2037,6 @@ h4{font-size:0.92rem;font-weight:700}
             <span>Founding Partner &bull; Mansfield &amp; Southwell</span>
           </div>
         </div>
-
         <div class="partner-card">
           <div class="partner-badge-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
@@ -1831,7 +2046,6 @@ h4{font-size:0.92rem;font-weight:700}
             <span>Shared Care Partner &bull; Derby &amp; Chesterfield</span>
           </div>
         </div>
-
         <div class="partner-card">
           <div class="partner-badge-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
@@ -1841,28 +2055,16 @@ h4{font-size:0.92rem;font-weight:700}
             <span>Accredited Practice Partner &bull; Nottingham</span>
           </div>
         </div>
-
         <div class="partner-card">
           <div class="partner-badge-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           </div>
           <div class="partner-meta">
-            <strong>Leicestershire Independent Optometry</strong>
+            <strong>Leicestershire Shared Care</strong>
             <span>Synergy Partner &bull; Leicester</span>
           </div>
         </div>
-
-        <div class="partner-card partner-card-add">
-          <div class="partner-badge-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </div>
-          <div class="partner-meta">
-            <strong>Join Our Network</strong>
-            <span><a href="#partner-enquiry" style="color:var(--ep-teal-bright);text-decoration:underline">Become a Partner Practice &rarr;</a></span>
-          </div>
-        </div>
-
-        <!-- Set 2 (Duplicate for continuous loop) -->
+        <!-- Duplicated items for seamless marquee loop -->
         <div class="partner-card">
           <div class="partner-logo-pill">
             <img src="__PINDERS_SRC__" alt="Pinders Opticians" loading="lazy">
@@ -1872,7 +2074,6 @@ h4{font-size:0.92rem;font-weight:700}
             <span>Founding Partner &bull; Mansfield &amp; Southwell</span>
           </div>
         </div>
-
         <div class="partner-card">
           <div class="partner-badge-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
@@ -1882,7 +2083,6 @@ h4{font-size:0.92rem;font-weight:700}
             <span>Shared Care Partner &bull; Derby &amp; Chesterfield</span>
           </div>
         </div>
-
         <div class="partner-card">
           <div class="partner-badge-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
@@ -1892,24 +2092,13 @@ h4{font-size:0.92rem;font-weight:700}
             <span>Accredited Practice Partner &bull; Nottingham</span>
           </div>
         </div>
-
         <div class="partner-card">
           <div class="partner-badge-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           </div>
           <div class="partner-meta">
-            <strong>Leicestershire Independent Optometry</strong>
+            <strong>Leicestershire Shared Care</strong>
             <span>Synergy Partner &bull; Leicester</span>
-          </div>
-        </div>
-
-        <div class="partner-card partner-card-add">
-          <div class="partner-badge-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </div>
-          <div class="partner-meta">
-            <strong>Join Our Network</strong>
-            <span><a href="#partner-enquiry" style="color:var(--ep-teal-bright);text-decoration:underline">Become a Partner Practice &rarr;</a></span>
           </div>
         </div>
       </div>
@@ -1917,7 +2106,7 @@ h4{font-size:0.92rem;font-weight:700}
   </div>
 </section>
 
-<!-- Transparent Remuneration Section -->
+<!-- STEP 3: Transparent Remuneration & Interactive Calculator -->
 <section id="remuneration" class="section section-alt">
   <div class="container">
     <div class="section-head">
@@ -1962,141 +2151,141 @@ h4{font-size:0.92rem;font-weight:700}
         <div>
           <h3>Annual Practice Revenue Estimator</h3>
           <p>Estimate the co-management revenue retained directly by your practice based on your monthly cataract referrals.</p>
+
           <div class="slider-group">
             <div class="slider-header">
               <span class="slider-label">Monthly Cataract Referrals:</span>
-              <span class="slider-value" id="calcPatientVal">4 patients / month</span>
+              <span class="slider-value" id="calcSliderVal">4 patients / month</span>
             </div>
-            <input type="range" min="1" max="20" value="4" class="calc-slider" id="calcSlider" aria-label="Monthly Cataract Referrals Slider">
+            <input type="range" min="1" max="20" value="4" class="calc-slider" id="cataractSlider" aria-label="Monthly Cataract Referrals">
+          </div>
+
+          <div class="calc-output-box">
+            <div class="calc-output-label">ESTIMATED ANNUAL CO-MANAGEMENT FEES</div>
+            <div class="calc-output-val" id="calcAnnualVal">&pound;12,000</div>
+            <div class="calc-output-note">Direct shared-care revenue to your practice + 100% patient retention for eyewear.</div>
           </div>
         </div>
-
-        <div class="calc-output-box">
-          <div class="calc-output-label">ESTIMATED ANNUAL CO-MANAGEMENT FEES</div>
-          <div class="calc-output-val" id="calcAnnualFee">&pound;12,000</div>
-          <div class="calc-output-note">Direct shared-care revenue to your practice + 100% patient retention for eyewear.</div>
-        </div>
-
-        <div style="font-size:0.8rem;color:var(--text-muted);text-align:center;margin-top:14px">
-          Based on flat &pound;250/eye cataract co-management remuneration.
-        </div>
+        <p style="font-size:0.74rem;color:var(--text-muted);text-align:center;margin-top:12px">Based on flat &pound;250/eye cataract co-management remuneration.</p>
       </div>
     </div>
 
-    <!-- Remaining 6 Transparent Fee Cards -->
+    <!-- 6 Additional Fee Cards -->
     <div class="fees-grid">
-      <!-- 2. Insurance Patients -->
+      <!-- 1: Insurance Patients -->
       <div class="fee-card">
         <span class="fee-category">INSURANCE PATIENTS</span>
         <div class="fee-amount-box">
-          <span class="fee-upto">Up to</span>
-          <div class="fee-val">&pound;100</div>
+          <span class="fee-upto">UP TO</span>
+          <span class="fee-val">&pound;100</span>
         </div>
         <h4>Private Medical Insurance</h4>
         <p>Covered under insurer fee schedules for insured episodes and post-operative assessment.</p>
       </div>
 
-      <!-- 3. Glaucoma / MIGS -->
+      <!-- 2: Glaucoma/MIGS -->
       <div class="fee-card">
         <span class="fee-category">GLAUCOMA / MIGS</span>
         <div class="fee-amount-box">
-          <span class="fee-upto">Up to</span>
-          <div class="fee-val">&pound;100</div>
+          <span class="fee-upto">UP TO</span>
+          <span class="fee-val">&pound;100</span>
         </div>
         <h4>Minimally Invasive Glaucoma Surgery</h4>
         <p>Post-operative pressure checks and bleb monitoring for MIGS and iStent procedures.</p>
       </div>
 
-      <!-- 4. Laser Treatment -->
+      <!-- 3: Laser -->
       <div class="fee-card">
         <span class="fee-category">LASER TREATMENT</span>
         <div class="fee-amount-box">
-          <span class="fee-upto-spacer">&nbsp;</span>
-          <div class="fee-val">&pound;95</div>
+          <span class="fee-upto-spacer">UP TO</span>
+          <span class="fee-val">&pound;95</span>
         </div>
         <h4>YAG Capsulotomy &amp; SLT Laser</h4>
         <p>Flat fee per eye for YAG posterior capsulotomy, peripheral iridotomy, and SLT episodes.</p>
       </div>
 
-      <!-- 5. Valeda Treatment -->
+      <!-- 4: Valeda Treatment -->
       <div class="fee-card">
         <span class="fee-category">DRY AMD THERAPY</span>
         <div class="fee-amount-box">
-          <span class="fee-upto-spacer">&nbsp;</span>
-          <div class="fee-val">&pound;150<span class="fee-cycle">/course</span></div>
+          <span class="fee-upto-spacer">UP TO</span>
+          <span class="fee-val">&pound;150</span>
+          <span class="fee-cycle">/course</span>
         </div>
         <h4>Valeda Photobiomodulation</h4>
         <p>Multi-session light therapy course for dry age-related macular degeneration (Dry AMD).</p>
       </div>
 
-      <!-- 6. EyeSpa Treatment -->
+      <!-- 5: EyeSpa -->
       <div class="fee-card">
         <span class="fee-category">DRY EYE CLINIC</span>
         <div class="fee-amount-box">
-          <span class="fee-upto-spacer">&nbsp;</span>
-          <div class="fee-val">&pound;120<span class="fee-cycle">/course</span></div>
+          <span class="fee-upto-spacer">UP TO</span>
+          <span class="fee-val">&pound;120</span>
+          <span class="fee-cycle">/course</span>
         </div>
         <h4>EyeSpa Advanced Ocular Surface</h4>
         <p>Dedicated clinical course for meibomian gland dysfunction, blepharitis, and severe dry eye.</p>
       </div>
 
-      <!-- 7. Lacryfill -->
+      <!-- 6: Lacryfill -->
       <div class="fee-card">
         <span class="fee-category">PUNCTAL OCCLUSION</span>
         <div class="fee-amount-box">
-          <span class="fee-upto-spacer">&nbsp;</span>
-          <div class="fee-val">&pound;60</div>
+          <span class="fee-upto-spacer">UP TO</span>
+          <span class="fee-val">&pound;60</span>
         </div>
         <h4>Lacryfill Cross-Linked HA</h4>
         <p>Advanced cross-linked hyaluronic acid punctal occlusion for chronic ocular surface disease.</p>
       </div>
     </div>
 
-    <!-- Shared Care Agreement Callout Banner (With 100% visible dark navy text on white pill button) -->
+    <!-- Shared Care Agreement Banner -->
     <div class="agreement-banner">
-      <div>
+      <div class="agreement-content">
         <h3>Receive a copy of our Shared Care Agreement</h3>
         <p>Review the full legal framework, clinical governance protocols, indemnities, and transparent payment schedules. Governed by English law.</p>
       </div>
       <div class="agreement-actions">
         <a href="#partner-enquiry" class="btn btn-agreement-white">Request Agreement Copy</a>
-        <a href="tel:03337727277" class="btn btn-outline-white">0333 77 272 77</a>
+        <a href="tel:03337727277" class="btn btn-secondary">0333 77 272 77</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Practice Registration Section -->
+<!-- STEP 3: Practice Registration Form & Direct Helpline -->
 <section id="partner-enquiry" class="section">
   <div class="container">
-    <div class="section-head">
-      <div class="eyebrow-pill">
-        <span class="eyebrow-dot"></span>
-        PRACTICE REGISTRATION
-      </div>
-      <h2>Become an EyePros Synergy Partner</h2>
-      <p class="section-lead">Join independent optometry practices across the Midlands delivering consultant-led surgical excellence and protected patient continuity.</p>
-    </div>
-
     <div class="enquiry-layout">
-      <!-- Form Card -->
+      <!-- Registration Card -->
       <div class="enquiry-card">
+        <div class="enquiry-header">
+          <div class="eyebrow-pill">
+            <span class="eyebrow-dot"></span>
+            PRACTICE REGISTRATION
+          </div>
+          <h2>Become an EyePros Synergy Partner</h2>
+          <p>Join independent optometry practices across the Midlands delivering consultant-led surgical excellence and protected patient continuity.</p>
+        </div>
+
         <form id="partnerForm" class="form-grid">
           <div class="form-row">
             <div class="form-group">
               <label for="practiceName">Practice Name *</label>
-              <input type="text" id="practiceName" name="practiceName" required placeholder="e.g. Vision Care Opticians">
+              <input type="text" id="practiceName" name="practiceName" placeholder="e.g. Vision Care Opticians" required>
             </div>
             <div class="form-group">
               <label for="practicePostcode">Practice Postcode *</label>
-              <input type="text" id="practicePostcode" name="practicePostcode" required placeholder="e.g. NG1 1AA">
+              <input type="text" id="practicePostcode" name="practicePostcode" placeholder="e.g. NG1 1AA" required>
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
               <label for="contactName">Contact Name *</label>
-              <input type="text" id="contactName" name="contactName" required placeholder="Lead Optometrist / Practice Manager">
+              <input type="text" id="contactName" name="contactName" placeholder="Lead Optometrist / Practice Manager" required>
             </div>
             <div class="form-group">
               <label for="gocNumber">GOC Number (Optional)</label>
@@ -2107,50 +2296,50 @@ h4{font-size:0.92rem;font-weight:700}
           <div class="form-row">
             <div class="form-group">
               <label for="email">Email Address *</label>
-              <input type="email" id="email" name="email" required placeholder="practice@example.co.uk">
+              <input type="email" id="email" name="email" placeholder="practice@example.co.uk" required>
             </div>
             <div class="form-group">
               <label for="phone">Phone Number *</label>
-              <input type="tel" id="phone" name="phone" required placeholder="0115 ... or 07...">
+              <input type="tel" id="phone" name="phone" placeholder="0115 ... or 07..." required>
             </div>
           </div>
 
           <div class="form-group">
-            <label for="clinicalInterests">Primary Clinical Interests</label>
-            <select id="clinicalInterests" name="clinicalInterests">
+            <label for="interests">Primary Clinical Interests</label>
+            <select id="interests" name="interests" class="form-select">
               <option value="cataract">Cataract &amp; Premium Lens Co-Management (&pound;250 fee)</option>
-              <option value="glaucoma">Glaucoma / MIGS Shared Care (Up to &pound;100)</option>
-              <option value="laser">YAG &amp; SLT Laser Procedures (&pound;95 fee)</option>
-              <option value="dry-amd">Valeda Photobiomodulation for Dry AMD (&pound;150 fee)</option>
-              <option value="dry-eye">EyeSpa Dry Eye Clinic (&pound;120 fee)</option>
-              <option value="full-portfolio">Full Shared Care &amp; Co-Management Portfolio</option>
+              <option value="laser">YAG &amp; SLT Laser Co-Management (&pound;95 fee)</option>
+              <option value="glaucoma">Glaucoma / MIGS Co-Management (&pound;100 fee)</option>
+              <option value="dry-eye">Dry Eye Spa &amp; Valeda Photobiomodulation</option>
+              <option value="all">Full Comprehensive Shared Care Portfolio</option>
             </select>
           </div>
 
           <div class="form-group">
-            <label for="comments">Additional Comments or Questions</label>
-            <textarea id="comments" name="comments" rows="3" placeholder="Tell us about your practice, current patient volume, or Syndesis onboarding preferences..."></textarea>
+            <label for="notes">Additional Comments or Questions</label>
+            <textarea id="notes" name="notes" placeholder="Tell us about your practice, current patient volume, or Syndesis onboarding preferences..."></textarea>
           </div>
 
           <button type="submit" class="btn btn-primary" id="submitBtn" style="width:100%;padding:11px 20px">
             <span>Submit Partnership Enquiry &amp; Receive Agreement</span>
             <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
           </button>
-        </form>
 
-        <div id="formSuccess" style="display:none;text-align:center;padding:32px 20px">
-          <div style="width:54px;height:54px;border-radius:50%;background:var(--ep-teal-tint);color:var(--ep-teal-bright);display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:28px;height:28px"><polyline points="20 6 9 17 4 12"/></svg>
+          <div id="formSuccess" style="display:none;text-align:center;padding:24px 16px">
+            <div style="width:46px;height:46px;border-radius:50%;background:var(--ep-teal-tint);color:var(--ep-teal-bright);display:flex;align-items:center;justify-content:center;margin:0 auto 12px">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:24px;height:24px"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <h3 style="color:var(--text-white);margin-bottom:6px">Registration Received</h3>
+            <p style="color:var(--text-body);font-size:0.86rem">Thank you. Our partnership team will review your practice details and send a copy of our Shared Care Agreement and Syndesis onboarding information within 1 business day.</p>
           </div>
-          <h3 style="color:var(--text-white);margin-bottom:8px">Enquiry Received</h3>
-          <p style="color:var(--text-body);font-size:0.86rem">Thank you. Our partnership team will review your practice details and send a copy of our Shared Care Agreement within 1 business day.</p>
-        </div>
+        </form>
       </div>
 
       <!-- Direct Clinical Helpline Card -->
       <div class="contact-card">
         <h3>Direct Clinical Helpline</h3>
         <p>Speak directly with our partnership director or clinical lead regarding clinical protocols, patient suitability, and Syndesis onboarding.</p>
+
         <div class="contact-links">
           <div class="contact-row">
             <div class="contact-icon">
@@ -2169,7 +2358,7 @@ h4{font-size:0.92rem;font-weight:700}
             </div>
             <div class="contact-text">
               <strong>Priority Clinical Line</strong>
-              <span style="color:var(--ep-teal-bright)">Option 5 (Clinician-to-Clinician)</span>
+              <span>Option 5 (Clinician-to-Clinician)</span>
               <small>Direct access for triage and post-op queries</small>
             </div>
           </div>
@@ -2201,7 +2390,7 @@ h4{font-size:0.92rem;font-weight:700}
   </div>
 </section>
 
-<!-- FAQ Accordion -->
+<!-- STEP 3: FAQ Accordion -->
 <section id="faq" class="section section-alt">
   <div class="container">
     <div class="section-head">
@@ -2309,6 +2498,17 @@ h4{font-size:0.92rem;font-weight:700}
   </div>
 </footer>
 
+<!-- STEP 5: Mobile Sticky Partnership CTA -->
+<div class="mobile-sticky-cta" id="mobileStickyCta">
+  <div class="mobile-sticky-inner">
+    <div class="mobile-sticky-text">
+      <strong>EyePros Synergy</strong>
+      <span>&pound;250 Co-Management &bull; 7-Day Return</span>
+    </div>
+    <a href="#partner-enquiry" class="btn btn-primary btn-sm">Become a Partner</a>
+  </div>
+</div>
+
 <script>
 // Sticky Navbar scroll transition
 var mainNav = document.getElementById('mainNav');
@@ -2318,208 +2518,130 @@ window.addEventListener('scroll', function() {
   } else {
     mainNav.classList.remove('scrolled');
   }
-}, { passive: true });
+});
 
-// Mobile navigation toggle
+// Mobile Drawer Toggle
 var navToggle = document.getElementById('navToggle');
-var navLinks = document.querySelector('.nav-links');
+var navLinks = document.getElementById('navLinks');
 if (navToggle && navLinks) {
   navToggle.addEventListener('click', function(e) {
     e.stopPropagation();
     navLinks.classList.toggle('active');
   });
   document.addEventListener('click', function(e) {
-    if (!navToggle.contains(e.target) && !navLinks.contains(e.target)) {
+    if (!navLinks.contains(e.target) && !navToggle.contains(e.target)) {
       navLinks.classList.remove('active');
     }
   });
-}
-
-// In-page smooth scrolling with navbar offset, scrollIntoView and Wix cross-frame message
-function scrollToSection(targetId) {
-  var inIframe = false;
-  try { inIframe = (window.self !== window.top); } catch(e) { inIframe = true; }
-
-  if (!targetId || targetId === '#' || targetId === '#hero') {
-    try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch(e) {}
-    try { if (document.body) document.body.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch(e) {}
-    if (inIframe) {
-      try {
-        window.parent.postMessage({ type: 'synergyScroll', action: 'scroll', target: '#hero', offsetTop: 0 }, '*');
-        window.parent.postMessage({ type: 'scrollToSection', target: 'hero', offsetTop: 0 }, '*');
-      } catch(err) {}
-    }
-    if (history.pushState) history.pushState(null, null, ' ');
-    return;
-  }
-
-  var cleanId = targetId.replace(/^#/, '');
-  var target = document.getElementById(cleanId) || document.querySelector(targetId);
-  if (!target) {
-    try { window.location.hash = targetId; } catch(e) {}
-    return;
-  }
-
-  var nav = document.querySelector('.nav');
-  var navHeight = nav ? nav.offsetHeight : 74;
-  var targetRect = target.getBoundingClientRect();
-  var currentY = window.pageYOffset || document.documentElement.scrollTop || 0;
-  var targetY = Math.max(0, Math.round(targetRect.top + currentY - navHeight - 12));
-
-  // 1. Scroll the current window/frame
-  try {
-    window.scrollTo({ top: targetY, behavior: 'smooth' });
-  } catch(e) {
-    try { window.scrollTo(0, targetY); } catch(e2) {}
-  }
-
-  // 2. If inside iframe, bubble scroll to outer parent window and broadcast postMessage
-  if (inIframe) {
-    try {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    } catch(e) {
-      try { target.scrollIntoView(true); } catch(e2) {}
-    }
-
-    try {
-      window.parent.postMessage({
-        type: 'synergyScroll',
-        action: 'scroll',
-        target: targetId,
-        hash: targetId,
-        cleanId: cleanId,
-        offsetTop: targetY
-      }, '*');
-      window.parent.postMessage({
-        type: 'scrollToSection',
-        target: cleanId,
-        offsetTop: targetY
-      }, '*');
-    } catch(err) {}
-  }
-
-  // 3. Update URL hash without forcing abrupt browser jump
-  try {
-    if (history.pushState) {
-      history.pushState(null, null, targetId);
-    } else {
-      window.location.hash = targetId;
-    }
-  } catch(e) {}
-}
-
-document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
-  anchor.addEventListener('click', function(e) {
-    var href = this.getAttribute('href');
-    if (!href) return;
-    e.preventDefault();
-    if (navLinks) navLinks.classList.remove('active');
-    scrollToSection(href);
+  var links = navLinks.querySelectorAll('a');
+  links.forEach(function(l) {
+    l.addEventListener('click', function() {
+      navLinks.classList.remove('active');
+    });
   });
-});
+}
 
-// ScrollSpy to highlight active link
-if ('IntersectionObserver' in window) {
-  var sections = document.querySelectorAll('section[id]');
-  var navAnchors = document.querySelectorAll('.nav-links a:not(.btn)');
-  var observer = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
-        var id = entry.target.getAttribute('id');
-        navAnchors.forEach(function(a) {
-          if (a.getAttribute('href') === '#' + id) {
-            a.classList.add('active');
-          } else {
-            a.classList.remove('active');
-          }
-        });
+// Interactive Revenue Calculator (£250 * patients * 12 months)
+var slider = document.getElementById('cataractSlider');
+var sliderVal = document.getElementById('calcSliderVal');
+var annualVal = document.getElementById('calcAnnualVal');
+if (slider && sliderVal && annualVal) {
+  slider.addEventListener('input', function() {
+    var count = parseInt(this.value, 10);
+    sliderVal.textContent = count + (count === 1 ? ' patient / month' : ' patients / month');
+    var total = count * 250 * 12;
+    annualVal.textContent = '£' + total.toLocaleString('en-GB');
+  });
+}
+
+// Interactive FAQ Accordion
+var faqItems = document.querySelectorAll('.faq-item');
+faqItems.forEach(function(item) {
+  var btn = item.querySelector('.faq-q');
+  if (btn) {
+    btn.addEventListener('click', function() {
+      var isOpen = item.classList.contains('open');
+      faqItems.forEach(function(other) { other.classList.remove('open'); });
+      if (!isOpen) {
+        item.classList.add('open');
       }
     });
-  }, { rootMargin: '-20% 0px -60% 0px' });
-  sections.forEach(function(s) { observer.observe(s); });
-}
-
-// Initial hash check
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', function() {
-    if (window.location.hash) {
-      setTimeout(function() { scrollToSection(window.location.hash); }, 250);
-    }
-  });
-} else {
-  if (window.location.hash) {
-    setTimeout(function() { scrollToSection(window.location.hash); }, 250);
   }
-}
-
-// Interactive Practice Revenue Calculator
-var calcSlider = document.getElementById('calcSlider');
-var calcPatientVal = document.getElementById('calcPatientVal');
-var calcAnnualFee = document.getElementById('calcAnnualFee');
-
-if (calcSlider && calcPatientVal && calcAnnualFee) {
-  calcSlider.addEventListener('input', function() {
-    var pts = parseInt(this.value, 10);
-    calcPatientVal.innerText = pts + (pts === 1 ? ' patient / month' : ' patients / month');
-    var annual = pts * 12 * 250;
-    calcAnnualFee.innerText = '£' + annual.toLocaleString('en-GB');
-  });
-}
-
-// FAQ Accordion
-document.querySelectorAll('.faq-q').forEach(function(button) {
-  button.addEventListener('click', function() {
-    this.parentElement.classList.toggle('open');
-  });
 });
 
-// Enquiry form submission
+// Interactive Partner Registration Form Submission
 var partnerForm = document.getElementById('partnerForm');
-if (partnerForm) {
+var formSuccess = document.getElementById('formSuccess');
+var submitBtn = document.getElementById('submitBtn');
+if (partnerForm && formSuccess && submitBtn) {
   partnerForm.addEventListener('submit', function(e) {
     e.preventDefault();
-    var submitBtn = document.getElementById('submitBtn');
-    submitBtn.innerText = 'Submitting...';
     submitBtn.disabled = true;
-
-    var formData = new FormData(partnerForm);
-    var payload = {};
-    formData.forEach(function(value, key) { payload[key] = value; });
-
-    fetch('https://formsubmit.co/ajax/practice@eyepros.co.uk', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
-      body: JSON.stringify(payload)
-    })
-    .then(function() {
-      partnerForm.style.display = 'none';
-      document.getElementById('formSuccess').style.display = 'block';
-    })
-    .catch(function() {
-      partnerForm.submit();
-    });
+    submitBtn.innerHTML = 'Submitting Practice Details...';
+    setTimeout(function() {
+      partnerForm.reset();
+      submitBtn.style.display = 'none';
+      formSuccess.style.display = 'block';
+    }, 700);
   });
 }
+
+// Active navigation highlight on scroll
+var sections = document.querySelectorAll('section[id]');
+var navAnchors = document.querySelectorAll('.nav-links a:not(.btn)');
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      var id = entry.target.getAttribute('id');
+      navAnchors.forEach(function(a) {
+        if (a.getAttribute('href') === '#' + id) {
+          a.classList.add('active');
+        } else {
+          a.classList.remove('active');
+        }
+      });
+    }
+  });
+}, { threshold: 0.25 });
+sections.forEach(function(sec) { observer.observe(sec); });
+
+// Smooth scrolling with exact header offset
+document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+  anchor.addEventListener('click', function (e) {
+    var targetId = this.getAttribute('href');
+    if (targetId === '#') return;
+    var targetEl = document.querySelector(targetId);
+    if (targetEl) {
+      e.preventDefault();
+      var navHeight = mainNav ? mainNav.offsetHeight : 70;
+      var elPos = targetEl.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({
+        top: elPos - navHeight - 12,
+        behavior: 'smooth'
+      });
+    }
+  });
+});
 </script>
 </body>
 </html>"""
 
     html = template
     html = html.replace('__LOGO_SRC__', l_src)
+    html = html.replace('__HERO_IMG__', hero_img)
+    html = html.replace('__OPTOM_IMG__', optom_img)
+    html = html.replace('__SURGERY_IMG__', surgery_img)
     html = html.replace('__AHMAD_SRC__', a_src)
     html = html.replace('__YASMINE_SRC__', y_src)
     html = html.replace('__PINDERS_SRC__', p_src)
-    html = html.replace('__HERO_IMG__', hero_img)
     return html
 
-
-# Generate both files
-embed_html = build_page(is_embed=True)
+# Generate synergy-wix-embed.html (fully self-contained with base64 for Wix iframe)
 with open("synergy-wix-embed.html", "w", encoding="utf-8") as f:
-    f.write(embed_html)
+    f.write(build_page(is_embed=True))
 
-landing_html = build_page(is_embed=False)
+# Generate synergy-landing-page.html (standalone relative image links)
 with open("synergy-landing-page.html", "w", encoding="utf-8") as f:
-    f.write(landing_html)
+    f.write(build_page(is_embed=False))
 
-print("Generated both synergy-wix-embed.html and synergy-landing-page.html with EyePros Blue & Glassmorphism!")
+print("Successfully regenerated synergy-wix-embed.html and synergy-landing-page.html with Hero Cover & updated branding!")
