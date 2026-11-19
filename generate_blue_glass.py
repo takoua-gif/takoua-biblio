@@ -474,7 +474,25 @@ h4{font-size:0.92rem;font-weight:700}
   max-width: 580px;
 }
 .hero h1 {
-  margin-bottom: 14px;
+  margin-bottom: 12px;
+}
+.hero-cream-banner {
+  background: #ECE6DB;
+  border-radius: 8px;
+  padding: 10px 18px;
+  margin: 12px 0 16px;
+  display: block;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+.hero-cream-banner span {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: #1E293B;
+  letter-spacing: -0.01em;
+  display: block;
+  line-height: 1.25;
 }
 .hero-sub {
   font-size: 0.96rem;
@@ -1515,14 +1533,17 @@ h4{font-size:0.92rem;font-weight:700}
           <span class="eyebrow-dot"></span>
           UK INDEPENDENT OPTOMETRY SHARED CARE
         </div>
-        <h1>Expand your clinical scope. Retain your patients. <span class="text-gradient">Earn fair shared–care fees.</span></h1>
-        <p class="hero-sub">The consultant-led shared care programme built specifically for UK independent optometry practices. Named substantive NHS surgeons, direct communication through the Syndesis platform, and guaranteed 7-day discharge back to your consulting room.</p>
+        <h1>Specialist eye care. A connected care partnership.</h1>
+        <div class="hero-cream-banner">
+          <span>Better together.</span>
+        </div>
+        <p class="hero-sub">A shared-care partnership for independent optometrists.</p>
         <div class="hero-ctas">
           <a href="#partner-enquiry" class="btn btn-primary">
-            <span>Become a Partner</span>
+            <span>Become a partner</span>
             <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
           </a>
-          <a href="#remuneration" class="btn btn-secondary">Explore Fee Schedule</a>
+          <a href="#remuneration" class="btn btn-secondary">Explore fee schedule</a>
         </div>
         <div class="hero-proof-strip">
           <div class="proof-item">
