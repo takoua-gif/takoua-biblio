@@ -1,23 +1,26 @@
 import re
+import base64
 
 # Read current embed for base64 assets
 with open("synergy-wix-embed.html", "r", encoding="utf-8") as f:
     orig = f.read()
 
-logo_m = re.search(r'img src="(data:image/jpeg;base64,[A-Za-z0-9+/=]+)" alt="Synergy', orig)
+# Load new synergy logo as PNG base64
+with open('images/synergy-logo-new.png', 'rb') as f_logo:
+    logo_b64 = 'data:image/png;base64,' + base64.b64encode(f_logo.read()).decode('utf-8')
+
 ahmad_m = re.search(r'img src="(data:image/jpeg;base64,[A-Za-z0-9+/=]+)" alt="Mr Ahmad Elsahn', orig)
 yasmine_m = re.search(r'img src="(data:image/jpeg;base64,[A-Za-z0-9+/=]+)" alt="Ms Yasmine Abdalla', orig)
 pinders_m = re.search(r'img src="(data:image/png;base64,[A-Za-z0-9+/=]+)" alt="Pinders Opticians', orig)
 
-logo_b64 = logo_m.group(1) if logo_m else "images/synergy-logo-dark.jpg"
 ahmad_b64 = ahmad_m.group(1) if ahmad_m else "images/elsahn-headshot.jpg"
 yasmine_b64 = yasmine_m.group(1) if yasmine_m else "images/abdalla-headshot.jpg"
 pinders_b64 = pinders_m.group(1) if pinders_m else "images/partner-pinders.png"
 with open('images/synergy-hero-secret.jpg', 'rb') as f_img:
-    hero_b64 = 'data:image/jpeg;base64,' + __import__('base64').b64encode(f_img.read()).decode('utf-8')
+    hero_b64 = 'data:image/jpeg;base64,' + base64.b64encode(f_img.read()).decode('utf-8')
 
 def build_page(is_embed=True):
-    l_src = logo_b64 if is_embed else "images/synergy-logo-dark.jpg"
+    l_src = logo_b64 if is_embed else "images/synergy-logo-new.png"
     a_src = ahmad_b64 if is_embed else "images/elsahn-headshot.jpg"
     y_src = yasmine_b64 if is_embed else "images/abdalla-headshot.jpg"
     p_src = pinders_b64 if is_embed else "images/partner-pinders.png"
@@ -379,21 +382,24 @@ h4{font-size:1.05rem;font-weight:700}
   gap: 12px;
 }
 .nav-logo-pill {
-  background: rgba(8, 20, 36, 0.85);
+  background: rgba(8, 20, 36, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   padding: 6px 14px;
   border-radius: 10px;
   display: inline-flex;
   align-items: center;
-  border: 1px solid rgba(45, 212, 191, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
-  transition: transform 0.25s var(--ease-smooth), border-color 0.25s ease;
+  transition: transform 0.25s var(--ease-smooth), border-color 0.25s ease, background 0.25s ease;
 }
 .nav-logo-pill:hover {
   transform: translateY(-1px);
-  border-color: var(--ep-teal-bright);
+  border-color: rgba(45, 212, 191, 0.5);
+  background: rgba(12, 30, 52, 0.85);
 }
 .nav-logo-pill img {
-  height: 28px;
+  height: 32px;
   width: auto;
   display: block;
 }
@@ -1443,6 +1449,12 @@ h4{font-size:1.05rem;font-weight:700}
 }
 
 @media (max-width: 640px) {
+  .nav-logo-pill {
+    padding: 5px 10px;
+  }
+  .nav-logo-pill img {
+    height: 25px;
+  }
   .hero-ctas {
     flex-direction: column;
     width: 100%;
