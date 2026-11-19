@@ -13,13 +13,15 @@ logo_b64 = logo_m.group(1) if logo_m else "images/synergy-logo-dark.jpg"
 ahmad_b64 = ahmad_m.group(1) if ahmad_m else "images/elsahn-headshot.jpg"
 yasmine_b64 = yasmine_m.group(1) if yasmine_m else "images/abdalla-headshot.jpg"
 pinders_b64 = pinders_m.group(1) if pinders_m else "images/partner-pinders.png"
+with open('images/synergy-hero-secret.jpg', 'rb') as f_img:
+    hero_b64 = 'data:image/jpeg;base64,' + __import__('base64').b64encode(f_img.read()).decode('utf-8')
 
 def build_page(is_embed=True):
     l_src = logo_b64 if is_embed else "images/synergy-logo-dark.jpg"
     a_src = ahmad_b64 if is_embed else "images/elsahn-headshot.jpg"
     y_src = yasmine_b64 if is_embed else "images/abdalla-headshot.jpg"
     p_src = pinders_b64 if is_embed else "images/partner-pinders.png"
-    hero_img = "https://takoua-gif.github.io/takoua-biblio/images/optometrist-partners.jpg" if is_embed else "images/optometrist-partners.jpg"
+    hero_img = hero_b64 if is_embed else "images/synergy-hero-secret.jpg"
 
     template = """
 <html lang="en">
@@ -523,86 +525,21 @@ h4{font-size:1.05rem;font-weight:700}
   position: relative;
   border-radius: var(--radius-xl);
   overflow: hidden;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.20);
-  background: rgba(16, 37, 64, 0.60);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.50), 0 0 40px rgba(13, 148, 136, 0.22);
+  border: 1.5px solid rgba(45, 212, 191, 0.35);
+  background: rgba(8, 20, 36, 0.85);
+  transition: transform 0.3s var(--ease-smooth), box-shadow 0.3s ease;
+}
+.hero-visual-frame:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55), 0 0 50px rgba(45, 212, 191, 0.30);
 }
 .hero-visual-frame img {
   width: 100%;
-  height: 380px;
+  height: auto;
+  aspect-ratio: 16 / 9;
   object-fit: cover;
   display: block;
-}
-.floating-glass-card {
-  position: absolute;
-  background: rgba(12, 30, 52, 0.88);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: var(--radius-md);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45), var(--glass-specular);
-  z-index: 3;
-}
-.float-card-top {
-  top: -20px;
-  right: -20px;
-  padding: 12px 18px;
-  max-width: 250px;
-}
-.float-card-top .badge-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 6px;
-}
-.badge-active {
-  font-size: 0.70rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--ep-teal-bright);
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-.badge-active::before {
-  content: '';
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--ep-teal-bright);
-}
-.float-card-top h4 {
-  font-size: 0.85rem;
-  margin-bottom: 2px;
-}
-.float-card-top p {
-  font-size: 0.74rem;
-  color: var(--text-muted);
-  line-height: 1.35;
-}
-.float-card-bottom {
-  bottom: -24px;
-  left: -20px;
-  padding: 14px 20px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-.float-fee-val {
-  font-family: var(--font-display);
-  font-size: 1.85rem;
-  font-weight: 800;
-  color: var(--ep-teal-bright);
-  line-height: 1;
-}
-.float-fee-meta h4 {
-  font-size: 0.88rem;
-  margin-bottom: 2px;
-}
-.float-fee-meta p {
-  font-size: 0.74rem;
-  color: var(--text-muted);
 }
 
 /* ═══ Simple & Elegant 4-Card Bento Grid with Glass Effect ═══ */
@@ -1495,9 +1432,7 @@ h4{font-size:1.05rem;font-weight:700}
 
   .hero { padding: 36px 0 44px; }
   .hero-proof-strip { grid-template-columns: repeat(2, 1fr); gap: 14px; }
-  .hero-visual-frame img { height: 260px; }
-  .floating-glass-card { position: static; margin-top: 14px; width: 100%; }
-  .float-card-top, .float-card-bottom { margin: 12px 0 0; }
+  .hero-visual-frame img { height: auto; }
 
   .gov-grid { grid-template-columns: 1fr; }
   .fees-grid { grid-template-columns: 1fr; }
@@ -1598,26 +1533,7 @@ h4{font-size:1.05rem;font-weight:700}
       <!-- Hero Visual Showcase -->
       <div class="hero-visual">
         <div class="hero-visual-frame">
-          <img src="__HERO_IMG__" alt="EyePros Consultant and Partner Optometrist Reviewing Case Work" loading="eager">
-        </div>
-
-        <!-- Floating Card 1: 7-Day Patient Return Guarantee -->
-        <div class="floating-glass-card float-card-top">
-          <div class="badge-row">
-            <span class="badge-active">ACTIVE LOOP</span>
-            <span style="font-size:0.68rem;color:var(--text-muted)">Protocol v2.6</span>
-          </div>
-          <h4>7-Day Patient Return Guarantee</h4>
-          <p>Referral &rarr; Surgery &rarr; Optom Review</p>
-        </div>
-
-        <!-- Floating Card 2: £250 Co-Management -->
-        <div class="floating-glass-card float-card-bottom">
-          <div class="float-fee-val">&pound;250</div>
-          <div class="float-fee-meta">
-            <h4>Flat Cataract Co-Management</h4>
-            <p>Direct BACS settlement on 4-week review</p>
-          </div>
+          <img src="__HERO_IMG__" alt="EyePros Synergy &mdash; The Secret? It's not just the referral... It's what happens after." loading="eager">
         </div>
       </div>
     </div>
