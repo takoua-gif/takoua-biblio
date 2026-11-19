@@ -15,8 +15,10 @@ with open('images/elsahn-headshot-square.jpg', 'rb') as f_ahmad:
 with open('images/abdalla-headshot-square.jpg', 'rb') as f_yasmine:
     yasmine_b64 = 'data:image/jpeg;base64,' + base64.b64encode(f_yasmine.read()).decode('utf-8')
 
-pinders_m = re.search(r'img src="(data:image/png;base64,[A-Za-z0-9+/=]+)" alt="Pinders Opticians', orig)
-pinders_b64 = pinders_m.group(1) if pinders_m else "images/partner-pinders.png"
+with open('images/partner-pinders.png', 'rb') as f_pinders:
+    pinders_b64 = 'data:image/png;base64,' + base64.b64encode(f_pinders.read()).decode('utf-8')
+with open('images/partner-optique.png', 'rb') as f_optique:
+    optique_b64 = 'data:image/png;base64,' + base64.b64encode(f_optique.read()).decode('utf-8')
 with open('images/synergy-hero-secret.jpg', 'rb') as f_img:
     hero_b64 = 'data:image/jpeg;base64,' + base64.b64encode(f_img.read()).decode('utf-8')
 
@@ -25,6 +27,7 @@ def build_page(is_embed=True):
     a_src = ahmad_b64 if is_embed else "images/elsahn-headshot-square.jpg"
     y_src = yasmine_b64 if is_embed else "images/abdalla-headshot-square.jpg"
     p_src = pinders_b64 if is_embed else "images/partner-pinders.png"
+    o_src = optique_b64 if is_embed else "images/partner-optique.png"
     hero_img = hero_b64 if is_embed else "images/synergy-hero-secret.jpg"
 
     template = """
@@ -815,39 +818,6 @@ h4{font-size:0.92rem;font-weight:700}
 }
 
 /* ═══ Trusted Partners & Infinite Carousel ═══ */
-.pinders-featured-card {
-  max-width: 800px;
-  margin: 0 auto 28px;
-  background: var(--glass-bg);
-  border: 1.5px solid rgba(45, 212, 191, 0.35);
-  border-radius: var(--radius-lg);
-  padding: 20px 24px;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35), var(--glass-specular);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-}
-.pinders-logo-box {
-  width: 110px;
-  flex-shrink: 0;
-  background: rgba(8, 20, 36, 0.85);
-  padding: 10px 14px;
-  border-radius: var(--radius-sm);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-}
-.pinders-featured-content h3 {
-  font-size: 1.05rem;
-  color: var(--text-white);
-  margin-bottom: 6px;
-}
-.pinders-quote {
-  font-size: 0.88rem;
-  color: var(--text-body);
-  line-height: 1.5;
-  font-style: italic;
-}
 .partner-carousel-wrap {
   position: relative;
   width: 100%;
@@ -869,7 +839,7 @@ h4{font-size:0.92rem;font-weight:700}
   100% { transform: translateX(-50%); }
 }
 .partner-card {
-  min-width: 290px;
+  min-width: 310px;
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.14);
   backdrop-filter: blur(16px);
@@ -881,18 +851,22 @@ h4{font-size:0.92rem;font-weight:700}
   gap: 14px;
 }
 .partner-logo-pill {
-  width: 50px;
-  height: 38px;
+  width: 78px;
+  height: 42px;
   background: rgba(8, 20, 36, 0.85);
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1px solid rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+  padding: 4px 6px;
+  flex-shrink: 0;
 }
 .partner-logo-pill img {
-  max-width: 34px;
-  max-height: 22px;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
 }
 .partner-badge-icon {
   width: 40px;
@@ -1457,7 +1431,6 @@ h4{font-size:0.92rem;font-weight:700}
 
   .gov-grid { grid-template-columns: 1fr; }
   .fees-grid { grid-template-columns: 1fr; }
-  .pinders-featured-card { flex-direction: column; text-align: center; padding: 18px 16px; }
   .agreement-banner { flex-direction: column; align-items: flex-start; padding: 20px 18px; }
   .enquiry-card { padding: 20px 16px; }
   .form-row { grid-template-columns: 1fr; }
@@ -1795,7 +1768,7 @@ h4{font-size:0.92rem;font-weight:700}
   </div>
 </section>
 
-<!-- Trusted Partners Section: Pinders Featured Card + Infinite Marquee -->
+<!-- Trusted Partners Section: Partners who trust Us -->
 <section id="trusted" class="section">
   <div class="container">
     <div class="section-head">
@@ -1803,23 +1776,8 @@ h4{font-size:0.92rem;font-weight:700}
         <span class="eyebrow-dot"></span>
         ESTABLISHED PARTNERSHIPS
       </div>
-      <h2>Trusted by Leading Independent Practices</h2>
-      <p class="section-lead">Independent optometry practices across the East Midlands partner with EyePros to expand their clinical scope, preserve patient relationships, and deliver consultant-led surgical excellence.</p>
-    </div>
-
-    <!-- Featured Partner Card: Pinders Opticians -->
-    <div class="pinders-featured-card">
-      <div class="pinders-logo-box">
-        <img src="__PINDERS_SRC__" alt="Pinders Opticians" loading="lazy">
-      </div>
-      <div class="pinders-featured-content">
-        <div class="eyebrow-pill" style="margin-bottom:8px;padding:3px 10px;font-size:0.68rem">
-          <span class="eyebrow-dot"></span>
-          FOUNDING PARTNER PRACTICE
-        </div>
-        <h3>Pinders Opticians &mdash; Mansfield, Southwell &amp; Rufford</h3>
-        <p class="pinders-quote">&ldquo;Partnering with EyePros Synergy has enabled our practice to offer our patients fast, consultant-led surgical care with the total certainty that they are discharged back to us for ongoing management. The &pound;250 co-management fee properly values our clinical chair time.&rdquo;</p>
-      </div>
+      <h2>Partners who trust Us</h2>
+      <p class="section-lead">Independent optometry practices across the Midlands partnering with EyePros to expand clinical scope, preserve patient continuity, and deliver consultant-led excellence.</p>
     </div>
 
     <!-- Infinite Carousel Marquee -->
@@ -1833,6 +1791,16 @@ h4{font-size:0.92rem;font-weight:700}
           <div class="partner-meta">
             <strong>Pinders Opticians</strong>
             <span>Founding Partner &bull; Mansfield &amp; Southwell</span>
+          </div>
+        </div>
+
+        <div class="partner-card">
+          <div class="partner-logo-pill">
+            <img src="__OPTIQUE_SRC__" alt="Optique Opticians" loading="lazy">
+          </div>
+          <div class="partner-meta">
+            <strong>Optique Opticians</strong>
+            <span>Practice Partner &bull; Thurmaston &amp; Leicester</span>
           </div>
         </div>
 
@@ -1884,6 +1852,16 @@ h4{font-size:0.92rem;font-weight:700}
           <div class="partner-meta">
             <strong>Pinders Opticians</strong>
             <span>Founding Partner &bull; Mansfield &amp; Southwell</span>
+          </div>
+        </div>
+
+        <div class="partner-card">
+          <div class="partner-logo-pill">
+            <img src="__OPTIQUE_SRC__" alt="Optique Opticians" loading="lazy">
+          </div>
+          <div class="partner-meta">
+            <strong>Optique Opticians</strong>
+            <span>Practice Partner &bull; Thurmaston &amp; Leicester</span>
           </div>
         </div>
 
@@ -2523,6 +2501,7 @@ if (partnerForm) {
     html = html.replace('__AHMAD_SRC__', a_src)
     html = html.replace('__YASMINE_SRC__', y_src)
     html = html.replace('__PINDERS_SRC__', p_src)
+    html = html.replace('__OPTIQUE_SRC__', o_src)
     html = html.replace('__HERO_IMG__', hero_img)
     return html
 
