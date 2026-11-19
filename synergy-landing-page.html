@@ -461,111 +461,95 @@ h4{font-size:0.92rem;font-weight:700}
 .hero-cover-card {
   position: relative;
   z-index: 3;
-  max-width: 860px;
+  max-width: 840px;
   margin: 0 auto;
-  text-align: left;
-  background: rgba(8, 20, 36, 0.65);
+  text-align: center;
+  background: rgba(8, 20, 36, 0.62);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: var(--radius-lg);
-  padding: 38px 40px 30px;
+  padding: 36px 36px 30px;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.20);
-}
-.hero-cover-brand-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 14px;
-  flex-wrap: wrap;
 }
 .hero-cover-logo-pill {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 12px;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  padding: 5px 14px;
+  padding: 5px 16px;
   border-radius: var(--radius-sm);
 }
 .hero-cover-logo-pill img {
-  height: 26px;
+  height: 28px;
   width: auto;
   display: block;
 }
 .hero-cover-title {
   font-family: var(--font-display);
-  font-size: clamp(1.85rem, 3.2vw, 2.45rem);
+  font-size: clamp(1.75rem, 3.2vw, 2.35rem);
   font-weight: 800;
   letter-spacing: -0.025em;
-  line-height: 1.2;
+  line-height: 1.18;
   color: var(--text-white);
-  margin-bottom: 4px;
+  margin-bottom: 8px;
 }
-.hero-cream-banner {
-  background: #ECE6DB;
-  border-radius: 8px;
-  padding: 12px 20px;
-  margin: 14px 0 16px;
-  display: block;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
-}
-.hero-cream-banner span {
+.hero-cover-tagline {
   font-family: var(--font-display);
-  font-style: italic;
-  font-weight: 700;
-  font-size: 1.35rem;
-  color: #1E293B;
-  letter-spacing: -0.01em;
-  display: block;
-  line-height: 1.25;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--ep-teal-bright);
+  margin-bottom: 10px;
 }
 .hero-cover-desc {
-  font-size: 0.98rem;
+  font-size: 0.95rem;
   color: var(--text-body);
-  margin-bottom: 20px;
+  max-width: 620px;
+  margin: 0 auto 18px;
   line-height: 1.55;
 }
 .hero-cover-ctas {
   display: flex;
-  align-items: center;
+  justify-content: center;
   gap: 12px;
-  margin-bottom: 24px;
+  margin-bottom: 22px;
   flex-wrap: wrap;
 }
-.hero-cover-footer-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.hero-cover-proof {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
   padding-top: 16px;
   border-top: 1px solid rgba(255, 255, 255, 0.12);
-  flex-wrap: wrap;
-  gap: 12px;
 }
-.hero-section-tag {
-  font-family: var(--font-display);
-  font-size: 0.74rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  color: var(--text-muted);
-  text-transform: uppercase;
-}
-.hero-cover-proof-inline {
+.proof-item {
   display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 3px;
 }
-.proof-pill {
-  font-size: 0.75rem;
+.proof-num {
+  font-family: var(--font-display);
+  font-size: 1.12rem;
+  font-weight: 800;
+  color: var(--text-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.proof-num::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--ep-teal-bright);
+}
+.proof-label {
+  font-size: 0.72rem;
   color: var(--text-muted);
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  padding: 3px 10px;
-  border-radius: var(--radius-pill);
-}
-.proof-pill strong {
-  color: var(--ep-teal-bright);
-  font-weight: 700;
+  line-height: 1.35;
 }
 
 /* ═══ STEP 3 & 4: VISUAL ACCENT IN BENEFITS SECTION ═══ */
@@ -1660,39 +1644,39 @@ h4{font-size:0.92rem;font-weight:700}
   <div class="hero-cover-overlay"></div>
   <div class="container">
     <div class="hero-cover-card">
-      <div class="hero-cover-brand-row">
-        <div class="hero-cover-logo-pill">
-          <img src="images/synergy-logo-new.png" alt="Synergy by EyePros">
-        </div>
-        <div class="eyebrow-pill">
-          <span class="eyebrow-dot"></span>
-          UK INDEPENDENT OPTOMETRY SHARED CARE
-        </div>
+      <div class="hero-cover-logo-pill">
+        <img src="images/synergy-logo-new.png" alt="Synergy by EyePros">
       </div>
-
-      <h1 class="hero-cover-title">Specialist eye care. A connected care partnership.</h1>
-
-      <div class="hero-cream-banner">
-        <span>Better together.</span>
+      <div class="eyebrow-pill">
+        <span class="eyebrow-dot"></span>
+        UK INDEPENDENT OPTOMETRY SHARED CARE
       </div>
-
+      <h1 class="hero-cover-title">Specialist eye care. <span class="text-cream">A connected care partnership.</span></h1>
+      <p class="hero-cover-tagline">Better together.</p>
       <p class="hero-cover-desc">A shared-care partnership for independent optometrists.</p>
-
       <div class="hero-cover-ctas">
         <a href="#partner-enquiry" class="btn btn-primary">
-          <span>Become a partner</span>
+          <span>Become a Partner</span>
           <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
         </a>
-        <a href="#remuneration" class="btn btn-secondary">Explore fee schedule</a>
+        <a href="#remuneration" class="btn btn-secondary">Explore Fee Schedule</a>
       </div>
-
-      <div class="hero-cover-footer-row">
-        <span class="hero-section-tag">01 &middot; HERO COVER</span>
-        <div class="hero-cover-proof-inline">
-          <span class="proof-pill"><strong>&pound;250</strong> Cataract Co-Management</span>
-          <span class="proof-pill"><strong>7 Days</strong> Electronic Discharge</span>
-          <span class="proof-pill"><strong>100%</strong> Substantive NHS Consultants</span>
-          <span class="proof-pill"><strong>0</strong> Volume Minimums</span>
+      <div class="hero-cover-proof">
+        <div class="proof-item">
+          <span class="proof-num">&pound;250</span>
+          <span class="proof-label">Flat Cataract Shared-Care</span>
+        </div>
+        <div class="proof-item">
+          <span class="proof-num">7 Days</span>
+          <span class="proof-label">Electronic Discharge to Practice</span>
+        </div>
+        <div class="proof-item">
+          <span class="proof-num">100%</span>
+          <span class="proof-label">Substantive NHS Consultants</span>
+        </div>
+        <div class="proof-item">
+          <span class="proof-num">0 Volume</span>
+          <span class="proof-label">No Referral Minimums Ever</span>
         </div>
       </div>
     </div>
