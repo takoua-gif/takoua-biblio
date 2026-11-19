@@ -1763,7 +1763,7 @@ h4{font-size:0.92rem;font-weight:700}
     <!-- Infinite Carousel Marquee -->
     <div class="partner-carousel-wrap">
       <div class="partner-carousel-track">
-        <!-- Set 1 -->
+        <!-- Set 1 (Cycles of Pinders, Optique, Join) -->
         <div class="partner-card">
           <div class="partner-logo-pill">
             <img src="__PINDERS_SRC__" alt="Pinders Opticians" loading="lazy">
@@ -1781,36 +1781,6 @@ h4{font-size:0.92rem;font-weight:700}
           <div class="partner-meta">
             <strong>Optique Opticians</strong>
             <span>Practice Partner &bull; Thurmaston &amp; Leicester</span>
-          </div>
-        </div>
-
-        <div class="partner-card">
-          <div class="partner-badge-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-          </div>
-          <div class="partner-meta">
-            <strong>Derbyshire Optical Practice</strong>
-            <span>Shared Care Partner &bull; Derby &amp; Chesterfield</span>
-          </div>
-        </div>
-
-        <div class="partner-card">
-          <div class="partner-badge-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          </div>
-          <div class="partner-meta">
-            <strong>Nottinghamshire Eye Care</strong>
-            <span>Accredited Practice Partner &bull; Nottingham</span>
-          </div>
-        </div>
-
-        <div class="partner-card">
-          <div class="partner-badge-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          </div>
-          <div class="partner-meta">
-            <strong>Leicestershire Independent Optometry</strong>
-            <span>Synergy Partner &bull; Leicester</span>
           </div>
         </div>
 
@@ -1824,7 +1794,6 @@ h4{font-size:0.92rem;font-weight:700}
           </div>
         </div>
 
-        <!-- Set 2 (Duplicate for continuous loop) -->
         <div class="partner-card">
           <div class="partner-logo-pill">
             <img src="__PINDERS_SRC__" alt="Pinders Opticians" loading="lazy">
@@ -1845,33 +1814,124 @@ h4{font-size:0.92rem;font-weight:700}
           </div>
         </div>
 
-        <div class="partner-card">
+        <div class="partner-card partner-card-add">
           <div class="partner-badge-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           </div>
           <div class="partner-meta">
-            <strong>Derbyshire Optical Practice</strong>
-            <span>Shared Care Partner &bull; Derby &amp; Chesterfield</span>
+            <strong>Join Our Network</strong>
+            <span><a href="#partner-enquiry" style="color:var(--ep-teal-bright);text-decoration:underline">Become a Partner Practice &rarr;</a></span>
           </div>
         </div>
 
         <div class="partner-card">
-          <div class="partner-badge-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <div class="partner-logo-pill">
+            <img src="__PINDERS_SRC__" alt="Pinders Opticians" loading="lazy">
           </div>
           <div class="partner-meta">
-            <strong>Nottinghamshire Eye Care</strong>
-            <span>Accredited Practice Partner &bull; Nottingham</span>
+            <strong>Pinders Opticians</strong>
+            <span>Founding Partner &bull; Mansfield &amp; Southwell</span>
           </div>
         </div>
 
         <div class="partner-card">
-          <div class="partner-badge-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <div class="partner-logo-pill">
+            <img src="__OPTIQUE_SRC__" alt="Optique Opticians" loading="lazy">
           </div>
           <div class="partner-meta">
-            <strong>Leicestershire Independent Optometry</strong>
-            <span>Synergy Partner &bull; Leicester</span>
+            <strong>Optique Opticians</strong>
+            <span>Practice Partner &bull; Thurmaston &amp; Leicester</span>
+          </div>
+        </div>
+
+        <div class="partner-card partner-card-add">
+          <div class="partner-badge-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+          <div class="partner-meta">
+            <strong>Join Our Network</strong>
+            <span><a href="#partner-enquiry" style="color:var(--ep-teal-bright);text-decoration:underline">Become a Partner Practice &rarr;</a></span>
+          </div>
+        </div>
+
+        <!-- Set 2 (Exact duplicate for seamless continuous loop) -->
+        <div class="partner-card">
+          <div class="partner-logo-pill">
+            <img src="__PINDERS_SRC__" alt="Pinders Opticians" loading="lazy">
+          </div>
+          <div class="partner-meta">
+            <strong>Pinders Opticians</strong>
+            <span>Founding Partner &bull; Mansfield &amp; Southwell</span>
+          </div>
+        </div>
+
+        <div class="partner-card">
+          <div class="partner-logo-pill">
+            <img src="__OPTIQUE_SRC__" alt="Optique Opticians" loading="lazy">
+          </div>
+          <div class="partner-meta">
+            <strong>Optique Opticians</strong>
+            <span>Practice Partner &bull; Thurmaston &amp; Leicester</span>
+          </div>
+        </div>
+
+        <div class="partner-card partner-card-add">
+          <div class="partner-badge-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+          <div class="partner-meta">
+            <strong>Join Our Network</strong>
+            <span><a href="#partner-enquiry" style="color:var(--ep-teal-bright);text-decoration:underline">Become a Partner Practice &rarr;</a></span>
+          </div>
+        </div>
+
+        <div class="partner-card">
+          <div class="partner-logo-pill">
+            <img src="__PINDERS_SRC__" alt="Pinders Opticians" loading="lazy">
+          </div>
+          <div class="partner-meta">
+            <strong>Pinders Opticians</strong>
+            <span>Founding Partner &bull; Mansfield &amp; Southwell</span>
+          </div>
+        </div>
+
+        <div class="partner-card">
+          <div class="partner-logo-pill">
+            <img src="__OPTIQUE_SRC__" alt="Optique Opticians" loading="lazy">
+          </div>
+          <div class="partner-meta">
+            <strong>Optique Opticians</strong>
+            <span>Practice Partner &bull; Thurmaston &amp; Leicester</span>
+          </div>
+        </div>
+
+        <div class="partner-card partner-card-add">
+          <div class="partner-badge-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+          <div class="partner-meta">
+            <strong>Join Our Network</strong>
+            <span><a href="#partner-enquiry" style="color:var(--ep-teal-bright);text-decoration:underline">Become a Partner Practice &rarr;</a></span>
+          </div>
+        </div>
+
+        <div class="partner-card">
+          <div class="partner-logo-pill">
+            <img src="__PINDERS_SRC__" alt="Pinders Opticians" loading="lazy">
+          </div>
+          <div class="partner-meta">
+            <strong>Pinders Opticians</strong>
+            <span>Founding Partner &bull; Mansfield &amp; Southwell</span>
+          </div>
+        </div>
+
+        <div class="partner-card">
+          <div class="partner-logo-pill">
+            <img src="__OPTIQUE_SRC__" alt="Optique Opticians" loading="lazy">
+          </div>
+          <div class="partner-meta">
+            <strong>Optique Opticians</strong>
+            <span>Practice Partner &bull; Thurmaston &amp; Leicester</span>
           </div>
         </div>
 
