@@ -2037,7 +2037,7 @@ h4{{font-size:1.05rem;font-weight:700}}
           <img src="{y_src}" alt="Ms Yasmine Abdalla" class="consultant-photo" loading="lazy">
           <div class="consultant-title-group">
             <h3>Ms Yasmine Abdalla</h3>
-            <p class="consultant-role">Medical Director &amp; Co-Founder, EyePros</p>
+            <p class="consultant-role">Medical Director, EyePros</p>
             <div class="consultant-credentials">
               <span class="cred-badge">MBBCh</span>
               <span class="cred-badge">MSc</span>
