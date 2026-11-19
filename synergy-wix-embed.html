@@ -66,7 +66,6 @@ html{
   scroll-behavior:smooth;
   -webkit-text-size-adjust:100%;
   scroll-padding-top:84px;
-  overflow-x:hidden;
 }
 body{
   font-family:var(--font-sans);
@@ -76,9 +75,10 @@ body{
   background-color:var(--bg-page);
   background-image:linear-gradient(180deg, #091728 0%, #0C1E34 25%, #0F2744 50%, #0C1E34 75%, #081524 100%);
   -webkit-font-smoothing:antialiased;
-  overflow-x:hidden;
   position:relative;
   width:100%;
+  padding-top:74px;
+  overflow-x:clip;
 }
 section,[id]{scroll-margin-top:84px}
 img{max-width:100%;display:block}
@@ -322,22 +322,25 @@ h4{font-size:0.92rem;font-weight:700}
   transform: translateX(3px);
 }
 
-/* ═══ Sticky Glass Navigation with Smooth Transitions ═══ */
+/* ═══ Fixed Glass Navigation with Smooth Transitions ═══ */
 .nav {
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 100;
-  background: rgba(12, 30, 52, 0.82);
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
+  background: rgba(12, 30, 52, 0.88);
   border-bottom: 1px solid rgba(255, 255, 255, 0.10);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.32);
   transition: background 0.3s var(--ease-smooth), border-color 0.3s ease, box-shadow 0.3s ease;
 }
 .nav.scrolled {
-  background: rgba(9, 23, 40, 0.94);
-  border-bottom-color: rgba(45, 212, 191, 0.25);
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+  background: rgba(9, 23, 40, 0.96);
+  border-bottom-color: rgba(45, 212, 191, 0.30);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.55);
 }
 .nav-inner {
   max-width: var(--max-w);
@@ -1370,13 +1373,13 @@ h4{font-size:0.92rem;font-weight:700}
 }
 
 @media (max-width: 768px) {
-  body { font-size: 15px; }
+  body { font-size: 15px; padding-top: 58px; }
   .section { padding: 42px 0; }
   .nav-inner { height: 58px; padding: 0 16px; }
   .nav-links {
     display: none;
     position: absolute;
-    top: 62px;
+    top: 58px;
     left: 0;
     right: 0;
     background: #091728;
