@@ -9,20 +9,21 @@ with open("synergy-wix-embed.html", "r", encoding="utf-8") as f:
 with open('images/synergy-logo-new.png', 'rb') as f_logo:
     logo_b64 = 'data:image/png;base64,' + base64.b64encode(f_logo.read()).decode('utf-8')
 
-ahmad_m = re.search(r'img src="(data:image/jpeg;base64,[A-Za-z0-9+/=]+)" alt="Mr Ahmad Elsahn', orig)
-yasmine_m = re.search(r'img src="(data:image/jpeg;base64,[A-Za-z0-9+/=]+)" alt="Ms Yasmine Abdalla', orig)
-pinders_m = re.search(r'img src="(data:image/png;base64,[A-Za-z0-9+/=]+)" alt="Pinders Opticians', orig)
+# Load square consultant headshots for perfect framing & eye-level alignment
+with open('images/elsahn-headshot-square.jpg', 'rb') as f_ahmad:
+    ahmad_b64 = 'data:image/jpeg;base64,' + base64.b64encode(f_ahmad.read()).decode('utf-8')
+with open('images/abdalla-headshot-square.jpg', 'rb') as f_yasmine:
+    yasmine_b64 = 'data:image/jpeg;base64,' + base64.b64encode(f_yasmine.read()).decode('utf-8')
 
-ahmad_b64 = ahmad_m.group(1) if ahmad_m else "images/elsahn-headshot.jpg"
-yasmine_b64 = yasmine_m.group(1) if yasmine_m else "images/abdalla-headshot.jpg"
+pinders_m = re.search(r'img src="(data:image/png;base64,[A-Za-z0-9+/=]+)" alt="Pinders Opticians', orig)
 pinders_b64 = pinders_m.group(1) if pinders_m else "images/partner-pinders.png"
 with open('images/synergy-hero-secret.jpg', 'rb') as f_img:
     hero_b64 = 'data:image/jpeg;base64,' + base64.b64encode(f_img.read()).decode('utf-8')
 
 def build_page(is_embed=True):
     l_src = logo_b64 if is_embed else "images/synergy-logo-new.png"
-    a_src = ahmad_b64 if is_embed else "images/elsahn-headshot.jpg"
-    y_src = yasmine_b64 if is_embed else "images/abdalla-headshot.jpg"
+    a_src = ahmad_b64 if is_embed else "images/elsahn-headshot-square.jpg"
+    y_src = yasmine_b64 if is_embed else "images/abdalla-headshot-square.jpg"
     p_src = pinders_b64 if is_embed else "images/partner-pinders.png"
     hero_img = hero_b64 if is_embed else "images/synergy-hero-secret.jpg"
 
@@ -718,12 +719,14 @@ h4{font-size:0.92rem;font-weight:700}
   margin-bottom: 14px;
 }
 .consultant-photo {
-  width: 62px;
-  height: 62px;
-  border-radius: 12px;
+  width: 72px;
+  height: 72px;
+  border-radius: 14px;
   object-fit: cover;
+  object-position: center;
   border: 2px solid var(--ep-teal-bright);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.40);
+  flex-shrink: 0;
 }
 .consultant-title-group h3 {
   font-size: 1.10rem;
