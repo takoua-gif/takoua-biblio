@@ -474,25 +474,17 @@ h4{font-size:0.92rem;font-weight:700}
   max-width: 580px;
 }
 .hero h1 {
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
-.hero-cream-banner {
-  background: #ECE6DB;
-  border-radius: 8px;
-  padding: 10px 18px;
-  margin: 12px 0 16px;
-  display: block;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-}
-.hero-cream-banner span {
+.hero-tagline {
   font-family: var(--font-display);
   font-style: italic;
   font-weight: 700;
-  font-size: 1.25rem;
-  color: #1E293B;
+  font-size: clamp(1.25rem, 1.8vw, 1.55rem);
+  margin: 4px 0 16px;
   letter-spacing: -0.01em;
+  line-height: 1.3;
   display: block;
-  line-height: 1.25;
 }
 .hero-sub {
   font-size: 0.96rem;
@@ -1534,9 +1526,7 @@ h4{font-size:0.92rem;font-weight:700}
           UK INDEPENDENT OPTOMETRY SHARED CARE
         </div>
         <h1>Specialist eye care. A connected care partnership.</h1>
-        <div class="hero-cream-banner">
-          <span>Better together.</span>
-        </div>
+        <div class="hero-tagline text-gradient">Better together.</div>
         <p class="hero-sub">A shared-care partnership for independent optometrists.</p>
         <div class="hero-ctas">
           <a href="#partner-enquiry" class="btn btn-primary">
