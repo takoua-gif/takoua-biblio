@@ -98,6 +98,7 @@ html{
   scroll-behavior:smooth;
   -webkit-text-size-adjust:100%;
   scroll-padding-top:84px;
+  overflow-x:hidden;
 }
 body{
   font-family:var(--font-sans);
@@ -109,8 +110,9 @@ body{
   -webkit-font-smoothing:antialiased;
   position:relative;
   width:100%;
+  max-width:100%;
   padding-top:74px;
-  overflow-x:clip;
+  overflow-x:hidden;
 }
 section,[id]{scroll-margin-top:84px}
 img{max-width:100%;display:block}
@@ -141,13 +143,13 @@ h4{font-size:0.92rem;font-weight:700}
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
   contain: paint;
-  max-width: 100vw;
+  max-width: 100%;
 }
 .aurora-blob {
   position: absolute;
@@ -824,7 +826,9 @@ h4{font-size:0.92rem;font-weight:700}
 .partner-carousel-wrap {
   position: relative;
   width: 100%;
+  max-width: 100%;
   overflow: hidden;
+  contain: paint;
   mask-image: linear-gradient(90deg, transparent 0%, #000000 12%, #000000 88%, transparent 100%);
   -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000000 12%, #000000 88%, transparent 100%);
 }
