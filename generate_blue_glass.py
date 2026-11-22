@@ -1813,7 +1813,7 @@ dialog:modal {
         </div>
       </div>
 
-      <!-- Card 4: Protected Patient Relationship & 7-Day Discharge -->
+      <!-- Card 4: Protected Patient Relationship & 7-Day Review -->
       <div class="simple-bento-card">
         <div class="card-top">
           <div class="card-header-row">
@@ -1822,11 +1822,11 @@ dialog:modal {
             </div>
             <span class="card-tag">PATIENT RETENTION GUARANTEE</span>
           </div>
-          <h3>Protected Patient Relationship &amp; 7-Day Discharge</h3>
+          <h3>Protected Patient Relationship &amp; 7-Day Review</h3>
           <p>Your patients stay yours. We perform the surgery and return them with full clinical handover within 7 days. You manage post-op review and all future dispensing.</p>
         </div>
         <div class="card-pill-row">
-          <span class="card-pill">Electronic Discharge in 7 Days</span>
+          <span class="card-pill">Electronic Review in 7 Days</span>
           <span class="card-pill">Post-op Biometry Shared</span>
           <span class="card-pill">Ongoing Optical Dispensing</span>
         </div>
@@ -1872,7 +1872,7 @@ dialog:modal {
       <div class="pathway-card">
         <div class="step-num">4</div>
         <div class="step-actor">EYEPROS &rarr; YOU</div>
-        <h4>7-Day Discharge</h4>
+        <h4>7-Day Review</h4>
         <p>Electronic discharge letter, surgical notes, and post-op medication plan securely sent to your practice within 7 days.</p>
       </div>
 
@@ -1938,7 +1938,6 @@ dialog:modal {
               <span class="cred-badge">MBBCh</span>
               <span class="cred-badge">MSc</span>
               <span class="cred-badge">FRCOphth</span>
-              <span class="cred-badge">Retina Fellow</span>
             </div>
           </div>
         </div>
@@ -1968,7 +1967,7 @@ dialog:modal {
       </div>
       <div class="gov-card">
         <h4><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>Substantive NHS Standards</h4>
-        <p>All consultants hold active substantive NHS appointments with specialist royal college fellowship credentials.</p>
+        <p>All consultants hold active substantive NHS appointments with specialist Fellowship training.</p>
       </div>
       <div class="gov-card">
         <h4><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>NOD Audit Governance</h4>
@@ -2250,7 +2249,7 @@ dialog:modal {
           <span class="fee-upto-spacer">&nbsp;</span>
           <div class="fee-val">&pound;120<span class="fee-cycle">/course</span></div>
         </div>
-        <h4>EyeSpa Advanced Ocular Surface</h4>
+        <h4>EyeSpa Dry Eye Protocols</h4>
         <p>Dedicated clinical course for meibomian gland dysfunction, blepharitis, and severe dry eye.</p>
       </div>
 
@@ -2261,7 +2260,7 @@ dialog:modal {
           <span class="fee-upto-spacer">&nbsp;</span>
           <div class="fee-val">&pound;60</div>
         </div>
-        <h4>Lacryfill Cross-Linked HA</h4>
+        <h4>Lacryfill Injections</h4>
         <p>Advanced cross-linked hyaluronic acid punctal occlusion for chronic ocular surface disease.</p>
       </div>
     </div>
