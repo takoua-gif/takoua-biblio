@@ -583,7 +583,7 @@ h4{font-size:0.92rem;font-weight:700}
 .simple-bento-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  gap: 14px;
 }
 .simple-bento-card {
   background: var(--glass-bg);
@@ -591,11 +591,12 @@ h4{font-size:0.92rem;font-weight:700}
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
   border-radius: var(--radius-md);
-  padding: 22px 22px;
+  padding: 16px 18px;
   box-shadow: var(--glass-shadow), var(--glass-specular);
   transition: transform 0.3s var(--ease-smooth), border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
   display: flex;
   flex-direction: column;
+  gap: 6px;
 }
 .simple-bento-card:hover {
   background: var(--glass-bg-hover);
@@ -603,40 +604,48 @@ h4{font-size:0.92rem;font-weight:700}
   transform: translateY(-3px);
   box-shadow: 0 14px 36px rgba(0, 0, 0, 0.35), 0 0 20px var(--ep-teal-glow), var(--glass-specular);
 }
+/* Icon + tag on same row */
+.card-header-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 2px;
+}
 .card-icon-bubble {
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
   background: var(--ep-teal-tint);
   border: 1px solid rgba(45, 212, 191, 0.30);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   color: var(--ep-teal-bright);
-  margin-bottom: 12px;
+  flex-shrink: 0;
 }
 .card-icon-bubble svg {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
 }
 .card-tag {
   display: inline-block;
-  font-size: 0.64rem;
+  font-size: 0.62rem;
   font-weight: 700;
   letter-spacing: 0.10em;
   text-transform: uppercase;
   color: var(--ep-teal-bright);
-  margin-bottom: 6px;
 }
 .simple-bento-card h3 {
-  font-size: 1.05rem;
-  margin-bottom: 8px;
+  font-size: 0.97rem;
+  margin: 0 0 4px;
   color: var(--text-white);
+  line-height: 1.3;
 }
 .simple-bento-card p {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   color: var(--text-body);
-  line-height: 1.5;
+  line-height: 1.45;
+  margin: 0;
 }
 .card-pill-row {
   display: flex;
@@ -1388,14 +1397,47 @@ dialog:modal {
 }
 .contact-card h3 {
   font-size: 1.05rem;
-  margin-bottom: 4px;
+  margin-bottom: 14px;
   color: var(--text-white);
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
-.contact-card p {
-  font-size: 0.80rem;
-  color: var(--text-muted);
-  margin-bottom: 16px;
+/* Info tooltip icon */
+.info-tip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: default;
+  flex-shrink: 0;
 }
+.info-tip svg {
+  width: 15px;
+  height: 15px;
+  color: var(--ep-teal-bright);
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+.info-tip:hover svg { opacity: 1; }
+.info-tip-bubble {
+  display: none;
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 8px);
+  transform: translateX(-50%);
+  background: rgba(8, 20, 36, 0.97);
+  border: 1px solid rgba(45, 212, 191, 0.3);
+  border-radius: 8px;
+  padding: 9px 12px;
+  width: 230px;
+  font-size: 0.75rem;
+  color: var(--text-body);
+  line-height: 1.4;
+  z-index: 50;
+  pointer-events: none;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+.info-tip:hover .info-tip-bubble { display: block; }
 .contact-links {
   display: flex;
   flex-direction: column;
@@ -1702,12 +1744,14 @@ dialog:modal {
     <div class="simple-bento-grid">
       <!-- Card 1: Direct Named-Surgeon Continuity & Access -->
       <div class="simple-bento-card">
-        <div class="card-icon-bubble">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+        <div class="card-header-row">
+          <div class="card-icon-bubble">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+          </div>
+          <span class="card-tag">NO CALL CENTRES &bull; NO INTERMEDIARIES</span>
         </div>
-        <span class="card-tag">NO CALL CENTRES &bull; NO INTERMEDIARIES</span>
-        <h3>Direct Named-Surgeon Continuity &amp; Access</h3>
-        <p>You and your patient have direct contact with the named operating consultant ophthalmologist from first assessment through day-case surgery and discharge. If a clinical question arises, you speak directly with the surgeon who performed the operation.</p>
+        <h3>Direct Named-Surgeon Access</h3>
+        <p>You and your patient have direct contact with the named operating consultant — from first assessment through surgery and discharge. Clinical questions go straight to the surgeon who operated.</p>
         <div class="card-pill-row">
           <span class="card-pill">Named Consultant Access</span>
           <span class="card-pill">Direct Clinical Dialogue</span>
@@ -1717,12 +1761,14 @@ dialog:modal {
 
       <!-- Card 2: Syndesis Platform -->
       <div class="simple-bento-card">
-        <div class="card-icon-bubble">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        <div class="card-header-row">
+          <div class="card-icon-bubble">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <span class="card-tag">DEDICATED DIGITAL PLATFORM</span>
         </div>
-        <span class="card-tag">DEDICATED DIGITAL PLATFORM</span>
-        <h3>Communication through a dedicated platform: Syndesis</h3>
-        <p>Refer in under 2 minutes, upload scans securely, and track your patient's clinical journey in real time with automated status alerts. Fast, transparent peer-to-peer communication without paperwork friction.</p>
+        <h3>Refer via Syndesis in under 2 minutes</h3>
+        <p>Upload scans securely, track your patient's journey in real time, and receive automated status alerts — no paperwork, no friction.</p>
         <div class="card-pill-row">
           <span class="card-pill">Under 2-Min Submissions</span>
           <span class="card-pill">Real-Time Patient Tracker</span>
@@ -1736,12 +1782,14 @@ dialog:modal {
 
       <!-- Card 3: Complete Team Training -->
       <div class="simple-bento-card">
-        <div class="card-icon-bubble">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        <div class="card-header-row">
+          <div class="card-icon-bubble">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          </div>
+          <span class="card-tag">PRACTICE EMPOWERMENT</span>
         </div>
-        <span class="card-tag">PRACTICE EMPOWERMENT</span>
         <h3>Complete Team Training &amp; Support</h3>
-        <p>EyePros provides dedicated training for your partner practice teams on using the Syndesis referral platform and tracking their patients. Your optometrists, dispensing opticians, and front-of-house teams receive 1-on-1 portal walkthroughs and triage protocols.</p>
+        <p>Dedicated onboarding for your whole team — optometrists, dispensing opticians, and front-of-house — with 1-on-1 Syndesis walkthroughs and triage protocols.</p>
         <div class="card-pill-row">
           <span class="card-pill">Practice Onboarding</span>
           <span class="card-pill">Front-of-House Triage</span>
@@ -1751,12 +1799,14 @@ dialog:modal {
 
       <!-- Card 4: Protected Patient Relationship & 7-Day Discharge -->
       <div class="simple-bento-card">
-        <div class="card-icon-bubble">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <div class="card-header-row">
+          <div class="card-icon-bubble">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <span class="card-tag">PATIENT RETENTION GUARANTEE</span>
         </div>
-        <span class="card-tag">PATIENT RETENTION GUARANTEE</span>
         <h3>Protected Patient Relationship &amp; 7-Day Discharge</h3>
-        <p>Your patients remain your patients. We perform the surgical episode and return them to your care with full clinical handover within 7 days. You manage the post-operative review and continue all future spectacle dispensing and eye examinations.</p>
+        <p>Your patients stay yours. We perform the surgery and return them with full clinical handover within 7 days — you manage post-op review and all future dispensing.</p>
         <div class="card-pill-row">
           <span class="card-pill">Electronic Discharge in 7 Days</span>
           <span class="card-pill">Post-op Biometry Shared</span>
@@ -2291,8 +2341,12 @@ dialog:modal {
 
       <!-- Direct Clinical Helpline Card -->
       <div class="contact-card">
-        <h3>Direct Clinical Helpline</h3>
-        <p>Speak directly with our partnership director or clinical lead regarding clinical protocols, patient suitability, and Syndesis onboarding.</p>
+        <h3>Direct Clinical Helpline
+          <span class="info-tip" aria-label="About this helpline" tabindex="0">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <span class="info-tip-bubble">Speak directly with our partnership director or clinical lead regarding clinical protocols, patient suitability, and Syndesis onboarding.</span>
+          </span>
+        </h3>
         <div class="contact-links">
           <div class="contact-row">
             <div class="contact-icon">
