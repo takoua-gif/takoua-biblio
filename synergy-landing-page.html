@@ -2722,13 +2722,27 @@ dialog:modal {
 </dialog>
 
 <script>
-// Sticky Navbar scroll transition
+// Detect Wix iframe context and adjust navbar positioning
 var mainNav = document.getElementById('mainNav');
+var inIframe = false;
+try { inIframe = (window.self !== window.top); } catch(e) { inIframe = true; }
+
+if (inIframe && mainNav) {
+  // Inside Wix iframe: switch from fixed to sticky so nav stays within the embed
+  mainNav.style.position = 'sticky';
+  mainNav.style.top = '0';
+  // Remove body padding-top since nav is now in document flow
+  document.body.style.paddingTop = '0';
+  // Keep nav visible from the start
+  mainNav.classList.add('scrolled');
+}
+
+// Sticky Navbar scroll transition
 window.addEventListener('scroll', function() {
   if (window.scrollY > 25) {
     mainNav.classList.add('scrolled');
   } else {
-    mainNav.classList.remove('scrolled');
+    if (!inIframe) mainNav.classList.remove('scrolled');
   }
 }, { passive: true });
 
@@ -2773,7 +2787,8 @@ function scrollToSection(targetId) {
   }
 
   var nav = document.querySelector('.nav');
-  var navHeight = nav ? nav.offsetHeight : 74;
+  // In iframe/Wix context, sticky nav doesn't need extra offset since body padding is removed
+  var navHeight = (inIframe && nav) ? nav.offsetHeight : (nav ? nav.offsetHeight : 74);
   var targetRect = target.getBoundingClientRect();
   var currentY = window.pageYOffset || document.documentElement.scrollTop || 0;
   var targetY = Math.max(0, Math.round(targetRect.top + currentY - navHeight - 12));
