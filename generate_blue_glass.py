@@ -1000,17 +1000,22 @@ dialog:modal {
   gap: 14px;
 }
 .partner-logo-pill {
-  width: 88px;
-  height: 42px;
-  background: rgba(8, 20, 36, 0.85);
-  border-radius: 8px;
+  width: 110px;
+  height: 52px;
+  background: #FFFFFF;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0.08);
   overflow: hidden;
-  padding: 3px 6px;
+  padding: 6px 10px;
   flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+}
+.partner-logo-pill--dark {
+  background: #0C1E34;
+  border: 1px solid rgba(255,255,255,0.15);
 }
 .partner-logo-pill img {
   max-width: 100%;
@@ -1918,7 +1923,7 @@ dialog:modal {
       <div class="partner-carousel-track">
         <!-- Set 1 (6 Partner Practices + Join Card) -->
         <div class="partner-card">
-          <div class="partner-logo-pill">
+          <div class="partner-logo-pill partner-logo-pill--dark">
             <img src="__PINDERS_SRC__" alt="Pinders Opticians" loading="lazy">
           </div>
           <div class="partner-meta">
@@ -1928,7 +1933,7 @@ dialog:modal {
         </div>
 
         <div class="partner-card">
-          <div class="partner-logo-pill">
+          <div class="partner-logo-pill partner-logo-pill--dark">
             <img src="__OPTIQUE_SRC__" alt="Optique Opticians" loading="lazy">
           </div>
           <div class="partner-meta">
@@ -1989,7 +1994,7 @@ dialog:modal {
 
         <!-- Set 2 (Exact duplicate for seamless continuous loop) -->
         <div class="partner-card">
-          <div class="partner-logo-pill">
+          <div class="partner-logo-pill partner-logo-pill--dark">
             <img src="__PINDERS_SRC__" alt="Pinders Opticians" loading="lazy">
           </div>
           <div class="partner-meta">
@@ -1999,7 +2004,7 @@ dialog:modal {
         </div>
 
         <div class="partner-card">
-          <div class="partner-logo-pill">
+          <div class="partner-logo-pill partner-logo-pill--dark">
             <img src="__OPTIQUE_SRC__" alt="Optique Opticians" loading="lazy">
           </div>
           <div class="partner-meta">
