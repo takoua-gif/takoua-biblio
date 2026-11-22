@@ -584,7 +584,6 @@ h4{font-size:0.92rem;font-weight:700}
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 14px;
-  align-items: start;
 }
 .simple-bento-card {
   background: var(--glass-bg);
@@ -598,6 +597,7 @@ h4{font-size:0.92rem;font-weight:700}
   display: flex;
   flex-direction: column;
   gap: 6px;
+  justify-content: space-between;
 }
 .simple-bento-card:hover {
   background: var(--glass-bg-hover);
@@ -647,12 +647,13 @@ h4{font-size:0.92rem;font-weight:700}
   color: var(--text-body);
   line-height: 1.45;
   margin: 0;
+  flex-grow: 1;
 }
 .card-pill-row {
   display: flex;
   gap: 6px;
   flex-wrap: wrap;
-  margin-top: 14px;
+  margin-top: 10px;
 }
 .card-pill {
   font-size: 0.70rem;
