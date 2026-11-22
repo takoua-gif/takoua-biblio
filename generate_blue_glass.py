@@ -19,6 +19,14 @@ with open('images/partner-pinders.png', 'rb') as f_pinders:
     pinders_b64 = 'data:image/png;base64,' + base64.b64encode(f_pinders.read()).decode('utf-8')
 with open('images/partner-optique.png', 'rb') as f_optique:
     optique_b64 = 'data:image/png;base64,' + base64.b64encode(f_optique.read()).decode('utf-8')
+with open('images/partner-diblow.png', 'rb') as f_diblow:
+    diblow_b64 = 'data:image/png;base64,' + base64.b64encode(f_diblow.read()).decode('utf-8')
+with open('images/partner-oakwood.png', 'rb') as f_oakwood:
+    oakwood_b64 = 'data:image/png;base64,' + base64.b64encode(f_oakwood.read()).decode('utf-8')
+with open('images/partner-alvaston.png', 'rb') as f_alvaston:
+    alvaston_b64 = 'data:image/png;base64,' + base64.b64encode(f_alvaston.read()).decode('utf-8')
+with open('images/partner-kimberley.png', 'rb') as f_kimberley:
+    kimberley_b64 = 'data:image/png;base64,' + base64.b64encode(f_kimberley.read()).decode('utf-8')
 with open('images/synergy-hero-secret.jpg', 'rb') as f_img:
     hero_b64 = 'data:image/jpeg;base64,' + base64.b64encode(f_img.read()).decode('utf-8')
 
@@ -28,6 +36,10 @@ def build_page(is_embed=True):
     y_src = yasmine_b64 if is_embed else "images/abdalla-headshot-square.jpg"
     p_src = pinders_b64 if is_embed else "images/partner-pinders.png"
     o_src = optique_b64 if is_embed else "images/partner-optique.png"
+    di_src = diblow_b64 if is_embed else "images/partner-diblow.png"
+    oak_src = oakwood_b64 if is_embed else "images/partner-oakwood.png"
+    alv_src = alvaston_b64 if is_embed else "images/partner-alvaston.png"
+    kim_src = kimberley_b64 if is_embed else "images/partner-kimberley.png"
     hero_img = hero_b64 if is_embed else "images/synergy-hero-secret.jpg"
 
     template = """
@@ -870,7 +882,7 @@ h4{font-size:0.92rem;font-weight:700}
   display: flex;
   gap: 18px;
   width: max-content;
-  animation: partnerMarquee 38s linear infinite;
+  animation: partnerMarquee 45s linear infinite;
 }
 .partner-carousel-track:hover {
   animation-play-state: paused;
@@ -880,7 +892,7 @@ h4{font-size:0.92rem;font-weight:700}
   100% { transform: translateX(-50%); }
 }
 .partner-card {
-  min-width: 310px;
+  min-width: 325px;
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.14);
   backdrop-filter: blur(16px);
@@ -892,7 +904,7 @@ h4{font-size:0.92rem;font-weight:700}
   gap: 14px;
 }
 .partner-logo-pill {
-  width: 78px;
+  width: 88px;
   height: 42px;
   background: rgba(8, 20, 36, 0.85);
   border-radius: 8px;
@@ -901,7 +913,7 @@ h4{font-size:0.92rem;font-weight:700}
   justify-content: center;
   border: 1px solid rgba(255, 255, 255, 0.15);
   overflow: hidden;
-  padding: 4px 6px;
+  padding: 3px 6px;
   flex-shrink: 0;
 }
 .partner-logo-pill img {
@@ -1808,7 +1820,7 @@ h4{font-size:0.92rem;font-weight:700}
     <!-- Infinite Carousel Marquee -->
     <div class="partner-carousel-wrap">
       <div class="partner-carousel-track">
-        <!-- Set 1 (Cycles of Pinders, Optique, Join) -->
+        <!-- Set 1 (6 Partner Practices + Join Card) -->
         <div class="partner-card">
           <div class="partner-logo-pill">
             <img src="__PINDERS_SRC__" alt="Pinders Opticians" loading="lazy">
@@ -1829,69 +1841,49 @@ h4{font-size:0.92rem;font-weight:700}
           </div>
         </div>
 
-        <div class="partner-card partner-card-add">
-          <div class="partner-badge-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <div class="partner-card">
+          <div class="partner-logo-pill">
+            <img src="__DIBLOW_SRC__" alt="D.I. Blow Opticians" loading="lazy">
           </div>
           <div class="partner-meta">
-            <strong>Join Our Network</strong>
-            <span><a href="#partner-enquiry" style="color:var(--ep-teal-bright);text-decoration:underline">Become a Partner Practice &rarr;</a></span>
+            <strong>D.I. Blow Opticians</strong>
+            <span>Practice Partner &bull; Nottinghamshire &amp; Derbyshire</span>
           </div>
         </div>
 
         <div class="partner-card">
           <div class="partner-logo-pill">
-            <img src="__PINDERS_SRC__" alt="Pinders Opticians" loading="lazy">
+            <img src="__OAKWOOD_SRC__" alt="Oakwood Eyecare" loading="lazy">
           </div>
           <div class="partner-meta">
-            <strong>Pinders Opticians</strong>
-            <span>Founding Partner &bull; Mansfield &amp; Southwell</span>
+            <strong>Oakwood Eyecare</strong>
+            <span>Practice Partner &bull; Oakwood, Derby</span>
           </div>
         </div>
 
         <div class="partner-card">
           <div class="partner-logo-pill">
-            <img src="__OPTIQUE_SRC__" alt="Optique Opticians" loading="lazy">
+            <img src="__ALVASTON_SRC__" alt="Alvaston Opticians" loading="lazy">
           </div>
           <div class="partner-meta">
-            <strong>Optique Opticians</strong>
-            <span>Practice Partner &bull; Thurmaston &amp; Leicester</span>
-          </div>
-        </div>
-
-        <div class="partner-card partner-card-add">
-          <div class="partner-badge-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </div>
-          <div class="partner-meta">
-            <strong>Join Our Network</strong>
-            <span><a href="#partner-enquiry" style="color:var(--ep-teal-bright);text-decoration:underline">Become a Partner Practice &rarr;</a></span>
+            <strong>Alvaston Opticians</strong>
+            <span>Practice Partner &bull; Alvaston, Derby</span>
           </div>
         </div>
 
         <div class="partner-card">
           <div class="partner-logo-pill">
-            <img src="__PINDERS_SRC__" alt="Pinders Opticians" loading="lazy">
+            <img src="__KIMBERLEY_SRC__" alt="Kimberley Opticians" loading="lazy">
           </div>
           <div class="partner-meta">
-            <strong>Pinders Opticians</strong>
-            <span>Founding Partner &bull; Mansfield &amp; Southwell</span>
-          </div>
-        </div>
-
-        <div class="partner-card">
-          <div class="partner-logo-pill">
-            <img src="__OPTIQUE_SRC__" alt="Optique Opticians" loading="lazy">
-          </div>
-          <div class="partner-meta">
-            <strong>Optique Opticians</strong>
-            <span>Practice Partner &bull; Thurmaston &amp; Leicester</span>
+            <strong>Kimberley Opticians</strong>
+            <span>Practice Partner &bull; Kimberley, Nottinghamshire</span>
           </div>
         </div>
 
         <div class="partner-card partner-card-add">
           <div class="partner-badge-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           </div>
           <div class="partner-meta">
             <strong>Join Our Network</strong>
@@ -1920,69 +1912,49 @@ h4{font-size:0.92rem;font-weight:700}
           </div>
         </div>
 
-        <div class="partner-card partner-card-add">
-          <div class="partner-badge-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <div class="partner-card">
+          <div class="partner-logo-pill">
+            <img src="__DIBLOW_SRC__" alt="D.I. Blow Opticians" loading="lazy">
           </div>
           <div class="partner-meta">
-            <strong>Join Our Network</strong>
-            <span><a href="#partner-enquiry" style="color:var(--ep-teal-bright);text-decoration:underline">Become a Partner Practice &rarr;</a></span>
+            <strong>D.I. Blow Opticians</strong>
+            <span>Practice Partner &bull; Nottinghamshire &amp; Derbyshire</span>
           </div>
         </div>
 
         <div class="partner-card">
           <div class="partner-logo-pill">
-            <img src="__PINDERS_SRC__" alt="Pinders Opticians" loading="lazy">
+            <img src="__OAKWOOD_SRC__" alt="Oakwood Eyecare" loading="lazy">
           </div>
           <div class="partner-meta">
-            <strong>Pinders Opticians</strong>
-            <span>Founding Partner &bull; Mansfield &amp; Southwell</span>
+            <strong>Oakwood Eyecare</strong>
+            <span>Practice Partner &bull; Oakwood, Derby</span>
           </div>
         </div>
 
         <div class="partner-card">
           <div class="partner-logo-pill">
-            <img src="__OPTIQUE_SRC__" alt="Optique Opticians" loading="lazy">
+            <img src="__ALVASTON_SRC__" alt="Alvaston Opticians" loading="lazy">
           </div>
           <div class="partner-meta">
-            <strong>Optique Opticians</strong>
-            <span>Practice Partner &bull; Thurmaston &amp; Leicester</span>
-          </div>
-        </div>
-
-        <div class="partner-card partner-card-add">
-          <div class="partner-badge-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </div>
-          <div class="partner-meta">
-            <strong>Join Our Network</strong>
-            <span><a href="#partner-enquiry" style="color:var(--ep-teal-bright);text-decoration:underline">Become a Partner Practice &rarr;</a></span>
+            <strong>Alvaston Opticians</strong>
+            <span>Practice Partner &bull; Alvaston, Derby</span>
           </div>
         </div>
 
         <div class="partner-card">
           <div class="partner-logo-pill">
-            <img src="__PINDERS_SRC__" alt="Pinders Opticians" loading="lazy">
+            <img src="__KIMBERLEY_SRC__" alt="Kimberley Opticians" loading="lazy">
           </div>
           <div class="partner-meta">
-            <strong>Pinders Opticians</strong>
-            <span>Founding Partner &bull; Mansfield &amp; Southwell</span>
-          </div>
-        </div>
-
-        <div class="partner-card">
-          <div class="partner-logo-pill">
-            <img src="__OPTIQUE_SRC__" alt="Optique Opticians" loading="lazy">
-          </div>
-          <div class="partner-meta">
-            <strong>Optique Opticians</strong>
-            <span>Practice Partner &bull; Thurmaston &amp; Leicester</span>
+            <strong>Kimberley Opticians</strong>
+            <span>Practice Partner &bull; Kimberley, Nottinghamshire</span>
           </div>
         </div>
 
         <div class="partner-card partner-card-add">
           <div class="partner-badge-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           </div>
           <div class="partner-meta">
             <strong>Join Our Network</strong>
@@ -2575,6 +2547,10 @@ if (partnerForm) {
     html = html.replace('__YASMINE_SRC__', y_src)
     html = html.replace('__PINDERS_SRC__', p_src)
     html = html.replace('__OPTIQUE_SRC__', o_src)
+    html = html.replace('__DIBLOW_SRC__', di_src)
+    html = html.replace('__OAKWOOD_SRC__', oak_src)
+    html = html.replace('__ALVASTON_SRC__', alv_src)
+    html = html.replace('__KIMBERLEY_SRC__', kim_src)
     html = html.replace('__HERO_IMG__', hero_img)
     return html
 
