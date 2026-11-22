@@ -1498,11 +1498,45 @@ dialog:modal {
   font-weight: 600;
 }
 .contact-text small {
-  display: block;
-  font-size: 0.70rem;
-  color: var(--text-muted);
-  margin-top: 2px;
+  display: none;
 }
+.contact-row-tip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  margin-left: 5px;
+  cursor: default;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+.contact-row-tip svg {
+  width: 13px;
+  height: 13px;
+  color: var(--ep-teal-bright);
+  opacity: 0.55;
+  transition: opacity 0.2s;
+}
+.contact-row-tip:hover svg { opacity: 1; }
+.contact-row-tip-bubble {
+  display: none;
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 7px);
+  transform: translateX(-50%);
+  background: rgba(8, 20, 36, 0.97);
+  border: 1px solid rgba(45, 212, 191, 0.3);
+  border-radius: 8px;
+  padding: 8px 11px;
+  width: 200px;
+  font-size: 0.72rem;
+  color: var(--text-body);
+  line-height: 1.4;
+  z-index: 50;
+  pointer-events: none;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  white-space: normal;
+}
+.contact-row-tip:hover .contact-row-tip-bubble { display: block; }
 
 /* ═══ FAQ Accordion ═══ */
 .faq-list {
@@ -2341,7 +2375,7 @@ dialog:modal {
           </li>
           <li>
             <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-            <span><strong>Zero Referral Quotas:</strong> Co-manage 1 or 20 patients &mdash; fee remains &pound;250</span>
+            <span><strong>Zero Referral Quotas:</strong> Co-manage 1 or 20 patients, fee remains &pound;250</span>
           </li>
           <li>
             <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
@@ -2552,8 +2586,13 @@ dialog:modal {
             </div>
             <div class="contact-text">
               <strong>Practice Enquiries</strong>
-              <a href="tel:03337727277">0333 77 272 77</a>
-              <small>Mon &ndash; Fri &bull; 8:30am &ndash; 6:00pm</small>
+              <div style="display:flex;align-items:center;gap:4px">
+                <a href="tel:03337727277">0333 77 272 77</a>
+                <span class="contact-row-tip" aria-label="Opening hours" tabindex="0">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  <span class="contact-row-tip-bubble">Mon &ndash; Fri &bull; 8:30am &ndash; 6:00pm</span>
+                </span>
+              </div>
             </div>
           </div>
 
@@ -2563,8 +2602,13 @@ dialog:modal {
             </div>
             <div class="contact-text">
               <strong>Priority Clinical Line</strong>
-              <span style="color:var(--ep-teal-bright)">Option 5 (Clinician-to-Clinician)</span>
-              <small>Direct access for triage and post-op queries</small>
+              <div style="display:flex;align-items:center;gap:4px">
+                <span style="color:var(--ep-teal-bright)">Option 5 (Clinician-to-Clinician)</span>
+                <span class="contact-row-tip" aria-label="About priority line" tabindex="0">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  <span class="contact-row-tip-bubble">Direct access for triage and post-op queries</span>
+                </span>
+              </div>
             </div>
           </div>
 
@@ -2574,8 +2618,13 @@ dialog:modal {
             </div>
             <div class="contact-text">
               <strong>Direct Partner Desk</strong>
-              <a href="mailto:practice@eyepros.co.uk">practice@eyepros.co.uk</a>
-              <small>Direct liaison for accreditation &amp; SLAs</small>
+              <div style="display:flex;align-items:center;gap:4px">
+                <a href="mailto:practice@eyepros.co.uk">practice@eyepros.co.uk</a>
+                <span class="contact-row-tip" aria-label="About partner desk" tabindex="0">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  <span class="contact-row-tip-bubble">Direct liaison for accreditation &amp; SLAs</span>
+                </span>
+              </div>
             </div>
           </div>
 
@@ -2585,8 +2634,13 @@ dialog:modal {
             </div>
             <div class="contact-text">
               <strong>Surgical Locations</strong>
-              <span style="color:var(--text-white)">East Midlands Surgical Centres</span>
-              <small>(Nottinghamshire, Derbyshire, Leicestershire)</small>
+              <div style="display:flex;align-items:center;gap:4px">
+                <span style="color:var(--text-white)">East Midlands Surgical Centres</span>
+                <span class="contact-row-tip" aria-label="Surgical locations" tabindex="0">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  <span class="contact-row-tip-bubble">(Nottinghamshire, Derbyshire, Leicestershire)</span>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -2622,7 +2676,7 @@ dialog:modal {
           <span class="faq-icon">+</span>
         </button>
         <div class="faq-a">
-          Yes, absolutely. Our Shared Care Agreement legally protects your patient relationship. EyePros exclusively provides the surgical episode and returns the patient to your consulting room within 7 days for post-op care. We do not provide primary optometric services, spectacles, or contact lenses &mdash; all future dispensing remains 100% with your practice.
+          Yes, absolutely. Our Shared Care Agreement legally protects your patient relationship. EyePros exclusively provides the surgical episode and returns the patient to your consulting room within 7 days for post-op care. We do not provide primary optometric services, spectacles, or contact lenses. All future dispensing remains 100% with your practice.
         </div>
       </div>
 
