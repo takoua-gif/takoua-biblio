@@ -552,7 +552,7 @@ h4{font-size:0.92rem;font-weight:700}
   transition: transform 0.3s var(--ease-smooth), border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 0;
   justify-content: space-between;
 }
 .simple-bento-card:hover {
@@ -603,6 +603,12 @@ h4{font-size:0.92rem;font-weight:700}
   color: var(--text-body);
   line-height: 1.45;
   margin: 0;
+}
+/* card-top grows to fill card, pushing pills to bottom */
+.card-top {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
   flex-grow: 1;
 }
 .card-pill-row {
@@ -1702,14 +1708,16 @@ dialog:modal {
     <div class="simple-bento-grid">
       <!-- Card 1: Direct Named-Surgeon Continuity & Access -->
       <div class="simple-bento-card">
-        <div class="card-header-row">
-          <div class="card-icon-bubble">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+        <div class="card-top">
+          <div class="card-header-row">
+            <div class="card-icon-bubble">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+            </div>
+            <span class="card-tag">NO CALL CENTRES &bull; NO INTERMEDIARIES</span>
           </div>
-          <span class="card-tag">NO CALL CENTRES &bull; NO INTERMEDIARIES</span>
+          <h3>Direct Named-Surgeon Access</h3>
+          <p>You and your patient have direct contact with the named operating consultant, from first assessment through surgery and discharge. Clinical questions go straight to the surgeon who operated.</p>
         </div>
-        <h3>Direct Named-Surgeon Access</h3>
-        <p>You and your patient have direct contact with the named operating consultant, from first assessment through surgery and discharge. Clinical questions go straight to the surgeon who operated.</p>
         <div class="card-pill-row">
           <span class="card-pill">Named Consultant Access</span>
           <span class="card-pill">Direct Clinical Dialogue</span>
@@ -1719,35 +1727,41 @@ dialog:modal {
 
       <!-- Card 2: Syndesis Platform -->
       <div class="simple-bento-card">
-        <div class="card-header-row">
-          <div class="card-icon-bubble">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        <div class="card-top">
+          <div class="card-header-row">
+            <div class="card-icon-bubble">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <span class="card-tag">DEDICATED DIGITAL PLATFORM</span>
           </div>
-          <span class="card-tag">DEDICATED DIGITAL PLATFORM</span>
+          <h3>Refer via Syndesis in under 2 minutes</h3>
+          <p>Upload scans securely, track your patient's journey in real time, and receive automated status alerts. No paperwork, no friction.</p>
         </div>
-        <h3>Refer via Syndesis in under 2 minutes</h3>
-        <p>Upload scans securely, track your patient's journey in real time, and receive automated status alerts. No paperwork, no friction.</p>
-        <div class="card-pill-row">
-          <span class="card-pill">Under 2-Min Submissions</span>
-          <span class="card-pill">Real-Time Patient Tracker</span>
-          <span class="card-pill">Secure Biometry &amp; OCT Uploads</span>
+        <div>
+          <div class="card-pill-row">
+            <span class="card-pill">Under 2-Min Submissions</span>
+            <span class="card-pill">Real-Time Patient Tracker</span>
+            <span class="card-pill">Secure Biometry &amp; OCT Uploads</span>
+          </div>
+          <button type="button" class="card-btn-action" id="openVideoBtn" aria-haspopup="dialog" aria-controls="videoModal" aria-label="Watch video: Explore how to refer with Syndesis">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <span>Explore how to refer with Syndesis</span>
+          </button>
         </div>
-        <button type="button" class="card-btn-action" id="openVideoBtn" aria-haspopup="dialog" aria-controls="videoModal" aria-label="Watch video: Explore how to refer with Syndesis">
-          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          <span>Explore how to refer with Syndesis</span>
-        </button>
       </div>
 
       <!-- Card 3: Complete Team Training -->
       <div class="simple-bento-card">
-        <div class="card-header-row">
-          <div class="card-icon-bubble">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        <div class="card-top">
+          <div class="card-header-row">
+            <div class="card-icon-bubble">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            </div>
+            <span class="card-tag">PRACTICE EMPOWERMENT</span>
           </div>
-          <span class="card-tag">PRACTICE EMPOWERMENT</span>
+          <h3>Complete Team Training &amp; Support</h3>
+          <p>Dedicated onboarding for your whole team: optometrists, dispensing opticians, and front-of-house. Includes 1-on-1 Syndesis walkthroughs and triage protocols.</p>
         </div>
-        <h3>Complete Team Training &amp; Support</h3>
-        <p>Dedicated onboarding for your whole team: optometrists, dispensing opticians, and front-of-house. Includes 1-on-1 Syndesis walkthroughs and triage protocols.</p>
         <div class="card-pill-row">
           <span class="card-pill">Practice Onboarding</span>
           <span class="card-pill">Front-of-House Triage</span>
@@ -1757,14 +1771,16 @@ dialog:modal {
 
       <!-- Card 4: Protected Patient Relationship & 7-Day Discharge -->
       <div class="simple-bento-card">
-        <div class="card-header-row">
-          <div class="card-icon-bubble">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <div class="card-top">
+          <div class="card-header-row">
+            <div class="card-icon-bubble">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <span class="card-tag">PATIENT RETENTION GUARANTEE</span>
           </div>
-          <span class="card-tag">PATIENT RETENTION GUARANTEE</span>
+          <h3>Protected Patient Relationship &amp; 7-Day Discharge</h3>
+          <p>Your patients stay yours. We perform the surgery and return them with full clinical handover within 7 days. You manage post-op review and all future dispensing.</p>
         </div>
-        <h3>Protected Patient Relationship &amp; 7-Day Discharge</h3>
-        <p>Your patients stay yours. We perform the surgery and return them with full clinical handover within 7 days. You manage post-op review and all future dispensing.</p>
         <div class="card-pill-row">
           <span class="card-pill">Electronic Discharge in 7 Days</span>
           <span class="card-pill">Post-op Biometry Shared</span>
