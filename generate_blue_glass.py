@@ -584,6 +584,7 @@ h4{font-size:0.92rem;font-weight:700}
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 14px;
+  align-items: start;
 }
 .simple-bento-card {
   background: var(--glass-bg);
@@ -1751,7 +1752,7 @@ dialog:modal {
           <span class="card-tag">NO CALL CENTRES &bull; NO INTERMEDIARIES</span>
         </div>
         <h3>Direct Named-Surgeon Access</h3>
-        <p>You and your patient have direct contact with the named operating consultant — from first assessment through surgery and discharge. Clinical questions go straight to the surgeon who operated.</p>
+        <p>You and your patient have direct contact with the named operating consultant, from first assessment through surgery and discharge. Clinical questions go straight to the surgeon who operated.</p>
         <div class="card-pill-row">
           <span class="card-pill">Named Consultant Access</span>
           <span class="card-pill">Direct Clinical Dialogue</span>
@@ -1768,7 +1769,7 @@ dialog:modal {
           <span class="card-tag">DEDICATED DIGITAL PLATFORM</span>
         </div>
         <h3>Refer via Syndesis in under 2 minutes</h3>
-        <p>Upload scans securely, track your patient's journey in real time, and receive automated status alerts — no paperwork, no friction.</p>
+        <p>Upload scans securely, track your patient's journey in real time, and receive automated status alerts. No paperwork, no friction.</p>
         <div class="card-pill-row">
           <span class="card-pill">Under 2-Min Submissions</span>
           <span class="card-pill">Real-Time Patient Tracker</span>
@@ -1789,7 +1790,7 @@ dialog:modal {
           <span class="card-tag">PRACTICE EMPOWERMENT</span>
         </div>
         <h3>Complete Team Training &amp; Support</h3>
-        <p>Dedicated onboarding for your whole team — optometrists, dispensing opticians, and front-of-house — with 1-on-1 Syndesis walkthroughs and triage protocols.</p>
+        <p>Dedicated onboarding for your whole team: optometrists, dispensing opticians, and front-of-house. Includes 1-on-1 Syndesis walkthroughs and triage protocols.</p>
         <div class="card-pill-row">
           <span class="card-pill">Practice Onboarding</span>
           <span class="card-pill">Front-of-House Triage</span>
@@ -1806,7 +1807,7 @@ dialog:modal {
           <span class="card-tag">PATIENT RETENTION GUARANTEE</span>
         </div>
         <h3>Protected Patient Relationship &amp; 7-Day Discharge</h3>
-        <p>Your patients stay yours. We perform the surgery and return them with full clinical handover within 7 days — you manage post-op review and all future dispensing.</p>
+        <p>Your patients stay yours. We perform the surgery and return them with full clinical handover within 7 days. You manage post-op review and all future dispensing.</p>
         <div class="card-pill-row">
           <span class="card-pill">Electronic Discharge in 7 Days</span>
           <span class="card-pill">Post-op Biometry Shared</span>
