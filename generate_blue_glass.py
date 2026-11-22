@@ -1066,7 +1066,6 @@ dialog:modal {
   display: block;
   font-size: 0.88rem;
   color: var(--text-white);
-  white-space: nowrap;
 }
 .partner-meta span {
   font-size: 0.76rem;
@@ -1720,10 +1719,10 @@ dialog:modal {
     max-height: 100%;
   }
   .partner-meta strong {
-    font-size: 0.82rem;
+    font-size: 0.74rem;
   }
   .partner-meta span {
-    font-size: 0.70rem;
+    font-size: 0.65rem;
   }
 
   /* Fix agreement banner button row overflow */
