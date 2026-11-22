@@ -1001,13 +1001,10 @@ dialog:modal {
   display: flex;
   gap: 18px;
   width: max-content;
-  animation: partnerMarquee 45s linear infinite;
+  will-change: transform;
 }
 .partner-carousel-track:hover {
   animation-play-state: paused;
-}@keyframes partnerMarquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
 }
 .partner-card {
   min-width: 325px;
@@ -1703,10 +1700,6 @@ dialog:modal {
   .hero-ctas .btn {
     width: 100%;
     justify-content: center;
-  }
-  /* Faster carousel on mobile — 45s is too slow at narrow width */
-  .partner-carousel-track {
-    animation-duration: 12s;
   }
   .partner-card {
     min-width: 200px;
@@ -3027,6 +3020,48 @@ if (videoModal && openVideoBtn && videoIframe) {
     });
   }
 }
+
+// Partner Carousel — pixel-perfect seamless JS marquee
+(function() {
+  var track = document.querySelector('.partner-carousel-track');
+  if (!track) return;
+  var paused = false;
+  var pos = 0;
+  // px per frame at ~60fps: 0.5 = ~30px/s desktop, 1.0 = ~60px/s mobile
+  var speed = window.innerWidth <= 640 ? 1.0 : 0.5;
+
+  function getLoopWidth() {
+    // Exact pixel width of one set (half the total track)
+    var half = Math.floor(track.children.length / 2);
+    var last = track.children[half - 1];
+    return last ? last.offsetLeft + last.offsetWidth : 0;
+  }
+
+  var loopWidth = 0;
+
+  function tick() {
+    if (!paused && loopWidth) {
+      pos += speed;
+      if (pos >= loopWidth) pos -= loopWidth;
+      track.style.transform = 'translateX(-' + pos.toFixed(2) + 'px)';
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function start() {
+    loopWidth = getLoopWidth();
+    if (loopWidth > 0) requestAnimationFrame(tick);
+  }
+
+  track.addEventListener('mouseenter', function() { paused = true; });
+  track.addEventListener('mouseleave', function() { paused = false; });
+  track.addEventListener('touchstart', function() { paused = true; }, { passive: true });
+  track.addEventListener('touchend', function() {
+    setTimeout(function() { paused = false; }, 1200);
+  }, { passive: true });
+
+  window.addEventListener('load', function() { setTimeout(start, 150); });
+})();
 </script>
 </body>
 </html>"""
