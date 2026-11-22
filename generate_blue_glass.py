@@ -1040,6 +1040,16 @@ dialog:modal {
   background: #0C1E34;
   border: 1px solid rgba(255,255,255,0.15);
 }
+/* Circle logos — minimal padding so they fill the pill */
+.partner-logo-pill--circle {
+  padding: 2px;
+}
+.partner-logo-pill--circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
 .partner-logo-pill img {
   max-width: 100%;
   max-height: 100%;
@@ -2016,7 +2026,7 @@ dialog:modal {
         </div>
 
         <div class="partner-card">
-          <div class="partner-logo-pill">
+          <div class="partner-logo-pill partner-logo-pill--circle">
             <img src="__OPTIQUE_COL_SRC__" alt="Optique of Collingham" loading="lazy">
           </div>
           <div class="partner-meta">
@@ -2026,7 +2036,7 @@ dialog:modal {
         </div>
 
         <div class="partner-card">
-          <div class="partner-logo-pill">
+          <div class="partner-logo-pill partner-logo-pill--circle">
             <img src="__OPTIQUE_SOW_SRC__" alt="Optique of Southwell" loading="lazy">
           </div>
           <div class="partner-meta">
@@ -2107,7 +2117,7 @@ dialog:modal {
         </div>
 
         <div class="partner-card">
-          <div class="partner-logo-pill">
+          <div class="partner-logo-pill partner-logo-pill--circle">
             <img src="__OPTIQUE_COL_SRC__" alt="Optique of Collingham" loading="lazy">
           </div>
           <div class="partner-meta">
@@ -2117,7 +2127,7 @@ dialog:modal {
         </div>
 
         <div class="partner-card">
-          <div class="partner-logo-pill">
+          <div class="partner-logo-pill partner-logo-pill--circle">
             <img src="__OPTIQUE_SOW_SRC__" alt="Optique of Southwell" loading="lazy">
           </div>
           <div class="partner-meta">
