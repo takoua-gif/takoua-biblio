@@ -1709,7 +1709,7 @@ dialog:modal {
     animation-duration: 12s;
   }
   .partner-card {
-    min-width: 240px;
+    min-width: 200px;
     padding: 12px 14px;
     gap: 12px;
   }
@@ -2168,7 +2168,7 @@ dialog:modal {
         <!-- Set 1 (8 Partner Practices + Join Card) -->
         <div class="partner-card">
           <div class="partner-logo-pill">
-            <img src="__SUMPTON_SRC__" alt="Sumpton Opticians" loading="lazy">
+            <img src="__SUMPTON_SRC__" alt="Sumpton Opticians" loading="eager">
           </div>
           <div class="partner-meta">
             <strong>Sumpton Opticians</strong>
@@ -2178,7 +2178,7 @@ dialog:modal {
 
         <div class="partner-card">
           <div class="partner-logo-pill partner-logo-pill--dark">
-            <img src="__PINDERS_SRC__" alt="Pinders Opticians" loading="lazy">
+            <img src="__PINDERS_SRC__" alt="Pinders Opticians" loading="eager">
           </div>
           <div class="partner-meta">
             <strong>Pinders Opticians</strong>
@@ -2188,7 +2188,7 @@ dialog:modal {
 
         <div class="partner-card">
           <div class="partner-logo-pill partner-logo-pill--circle">
-            <img src="__OPTIQUE_COL_SRC__" alt="Optique of Collingham" loading="lazy">
+            <img src="__OPTIQUE_COL_SRC__" alt="Optique of Collingham" loading="eager">
           </div>
           <div class="partner-meta">
             <strong>Optique of Collingham</strong>
@@ -2198,7 +2198,7 @@ dialog:modal {
 
         <div class="partner-card">
           <div class="partner-logo-pill partner-logo-pill--circle">
-            <img src="__OPTIQUE_SOW_SRC__" alt="Optique of Southwell" loading="lazy">
+            <img src="__OPTIQUE_SOW_SRC__" alt="Optique of Southwell" loading="eager">
           </div>
           <div class="partner-meta">
             <strong>Optique of Southwell</strong>
@@ -2208,7 +2208,7 @@ dialog:modal {
 
         <div class="partner-card">
           <div class="partner-logo-pill">
-            <img src="__DIBLOW_SRC__" alt="D.I. Blow Opticians" loading="lazy">
+            <img src="__DIBLOW_SRC__" alt="D.I. Blow Opticians" loading="eager">
           </div>
           <div class="partner-meta">
             <strong>D.I. Blow Opticians</strong>
@@ -2218,7 +2218,7 @@ dialog:modal {
 
         <div class="partner-card">
           <div class="partner-logo-pill">
-            <img src="__OAKWOOD_SRC__" alt="Oakwood Eyecare" loading="lazy">
+            <img src="__OAKWOOD_SRC__" alt="Oakwood Eyecare" loading="eager">
           </div>
           <div class="partner-meta">
             <strong>Oakwood Eyecare</strong>
@@ -2228,7 +2228,7 @@ dialog:modal {
 
         <div class="partner-card">
           <div class="partner-logo-pill">
-            <img src="__ALVASTON_SRC__" alt="Alvaston Opticians" loading="lazy">
+            <img src="__ALVASTON_SRC__" alt="Alvaston Opticians" loading="eager">
           </div>
           <div class="partner-meta">
             <strong>Alvaston Opticians</strong>
@@ -2238,7 +2238,7 @@ dialog:modal {
 
         <div class="partner-card">
           <div class="partner-logo-pill">
-            <img src="__KIMBERLEY_SRC__" alt="Kimberley Opticians" loading="lazy">
+            <img src="__KIMBERLEY_SRC__" alt="Kimberley Opticians" loading="eager">
           </div>
           <div class="partner-meta">
             <strong>Kimberley Opticians</strong>
@@ -2259,7 +2259,7 @@ dialog:modal {
         <!-- Set 2 (Exact duplicate for seamless continuous loop) -->
         <div class="partner-card">
           <div class="partner-logo-pill">
-            <img src="__SUMPTON_SRC__" alt="Sumpton Opticians" loading="lazy">
+            <img src="__SUMPTON_SRC__" alt="Sumpton Opticians" loading="eager">
           </div>
           <div class="partner-meta">
             <strong>Sumpton Opticians</strong>
@@ -2269,7 +2269,7 @@ dialog:modal {
 
         <div class="partner-card">
           <div class="partner-logo-pill partner-logo-pill--dark">
-            <img src="__PINDERS_SRC__" alt="Pinders Opticians" loading="lazy">
+            <img src="__PINDERS_SRC__" alt="Pinders Opticians" loading="eager">
           </div>
           <div class="partner-meta">
             <strong>Pinders Opticians</strong>
@@ -2279,7 +2279,7 @@ dialog:modal {
 
         <div class="partner-card">
           <div class="partner-logo-pill partner-logo-pill--circle">
-            <img src="__OPTIQUE_COL_SRC__" alt="Optique of Collingham" loading="lazy">
+            <img src="__OPTIQUE_COL_SRC__" alt="Optique of Collingham" loading="eager">
           </div>
           <div class="partner-meta">
             <strong>Optique of Collingham</strong>
@@ -2289,7 +2289,7 @@ dialog:modal {
 
         <div class="partner-card">
           <div class="partner-logo-pill partner-logo-pill--circle">
-            <img src="__OPTIQUE_SOW_SRC__" alt="Optique of Southwell" loading="lazy">
+            <img src="__OPTIQUE_SOW_SRC__" alt="Optique of Southwell" loading="eager">
           </div>
           <div class="partner-meta">
             <strong>Optique of Southwell</strong>
@@ -2299,7 +2299,7 @@ dialog:modal {
 
         <div class="partner-card">
           <div class="partner-logo-pill">
-            <img src="__DIBLOW_SRC__" alt="D.I. Blow Opticians" loading="lazy">
+            <img src="__DIBLOW_SRC__" alt="D.I. Blow Opticians" loading="eager">
           </div>
           <div class="partner-meta">
             <strong>D.I. Blow Opticians</strong>
@@ -2309,7 +2309,7 @@ dialog:modal {
 
         <div class="partner-card">
           <div class="partner-logo-pill">
-            <img src="__OAKWOOD_SRC__" alt="Oakwood Eyecare" loading="lazy">
+            <img src="__OAKWOOD_SRC__" alt="Oakwood Eyecare" loading="eager">
           </div>
           <div class="partner-meta">
             <strong>Oakwood Eyecare</strong>
@@ -2319,7 +2319,7 @@ dialog:modal {
 
         <div class="partner-card">
           <div class="partner-logo-pill">
-            <img src="__ALVASTON_SRC__" alt="Alvaston Opticians" loading="lazy">
+            <img src="__ALVASTON_SRC__" alt="Alvaston Opticians" loading="eager">
           </div>
           <div class="partner-meta">
             <strong>Alvaston Opticians</strong>
@@ -2329,7 +2329,7 @@ dialog:modal {
 
         <div class="partner-card">
           <div class="partner-logo-pill">
-            <img src="__KIMBERLEY_SRC__" alt="Kimberley Opticians" loading="lazy">
+            <img src="__KIMBERLEY_SRC__" alt="Kimberley Opticians" loading="eager">
           </div>
           <div class="partner-meta">
             <strong>Kimberley Opticians</strong>
