@@ -1983,7 +1983,7 @@ dialog:modal {
         </div>
 
         <div class="partner-card">
-          <div class="partner-logo-pill partner-logo-pill--dark">
+          <div class="partner-logo-pill">
             <img src="__OPTIQUE_SRC__" alt="Optique Opticians" loading="lazy">
           </div>
           <div class="partner-meta">
@@ -2054,7 +2054,7 @@ dialog:modal {
         </div>
 
         <div class="partner-card">
-          <div class="partner-logo-pill partner-logo-pill--dark">
+          <div class="partner-logo-pill">
             <img src="__OPTIQUE_SRC__" alt="Optique Opticians" loading="lazy">
           </div>
           <div class="partner-meta">
