@@ -17,8 +17,10 @@ with open('images/abdalla-headshot-square.jpg', 'rb') as f_yasmine:
 
 with open('images/partner-pinders.png', 'rb') as f_pinders:
     pinders_b64 = 'data:image/png;base64,' + base64.b64encode(f_pinders.read()).decode('utf-8')
-with open('images/partner-optique.png', 'rb') as f_optique:
-    optique_b64 = 'data:image/png;base64,' + base64.b64encode(f_optique.read()).decode('utf-8')
+with open('images/partner-optique-collingham.png', 'rb') as f_optique_col:
+    optique_col_b64 = 'data:image/png;base64,' + base64.b64encode(f_optique_col.read()).decode('utf-8')
+with open('images/partner-optique-southwell.png', 'rb') as f_optique_sow:
+    optique_sow_b64 = 'data:image/png;base64,' + base64.b64encode(f_optique_sow.read()).decode('utf-8')
 with open('images/partner-diblow.png', 'rb') as f_diblow:
     diblow_b64 = 'data:image/png;base64,' + base64.b64encode(f_diblow.read()).decode('utf-8')
 with open('images/partner-oakwood.png', 'rb') as f_oakwood:
@@ -27,6 +29,8 @@ with open('images/partner-alvaston.png', 'rb') as f_alvaston:
     alvaston_b64 = 'data:image/png;base64,' + base64.b64encode(f_alvaston.read()).decode('utf-8')
 with open('images/partner-kimberley.png', 'rb') as f_kimberley:
     kimberley_b64 = 'data:image/png;base64,' + base64.b64encode(f_kimberley.read()).decode('utf-8')
+with open('images/partner-sumpton.png', 'rb') as f_sumpton:
+    sumpton_b64 = 'data:image/png;base64,' + base64.b64encode(f_sumpton.read()).decode('utf-8')
 with open('images/synergy-hero-secret.jpg', 'rb') as f_img:
     hero_b64 = 'data:image/jpeg;base64,' + base64.b64encode(f_img.read()).decode('utf-8')
 
@@ -35,11 +39,13 @@ def build_page(is_embed=True):
     a_src = ahmad_b64 if is_embed else "images/elsahn-headshot-square.jpg"
     y_src = yasmine_b64 if is_embed else "images/abdalla-headshot-square.jpg"
     p_src = pinders_b64 if is_embed else "images/partner-pinders.png"
-    o_src = optique_b64 if is_embed else "images/partner-optique.png"
+    o_col_src = optique_col_b64 if is_embed else "images/partner-optique-collingham.png"
+    o_sow_src = optique_sow_b64 if is_embed else "images/partner-optique-southwell.png"
     di_src = diblow_b64 if is_embed else "images/partner-diblow.png"
     oak_src = oakwood_b64 if is_embed else "images/partner-oakwood.png"
     alv_src = alvaston_b64 if is_embed else "images/partner-alvaston.png"
     kim_src = kimberley_b64 if is_embed else "images/partner-kimberley.png"
+    sump_src = sumpton_b64 if is_embed else "images/partner-sumpton.png"
     hero_img = hero_b64 if is_embed else "images/synergy-hero-secret.jpg"
 
     template = """
@@ -1988,7 +1994,17 @@ dialog:modal {
     <!-- Infinite Carousel Marquee -->
     <div class="partner-carousel-wrap">
       <div class="partner-carousel-track">
-        <!-- Set 1 (6 Partner Practices + Join Card) -->
+        <!-- Set 1 (8 Partner Practices + Join Card) -->
+        <div class="partner-card">
+          <div class="partner-logo-pill">
+            <img src="__SUMPTON_SRC__" alt="Sumpton Opticians" loading="lazy">
+          </div>
+          <div class="partner-meta">
+            <strong>Sumpton Opticians</strong>
+            <span>Practice Partner &bull; Nottinghamshire</span>
+          </div>
+        </div>
+
         <div class="partner-card">
           <div class="partner-logo-pill partner-logo-pill--dark">
             <img src="__PINDERS_SRC__" alt="Pinders Opticians" loading="lazy">
@@ -2001,11 +2017,21 @@ dialog:modal {
 
         <div class="partner-card">
           <div class="partner-logo-pill">
-            <img src="__OPTIQUE_SRC__" alt="Optique Opticians" loading="lazy">
+            <img src="__OPTIQUE_COL_SRC__" alt="Optique of Collingham" loading="lazy">
           </div>
           <div class="partner-meta">
-            <strong>Optique Opticians</strong>
-            <span>Practice Partner &bull; Thurmaston &amp; Leicester</span>
+            <strong>Optique of Collingham</strong>
+            <span>Practice Partner &bull; Collingham, Nottinghamshire</span>
+          </div>
+        </div>
+
+        <div class="partner-card">
+          <div class="partner-logo-pill">
+            <img src="__OPTIQUE_SOW_SRC__" alt="Optique of Southwell" loading="lazy">
+          </div>
+          <div class="partner-meta">
+            <strong>Optique of Southwell</strong>
+            <span>Practice Partner &bull; Southwell, Nottinghamshire</span>
           </div>
         </div>
 
@@ -2061,6 +2087,16 @@ dialog:modal {
 
         <!-- Set 2 (Exact duplicate for seamless continuous loop) -->
         <div class="partner-card">
+          <div class="partner-logo-pill">
+            <img src="__SUMPTON_SRC__" alt="Sumpton Opticians" loading="lazy">
+          </div>
+          <div class="partner-meta">
+            <strong>Sumpton Opticians</strong>
+            <span>Practice Partner &bull; Nottinghamshire</span>
+          </div>
+        </div>
+
+        <div class="partner-card">
           <div class="partner-logo-pill partner-logo-pill--dark">
             <img src="__PINDERS_SRC__" alt="Pinders Opticians" loading="lazy">
           </div>
@@ -2072,11 +2108,21 @@ dialog:modal {
 
         <div class="partner-card">
           <div class="partner-logo-pill">
-            <img src="__OPTIQUE_SRC__" alt="Optique Opticians" loading="lazy">
+            <img src="__OPTIQUE_COL_SRC__" alt="Optique of Collingham" loading="lazy">
           </div>
           <div class="partner-meta">
-            <strong>Optique Opticians</strong>
-            <span>Practice Partner &bull; Thurmaston &amp; Leicester</span>
+            <strong>Optique of Collingham</strong>
+            <span>Practice Partner &bull; Collingham, Nottinghamshire</span>
+          </div>
+        </div>
+
+        <div class="partner-card">
+          <div class="partner-logo-pill">
+            <img src="__OPTIQUE_SOW_SRC__" alt="Optique of Southwell" loading="lazy">
+          </div>
+          <div class="partner-meta">
+            <strong>Optique of Southwell</strong>
+            <span>Practice Partner &bull; Southwell, Nottinghamshire</span>
           </div>
         </div>
 
@@ -2784,11 +2830,13 @@ if (videoModal && openVideoBtn && videoIframe) {
     html = html.replace('__AHMAD_SRC__', a_src)
     html = html.replace('__YASMINE_SRC__', y_src)
     html = html.replace('__PINDERS_SRC__', p_src)
-    html = html.replace('__OPTIQUE_SRC__', o_src)
+    html = html.replace('__OPTIQUE_COL_SRC__', o_col_src)
+    html = html.replace('__OPTIQUE_SOW_SRC__', o_sow_src)
     html = html.replace('__DIBLOW_SRC__', di_src)
     html = html.replace('__OAKWOOD_SRC__', oak_src)
     html = html.replace('__ALVASTON_SRC__', alv_src)
     html = html.replace('__KIMBERLEY_SRC__', kim_src)
+    html = html.replace('__SUMPTON_SRC__', sump_src)
     html = html.replace('__HERO_IMG__', hero_img)
     return html
 
