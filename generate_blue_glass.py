@@ -1005,8 +1005,7 @@ dialog:modal {
 }
 .partner-carousel-track:hover {
   animation-play-state: paused;
-}
-@keyframes partnerMarquee {
+}@keyframes partnerMarquee {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
@@ -1705,7 +1704,10 @@ dialog:modal {
     width: 100%;
     justify-content: center;
   }
-  /* Larger, more visible partner logo pills on mobile */
+  /* Faster carousel on mobile — 45s is too slow at narrow width */
+  .partner-carousel-track {
+    animation-duration: 22s;
+  }
   .partner-card {
     min-width: 240px;
     padding: 12px 14px;
