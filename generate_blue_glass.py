@@ -1706,7 +1706,7 @@ dialog:modal {
   }
   /* Faster carousel on mobile — 45s is too slow at narrow width */
   .partner-carousel-track {
-    animation-duration: 22s;
+    animation-duration: 12s;
   }
   .partner-card {
     min-width: 240px;
