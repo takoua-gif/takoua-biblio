@@ -721,7 +721,7 @@ dialog.video-modal-dialog {
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.85), 0 0 40px rgba(20, 184, 166, 0.25);
   padding: 0;
   max-width: 880px;
-  width: calc(100vw - 32px);
+  width: calc(100% - 32px);
   margin: auto;
   color: #FFFFFF;
   overflow: hidden;
@@ -1774,7 +1774,7 @@ dialog:modal {
   }
   section, .section {
     overflow-x: hidden;
-    max-width: 100vw;
+    max-width: 100%;
   }
   /* Universal overflow guard for all block elements */
   h1, h2, h3, h4, h5, p, span, div, li {
@@ -2781,6 +2781,23 @@ if (inIframe && mainNav) {
   // Keep nav visible from the start
   mainNav.classList.add('scrolled');
 }
+
+// Broadcast height to Wix parent window for auto-resizing containers
+function sendWixHeight() {
+  if (inIframe) {
+    try {
+      var h = Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight,
+        document.body.offsetHeight
+      );
+      window.parent.postMessage({ type: 'synergyHeight', height: h }, '*');
+      window.parent.postMessage({ type: 'setHeight', height: h }, '*');
+    } catch(e) {}
+  }
+}
+window.addEventListener('load', function() { setTimeout(sendWixHeight, 300); });
+window.addEventListener('resize', sendWixHeight);
 
 // Sticky Navbar scroll transition
 window.addEventListener('scroll', function() {
