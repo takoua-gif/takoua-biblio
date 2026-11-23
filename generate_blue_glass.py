@@ -116,7 +116,7 @@ html{
   scroll-behavior:smooth;
   -webkit-text-size-adjust:100%;
   scroll-padding-top:84px;
-  overflow-x:hidden;
+  overflow-x:clip;
 }
 body{
   font-family:var(--font-sans);
@@ -130,7 +130,7 @@ body{
   width:100%;
   max-width:100%;
   padding-top:74px;
-  overflow-x:hidden;
+  overflow-x:clip;
 }
 section,[id]{scroll-margin-top:84px}
 img{max-width:100%;display:block}
