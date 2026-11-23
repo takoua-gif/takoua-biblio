@@ -2707,9 +2707,15 @@ dialog:modal {
         <svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:var(--ep-teal-bright)"><path d="M8 5v14l11-7z"/></svg>
         <span>Syndesis: Step by Step Refer in Under 2 Minutes</span>
       </div>
-      <button type="button" class="video-modal-close-btn" id="closeVideoBtn" aria-label="Close video walkthrough">
-        <svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
+      <div style="display:flex;align-items:center;gap:12px">
+        <a href="https://youtu.be/5fU044uDSs8" target="_blank" rel="noopener noreferrer" style="font-size:0.75rem;color:var(--ep-teal-bright);text-decoration:underline;display:flex;align-items:center;gap:4px" title="Open directly on YouTube">
+          <span>Watch on YouTube</span>
+          <svg viewBox="0 0 20 20" fill="currentColor" style="width:13px;height:13px"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"/><path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"/></svg>
+        </a>
+        <button type="button" class="video-modal-close-btn" id="closeVideoBtn" aria-label="Close video walkthrough">
+          <svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
     </div>
     <div class="video-responsive-wrap">
       <iframe id="videoIframe" src="" title="Syndesis: Step by Step Refer in under 2 minutes" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -2983,7 +2989,26 @@ if (videoModal && openVideoBtn && videoIframe) {
   openVideoBtn.addEventListener('click', function(e) {
     e.preventDefault();
     videoIframe.src = youtubeEmbedUrl;
+
+    // Calculate vertical position relative to the clicked button
+    var btn = openVideoBtn;
+    var btnY = btn.getBoundingClientRect().top + (window.pageYOffset || document.documentElement.scrollTop || 0);
+    var modalTop = Math.max(30, Math.round(btnY - 180));
+
+    videoModal.style.position = 'absolute';
+    videoModal.style.top = modalTop + 'px';
+    videoModal.style.bottom = 'auto';
+    videoModal.style.left = '0';
+    videoModal.style.right = '0';
+    videoModal.style.margin = '0 auto';
+
     videoModal.showModal();
+
+    setTimeout(function() {
+      try {
+        videoModal.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } catch(x) {}
+    }, 60);
   });
 
   function stopAndCloseVideo() {
