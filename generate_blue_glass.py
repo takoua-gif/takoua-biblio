@@ -2614,7 +2614,7 @@ dialog:modal {
             <div class="contact-text">
               <strong>Direct Partner Desk</strong>
               <div style="display:flex;align-items:center;gap:4px">
-                <a href="mailto:practice@eyepros.co.uk">practice@eyepros.co.uk</a>
+                <a href="mailto:info@eyepros.co.uk">info@eyepros.co.uk</a>
                 <span class="contact-row-tip" aria-label="About partner desk" tabindex="0">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
                   <span class="contact-row-tip-bubble">Direct liaison for accreditation &amp; SLAs</span>
@@ -2975,17 +2975,31 @@ if (partnerForm) {
     var payload = {};
     formData.forEach(function(value, key) { payload[key] = value; });
 
-    fetch('https://formsubmit.co/ajax/practice@eyepros.co.uk', {
+    // Add Web3Forms access key and subject
+    payload['access_key'] = 'ba8559ff-01ff-4aed-9e0f-1d758bf365a4';
+    payload['subject'] = 'New Synergy Partner Enquiry — ' + (payload['practice_name'] || payload['practiceName'] || 'Unknown Practice');
+    payload['from_name'] = 'EyePros Synergy Website';
+
+    fetch('https://api.web3forms.com/submit', {
       method: 'POST',
       headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
       body: JSON.stringify(payload)
     })
-    .then(function() {
-      partnerForm.style.display = 'none';
-      document.getElementById('formSuccess').style.display = 'block';
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      if (data.success) {
+        partnerForm.style.display = 'none';
+        document.getElementById('formSuccess').style.display = 'block';
+      } else {
+        submitBtn.innerText = 'Send Enquiry →';
+        submitBtn.disabled = false;
+        alert('Something went wrong. Please call us on 0333 77 272 77.');
+      }
     })
     .catch(function() {
-      partnerForm.submit();
+      submitBtn.innerText = 'Send Enquiry →';
+      submitBtn.disabled = false;
+      alert('Network error. Please call us on 0333 77 272 77.');
     });
   });
 }
