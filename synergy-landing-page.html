@@ -1777,6 +1777,7 @@ dialog:modal {
   }
 }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
 
@@ -2912,7 +2913,12 @@ document.querySelectorAll('.faq-q').forEach(function(button) {
   });
 });
 
-// Enquiry form submission
+// EmailJS initialisation
+if (typeof emailjs !== 'undefined') {
+  emailjs.init({ publicKey: 'lEaKsszd37zdF2eIH' });
+}
+
+// Enquiry form submission via EmailJS
 var partnerForm = document.getElementById('partnerForm');
 if (partnerForm) {
   partnerForm.addEventListener('submit', function(e) {
@@ -2921,36 +2927,27 @@ if (partnerForm) {
     submitBtn.innerText = 'Submitting...';
     submitBtn.disabled = true;
 
-    var formData = new FormData(partnerForm);
-    var payload = {};
-    formData.forEach(function(value, key) { payload[key] = value; });
+    var templateParams = {
+      practice_name:     document.getElementById('practiceName').value,
+      postcode:          document.getElementById('practicePostcode').value,
+      contact_name:      document.getElementById('contactName').value,
+      goc_number:        document.getElementById('gocNumber').value,
+      email:             document.getElementById('email').value,
+      phone:             document.getElementById('phone').value,
+      clinical_interest: document.getElementById('clinicalInterests').value,
+      message:           document.getElementById('comments').value
+    };
 
-    // Add Web3Forms access key and subject
-    payload['access_key'] = 'ba8559ff-01ff-4aed-9e0f-1d758bf365a4';
-    payload['subject'] = 'New Synergy Partner Enquiry — ' + (payload['practice_name'] || payload['practiceName'] || 'Unknown Practice');
-    payload['from_name'] = 'EyePros Synergy Website';
-
-    fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
-      body: JSON.stringify(payload)
-    })
-    .then(function(res) { return res.json(); })
-    .then(function(data) {
-      if (data.success) {
+    emailjs.send('service_tmyeyek', 'template_vlizwvn', templateParams)
+      .then(function() {
         partnerForm.style.display = 'none';
         document.getElementById('formSuccess').style.display = 'block';
-      } else {
-        submitBtn.innerText = 'Send Enquiry →';
+      }, function(error) {
+        console.error('EmailJS error:', error);
+        submitBtn.innerText = 'Submit Partnership Enquiry →';
         submitBtn.disabled = false;
-        alert('Something went wrong. Please call us on 0333 77 272 77.');
-      }
-    })
-    .catch(function() {
-      submitBtn.innerText = 'Send Enquiry →';
-      submitBtn.disabled = false;
-      alert('Network error. Please call us on 0333 77 272 77.');
-    });
+        alert('Something went wrong. Please call us on 0333 77 272 77 or email info@eyepros.co.uk');
+      });
   });
 }
 
