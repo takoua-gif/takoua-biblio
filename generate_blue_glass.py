@@ -2774,13 +2774,34 @@ var inIframe = false;
 try { inIframe = (window.self !== window.top); } catch(e) { inIframe = true; }
 
 if (inIframe && mainNav) {
-  // Inside Wix iframe: switch from fixed to sticky so nav stays within the embed
-  mainNav.style.position = 'sticky';
+  // Inside Wix iframe: use absolute positioning + postMessage scroll sync from Wix Velo
+  mainNav.style.position = 'absolute';
   mainNav.style.top = '0';
-  // Remove body padding-top since nav is now in document flow
-  document.body.style.paddingTop = '0';
-  // Keep nav visible from the start
+  mainNav.style.left = '0';
+  mainNav.style.right = '0';
+  mainNav.style.width = '100%';
+  mainNav.style.zIndex = '1000';
   mainNav.classList.add('scrolled');
+  document.body.style.position = 'relative';
+  document.body.style.paddingTop = '74px';
+
+  // Listen for scroll position broadcast from Wix parent via Velo postMessage
+  var iframeTopOffset = 0;
+  window.addEventListener('message', function(e) {
+    try {
+      var data = e.data;
+      if (typeof data === 'string') { try { data = JSON.parse(data); } catch(x) {} }
+      if (!data || !data.type) return;
+      if (data.type === 'init' && typeof data.iframeTop !== 'undefined') {
+        iframeTopOffset = Number(data.iframeTop) || 0;
+      }
+      if (data.type === 'scroll' || data.type === 'init') {
+        var scrollY = Number(data.scrollY) || 0;
+        var navOffset = Math.max(0, scrollY - iframeTopOffset);
+        mainNav.style.transform = 'translateY(' + navOffset + 'px)';
+      }
+    } catch(err) {}
+  });
 }
 
 // Broadcast height to Wix parent window for auto-resizing containers
